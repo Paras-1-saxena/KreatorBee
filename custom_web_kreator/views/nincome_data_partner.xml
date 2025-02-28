@@ -1,0 +1,310 @@
+<odoo>
+    <data>
+        <template id="ndata_page_template_partner" name="nincomedataPartner">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet"/>
+            <body>
+                <!-- Page-Specific Styles -->
+                <style>
+                    body {
+                        display: flex;
+                        margin: 0;
+                        font-family: 'Poppins', sans-serif;
+                        background-color: #f8f9fa;
+                    }
+
+                    /* Top Menu */
+                    .top-menu {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 10px 20px;
+                        background-color: #fff;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        top: 0;
+                        z-index: 100;
+                        height: 60px; /* Adjust height for new layout */
+                    }
+
+                    .top-menu .logo img {
+                        height: 60px;
+                        width: auto;
+                    }
+
+                    .top-menu .menu-links {
+                        display: flex;
+                        gap: 40px; /* Space between menu items */
+                        align-items: center;
+                        justify-content: center;
+                        flex: 1;
+                    }
+
+                    .top-menu .menu-links a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 14px;
+                        font-weight: 500;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 15px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        height: 100%;
+                        justify-content: center;
+                    }
+
+                    .top-menu .menu-links a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links i {
+                        font-size: 24px; /* Icon size */
+                    }
+                    .top-menu .user-icon {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        cursor: pointer;
+                        margin-right: 30px; /* Adds space from the edge */
+                    }
+
+                    /* Side Menu */
+                    .side-menu {
+                        width: 250px;
+                        background-color: #fff;
+                        padding: 20px 10px;
+                        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        left: 0;
+                        top: 60px; /* Adjust for top menu */
+                        height: calc(100vh - 60px);
+                        overflow-y: auto;
+                    }
+
+                    .side-menu ul {
+                        list-style: none;
+                        padding: 2;
+                    }
+
+                    .side-menu ul li {
+                        margin: 15px 0;
+                    }
+
+                    .side-menu ul li a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 15px;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                    }
+
+                    .side-menu ul li a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .side-menu ul li a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .main-content {
+                        margin-left: 270px; /* Adjust to create space from the side menu */
+                        padding: 20px;      /* Maintain consistent padding inside the main content */
+                        margin-top: 60px;   /* Adjust for the top menu */
+                        flex-grow: 1;
+                    }
+
+
+                    .dashboard-header {
+                        disaply:flex;
+                        background-color: #fff;
+                        text-align: center;
+                        font-size: 24px;
+                        font-weight: bold;
+                        color: #333;
+                        margin-bottom: 20px;
+                        margin-top: 20px;
+                        border-radius: 10px;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    }
+
+                    .stats-container {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 30px;
+                    }
+
+                    .stat-block {
+                        background-color: #fff;
+                        flex: 1;
+                        margin: 0 10px;
+                        text-align: center;
+                        padding: 20px;
+                        border-radius: 10px;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        font-size: 20px;
+                        font-weight: bold;
+                    }
+
+                    .stat-block h3 {
+                        font-size: 18px;
+                        margin: 0 0 10px;
+                        color: #888;
+                    }
+
+                    .stat-block p {
+                        font-size: 32px;
+                        color: #555;
+                    }
+
+                    .charts-container {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 30px;
+                    }
+
+                    .chart-block {
+                        background-color: #fff;
+                        padding: 20px;
+                        border-radius: 10px;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        text-align: center;
+                    }
+
+                    .chart-block canvas {
+                        width: 100%;
+                        height: 200px;
+                    }
+
+                    
+                </style>
+
+                <!-- Top Menu -->
+                <div class="top-menu">
+                    <div class="logo">
+                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
+                    </div>
+                    <div class="menu-links">
+                        <a href="/master_income_data" class="active">
+                            <i class="fa fa-chart-bar"></i> Income
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-bullhorn"></i> Leads
+                        </a>
+                        <a href="/nkyc">
+                            <i class="fa fa-id-card"></i> KYC
+                        </a>
+                        <a href="/nreferral">
+                            <i class="fa fa-link"></i> Links
+                        </a>
+                        <a href="/nleaderboard">
+                            <i class="fa fa-medal"></i> Leaderboard
+                        </a>
+                    </div>
+                    <!-- Use <img> tag for user icon -->
+                    <img class="user-icon" src="/custom_web_kreator/static/src/user1.png" alt="User Icon"/>
+                </div>
+
+                <!-- Side Menu -->
+                <div class="side-menu">
+                    <ul>
+                        <li><a href="/master_income_data" class="active"><i class="fa fa-chart-line"></i> Sales</a></li>
+                        <li><a href="/nmy-courses"><i class="fa fa-box"></i> Products</a></li>
+                        <li><a href="/connect"><i class="fa fa-ad"></i> Promote</a></li>
+                        <li><a href="/#"><i class="fa fa-users"></i> Community</a></li>
+                        <li><a href="#"><i class="fa fa-book-reader"></i> My Courses</a></li>
+                    </ul>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                        <div class="dashboard-header">Financial Report</div>
+
+                        <!-- Statistics Section -->
+                        <div class="stats-container">
+                            <div class="stat-block">
+                                <h3>Income</h3>
+                                <p>2799</p>
+                            </div>
+                            <div class="stat-block">
+                                <h3>Costs</h3>
+                                <p>800</p>
+                            </div>
+                            <div class="stat-block">
+                                <h3>Profit</h3>
+                                <p>638</p>
+                            </div>
+                        </div>
+
+                        <!-- Charts Section -->
+                        <div class="charts-container">
+                            <div class="chart-block">
+                                <h3>Monthly Sales</h3>
+                                <canvas id="barChart"></canvas>
+                            </div>
+                            <div class="chart-block">
+                                <h3>Units Sold %</h3>
+                                <canvas id="pieChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Include Chart.js -->
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script>
+                        // Bar Chart
+                        const barChart = document.getElementById('barChart');
+                        new Chart(barChart, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Product A', 'Product B', 'Product C'],
+                                datasets: [{
+                                    label: 'Sales',
+                                    data: [120, 150, 80],
+                                    backgroundColor: ['#836FFF', '#6A5ACD', '#7B68EE']
+                                }]
+                            },
+                            options: {
+                                responsive: true
+                            }
+                        });
+
+                        // Pie Chart
+                        const pieChart = document.getElementById('pieChart');
+                        new Chart(pieChart, {
+                            type: 'pie',
+                            data: {
+                                labels: ['Product A', 'Product B', 'Product C'],
+                                datasets: [{
+                                    label: 'Units Sold',
+                                    data: [30, 50, 20],
+                                    backgroundColor: ['#FF9999', '#FFCC99', '#FF6699']
+                                }]
+                            },
+                            options: {
+                                responsive: true
+                            }
+                        });
+                    </script>
+
+            </body>
+        </template>
+    </data>
+</odoo>

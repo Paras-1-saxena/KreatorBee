@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Terms and Conditions -->
+    <record id="view_course_terms_conditions_form" model="ir.ui.view">
+        <field name="name">course terms and conditions</field>
+        <field name="model">terms.conditions</field>
+        <field name="arch" type="xml">
+            <form string="Terms and Conditions">
+                <sheet>
+                    <group>
+                        <field name="content"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_course_terms_conditions_tree" model="ir.ui.view">
+        <field name="name">course terms and conditions</field>
+        <field name="model">terms.conditions</field>
+        <field name="arch" type="xml">
+            <list string="Terms and Conditions">
+                <field name="content"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_terms_conditions" model="ir.actions.act_window">
+        <field name="name">Terms and Conditions</field>
+        <field name="res_model">terms.conditions</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Content Tag
+            </p>
+        </field>
+    </record>
+    <!-- Course Standard -->
+    <record id="view_course_standard_form" model="ir.ui.view">
+        <field name="name">course standard view</field>
+        <field name="model">course.standard</field>
+        <field name="arch" type="xml">
+            <form string="Course Standard">
+                <sheet>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_course_standard_tree" model="ir.ui.view">
+        <field name="name">course standard view</field>
+        <field name="model">course.standard</field>
+        <field name="arch" type="xml">
+            <list string="Course Standard">
+                <field name="description"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_course_standard" model="ir.actions.act_window">
+        <field name="name">Content Standard</field>
+        <field name="res_model">course.standard</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_course_standard_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Content Tag
+            </p>
+        </field>
+    </record>
+
+    <!--Partner Commision -->
+    <record id="view_partner_commision_form" model="ir.ui.view">
+        <field name="name">partner.commission.form</field>
+        <field name="model">partner.commission</field>
+        <field name="arch" type="xml">
+            <form string="Partner Commission">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Commission Plan"/>
+                        <h1>
+                            <field name="name" placeholder="i.e. Commissions plan 2025" class="d-block"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <group>
+                                <label for="rate" string="Rate"/>
+                                <div class="o_row">
+                                    <field name="rate"/>
+                                    <span>%</span>
+                                </div>
+                            </group>
+                        </group>
+                    </group>
+<!--                    <notebook name="main_book">-->
+<!--                        <page string="Commissions">-->
+<!--                            <field name="line_ids">-->
+<!--                                <list>-->
+<!--                                    <field name="target"/>-->
+<!--                                    <field name="rate"/>-->
+<!--                                </list>-->
+<!--                                <form>-->
+<!--                                    <field name="target"/>-->
+<!--                                    <field name="rate"/>-->
+<!--                                </form>-->
+<!--                            </field>-->
+<!--                        </page>-->
+<!--                        <page string="Targets">-->
+<!--                            <field name="line_ids">-->
+<!--                                <list>-->
+<!--                                    <field name="target"/>-->
+<!--                                    <field name="rate"/>-->
+<!--                                </list>-->
+<!--                                <form>-->
+<!--                                    <field name="target"/>-->
+<!--                                    <field name="rate"/>-->
+<!--                                </form>-->
+<!--                            </field>-->
+<!--                        </page>-->
+<!--                        <page string="Achievements">-->
+<!--                            <field name="line_ids">-->
+<!--                                <list>-->
+<!--                                    <field name="target"/>-->
+<!--                                    <field name="rate"/>-->
+<!--                                </list>-->
+<!--                                <form>-->
+<!--                                    <field name="target"/>-->
+<!--                                    <field name="rate"/>-->
+<!--                                </form>-->
+<!--                            </field>-->
+<!--                        </page>-->
+<!--                    </notebook>-->
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_partner_commission_tree" model="ir.ui.view">
+        <field name="name">partner.commission.list</field>
+        <field name="model">partner.commission</field>
+        <field name="arch" type="xml">
+            <list string="Partner Commission">
+                <field name="name" string="Commission"/>
+                <field name="rate"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_partner_commission" model="ir.actions.act_window">
+        <field name="name">Partner Commission</field>
+        <field name="res_model">partner.commission</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Content Tag
+            </p>
+        </field>
+    </record>
+
+    <!--Direct Commision -->
+    <record id="view_direct_commission_form" model="ir.ui.view">
+        <field name="name">direct.commission.form</field>
+        <field name="model">direct.commission</field>
+        <field name="arch" type="xml">
+            <form string="Direct Commission">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Commission Plan"/>
+                        <h1>
+                            <field name="name" placeholder="i.e. Commissions plan 2025" class="d-block"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <group>
+                                <label for="rate" string="Rate"/>
+                                <div class="o_row">
+                                    <field name="rate"/>
+                                    <span>%</span>
+                                </div>
+                            </group>
+                        </group>
+                    </group>
+<!--                    <notebook name="main_book">-->
+<!--                        <page string="Commissions">-->
+<!--                            <field name="line_ids">-->
+<!--                                <list>-->
+<!--                                    <field name="target"/>-->
+<!--                                    <field name="rate"/>-->
+<!--                                </list>-->
+<!--                                <form>-->
+<!--                                    <field name="target"/>-->
+<!--                                    <field name="rate"/>-->
+<!--                                </form>-->
+<!--                            </field>-->
+<!--                        </page>-->
+<!--                        <page string="Targets">-->
+<!--                            <field name="line_ids">-->
+<!--                                <list>-->
+<!--                                    <field name="target"/>-->
+<!--                                    <field name="rate"/>-->
+<!--                                </list>-->
+<!--                                <form>-->
+<!--                                    <field name="target"/>-->
+<!--                                    <field name="rate"/>-->
+<!--                                </form>-->
+<!--                            </field>-->
+<!--                        </page>-->
+<!--                        <page string="Achievements">-->
+<!--                            <field name="line_ids">-->
+<!--                                <list>-->
+<!--                                    <field name="target"/>-->
+<!--                                    <field name="rate"/>-->
+<!--                                </list>-->
+<!--                                <form>-->
+<!--                                    <field name="target"/>-->
+<!--                                    <field name="rate"/>-->
+<!--                                </form>-->
+<!--                            </field>-->
+<!--                        </page>-->
+<!--                    </notebook>-->
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_direct_commission_tree" model="ir.ui.view">
+        <field name="name">direct.commission.list</field>
+        <field name="model">direct.commission</field>
+        <field name="arch" type="xml">
+            <list string="Direct Commission">
+                <field name="name" string="Commission"/>
+                <field name="rate"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_direct_commission_inherit" model="ir.actions.act_window">
+        <field name="name">Direct Commission</field>
+        <field name="res_model">direct.commission</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Content Tag
+            </p>
+        </field>
+    </record>
+</odoo>

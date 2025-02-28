@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <template id="partner_dashboard" name="Partner dashboard">
+
+        <t t-call="custom_web_kreator.partner_webtemp">
+            <t t-set="website_structure" t-value="True"/> <!-- Use website layout -->
+            
+          
+        </t>
+    </template>
+        </data>
+</odoo>

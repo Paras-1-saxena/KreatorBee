@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_my_product_cart_portal,access.my.product.cart.user,model_my_product_cart,base.group_portal,1,1,1,1
+access_my_product_cart_user,access.my.product.cart.user,model_my_product_cart,base.group_user,1,1,1,1
+access_my_product_cart_public,access.my.product.cart.user,model_my_product_cart,base.group_public,1,1,1,1

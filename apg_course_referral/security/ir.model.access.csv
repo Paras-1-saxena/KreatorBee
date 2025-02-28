@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_apg_course_referral_portal,access.apg.course.referral.user,model_apg_course_referral,base.group_portal,1,1,1,1
+access_apg_course_referral_user,access.apg.course.referral.user,model_apg_course_referral,base.group_user,1,1,1,1
+access_apg_course_referral_public,access.apg.course.referral.user,model_apg_course_referral,base.group_public,1,1,1,1

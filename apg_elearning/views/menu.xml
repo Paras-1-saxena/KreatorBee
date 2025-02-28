@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add Commission Menu under Default Configuration -->
+    <menuitem 
+        id="website_slides_menu_partner_commission" 
+        name="Partner Commission"
+        parent="website_slides.website_slides_menu_configuration"
+        sequence="1" 
+        action="action_partner_commission"/>
+
+    <menuitem 
+        id="website_slides_menu_direct_commission" 
+        name="Direct Commission"
+        parent="website_slides.website_slides_menu_configuration"
+        sequence="2" 
+        action="action_direct_commission_inherit"/>
+
+    <menuitem 
+        id="website_slides_menu_course_standard" 
+        name="Content Standard"
+        parent="website_slides.website_slides_menu_configuration"
+        sequence="3" 
+        action="action_course_standard"/>
+
+    <menuitem 
+        id="website_slides_menu_terms_conditions" 
+        name="Terms and Conditions"
+        parent="website_slides.website_slides_menu_configuration"
+        sequence="4" 
+        action="action_terms_conditions"/>
+</odoo>

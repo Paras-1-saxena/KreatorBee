@@ -1,0 +1,19 @@
+<odoo>
+	<menuitem 
+		id="discount_submenu" 
+		name="Discount" 
+		parent="sale.menu_sale_config" 
+		sequence="55"/>
+		<menuitem 
+			id="menu_discount_discount" 
+			name="Discount" 
+			parent="apg_coupon.discount_submenu" 
+			sequence="1"
+			action="action_discount_discount_record"/>
+		<menuitem 
+			id="menu_duration_duration" 
+			name="Duration" 
+			parent="apg_coupon.discount_submenu" 
+			sequence="2"
+			action="action_duration_duration_record"/>
+</odoo>

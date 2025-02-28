@@ -1,0 +1,216 @@
+<odoo>
+    <data>
+        <template id="main_template" name="Main Template">
+             <t t-call="website.layout">
+             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet"/>
+            <body>
+                <!-- Page-Specific Styles -->
+                <style>
+                    header { display: none; }
+                    body {
+                        display: flex;
+                        margin: 0;
+                        font-family: 'Poppins', sans-serif;
+                        background-color: #f8f9fa;
+                    }
+
+                    /* Top Menu */
+                    .top-menu {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 10px 20px;
+                        background-color: #fff;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        top: 0;
+                        z-index: 100;
+                        height: 80px; /* Adjust height for new layout */
+                    }
+
+                    .top-menu .logo img {
+                        height: 60px;
+                        width: auto;
+                    }
+
+                    .top-menu .menu-links {
+                        display: flex;
+                        gap: 40px; /* Space between menu items */
+                        align-items: center;
+                        justify-content: center;
+                        flex: 1;
+                    }
+
+                    .top-menu .menu-links a {
+                        text-decoration: none;
+                        color: #333;
+                        
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 5px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        height: 100%;
+                        justify-content: center;
+                    }
+
+                    .top-menu .menu-links a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links i {
+                        font-size: 24px; /* Icon size */
+                    }
+                    .top-menu .user-icon {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        cursor: pointer;
+                        margin-right: 30px; /* Adds space from the edge */
+                    }
+
+                    /* Side Menu */
+                    .side-menu {
+                        width: 300px;
+                        background-color: #fff;
+                        padding: 20px 10px;
+                        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        left: 0;
+                        top: 60px; /* Adjust for top menu */
+                        height: calc(100vh - 60px);
+                        overflow-y: auto;
+                    }
+
+                    .side-menu ul {
+                        list-style: none;
+                        padding: 2;
+                    }
+
+                    .side-menu ul li {
+                        margin: 15px 0;
+                    }
+
+                    .side-menu ul li a {
+                        text-decoration: none;
+                        color: #333;
+                       
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                    }
+
+                    .side-menu ul li a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .side-menu ul li a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .main-content {
+                        margin-left: 300px; /* Adjust to create space from the side menu */
+                        padding: 20px;      /* Maintain consistent padding inside the main content */
+                        margin-top: 80px;   /* Adjust for the top menu */
+                        flex-grow: 1;
+                        background-color:teal;
+                    }
+
+                     /* Progress Bar */
+                    .progress-bar-container {
+                        width: 100%;
+                        height:10px;
+                        background-color: red;
+                        margin-bottom: 20px;
+                        position: relative;
+                    }
+
+                    .progress-bar {
+                        height: 10px;
+                        background-color: #ffd001;
+                        width: 25%; /* Adjust for progress percentage */
+                        transition: width 0.3s ease;
+                    }
+
+                    .content-containter {
+                        
+                        background-color:skyblue;
+                        height:560px;
+                    }
+
+                
+                    
+                </style>
+
+                <!-- Top Menu -->
+                <div class="top-menu">
+                    <div class="logo">
+                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
+                    </div>
+                    <div class="menu-links">
+                        <a href="/course-details" >
+                            <i class="fa fa-book-reader"></i> Course Details
+                        </a>
+                        <a href="/1course_standard" class="active">
+                            <i class="fa fa-book"></i> Course Standard
+                        </a>
+                        <a href="/1term_condition">
+                            <i class="fa fa-link"></i> T &amp; C
+                        </a>
+                        <a href="/welcome">
+                            <i class="fa fa-trophy"></i> Welcome
+                        </a>
+                    </div>
+                    <!-- Use <img> tag for user icon -->
+                    <img class="user-icon" src="/custom_web_kreator/static/src/user1.png" alt="User Icon"/>
+                </div>
+
+                <!-- Side Menu -->
+                <div class="side-menu">
+                    <ul>
+                        <li><a href="/1get_started_home" class="active"><i class="fa fa-home"></i> Get Started</a></li>
+                        <li><a href="/master_income_data"><i class="fa fa-chart-line"></i> Sales</a></li>
+                        <li><a href="/nmy-courses"><i class="fa fa-box"></i> Products</a></li>
+                        <li><a href="/offers"><i class="fa fa-users"></i> Connect with Partner</a></li>
+                        <li><a href="/customer"><i class="fa fa-address-book"></i> Customer</a></li>
+                        <li><a href="/be_partner"><i class="fa fa-rocket"></i> Become A Bee Partner</a></li>
+                    </ul>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                   
+                    <!-- Form and Image Section -->
+                    <div class="content-containter">
+                        <!-- Progress Bar -->
+                        <div class="progress-bar-container">
+                            <div class="progress-bar">
+                                
+                            </div>
+                        </div>
+                        <div>
+                        <a href="#" role="button" class="btn btn-primary s_website_form_send o_default_snippet_text">Submit</a>
+                    </div>
+                    </div>
+                </div>
+            </body>
+        </t>
+        </template>
+    </data>
+</odoo>

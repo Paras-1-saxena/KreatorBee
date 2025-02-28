@@ -1,0 +1,362 @@
+<odoo>
+    <data>
+        <template id="Ncourse_standard" name="NCourse Standard">
+             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet"/>
+            <body>
+                <!-- Page-Specific Styles -->
+                <style>
+                    body {
+                        display: flex;
+                        margin: 0;
+                        font-family: 'Poppins', sans-serif;
+                        background-color: #f8f9fa;
+                    }
+
+                    /* Top Menu */
+                    .top-menu {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 10px 20px;
+                        background-color: #fff;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        top: 0;
+                        z-index: 100;
+                        height: 60px; /* Adjust height for new layout */
+                    }
+
+                    .top-menu .logo img {
+                        height: 60px;
+                        width: auto;
+                    }
+
+                    .top-menu .menu-links {
+                        display: flex;
+                        gap: 40px; /* Space between menu items */
+                        align-items: center;
+                        justify-content: center;
+                        flex: 1;
+                    }
+
+                    .top-menu .menu-links a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 14px;
+                        font-weight: 500;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 15px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        height: 100%;
+                        justify-content: center;
+                    }
+
+                    .top-menu .menu-links a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links i {
+                        font-size: 24px; /* Icon size */
+                    }
+                    .top-menu .user-icon {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        cursor: pointer;
+                        margin-right: 30px; /* Adds space from the edge */
+                    }
+
+                    /* Side Menu */
+                    .side-menu {
+                        width: 250px;
+                        background-color: #fff;
+                        padding: 20px 10px;
+                        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        left: 0;
+                        top: 60px; /* Adjust for top menu */
+                        height: calc(100vh - 60px);
+                        overflow-y: auto;
+                    }
+
+                    .side-menu ul {
+                        list-style: none;
+                        padding: 2;
+                    }
+
+                    .side-menu ul li {
+                        margin: 15px 0;
+                    }
+
+                    .side-menu ul li a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 15px;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                    }
+
+                    .side-menu ul li a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .side-menu ul li a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .main-content {
+                        margin-left: 270px; /* Adjust to create space from the side menu */
+                        padding: 20px;      /* Maintain consistent padding inside the main content */
+                        margin-top: 60px;   /* Adjust for the top menu */
+                        flex-grow: 1;
+                    }
+
+                    /* Progress Bar */
+                    .progress-bar-container {
+                        width: 100%;
+                        height:10px;
+                        background-color: #ddd;
+                        margin-bottom: 20px;
+                        position: relative;
+                    }
+
+                    .progress-bar {
+                        height: 10px;
+                        background-color: #ffd001;
+                        width: 50%; /* Adjust for progress percentage */
+                        transition: width 0.3s ease;
+                    }
+
+                    /* Form Content */
+                    .form-container {
+                        display: flex;
+                        align-items: flex-start;
+                        <!-- gap: 20px; -->
+                    }
+
+                    .form-section {
+                        flex: 1;
+                        padding: 20px;
+                        background-color: #fff;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        border-radius: 10px;
+                    }
+
+                    .form-section h3 {
+                        font-size: 18px;
+                        font-weight: bold;
+                        margin-bottom: 10px;
+                    }
+
+                    .form-section p {
+                        font-size: 14px;
+                        color: #666;
+                        line-height: 1.5;
+                        margin-bottom: 20px;
+                    }
+
+                    .form-section input {
+                        width: 100%;
+                        padding: 10px;
+                        margin-top: 10px;
+                        margin-bottom: 20px;
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                        font-size: 14px;
+                    }
+
+                    .form-section .add-more {
+                        font-size: 14px;
+                        font-weight: bold;
+                        color: #333;
+                        cursor: pointer;
+                        text-align: right;
+                        display: block;
+                        margin-top: -10px;
+                        margin-bottom: 20px;
+                    }
+                    .form-actions {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-top: 20px;
+                    }
+
+                    .form-actions .btn {
+                        padding: 10px 20px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        border-radius: 5px;
+                        border: none;
+                        cursor: pointer;
+                        text-decoration: none; /* Removes the underline */
+                        color: inherit; /* Inherits the color of the parent (button) */
+                        display: inline-block; /* Ensures the link behaves like a block element */
+                       
+                                        }
+
+                    .btn-back {
+                        background-color: #ffd001;
+                        color: #000;
+                        border: 2px solid #ccc;
+                    }
+
+                    .btn-back:hover {
+                        background-color: #fef5c5;
+                        border-color: #bbb;
+                    }
+
+                    .btn-continue {
+                        background-color: #ffd001;
+                        color: #000;
+                    }
+
+                    .btn-continue:hover {
+                        background-color: #fef5c5;
+                        border-color: #bbb;
+                    }
+
+
+
+                    .image-container {
+                        flex: 1;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .image-container img {
+                        max-width: 100%;
+                        height: 480px;
+                        border-radius: 10px;
+                    }
+                    .inline-fields {
+                        display: flex;
+                        gap: 20px; /* Space between the two inputs */
+                        align-items: flex-start; /* Aligns the fields at the start */
+                    }
+
+                    .inline-fields > div {
+                        flex: 1; /* Ensures both inputs take equal space */
+                    }
+
+                    .inline-fields label {
+                        font-size: 14px;
+                        font-weight: bold;
+                        display: block;
+                        margin-bottom: 5px;
+                    }
+
+                    .inline-fields input {
+                        width: 100%;
+                        padding: 10px;
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                        font-size: 14px;
+                    }
+                </style>
+
+                <!-- Top Menu -->
+                <div class="top-menu">
+                    <div class="logo">
+                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
+                    </div>
+                    <div class="menu-links">
+                        <a href="/course-details" >
+                            <i class="fa fa-book-reader"></i> Course Details
+                        </a>
+                        <a href="/1course_standard" class="active">
+                            <i class="fa fa-book"></i> Course Standard
+                        </a>
+                        <a href="/1term_condition">
+                            <i class="fa fa-link"></i> T and C
+                        </a>
+                        <a href="/welcome">
+                            <i class="fa fa-trophy"></i> Welcome
+                        </a>
+                    </div>
+                    <!-- Use <img> tag for user icon -->
+                    <img class="user-icon" src="/custom_web_kreator/static/src/user1.png" alt="User Icon"/>
+                </div>
+
+                <!-- Side Menu -->
+                <div class="side-menu">
+                    <ul>
+                        <li><a href="/1get_started_home" class="active"><i class="fa fa-home"></i> Get Started</a></li>
+                        <li><a href="/master_income_data"><i class="fa fa-chart-line"></i> Sales</a></li>
+                        <li><a href="/nmy-courses"><i class="fa fa-box"></i> Products</a></li>
+                        <li><a href="/offers"><i class="fa fa-users"></i> Connect with Partner</a></li>
+                        <li><a href="#"><i class="fa fa-address-book"></i> Customer</a></li>
+                        <li><a href="#"><i class="fa fa-rocket"></i> Become A Bee Partner</a></li>
+                    </ul>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <!-- Progress Bar -->
+                    <div class="progress-bar-container">
+                        <div class="progress-bar"></div>
+                    </div>
+
+                    <!-- Form and Image Section -->
+                    <div class="form-container">
+                        <form method="post" action="/1term_condition">
+                            <!-- CSRF Token for security -->
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                            <div class="form-section">
+                                <h3>Quality</h3>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
+
+                                <h3>Resolution</h3>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
+
+                                <h3>Module Structure</h3>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
+
+                                <h3>Duration Per Video</h3>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
+
+                                <label for="google-drive-link">Paste Google Drive Link Here</label>
+                                <input
+                                        type="text"
+                                        id="google-drive-link"
+                                        name="google_drive_link"
+                                        placeholder="e.g. https://drive.google.com/drive/u/0/my-drive" required="required"
+                                />
+                                <span class="add-more">Add More +</span>
+
+                                <div class="form-actions">
+                                    <a href="/course" class="btn btn-continue">Back</a>
+                                    <button type="submit" class="btn btn-back">Save and Continue</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="image-container">
+                            <img src="/custom_web_kreator/static/src/bees3.png" alt="Bee Image"/>
+                        </div>
+                    </div>
+                </div>
+            </body>
+        </template>
+    </data>
+</odoo>

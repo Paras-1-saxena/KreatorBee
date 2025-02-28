@@ -1,0 +1,148 @@
+<odoo> 
+    <data>
+        <template id="Npartner" name="Npartner Home">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;display=swap" rel="stylesheet" />
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <body>
+                <style>
+                    @media (max-width: 769px) {
+                        /* Style the input field */
+                        #fromDate,#toDate {
+                            position: relative;
+                            padding-right: 30px;  /* Space for the calendar icon */
+                        }
+                        
+                        /* Add the calendar icon using the ::after pseudo-element */
+                        #fromDate::after,#toDate::after {
+                            content: "📅"; /* Unicode calendar icon */
+                            position: absolute;
+                            right: 10px;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            pointer-events: none;  /* Make sure the icon does not interfere with clicking the input */
+                            font-size: 18px; /* Adjust the size of the calendar icon */
+                        }
+                    }
+                </style>
+                <!-- Top Menu -->
+                <div class="top-menu">
+                    <button class="navbar-toggler d-lg-none" type="button" id="burgerMenu" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"><i class="fa fa-solid fa-bars"></i></span>
+                    </button>
+                    <div class="logo">
+                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
+                    </div>
+                    <div class="menu-links">
+                        <a href="/partner" class="active">
+                            <i class="fa fa-chart-bar"></i> Income
+                        </a>
+                        <a href="/partner-lead">
+                            <i class="fa fa-bullhorn"></i> Leads
+                        </a>
+                        <a href="/partner-kyc">
+                            <i class="fa fa-id-card"></i> KYC
+                        </a>
+                        <a href="/partner-referral">
+                            <i class="fa fa-link"></i> Links
+                        </a>
+                        <a href="/partner-leaderboard" >
+                            <i class="fa fa-medal"></i> Leaderboard
+                        </a>
+                    </div>
+                    <!-- Use <img> tag for user icon -->
+                    <t t-call="custom_web_kreator.partner_profile_dropdown"/>
+                </div>
+                <!-- Side Menu -->
+                <t t-call="custom_web_kreator.side_menu"/>
+                <!-- Main Content -->
+                <div class="main-content">
+                   <!-- Top Block -->
+                    <t t-call="custom_web_kreator.user_block" />
+                    <!-- Form and Image Section -->
+
+                <div class="row">
+                            <!-- Left Blocks -->
+                    <div class="col-md-4">
+                                <!-- Block 1 -->
+                                <div class="card mb-4">
+                                    <div class="card-header bg-warning d-flex justify-content-between align-items-center">
+                                        <h5>Total Sales</h5>
+                                        <div class="input-group" style="max-width: 280px;">
+
+                                            <input type="date" id="fromDate" class="form-control" aria-label="From" style="text-transform: uppercase;font-size: 0.75rem;"/>
+
+                                            <label for="toDate" class="form-label">To</label>
+                                            <input type="date" id="toDate" class="form-control" aria-label="To" style="text-transform: uppercase;font-size: 0.75rem;"/>
+
+                                        </div>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h6>All Time</h6>
+                                        <h2><t t-esc="commission['total']"/></h2>
+                                        <div class="row mt-4">
+                                            <div class="col">
+                                                <h6>Today</h6>
+                                                <h4><t t-esc="commission['today']"/></h4>
+                                            </div>
+                                            <div class="col">
+                                                <h6>Last 7 Days</h6>
+                                                <h4><t t-esc="commission['last_7_days']"/></h4>
+                                            </div>
+                                            <div class="col">
+                                                <h6>Last 30 Days</h6>
+                                                <h4><t t-esc="commission['last_30_days']"/></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+
+
+
+                    <div class="col-md-4">
+                                <!-- Block 4 -->
+                                <div class="card mb-4">
+                                    <div class="card-header bg-warning">
+                                        <h5>Course Wise Earnings</h5>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <img src="/custom_web_kreator/static/src/circle2.png" alt="Pie Chart" class="img-fluid" style="max-width: 57%; height: auto;" />
+                                    </div>
+                                </div>
+
+                    </div>
+
+
+
+
+                    <!-- Right Blocks -->
+                    <div class="col-md-4">
+                                <!-- Block 4 -->
+                                <div class="card mb-4">
+                                    <div class="card-header bg-warning">
+                                        <h5>State Wise Earnings</h5>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <img src="/custom_web_kreator/static/src/circle2.png" alt="Pie Chart" class="img-fluid" style="max-width: 57%; height: auto;" />
+                                    </div>
+                                </div>
+
+                    </div>
+                </div>
+
+                    </div>
+
+                </body>
+                  <xpath expr="." position="inside">
+            <!-- Include jQuery -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script type="text/javascript" src="/apg_js/static/src/js/menu.js"></script>
+            <link rel="stylesheet" href="/apg_js/static/src/scss/menu.css" />
+            <!-- <script type="text/javascript" src="/apg_social_media/static/src/js/menu.js"></script>
+            <link rel="stylesheet" href="/apg_social_media/static/src/scss/menu.css" /> -->
+        </xpath>
+        </template>
+    </data>
+</odoo>

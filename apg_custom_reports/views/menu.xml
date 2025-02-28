@@ -1,0 +1,68 @@
+<odoo>
+
+    <record id="view_commission_report_wizard_form" model="ir.ui.view">
+        <field name="name">commission.report.wizard.form</field>
+        <field name="model">commission.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Download Commission Report">
+                <group>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                </group>
+                <footer>
+                    <button name="action_download_report" string="Download Report" type="object"
+                            class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_commission_report_wizard" model="ir.actions.act_window">
+        <field name="name">Commission Report Wizard</field>
+        <field name="res_model">commission.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <record id="action_rbl_bank_report_download" model="ir.actions.server">
+        <field name="name">Download RBL Bank Report</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="binding_model_id" eval="False"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = {
+            'type': 'ir.actions.act_url',
+            'url': '/rbl_bank_report/download',
+            'target': 'self',
+            }
+        </field>
+    </record>
+    <record id="action_icici_bank_report_download" model="ir.actions.server">
+        <field name="name">Download ICICI Bank Report</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="binding_model_id" eval="False"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = {
+            'type': 'ir.actions.act_url',
+            'url': '/icici_bank_report/download',
+            'target': 'self',
+            }
+        </field>
+    </record>
+    <menuitem id="menu_commission_report_root"
+              name="Commission Report"
+              parent="account.menu_finance_reports"
+              sequence="10"
+              action="action_commission_report_wizard"/>
+    <menuitem id="menu_rbl_bank_report_root"
+              name="RBL Bank Report"
+              parent="account.menu_finance_reports"
+              sequence="11"
+              action="action_rbl_bank_report_download"/>
+    <menuitem id="menu_icici_bank_report_root"
+              name="ICICI Bank Report"
+              parent="account.menu_finance_reports"
+              sequence="12"
+              action="action_icici_bank_report_download"/>
+</odoo>

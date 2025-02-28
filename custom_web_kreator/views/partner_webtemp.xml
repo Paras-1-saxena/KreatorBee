@@ -1,0 +1,257 @@
+<odoo>
+    <data>
+        <template id="partner_webtemp" name="Partner WebTemplate">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+             <t t-call="website.layout">
+                <t t-set="website_structure" t-value="True"/>
+
+                <style>
+/* General Fixes */
+.header.o_main_header, footer, .o_we_header_navbar, .o_we_footer {
+    display: none !important;
+}
+#o_main_nav {
+    display: none !important;
+}
+.custom-page {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    border-right: 1px solid #ddd;
+    height: 100vh;
+    flex-shrink: 0;
+    position: relative;
+    padding:15px;
+}
+
+.sidebar-menu {
+    width: 250px;
+    height: 100%;
+    overflow-y: auto;
+    background-color: #fff;
+    color:#333;
+    font-weight:600;
+
+}
+
+.sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    color: #333;
+    font-size: 16px;
+    text-decoration: none;
+
+
+}
+
+.sidebar .nav-link i {
+    margin-right: 10px; /* Space between icon and text */
+    font-size: 20px;
+    color: #333;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #fdf5c5;
+    color: #000;
+}
+
+.sidebar .nav-link:hover i {
+    color: #000;
+}
+
+/* Top Menu Styling */
+.navbar-brand img {
+    vertical-align: middle;
+    height: 60px;
+    width: auto;
+}
+
+.top-menu .navbar-nav {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-left: 320px;
+}
+
+.top-menu .navbar-nav .nav-item .nav-link {
+    display: flex;
+    flex-direction: column; /* Icon on top, text below */
+    align-items: center; /* Center icon and text horizontally */
+    justify-content: center; /* Center icon and text vertically */
+    padding: 10px; /* Add padding for larger hover area */
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s; /* Smooth hover transition */
+    border-radius: 5px; /* Optional: Rounded corners for hover */
+}
+
+.top-menu .navbar-nav .nav-item .nav-link i {
+    font-size: 20px; /* Icon size */
+    margin-bottom: 5px; /* Space between icon and text */
+    color: #333; /* Default icon color */
+    transition: color 0.3s; /* Smooth hover transition for icon */
+}
+
+.top-menu .navbar-nav .nav-item .nav-link:hover {
+    background-color: #fdf5c5; /* Highlight entire menu item */
+    color: #000; /* Text color on hover */
+}
+
+.top-menu .navbar-nav .nav-item .nav-link:hover i {
+    color: #000; /* Icon color on hover */
+}
+
+
+.user-icon img {
+    border-radius: 50%;
+}
+
+/* Main Content Styling */
+.main-content {
+    flex-grow: 1;
+    overflow: auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+#wrap.oe_structure.oe_empty {
+    border: 2px dashed #ddd; /* Highlight editable area */
+    min-height: 300px;
+    padding: 20px;
+}
+
+.main-content h1 {
+    font-size: 36px;
+    color: #333;
+}
+
+.main-content p {
+    font-size: 18px;
+    color: #666;
+    margin-top: 10px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none; /* Hide sidebar on smaller screens */
+    }
+    .sidebar-menu {
+        width: 100%;
+    }
+    .top-menu .navbar-nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+}
+</style>
+
+
+                <!-- Custom Page Content -->
+                <div class="custom-page">
+                    <!-- Top Menu -->
+                    <nav class="navbar navbar-expand-lg navbar-light bg-white w-100 top-menu">
+                        <div class="container-fluid">
+                            <a class="navbar-brand" href="#">
+                                <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
+                            </a>
+                            <div class="collapse navbar-collapse" id="navbarNav">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item text-center">
+                                        <a class="nav-link active" aria-current="page" href="#home">
+                                            <i class="fa fa-chart-bar"></i> Income
+                                        </a>
+                                    </li>
+                                    <li class="nav-item text-center">
+                                        <a class="nav-link" href="#about">
+                                            <i class="fa fa-bullhorn"></i> Leads
+                                        </a>
+                                    </li>
+                                    <li class="nav-item text-center">
+                                        <a class="nav-link" href="#services">
+                                            <i class="fa fa-id-card"></i> KYC
+                                        </a>
+                                    </li>
+                                    <li class="nav-item text-center">
+                                        <a class="nav-link" href="#contact">
+                                             <i class="fa fa-link"></i> Links
+                                        </a>
+                                    </li>
+                                    <li class="nav-item text-center">
+                                        <a class="nav-link" href="#contact">
+                                            <i class="fa fa-trophy"></i> Leadserboard
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="user-icon">
+                                <img src="/custom_web_kreator/static/src/user1.png" alt="User Icon" width="40" height="40"/>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <!-- Sidebar and Main Content -->
+                    <div class="d-flex">
+                        <!-- Sidebar Menu -->
+                        <nav class="navbar navbar-expand-lg navbar-light sidebar">
+                            <div class="offcanvas-body sidebar-menu">
+                                <ul class="navbar-nav flex-column">
+                                   
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#course-content">
+                                            <i class="fa fa-chart-line"></i> Sales
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#product">
+                                            <i class="fa fa-book"></i> Products
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#product">
+                                           <i class="fa fa-pen-square"></i> Promote
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#product">
+                                            <i class="fa fa-users"></i> Community
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#product">
+                                            <i class="fa fa-book"></i> My Courses
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+
+                        <!-- Main Content -->
+                        <div class="main-content flex-grow-1">
+                            <div id="wrap" class="oe_structure oe_empty">
+                                <!-- Editable area -->
+                                <section class="s_default">
+                                    <div class="container">
+                                        <h1>Main Content Area</h1>
+                                        <p>Building blocks can be added here.</p>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+        </template>
+    </data>
+</odoo>

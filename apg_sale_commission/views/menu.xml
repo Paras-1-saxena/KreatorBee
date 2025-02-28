@@ -1,0 +1,31 @@
+<odoo>
+	<menuitem
+		id="sale_commission_submenu"
+		name="Sale Commission"
+		parent="sale.menu_sale_config"
+		sequence="56"/>
+		<menuitem
+			id="menu_partner_commission"
+			name="Partner Commission"
+			parent="apg_sale_commission.sale_commission_submenu"
+			sequence="1"
+			action="apg_elearning.action_partner_commission"/>
+		<menuitem
+			id="menu_direct_commission"
+			name="Direct Commission"
+			parent="apg_sale_commission.sale_commission_submenu"
+			sequence="2"
+			action="apg_elearning.action_direct_commission_inherit"/>
+		<menuitem
+				id="menu_target"
+				name="Target"
+				parent="apg_sale_commission.sale_commission_submenu"
+				sequence="3"
+				action="apg_sale_commission.action_target_inherit"/>
+	<menuitem
+			id="menu_commission"
+			name="Commission"
+			parent="sale.sale_order_menu"
+			sequence="50"
+			action="action_menu_my_commission_inherit"/>
+</odoo>

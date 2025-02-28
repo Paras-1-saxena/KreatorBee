@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_apg_social_post_list" model="ir.ui.view">
+        <field name="name">apg.social.post.list</field>
+        <field name="model">apg.social.post</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="message"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_apg_social_post_form" model="ir.ui.view">
+        <field name="name">apg.social.post.form</field>
+        <field name="model">apg.social.post</field>
+        <field name="arch" type="xml">
+            <form string="Social Post">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_comments" type="object" class="oe_stat_button" icon="fa-comments-o">
+                            <field string="Comment" name="comment_count" widget="statinfo"/>
+                        </button>
+                        <button name="action_view_likes" type="object" class="oe_stat_button" icon="fa-thumbs-o-up">
+                            <field string="Like" name="like_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group string="Your Post" name="social_post_global">
+                            <field string="Post Type" name="partner_type"/>
+                            <field name="message" widget="text_emojis" class="o_social_post_message_wrapper"
+                                onchange_on_keydown="True" force_save="1" default_focus="1"
+                                placeholder="Write a message or upload an image"
+                                />
+                                <field string="Video Url" name="video_url"/>
+                                <field name="image_ids" widget="many2many_binary"
+                                class="o_social_post_form_attachments"
+                                />
+                                <!-- <field string="Campaign" name="utm_campaign_id" readonly="state in ['posting', 'posted']"/>
+                                <field name="post_method" widget="radio" invisible="state != 'draft'"/>
+                                <field name="scheduled_date" invisible="post_method == 'now' or state in ['posting', 'posted']" required="post_method != 'now'" /> -->
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_apg_social_post" model="ir.actions.act_window">
+        <field name="name">Social Post</field>
+        <field name="res_model">apg.social.post</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Content Tag
+            </p>
+        </field>
+    </record>
+
+    <!-- Comment form -->
+
+    <record id="view_apg_post_comment_list" model="ir.ui.view">
+        <field name="name">apg.post.comment.list</field>
+        <field name="model">apg.post.comment</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="message" string="Comment"/>
+                <field name="create_uid" string="Comment by"/>
+                <field name="create_date" string="Comment on"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_apg_post_comment" model="ir.actions.act_window">
+        <field name="name">Post Comment</field>
+        <field name="res_model">apg.post.comment</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'create': False,'edit': False,'delete': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Content Tag
+            </p>
+        </field>
+    </record>
+</odoo>

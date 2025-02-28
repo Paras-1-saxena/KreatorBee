@@ -1,0 +1,39 @@
+<odoo>
+    <data>
+    	<template id="landing_page_expiry_time" inherit_id="custom_web_kreator.landing_page" priority="30">
+		    <xpath expr="//div[@id='landing_expiry']" position="inside">
+		        <t t-set="expiry_time" t-value="request.session.get('link_expiry_time', 0)"/>
+		        <span id="expiry_time_span" t-esc="expiry_time" style="display:none;"></span>
+		        <script>
+		            document.addEventListener("DOMContentLoaded", function() {
+			            let expiryTime = parseInt(document.getElementById("expiry_time_span").innerText.trim()) || 0;
+			            if (expiryTime){
+			                function checkExpiry() {
+			                    let currentTime = Math.floor(Date.now() / 1000);
+			                    if (currentTime &gt; expiryTime) {
+			                        alert("This page has expired.");
+			                        setTimeout(function() {
+			                            window.location.href = '/404';  // Go Error page
+			                        }, 300);
+			                        fetch('/delete-session-key', {
+			                            method: "POST",
+			                            headers: {
+			                                "Content-Type": "application/json",
+			                            },
+			                            'body': JSON.stringify({})
+			                        })
+			                    }
+			                }
+
+			                // Run the check immediately when page loads
+			                checkExpiry();
+
+			                // Check expiry every 5 minutes (300,000 milliseconds)
+			                setInterval(checkExpiry, 300000);
+			            }
+		            });
+		        </script>
+		    </xpath>
+		</template>
+    </data>
+</odoo>

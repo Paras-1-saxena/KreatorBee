@@ -1,0 +1,238 @@
+<odoo>
+	<template id="custom_page_template" name="My Course">
+		<t t-call="portal.portal_docs_entry" t-if="False"/>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Google Cybersecurity</t>
+            <t t-set="text">Network Security, Python Programming, Linux, Cloud Computing, Audit, Computer Programming, Computer Security Incident Management, Cryptography, Databases, Leadership and Management, Network Architecture, Risk Management, SQL</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Google Cybersecurity</t>
+            <t t-set="text">Network Security, Python Programming, Linux, Cloud Computing, Audit, Computer Programming, Computer Security Incident Management, Cryptography, Databases, Leadership and Management, Network Architecture, Risk Management, SQL</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Google Cybersecurity</t>
+            <t t-set="text">Network Security, Python Programming, Linux, Cloud Computing, Audit, Computer Programming, Computer Security Incident Management, Cryptography, Databases, Leadership and Management, Network Architecture, Risk Management, SQL</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Google Cybersecurity</t>
+            <t t-set="text">Network Security, Python Programming, Linux, Cloud Computing, Audit, Computer Programming, Computer Security Incident Management, Cryptography, Databases, Leadership and Management, Network Architecture, Risk Management, SQL</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Google Cybersecurity</t>
+            <t t-set="text">Network Security, Python Programming, Linux, Cloud Computing, Audit, Computer Programming, Computer Security Incident Management, Cryptography, Databases, Leadership and Management, Network Architecture, Risk Management, SQL</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Google Cybersecurity</t>
+            <t t-set="text">Network Security, Python Programming, Linux, Cloud Computing, Audit, Computer Programming, Computer Security Incident Management, Cryptography, Databases, Leadership and Management, Network Architecture, Risk Management, SQL</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Google Cybersecurity</t>
+            <t t-set="text">Network Security, Python Programming, Linux, Cloud Computing, Audit, Computer Programming, Computer Security Incident Management, Cryptography, Databases, Leadership and Management, Network Architecture, Risk Management, SQL</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Google Cybersecurity</t>
+            <t t-set="text">Network Security, Python Programming, Linux, Cloud Computing, Audit, Computer Programming, Computer Security Incident Management, Cryptography, Databases, Leadership and Management, Network Architecture, Risk Management, SQL</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Google Cybersecurity</t>
+            <t t-set="text">Network Security, Python Programming, Linux, Cloud Computing, Audit, Computer Programming, Computer Security Incident Management, Cryptography, Databases, Leadership and Management, Network Architecture, Risk Management, SQL</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Google Cybersecurity</t>
+            <t t-set="text">Network Security, Python Programming, Linux, Cloud Computing, Audit, Computer Programming, Computer Security Incident Management, Cryptography, Databases, Leadership and Management, Network Architecture, Risk Management, SQL</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Google Cybersecurity</t>
+            <t t-set="text">Network Security, Python Programming, Linux, Cloud Computing, Audit, Computer Programming, Computer Security Incident Management, Cryptography, Databases, Leadership and Management, Network Architecture, Risk Management, SQL</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Google Cybersecurity</t>
+            <t t-set="text">Network Security, Python Programming, Linux, Cloud Computing, Audit, Computer Programming, Computer Security Incident Management, Cryptography, Databases, Leadership and Management, Network Architecture, Risk Management, SQL</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Google Cybersecurity</t>
+            <t t-set="text">Network Security, Python Programming, Linux, Cloud Computing, Audit, Computer Programming, Computer Security Incident Management, Cryptography, Databases, Leadership and Management, Network Architecture, Risk Management, SQL</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Google Cybersecurity</t>
+            <t t-set="text">Network Security, Python Programming, Linux, Cloud Computing, Audit, Computer Programming, Computer Security Incident Management, Cryptography, Databases, Leadership and Management, Network Architecture, Risk Management, SQL</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Google Cybersecurity</t>
+            <t t-set="text">Network Security, Python Programming, Linux, Cloud Computing, Audit, Computer Programming, Computer Security Incident Management, Cryptography, Databases, Leadership and Management, Network Architecture, Risk Management, SQL</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Google Cybersecurity</t>
+            <t t-set="text">Network Security, Python Programming, Linux, Cloud Computing, Audit, Computer Programming, Computer Security Incident Management, Cryptography, Databases, Leadership and Management, Network Architecture, Risk Management, SQL</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Google UX Design</t>
+            <t t-set="text">User Experience, User Experience Design, User Research, Audit, Human Computer Interaction, Planning, Product Design, Product Development, Visual Design, Web Design, Web Development Tools</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+	</template>
+	<template id="analytics_page_template" name="My Analytics">
+		<t t-call="portal.portal_docs_entry" t-if="False"/>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Introduction to Data Analytics</t>
+            <t t-set="text">
+            	Understanding Types of Data
+				Metrics &amp; types of analysis
+				Steps in exploratory data analysis
+				Introduction to data visualisation</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Data Preparation using Excel</t>
+            <t t-set="text">
+            	Basic Functions &amp; Shortcuts
+				Data Formatting Techniques
+				Data Cleaning Techniques
+				Data Protection &amp; Error Validation
+            </t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+	</template>
+	<template id="product_page_template" name="My Product">
+		<t t-call="portal.portal_docs_entry" t-if="False"/>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Mapping Business Outcomes to Product Outcomes</t>
+            <t t-set="text">
+            	Systems thinking
+				KPI trees
+				Design thinking
+			</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Product Discovery &amp; User Research</t>
+            <t t-set="text">
+            	Impact mapping
+				User research
+				Customer journey maps
+            </t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+	</template>
+	<template id="certificates_page_template" name="My Certificates">
+		<t t-call="portal.portal_docs_entry" t-if="False"/>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Data Analyst</t>
+            <t t-set="text">
+            	Collect, organize, and transform data to make informed decisions.
+			</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Project Manager</t>
+            <t t-set="text">
+            	Oversee the planning and execution of projects to ensure they’re successful.
+            </t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+	</template>
+	<template id="workshop_page_template" name="My Workshop">
+		<t t-call="portal.portal_docs_entry" t-if="False"/>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Cybersecurity Professional</t>
+            <t t-set="text">
+            	Develop strategies to protect organizations from cyber-attacks and disruptions.
+			</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">UX Designer</t>
+            <t t-set="text">
+            	Make digital and physical products easier and more enjoyable to use.
+            </t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+	</template>
+	<template id="consultation_page_template" name="My Consultation">
+		<t t-call="portal.portal_docs_entry" t-if="False"/>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">IT Support Specialist</t>
+            <t t-set="text">
+            	Evaluate and troubleshoot technology issues so equipment runs smoothly.
+			</t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+            <t t-set="title">Digital Marketer</t>
+            <t t-set="text">
+            	Define and develop digital strategies to deliver business growth through online channels.
+            </t>
+            <t t-set="url" t-value="'/my/security'"/>
+            <t t-set="config_card" t-value="True"/>
+        </t>
+	</template>
+</odoo>

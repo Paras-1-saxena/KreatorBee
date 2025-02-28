@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_menu_sidebar_content" name="Menu Sidebar">
+        <div class="row justify-content-between p-0 col-lg-12 m-0">
+            <div class="d-none d-lg-flex justify-content-start col-lg-12 p-0">
+                <div class="sidebar col-lg-12" style="width: 100%;background: #FFF;color: #5a2020;transition: all 0.3s;padding-bottom: 100px;box-shadow: none;border-radius: var(--btn-border-radius);position: sticky;top: 50px;left: 0;height: 100vh;overflow: auto;">
+                    <ul id="left-menu" class="list-group">
+                        <li data-page="courses" class="list active">
+                            <a href="#courses"><i class="fa fa-th-large"></i> Dashboard</a>
+                        </li>
+                        <li class="list" data-page="courses">
+                            <a href="#courses"><i class="fa fa-th-large"></i> Courses</a>
+                        </li>
+                        <li class="list" data-page="analytics">
+                            <a href="#analytics"><i class="fa fa-bar-chart"></i> Analytics</a>
+                        </li>
+                        <li class="list" data-page="products">
+                            <a href="#products"><i class="fa fa-shopping-cart"></i> Products</a>
+                        </li>
+                        <li class="list" data-page="certificates">
+                            <a href="#certificates"><i class="fa fa-certificate"></i> Certificates</a>
+                        </li>
+                        <li class="list" data-page="workshops">
+                            <a href="#workshops"><i class="fa fa-shopping-bag"></i> Workshops</a>
+                        </li>
+                        <li class="list" data-page="consultation">
+                            <a href="#consultation"><i class="fa fa-phone-square"></i> Consultation</a>
+                        </li>
+                        <li class="list" data-page="consultation">
+                            <a href="#consultation"><i class="fa fa-phone-square"></i> Partner Pro</a>
+                        </li>
+                        <li class="list" data-page="consultation">
+                            <a href="#consultation"><i class="fa fa-phone-square"></i> Community</a>
+                        </li>
+                        <li class="list" data-page="consultation">
+                            <a href="#consultation"><i class="fa fa-phone-square"></i> Training</a>
+                        </li>
+                        <li class="list" data-page="consultation">
+                            <a href="#consultation"><i class="fa fa-phone-square"></i> KYC</a>
+                        </li>
+                        <li class="list" data-page="consultation">
+                            <a href="#consultation"><i class="fa fa-phone-square"></i> Marketing Tools</a>
+                        </li>
+                        <li class="list" data-page="consultation">
+                            <a href="#consultation"><i class="fa fa-phone-square"></i> Referral Link</a>
+                        </li>
+                        <li class="list" data-page="consultation">
+                            <a href="#consultation"><i class="fa fa-phone-square"></i> Support</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="menu_sidebar_list">
+        <div t-if="isOffcanvas" class="offcanvas-header justify-content-end">
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"/>
+        </div>
+        <div t-attf-class="{{'offcanvas-body' if isOffcanvas else 'mt-3 mw-100'}}">
+            <div class="sidebar d-flex justify-content-start align-items-start gap-3 mb-4">
+                <div class="d-flex flex-column justify-content-center">
+                    <ul>
+                        <li  data-page="courses">
+                            <a href="#courses"><i class="fa fa-th-large"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#courses"><i class="fa fa-th-large"></i> Courses</a>
+                        </li>
+                        <li>
+                            <a href="#analytics"><i class="fa fa-bar-chart"></i> Analytics</a>
+                        </li>
+                        <li>
+                            <a href="#products"><i class="fa fa-shopping-cart"></i> Products</a>
+                        </li>
+                        <li>
+                            <a href="#certificates"><i class="fa fa-certificate"></i> Certificates</a>
+                        </li>
+                        <li>
+                            <a href="#workshops"><i class="fa fa-shopping-bag"></i> Workshops</a>
+                        </li>
+                        <li>
+                            <a href="#consultation"><i class="fa fa-phone-square"></i> Consultation</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="portal_my_dashboard" name="Dashboard">
+        <t t-call="portal.frontend_layout">
+            <t t-set="is_portal" t-value="True"/>
+            <!-- <div t-if="not no_breadcrumbs and not my_details and not breadcrumbs_searchbar" class="o_portal container mt-3" style="background-color: #fbfcfd !important;">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <t t-call="portal.portal_breadcrumbs"/>
+                    <t t-if="prev_record or next_record" t-call='portal.record_pager'/>
+                </div>
+            </div> -->
+            <div id="wrap" class='o_portal_wrap' style="background-color: #fbfcfd;">
+                <div class="container pt-0 pb-0" style="max-width: 3140px;">
+                    <div class="wrapper col-12 d-flex flex-wrap justify-content-between align-items-center d-none">
+                        <h3 class="my-3">Dashboard</h3>
+                        <button class="btn py-0 d-flex align-items-center gap-2 d-lg-none ms-auto"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#accountOffCanvas">
+                            <img class="o_avatar rounded"
+                            t-att-src="image_data_uri(user_id.partner_id.avatar_1024)" alt="Contact"/>
+                        </button>
+                    </div>
+                    <div class="row justify-content-between">
+                        <div class="d-none d-lg-flex justify-content-start col-lg-3 pt-3 pr-0" style="padding-left: 1px;padding-right: 0px;border-right: 1px solid #EAEAEA;background: #fff;box-shadow: 1px 0px 12px 0px rgb(0 0 0 / 5%);">
+                            <t t-call="apg_portal_dashboard.portal_menu_sidebar_content"/>
+                        </div>
+                        <div t-attf-class="o_portal_content col-12 col-lg-9 mb-5 pt-3">
+                            <div class="o_portal_my_home">
+                                <div class="o_portal_docs row g-2">
+                                    <div t-if="portal_alert_category_enable" class="o_portal_category row g-2 mt-3" id="portal_alert_category"/>
+                                    <div t-if="portal_client_category_enable" class="o_portal_category row g-2 mt-3" id="portal_client_category"/>
+                                    <div t-if="portal_service_category_enable" class="o_portal_category row g-2 mt-3" id="portal_service_category"/>
+                                    <div t-if="portal_vendor_category_enable" class="o_portal_category row g-2 mt-3" id="portal_vendor_category"/>
+                                    <div class="o_portal_category row g-2 mt-0" id="portal_common_category">
+                                        <t t-call="portal.portal_docs_entry" t-if="False"/>
+                                        <t t-call="portal.portal_docs_entry">
+                                            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+                                            <t t-set="title">Connection &amp; Security</t>
+                                            <t t-set="text">Configure your connection parameters</t>
+                                            <t t-set="url" t-value="'/my/security'"/>
+                                            <t t-set="config_card" t-value="True"/>
+                                        </t>
+                                        <t t-call="portal.portal_docs_entry">
+                                            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+                                            <t t-set="title">Connection &amp; Security</t>
+                                            <t t-set="text">Configure your connection parameters</t>
+                                            <t t-set="url" t-value="'/my/security'"/>
+                                            <t t-set="config_card" t-value="True"/>
+                                        </t>
+                                        <t t-call="portal.portal_docs_entry">
+                                            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+                                            <t t-set="title">Connection &amp; Security</t>
+                                            <t t-set="text">Configure your connection parameters</t>
+                                            <t t-set="url" t-value="'/my/security'"/>
+                                            <t t-set="config_card" t-value="True"/>
+                                        </t>
+                                        <t t-call="portal.portal_docs_entry">
+                                            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+                                            <t t-set="title">Connection &amp; Security</t>
+                                            <t t-set="text">Configure your connection parameters</t>
+                                            <t t-set="url" t-value="'/my/security'"/>
+                                            <t t-set="config_card" t-value="True"/>
+                                        </t>
+                                        <t t-call="portal.portal_docs_entry">
+                                            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+                                            <t t-set="title">Connection &amp; Security</t>
+                                            <t t-set="text">Configure your connection parameters</t>
+                                            <t t-set="url" t-value="'/my/security'"/>
+                                            <t t-set="config_card" t-value="True"/>
+                                        </t>
+                                        <t t-call="portal.portal_docs_entry">
+                                            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+                                            <t t-set="title">Connection &amp; Security</t>
+                                            <t t-set="text">Configure your connection parameters</t>
+                                            <t t-set="url" t-value="'/my/security'"/>
+                                            <t t-set="config_card" t-value="True"/>
+                                        </t>
+                                    </div>
+                                    <div class="o_portal_doc_spinner spinner-border text-o-color-2 align-self-center mt-5"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="offcanvas offcanvas-start d-lg-none" id="accountOffCanvas">
+                            <t t-call="portal.side_content">
+                                <t t-set="isOffcanvas" t-value="true"/>
+                            </t>
+                        </div>
+                    </div>
+                    <!-- </t>
+                    <t t-else="">
+                        <t t-out="0"/>
+                    </t> -->
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="portal.my_account_link" name="Link to frontend portal" inherit_id="portal.user_dropdown">
+        <xpath expr="//*[@id='o_logout_divider']" position="before">
+            <a href="/dashboard" role="menuitem" class="dropdown-item ps-3">
+                <i class="fa fa-fw fa-id-card-o me-1 small text-primary"/> My Account
+            </a>
+        </xpath>
+    </template>
+    <template id="edit_my_profile_link" name="Link to frontend portal" inherit_id="portal.user_dropdown">
+        <xpath expr="//*[@id='o_logout_divider']" position="before">
+            <a href="/my/account" role="menuitem" class="dropdown-item ps-3">
+                <i class="fa fa-pencil me-1 small text-primary"/> My Profile
+            </a>
+        </xpath>
+    </template>
+</odoo>

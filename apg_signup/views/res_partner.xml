@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_niche_type_tree" model="ir.ui.view">
+        <field name="name">niche.type.tree</field>
+        <field name="model">niche.type</field>
+        <field name="arch" type="xml">
+            <list string="Niche Types" editable="bottom" multi_edit="1" sample="1">
+                <field name="name"/>
+                <field name="color" widget="color_picker"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_niche_type_search" model="ir.ui.view">
+        <field name="name">niche.type.search</field>
+        <field name="model">niche.type</field>
+        <field name="arch" type="xml">
+            <search string="Niche Type">
+                <field name="name"/>
+                <field name="color"/>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="action_niche_type_record" model="ir.actions.act_window">
+        <field name="name">Niche Type</field>
+        <field name="res_model">niche.type</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_niche_type_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Data
+            </p>
+        </field>
+    </record>
+    <!--    Action for creator-->
+    <record id="action_creator_record" model="ir.actions.act_window">
+        <field name="name">Creator</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,list,form,activity</field>
+        <field name="domain">[('user_type', '=', 'creator')]</field>
+        <field name="context">{'default_user_type': 'creator'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Contact in your address book
+            </p>
+            <p>
+                Odoo helps you track all activities related to your contacts.
+            </p>
+        </field>
+    </record>
+
+    <!--    Action for partner-->
+    <record id="action_partner_record" model="ir.actions.act_window">
+        <field name="name">Partner</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,list,form,activity</field>
+        <field name="domain">[('user_type', '=', 'partner')]</field>
+        <field name="context">{'default_user_type': 'partner'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Contact in your address book
+            </p>
+            <p>
+                Odoo helps you track all activities related to your contacts.
+            </p>
+        </field>
+    </record>
+    <!--    Action customer record-->
+    <record id="action_customer_record" model="ir.actions.act_window">
+        <field name="name">Customer</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,list,form,activity</field>
+        <field name="domain">[('user_type', '=', 'customer')]</field>
+        <field name="context">{'default_user_type': 'customer'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Contact in your address book
+            </p>
+            <p>
+                Odoo helps you track all activities related to your contacts.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_partner_form_inherit_user_type" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.user.type</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet" position="before">
+                <header>
+                    <button name="action_approve" type="object" string="Approve" class="oe_highlight" invisible="state_selection == 'approved'"/>
+                    <button name="action_reject" type="object" string="Reject" class="oe_highlight"
+                            invisible="state_selection == 'rejected'"/>
+                </header>
+            </xpath>
+            <xpath expr="//form/sheet/group/group[1]/span[1]" position="before">
+                <field name="user_type" string="User Type"/>
+            </xpath>
+            <field name="category_id" position="after">
+                <field name="niche_type_ids" widget="many2many_tags" options="{'color_field': 'color'}"
+                       placeholder="e.g. &quot;B2B&quot;, &quot;VIP&quot;, &quot;Consulting&quot;, ..."/>
+                <field name="product_type"
+                       help="This field indicates the type of product. Choose from 'Live Workshop', 'Pre-ordered Course', or 'One to One'. It is a readonly field for informational purposes."/>
+                <field name="reference"/>
+                <field name="description"/>
+            </field>
+            <xpath expr="//notebook" position="inside">
+                <page string="KYC">
+                    <group>
+                        <group>
+                            <field name="select_document"/>
+                            <field name="state_selection"/>
+                        </group>
+                        <!-- Aadhaar Section -->
+                        <group invisible="select_document != 'aadhaar'">
+                            <field name="aadhaar_number" colspan="2"/>
+                            <field name="aadhaar_name" colspan="2"/>
+                            <field name="aadhaar_front" colspan="2"/>
+                            <field name="aadhaar_back" colspan="2"/>
+                        </group>
+                        <!-- Driving License Section -->
+                        <group invisible="select_document != 'driving_license'">
+                            <field name="driving_license_number" colspan="2"/>
+                            <field name="driving_license_name" colspan="2"/>
+                            <field name="driving_license_front" colspan="2"/>
+                            <field name="driving_license_back" colspan="2"/>
+                        </group>
+                        <!-- Voter Identity Card Section -->
+                        <group invisible="select_document != 'voter_identity_card'">
+                            <field name="voter_identity_number" colspan="2"/>
+                            <field name="voter_identity_name" colspan="2"/>
+                            <field name="voter_identity_front" colspan="2"/>
+                            <field name="voter_identity_back" colspan="2"/>
+                        </group>
+                        <!-- Passport Section -->
+                        <group invisible="select_document != 'passport'">
+                            <field name="passport_number" colspan="2"/>
+                            <field name="passport_name" colspan="2"/>
+                            <field name="passport_front" colspan="2"/>
+                            <field name="passport_back" colspan="2"/>
+                        </group>
+                    </group>
+                    <group string="Bank Details">
+                        <group>
+                            <field name="Account_holder_name"/>
+                            <field name="Account_holder_number"/>
+                            <field name="bank_id"/>
+                            <field name="upi_mobile_number"/>
+                        </group>
+                        <group>
+                            <field name="ifsc_code"/>
+                            <field name="upload_file"/>
+                            <field name="paytm_mobile_number"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Pan Card Details">
+                            <field name="pan_card_number"/>
+                            <field name="pan_card_name"/>
+                            <field name="pan_card_file"/>
+                        </group>
+                    </group>
+                </page>
+                <page string="Social Media">
+                    <field name="social_section_line">
+                        <list editable="bottom">
+                            <!--                            <field name="partner_id" invisible="1"/>-->
+                            <field name="social_media"/>
+                            <field name="social_media_link"/>
+                        </list>
+                    </field>
+
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,733 @@
+<odoo>
+    <data>
+        <template id="nkyc_page_template" name="nkyc">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+                <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet"/>
+            <body>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                    const documentSelect = document.getElementById("document");
+                    const dynamicFields = {
+                    passport: {
+                    labels: ["Passport Number", "Name on Passport"],
+                    },
+                    aadhaar: {
+                    labels: ["Aadhar Number", "Name on Aadhar"],
+                    },
+                    driving_license: {
+                    labels: ["License Number", "Name on License"],
+                    },
+                    "voter_identity_card": {
+                    labels: ["Voter ID Number", "Name on Voter ID"],
+                    },
+                    };
+
+                    // Get all hidden elements
+                    const hiddenLabels = document.querySelectorAll(".hidden-label");
+
+                    // Ensure `hiddenLabels` contains at least 4 elements
+                    if (hiddenLabels.length &lt; 4) {
+                    console.error("Expected at least 4 elements with class 'hidden-label', but found:",
+                    hiddenLabels.length);
+                    return;
+                    }
+
+                    // Listen for changes in the dropdown
+                    documentSelect.addEventListener("change", function () {
+                    const selectedValue = documentSelect.value;
+
+                    // Hide all fields initially
+                    hiddenLabels.forEach((field) => {
+                    if (field &amp;&amp; field.previousElementSibling) {
+                    field.classList.add("hidden-label");
+                    field.previousElementSibling.classList.add("hidden-label");
+                    }
+                    });
+
+                    // If valid document type selected, update and show fields
+                    if (dynamicFields[selectedValue]) {
+                    const labels = dynamicFields[selectedValue].labels;
+
+                    // Ensure we have enough hidden labels
+                    if (hiddenLabels.length >= 4) {
+                    // Show the first two input fields with dynamic labels
+                    hiddenLabels[0].previousElementSibling.textContent = labels[0];
+                    hiddenLabels[1].previousElementSibling.textContent = labels[1];
+
+                    hiddenLabels[0].classList.remove("hidden-label");
+                    hiddenLabels[1].classList.remove("hidden-label");
+
+                    hiddenLabels[0].previousElementSibling.classList.remove("hidden-label");
+                    hiddenLabels[1].previousElementSibling.classList.remove("hidden-label");
+
+                    // Show file upload fields
+                    hiddenLabels[2].classList.remove("hidden-label");
+                    hiddenLabels[2].previousElementSibling.classList.remove("hidden-label");
+
+                    hiddenLabels[3].classList.remove("hidden-label");
+                    hiddenLabels[3].previousElementSibling.classList.remove("hidden-label");
+                    } else {
+                    console.error("Not enough hidden-label elements to show dynamic fields.");
+                    }
+                    }
+                    });
+                    });
+                </script>
+
+                <!-- Page-Specific Styles -->
+                <style>
+                    body,textarea {
+                    display: block !important;
+                    margin: 0;
+                    font-family: 'Poppins', sans-serif;
+                    background-color: #f8f9fa;
+                    }
+
+                    /* Top Menu */
+                    .top-menu {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 10px 20px;
+                    background-color: #fff;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    position: fixed;
+                    top: 0;
+                    z-index: 100;
+                    height: 80px; /* Adjust height for new layout */
+                    }
+
+                    .top-menu .logo img {
+                    height: 60px;
+                    width: auto;
+                    }
+
+                    .top-menu .menu-links {
+                        display: flex;
+                        gap: 40px; /* Space between menu items */
+                        align-items: center;
+                        justify-content: center;
+                        flex: 1;
+                    }
+
+                    .top-menu .menu-links a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 14px;
+                        font-weight: 500;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 15px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        height: 100%;
+                        justify-content: center;
+                    }
+
+                    .top-menu .menu-links a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links i {
+                        font-size: 24px; /* Icon size */
+                    }
+                    .top-menu .user-icon {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        cursor: pointer;
+                        margin-right: 30px; /* Adds space from the edge */
+                    }
+
+                    /* Side Menu */
+                    .side-menu {
+                        width: 250px;
+                        background-color: #fff;
+                        padding: 20px 10px;
+                        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        left: 0;
+                        top: 60px; /* Adjust for top menu */
+                        height: calc(100vh - 60px);
+                        overflow-y: auto;
+                    }
+
+                    .side-menu ul {
+                        list-style: none;
+                        padding: 2;
+                        line-height: 1.5rem;
+                    }
+
+                    .side-menu ul li {
+                        margin: 15px 0;
+                    }
+
+                    .side-menu ul li a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 15px;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                    }
+
+                    .side-menu ul li a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .side-menu ul li a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .main-content {
+                        margin-left: 270px; /* Adjust to create space from the side menu */
+                        padding: 20px; /* Maintain consistent padding inside the main content */
+                        margin-top: 80px; /* Adjust for the top menu */
+                        flex-grow: 1;
+                    }
+
+
+                    /* Form Content */
+                    .kyc-header {
+                            text-align: center;
+                            font-size: 16px;
+                            font-weight: 500;
+                            color: #333;
+                            margin-bottom: 20px;
+                        }
+
+                        .form-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    margin-top:20px;
+    border: 1px solid #ffd000;
+}
+
+.form-section h3 {
+    color: #000;
+    font-size: 16px;
+    margin-bottom: 15px;
+    margin-top:5px;
+}
+
+.form-section .form-group {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+
+}
+
+.form-section .form-group label {
+    flex: 1;
+    min-width: 150px; /* Ensure labels have a minimum width */
+}
+
+.form-section .form-group input,
+.form-section .form-group select,
+.form-section .form-group textarea {
+    flex: 1; /* Equal size for all input fields */
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%; /* Ensure input fields span the available width */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+}
+
+.form-section .form-group.row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Equal width for three columns */
+    gap: 20px; /* Spacing between columns */
+}
+
+.form-section .form-group.row input,
+.form-section .form-group.row select,
+.form-section .form-group.row textarea {
+    width: 100%; /* Ensure fields in grid take full width */
+}
+
+.form-section .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group .checkbox-group1 {
+    display: flex;
+    align-items: left;
+}
+
+.form-control {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+label {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+                        /* Form Actions */
+                        .form-actions {
+                            display: flex;
+                            justify-content: center; /* Center buttons horizontally */
+                            gap: 20px; /* Add space between buttons */
+                            margin-top: 20px; /* Add spacing above the buttons */
+                            margin-bottom: 20px; /* Optional: Add spacing below the buttons */
+                        }
+
+
+                        /* Button Styling */
+                        .btn {
+                            background-color: #ffd000;
+                            color: #212529;
+                            font-family: 'Poppins', sans-serif;
+                            padding: 10px 15px;
+                            border: none;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            transition: background-color 0.3s ease;
+                            font-size: 16px;
+                            padding:10px 20px;
+                            letter-spacing: 1px;
+                        }
+
+                        .btn-back {
+                            background-color: #ddd;
+                            color: #333;
+                        }
+
+                        .btn-back:hover {
+                            background-color: #ccc;
+                        }
+
+                        .btn-submit {
+                            background-color: #ffd001;
+                            color: #000;
+                        }
+
+                        .btn-submit:hover {
+                            background-color: #f0c001;
+                        }
+
+                        /* Ensure link styles don't override button styles */
+                        .btn a {
+                            color: inherit; /* Inherit button text color */
+                            text-decoration: none; /* Remove underline */
+                        }
+
+                        <!-- .hidden-label {
+                            display: none; /* Hides the label by default */
+                        } -->
+
+                        <!-- #fields-container {
+                            display: flex;
+                            align-items: center;
+                            gap: 20px;
+                        }
+
+                        .extra-fields {
+                            display: none;
+                            flex: 1; /* Ensures fields take equal space */
+                        }
+
+                        .extra-fields input {
+                            width: 100%; /* Full width for inputs within the container */
+                            box-sizing: border-box; /* Include padding in width */
+                        } -->
+
+                       
+/* Status Boxes */
+.status {
+    border: 2px solid inherit;
+    padding: 8px 12px; /* Adjusted for better appearance */
+    background-color: #d3d3d3;
+    display: inline-block; /* Fix for misalignment */
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    margin: auto;
+}
+
+/* Fix for Row Height */
+.row.border1 {
+    display: flex;
+    align-items: center;
+    
+}
+.border1 {
+
+border: 1px solid #ffd000;
+
+border-radius: 5px;
+
+margin-top: 20px;
+
+}
+button {
+    background-color: #ffd000;
+                        color: #212529;
+                        font-family: 'Poppins', sans-serif;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        transition: background-color 0.3s ease;
+                        font-size: 16px;
+                        padding:5px 10px;
+                        letter-spacing: 1px;
+                       
+
+}
+                    
+                </style>
+
+                <!-- Top Menu -->
+                <div class="top-menu">
+                    <div class="logo">
+                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
+                    </div>
+                    <div class="menu-links">
+                        <a href="/master_income_data">
+                            <i class="fa fa-chart-bar"></i> Income
+                        </a>
+                        <a href="/creator-lead">
+                            <i class="fa fa-bullhorn"></i> Leads
+                        </a>
+                        <a href="/nkyc" class="active">
+                            <i class="fa fa-id-card"></i> KYC
+                        </a>
+                        <a href="/nreferral">
+                            <i class="fa fa-link"></i> Links
+                        </a>
+                        <a href="/nleaderboard">
+                            <i class="fa fa-medal"></i> Leaderboard
+                        </a>
+                    </div>
+                    <!-- Use <img> tag for user icon -->
+                    <t t-call="custom_web_kreator.partner_profile_dropdown"/>
+                </div>
+
+                <!-- Side Menu -->
+                <div class="side-menu">
+                    <ul>
+                        <li><a href="/master" class="d-none"><i class="fa fa-home"></i> Get Started</a></li>
+                        
+                        <li><a href="/nmy-courses"><i class="fa fa-box"></i> Products</a></li>
+                        <li><a href="/master_income_data" class="active"><i class="fa fa-chart-line"></i> Sales</a></li>
+                        <li><a href="/offers"><i class="fa fa-users"></i> Connect with Partner</a></li>
+                        <li><a href="#"><i class="fa fa-address-book"></i> Customer</a></li>
+                        <li>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                <i class="fa fa-rocket"></i> Become A Bee Partner
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Logout Confirmation Modal -->
+                <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to log out?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Not Now</button>
+                                <button id="confirmLogout" class="btn btn-warning">Yes, Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    document.getElementById("confirmLogout").addEventListener("click", function() {
+                        // Perform the logout by navigating to the logout URL
+                        window.location.href = "/web/session/logout?redirect=/web/signup?user_type=partner";
+                    });
+                </script>
+
+
+                <!-- Main Content -->
+                <form method="POST" action="/nkyc" enctype="multipart/form-data" id="kyc-form">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <input type="hidden" id="state-selection" name="state_selection" value=""/>
+                    <div class="main-content">
+                        <!-- Top Block -->
+                    <t t-call="custom_web_kreator.user_block" />
+                        <div class="row border1 bg-white pb-0 mb-0 statusrow">
+                            <div class="col-md-8 d-flex justify-content-start align-items-center pb-0 mb-0">
+                                <h5>Status</h5>
+                            </div>
+                            <div class="col-md-4 d-flex justify-content-evenly pt-1 pb-1 mb-0">
+                                <p id="status-pending" class="status"
+                                   t-att-style="partner_id.state_selection == 'pending' and 'background-color:#ffd000;' or ''">
+                                    Pending
+                                </p>
+                                <p id="status-review" class="status"
+                                   t-att-style="partner_id.state_selection == 'under_review' and 'background-color:#ffd000;' or ''">
+                                    Under Review
+                                </p>
+                                <p id="status-approved" class="status"
+                                   t-att-style="partner_id.state_selection == 'approved' and 'background-color:#ffd000;' or ''">
+                                    Approved
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Basic Details Section -->
+                        <div class="form-section">
+                            <h3>Basic Details</h3>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="full-name">Full Name<span style="color: red;">*</span></label>
+                                    <input type="text" id="full-name" name="full_name" class="form-control"
+                                           placeholder="Enter your full name" t-att-value="partner_id.name"
+                                           required="required" t-att-readonly="partner_id.name and 'readonly' or ''"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="email">Email ID<span style="color: red;">*</span></label>
+                                    <input type="email" id="email" name="email" class="form-control"
+                                           placeholder="Enter your email ID" t-att-value="partner_email"
+                                           required="required" t-att-readonly="partner_email and 'readonly' or ''"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="mobile">Mobile Number<span style="color: red;">*</span></label>
+                                    <input type="text" id="mobile" name="mobile" class="form-control"
+                                           placeholder="Enter your mobile number" t-att-value="partner_phone"
+                                           pattern="[0-9]{10}" title="Mobile number must be exactly 10 digits"
+                                           required="required" t-att-readonly="partner_phone and 'readonly' or ''"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="document">Select Document<span style="color: red;">*</span></label>
+                                    <select id="document" name="document" class="form-control" required="required">
+                                        <option value="" t-att-selected="not document" disabled="disabled">- Select -
+                                        </option>
+                                        <option value="passport" t-att-selected="document == 'passport'">Passport
+                                        </option>
+                                        <option value="aadhaar" t-att-selected="document == 'aadhaar'">Aadhar<span style="color: red;">*</span>(Masked Only)</option>
+                                        <option value="driving_license" t-att-selected="document == 'driving_license'">
+                                            Driving License
+                                        </option>
+                                        <option value="voter_identity_card"
+                                                t-att-selected="document == 'voter_identity_card'">Voter Identity Card
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="document-number">Document Number<span style="color: red;">*</span></label>
+                                    <input type="text" id="document-number" name="document_number" class="form-control"
+                                           t-att-value="document_number" placeholder="Enter Document Number"
+                                           required="required"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="document-name">Name on Document<span style="color: red;">*</span></label>
+                                    <input type="text" id="document-name" name="document_name" class="form-control"
+                                           t-att-value="document_name" placeholder="Enter Name on Document"
+                                           required="required"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="upload-front">Upload Front Side<span style="color: red;">*</span></label>
+                                    <input type="file" id="upload-front" name="file_upload_front" class="form-control"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="upload-back">Upload Back Side<span style="color: red;">*</span></label>
+                                    <input type="file" id="upload-back" name="file_upload_back" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Bank Details Section -->
+                        <div class="form-section">
+                            <h3>Bank Details</h3>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="account-holder-name">Account Holder Name<span style="color: red;">*</span></label>
+                                    <input type="text" id="account-holder-name" name="account_holder_name"
+                                           class="form-control" t-att-value="account_holder_name"
+                                           placeholder="Enter Account Holder Name" required="required"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="account-number">Account Number<span style="color: red;">*</span></label>
+                                    <input type="text" id="account-number" name="account_number" class="form-control"
+                                           t-att-value="account_number" placeholder="Enter Account Number"
+                                           required="required"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="bank-name">Bank Name<span style="color: red;">*</span></label>
+                                    <select id="bank-name" name="bank_id" class="form-control" required="required">
+                                        <t t-foreach="bank_id.bank_id or []" t-as="bank">
+                                            <option t-att-value="bank.id" t-att-selected="bank.id == partner_id.bank_id.bank_id.id">
+                                                <t t-esc="bank.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="ifsc-code">IFSC Code<span style="color: red;">*</span></label>
+                                    <input type="text" id="ifsc-code" name="ifsc_code" class="form-control"
+                                           t-att-value="ifsc_code" placeholder="Enter IFSC Code" required="required"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="bank-upload">Upload File<span style="color: red;">*</span></label>
+                                    <input type="file" id="bank-upload" name="bank_file" class="form-control"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="upi-number">UPI Mobile Number<span style="color: red;">*</span></label>
+                                    <input type="text" id="upi-number" name="upi_mobile_number" class="form-control"
+                                           placeholder="Enter UPI Mobile Number" t-att-value="upi_mobile_number" pattern="[0-9]{10}" title="Mobile number must be exactly 10 digits"
+                                           required="required"/>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <!-- PAN Card Details Section -->
+                        <div class="form-section">
+                            <h3>PAN Card Details</h3>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="pan-number">PAN Number<span style="color: red;">*</span></label>
+                                    <input type="text" id="pan-number" name="pan_number" class="form-control"
+                                           t-att-value="pan_number" placeholder="Enter PAN Number" required="required"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="pan-name">PAN Name<span style="color: red;">*</span></label>
+                                    <input type="text" id="pan-name" name="pan_name" class="form-control"
+                                           t-att-value="pan_name" placeholder="Enter PAN Name" required="required"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="pan-upload">Upload PAN Card File<span style="color: red;">*</span></label>
+                                    <input type="file" id="pan-upload" name="pan_file" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text Details Section -->
+
+                            <div class=" row">
+                                <div class="col-md-12">
+                                    <p>We are committed to maintaining the highest standards of compliance and security. Our Know Your Customer (KYC) Policy ensures transparency, protects against fraud, and adheres to legal and regulatory requirements.</p>
+                                    <p>We take your privacy seriously. Your documents are used only for verification purposes and are never shared or used anywhere else. All KYC documents are securely stored and handled in compliance with data protection laws.</p>
+                                   </div>
+                            </div>
+
+                        <!-- Buttons -->
+                        <div class="form-actions">
+                            <button type="submit" id="submit-button">Submit for Review</button>
+                        </div>
+                        <script>
+                            function toggleReadOnlyState() {
+                                // Get the "Approved" status element
+                                const approvedStatus = document.getElementById('status-approved');
+
+                                // Check if the "Approved" status is highlighted
+                                const isApprovedHighlighted = approvedStatus &amp;&amp; approvedStatus.style.backgroundColor === 'rgb(255, 208, 0)';
+
+                                // Get all input, select, and textarea elements within the form
+                                const form = document.getElementById('kyc-form');
+                                const inputs = form.querySelectorAll('input, select, textarea');
+
+                                // Iterate through each input field
+                                inputs.forEach(function(input) {
+                                    if (isApprovedHighlighted) {
+                                        // Set the field to read-only
+                                        input.readOnly = true;
+                                        // For select elements, use the disabled property
+                                        if (input.tagName === 'SELECT') {
+                                            input.disabled = true;
+                                        }
+                                    } else {
+                                        // Remove the read-only or disabled property
+                                        input.readOnly = false;
+                                        if (input.tagName === 'SELECT') {
+                                            input.disabled = false;
+                                        }
+                                    }
+                                });
+                            }
+
+                            // Event listener for DOM content loaded to set the initial state
+                            document.addEventListener('DOMContentLoaded', function() {
+                                toggleReadOnlyState();
+                            });
+
+
+                            document.getElementById('kyc-form').addEventListener('submit', function(event) {
+                            // Flag to track form validity
+                            let isValid = true;
+
+                            // Validate required fields
+                            const requiredFields = ['full-name', 'email', 'mobile', 'document', 'document-number',
+                                'document-name', 'upload-front', 'upload-back', 'account-holder-name', 'account-number',
+                                'bank-name', 'ifsc-code', 'bank-upload', 'upi-number', 'pan-number', 'pan-name',
+                                'pan-upload'];
+
+                            requiredFields.forEach(function(fieldId) {
+                                const field = document.getElementById(fieldId);
+                                if (field &amp;&amp; !field.value) {
+                                    isValid = false;
+                                    field.style.borderColor = 'red'; // Highlight invalid fields
+                                } else if (field) {
+                                    field.style.borderColor = ''; // Reset valid fields
+                                }
+                            });
+
+                            if (!isValid) {
+                                // If validation fails, prevent form submission
+                                event.preventDefault();
+                                alert('Please fill out all required fields correctly.');
+                            } else {
+                                // If validation passes, allow form submission
+                                // Optionally, set the state-selection value here if needed
+                                document.getElementById('state-selection').value = 'under_review';
+                            }
+                        });
+                            document.addEventListener('DOMContentLoaded', function() {
+        var stateSelectionElement = document.getElementById('state-selection');
+        if (stateSelectionElement &amp;&amp; !stateSelectionElement.value) {
+            stateSelectionElement.value = 'pending';
+        }
+    });
+                        </script>
+                    </div>
+                </form>
+            </body>
+        </template>
+    </data>
+</odoo>

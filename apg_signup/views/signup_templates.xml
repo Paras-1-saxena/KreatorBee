@@ -1,0 +1,107 @@
+<odoo>
+    <template id="account_sign_up_details_id" inherit_id="auth_signup.fields" name="Account sign up detail">
+        <xpath expr="//div[@class='mb-3 field-name']" position="replace"/>
+        <xpath expr="//div[@class='mb-3 field-login']" position="before">
+            <div class="mb-3 field-user_type" style="display:none;">
+                <label for="user_type">User Type</label>
+                <select name="user_type" id="user_type" class="form-control form-control-sm" required="required">
+                    <option t-att-selected="'creator' == user_type" value="creator">Creator</option>
+                    <option t-att-selected="'partner' == user_type" value="partner">Partner</option>
+                    <option t-att-selected="'customer' == user_type" value="customer">Customer</option>
+                </select>
+            </div>
+            <div class="mb-3 field-name">
+                <label for="name">Name</label>
+                <input type="text" name="name" t-att-value="name" id="name" class="form-control form-control-sm" style="font-size: 14px;"
+                       placeholder="e.g. John Doe"
+                       required="required" t-att-readonly="'readonly' if only_passwords else None"
+                       t-att-autofocus="'autofocus' if login and not only_passwords else None"/>
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='mb-3 field-login']" position="after">
+            <div class="text-center oe_login_buttons d-grid pt-2">
+                <button type="submit" class="btn btn-primary" id="submit_button _onSubmit_cus">Submit</button>
+                <a role="button" class="btn btn-primary mt-2 f16"> Sign up With Google</a><!-- fa fa-google  -->
+            </div> 
+        </xpath>
+        <xpath expr="//div[@class='mb-3 field-login']" position="after">
+            <div class="mb-3 field-phone">
+                <!-- <p id="title-valid-number" class="text-danger mt-1 mb-0">Please enter valid Contact Number</p> -->
+                <label for="phone">Mobile Number</label>
+                <div class="input-group">
+                    <!-- Flag and country code select button -->
+                    <div class="ReactFlagsSelect-module_flagsSelect__2pfa2 countryFlag" id="flags-select"
+                         data-testid="rfs">
+                        <button id="rfs-btn" type="button" class="ReactFlagsSelect-module_selectBtn__19wW7 flag-button form-control form-control-sm"
+                                aria-labelledby="rfs-btn" aria-haspopup="listbox" aria-expanded="false"
+                                data-testid="rfs-btn"
+                                style="font-size: 15px;">
+                            <span class="ReactFlagsSelect-module_selectValue__152eS">
+                                <span class="ReactFlagsSelect-module_selectFlag__2q5gC" data-testid="rfs-selected-flag">
+                                    <!-- Indian Flag SVG -->
+                                    <svg width="1em" height="1em" viewBox="0 0 512 336"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <g fill="none">
+                                            <path d="M512.001 112.092H0V9.103A8.829 8.829 0 018.828.275h494.345a8.829 8.829 0 018.828 8.828v102.989z"
+                                                  fill="#FAB446"></path>
+                                            <path d="M503.172 335.724H8.828A8.829 8.829 0 010 326.896V223.908h512v102.988a8.828 8.828 0 01-8.828 8.828z"
+                                                  fill="#73AF00"></path>
+                                            <path fill="#F5F5F5" d="M0 112.088h512V223.9H0z"></path>
+                                            <g transform="translate(208 120)" fill="#41479B">
+                                                <path d="M48 95.448C21.836 95.448.552 74.164.552 48S21.836.552 48 .552 95.448 21.836 95.448 48 74.164 95.448 48 95.448zm0-86.069C26.702 9.379 9.379 26.702 9.379 48c0 21.298 17.323 38.621 38.621 38.621 21.298 0 38.621-17.323 38.621-38.621C86.621 26.702 69.298 9.379 48 9.379z"></path>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </span>
+                                <span style="font-size: 14px;" class="ReactFlagsSelect-module_secondaryLabel__37t1D">+91</span>
+                            </span>
+                        </button>
+                    </div>
+                    <!-- Phone input field -->
+                    <input type="text" name="phone" t-att-value="phone" id="phone" class="form-control form-control-sm" style="font-size: 14px;"
+                           autofocus="autofocus" autocapitalize="off" required="required"
+                           t-att-readonly="'readonly' if only_passwords else None"/>
+                </div>
+                <div class="d-flex justify-content-end mt-2">
+                    <a role="button" class="btn btn-primary o_generate_otp" id="get_otp" style="font-size: 14px;">Generate OTP</a>
+                </div>
+                <!-- <input type="hidden" id="otp_input_new" value="123456" class="form-control form-control-sm"
+                       placeholder="OTP Confirm"/> -->
+                <input type="text" name="otp_input" id="otp_input" class="form-control form-control-sm" placeholder="OTP Verification" style="font-size: 14px;"/>
+                <!-- <input type="checkbox" id="is_otp_verify" name="is_otp_verify" class="form-control-sm"
+                       placeholder="Is OTP Verified" style="display:none;"/> -->
+                <div class="d-flex justify-content-end mt-2">
+                    <a role="button" class="btn btn-primary o_confirm_otp" id="confirm_otp" style="font-size: 14px;">Confirm</a>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='mb-3 field-confirm_password']" position="replace">
+            <input type="password" name="confirm_password" id="confirm_password" value="1234"
+                   class="form-control form-control-sm" style="display:none;"/>
+        </xpath>
+        <xpath expr="//div[@class='mb-3 field-password pt-2']" position="replace">
+            <input type="password" name="password" id="password" value="1234" class="form-control form-control-sm"
+                   t-att-autofocus="'autofocus' if only_passwords else None" style="display:none;"/>
+        </xpath>
+        <xpath expr="//label[contains(text(), 'Your Email')]" position="replace">
+            <label for="email">Email</label>
+        </xpath>
+        <xpath expr="//div[@class='mb-3 field-login']/input" position="attributes">
+            <attribute name="style">font-size: 14px;</attribute>
+        </xpath>
+        <!-- <xpath expr="//div[@class='mb-3 field-login']/label" position="before">
+            <p id="title-invalid-email" class="text-danger mt-1 mb-0">Please enter valid Email</p>
+        </xpath> -->
+    </template>
+    <template id="signup_form_template_add_class" inherit_id="apg_portal_dashboard.sign_up_design_changes" name="SignUp detail">
+        <xpath expr="//form[@class='oe_signup_form c_signup']" position="attributes">
+            <attribute name="class">oe_signup_form c_signup cust_signup_form</attribute>
+        </xpath>
+    </template>
+    <template id="rename_sign_up_button" inherit_id="auth_signup.signup" name="Rename Sign Up Button">
+        <xpath expr="//div[contains(@class, 'oe_login_buttons')]/button[contains(@class, 'btn-primary') and not(contains(@class, 'fa-google'))]"
+               position="replace">
+            <button type="submit" class="btn btn-primary mb-2" id="custom_next_button" style="display: none;">Submit</button>
+        </xpath>
+    </template>
+</odoo>

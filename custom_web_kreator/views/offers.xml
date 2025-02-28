@@ -1,0 +1,609 @@
+
+<odoo>
+    <data>
+        <template id="offers_page" name="Offer Template">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet"/>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"/>
+
+            <body>
+                <!-- Page-Specific Styles -->
+                <style>
+                    @media (max-width: 769px) {
+                        /* Style the input field */
+                        #fromDate,#toDate {
+                            position: relative;
+                            padding-right: 30px;  /* Space for the calendar icon */
+                        }
+
+                        /* Add the calendar icon using the ::after pseudo-element */
+                        #fromDate::after,#toDate::after {
+                            content: "📅"; /* Unicode calendar icon */
+                            position: absolute;
+                            right: 10px;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            pointer-events: none;  /* Make sure the icon does not interfere with clicking the input */
+                            font-size: 18px; /* Adjust the size of the calendar icon */
+                        }
+                    }
+                    body,textarea {
+                        display: flex;
+                        margin: 0;
+                        font-family: 'Poppins', sans-serif;
+                        background-color: #f8f9fa;
+                         margin: 0;
+                        padding: 0;
+                        line-height: 1.6;
+                    }
+
+                    /* Top Menu */
+                    .top-menu {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 10px 20px;
+                        background-color: #fff;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        top: 0;
+                        z-index: 100;
+                        height: 60px; /* Adjust height for new layout */
+                    }
+
+                    .top-menu .logo img {
+                        height: 60px;
+                        width: auto;
+                    }
+
+                    .top-menu .menu-links {
+                        display: flex;
+                        gap: 40px; /* Space between menu items */
+                        align-items: center;
+                        justify-content: center;
+                        flex: 1;
+                    }
+
+                    .top-menu .menu-links a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 14px;
+                        font-weight: 500;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 15px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        height: 100%;
+                        justify-content: center;
+                    }
+
+                    .top-menu .menu-links a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links i {
+                        font-size: 24px; /* Icon size */
+                    }
+                    .top-menu .user-icon {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        cursor: pointer;
+                        margin-right: 30px; /* Adds space from the edge */
+                    }
+
+                    /* Side Menu */
+                    .side-menu {
+                        width: 250px;
+                        background-color: #fff;
+                        padding: 20px 10px;
+                        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        left: 0;
+                        top: 60px; /* Adjust for top menu */
+                        height: calc(100vh - 60px);
+                        overflow-y: auto;
+                    }
+
+                    .side-menu ul {
+                        list-style: none;
+                        padding: 2;
+                    }
+
+                    .side-menu ul li {
+                        margin: 15px 0;
+                    }
+
+                    .side-menu ul li a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 15px;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                    }
+
+                    .side-menu ul li a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .side-menu ul li a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .main-content {
+                        margin-left: 270px; /* Adjust to create space from the side menu */
+                        padding: 20px;      /* Maintain consistent padding inside the main content */
+                        margin-top: 80px;   /* Adjust for the top menu */
+                        flex-grow: 1;
+                        background-color:#f8f9fa;
+                    }
+
+                    <!--  /* Progress Bar */
+                    .progress-bar-container {
+                        width: 100%;
+                        height:10px;
+                        background-color: fef5c5;
+                        margin-bottom: 20px;
+                        position: relative;
+                    }
+
+                    .progress-bar {
+                        height: 10px;
+                        background-color: #ffd001;
+                        width: 0%; /* Adjust for progress percentage */
+                        transition: width 0.3s ease;
+                    } -->
+
+                    .content-containter {
+                        
+                     <!-- background-color:#f8f9fa;
+                        height:560px;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        
+                        gap: 20px; -->
+                    }
+
+                    /* Form Content */
+                    .form-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-content,
+.image-container {
+    flex: 1 1 50%; /* Set both form and image sections to take 50% width */
+    max-width: 50%; /* Ensure they do not exceed 50% width */
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.form-content label {
+    font-size: 16px;
+    font-weight: 600;
+   
+    color: #333;
+}
+
+.form-content input,
+.form-content select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    color:#4c4c4b;
+    margin-bottom:15px;
+}
+
+.form-content .inline-fields {
+    display: flex;
+    gap: 20px; /* Space between the two date inputs */
+    justify-content: space-evenly;
+}
+.inline-fields input[type="date"] {
+    width: 100%; /* Make the date input fields take full width of their container */
+    max-width: 200px; /* Adjust the maximum width as needed */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.form-content .inline-fields input {
+    flex: 1; /* Make both date inputs equal width */
+}
+
+.applicable-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between the label and the radio group */
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px; /* Space between radio buttons */
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 8px;
+}
+
+.generate-btn {
+    background-color: #ffd000;
+                        color: #212529;
+                        font-family: 'Poppins', sans-serif;
+                        padding: 10px 15px;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        transition: background-color 0.3s ease;
+                        font-size: 16px;
+                        padding:10px 20px;
+                        letter-spacing: 1px;
+                        margin-bottom:15px;
+                        
+}
+
+.generate-btn:hover {
+    background-color: #e0a800;
+}
+
+.image-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background-color: #fffbea;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.promo-box {
+    background-color: #ffd001;
+    border-radius: 5px;
+    padding: 15px;
+    color: #000;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 300px;
+}
+
+.promo-box h2 {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.promo-box p {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.promo-box h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.image-container img {
+    max-width: 30%; /* Reduce the width of the image relative to its container */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Optional: Add rounded corners if needed */
+}
+
+.coupon-container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top:20px;
+}
+
+.coupon-container h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+    margin-top: 0px;
+}
+
+
+
+.coupon-box.blue1 {
+    background-color: teal;
+}
+
+.coupon-box.green1 {
+    background-color: green;
+}
+
+.coupon-box.orange1 {
+    background-color: orange;
+}
+
+.coupon-box.red1 {
+    background-color: red;
+}
+
+.coupon-box p {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: -8px;
+}
+
+.coupon-box h1 {
+    font-size: 28px;
+    margin: 10px 0;
+    line-height: 1; /* Ensures KB100 and INR100 are close */
+}
+
+.coupon-box .price {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0; /* No space below KB100 */
+}
+
+.coupon-box span {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+.coupon-box.blue1 {
+    background-color: #55a4ff;
+}
+
+.coupon-box.green1 {
+    background-color: #3cdabb;
+}
+
+.coupon-box.orange1 {
+    background-color: #ffbc5d;
+}
+
+.coupon-box.red1 {
+    background-color: #ff617c;
+}
+.border1{
+    border:1px solid #ffd000;
+}
+
+
+                
+                    
+                
+                </style>
+                <!-- Top Menu -->
+                <div class="top-menu">
+                    <div class="logo">
+                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
+                    </div>
+                    <div class="menu-links">
+                        
+                        <a href="/forumsection">
+                            <i class="fa fa-user-friends"></i>  Community
+                        </a>
+<!--                         <a href="/forumsection">-->
+<!--                            <i class="fa fa-user-plus"></i>  My Bee Partners-->
+<!--                        </a>-->
+                        <a href="/offers" class="active">
+                            <i class="fa fa-book-reader"></i> Offers
+                        </a>
+                    
+                    </div>
+                    <!-- Use <img> tag for user icon -->
+                    <t t-call="custom_web_kreator.partner_profile_dropdown"/>
+                </div>
+                <!-- Side Menu -->
+                <div class="side-menu">
+                    <ul>
+                        <li>
+                            <a href="/master" style="display:none">
+                                <i class="fa fa-home"></i> Get Started
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="/nmy-courses">
+                                <i class="fa fa-box"></i> Products
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/master_income_data">
+                                <i class="fa fa-chart-line"></i> Sales
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/forumsection" class="active">
+                                <i class="fa fa-users"></i> Connect with Partner
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/coming-soon">
+                                <i class="fa fa-address-book"></i> Customer
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                <i class="fa fa-rocket"></i> Become A Bee Partner
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Logout Confirmation Modal -->
+                <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to log out?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Not Now</button>
+                                <button id="confirmLogout" class="btn btn-warning">Yes, Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    document.getElementById("confirmLogout").addEventListener("click", function() {
+                        // Perform the logout by navigating to the logout URL
+                        window.location.href = "/web/session/logout?redirect=/web/signup?user_type=partner";
+                    });
+                </script>
+                <!-- Main Content -->
+                <div class="main-content">
+                    <!-- Form and Image Section -->
+                    <div class="content-containter">
+                        <!-- Progress Bar -->
+                        <div class="progress-bar-container">
+                            <div class="progress-bar"></div>
+                        </div>
+                        <!-- Form Section -->
+                        <div class="form-container border1">
+    <div class="form-content">
+        <form action="/offers-create" method="post" enctype="multipart/form-data">
+            <!-- CSRF Token -->
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+            <!-- <label for="Partner">Select Partner<span style="color: red;">*</span></label>
+            <select id="partner_type">
+                <option value="" selected="selected">e.g. Select Partner</option>
+                <option value="course1">My Bee Partner</option>
+                <option value="course2">All Bee Partner </option>
+            </select> -->
+            <label for="course">Select Course<span style="color: red;">*</span></label>
+            <select id="course" name="course" required="required">
+                <option value="" selected="selected">e.g. Select Course</option>
+                <t t-foreach="product_ids" t-as="course">
+                    <option t-att-value="course.id" t-esc="course.name"/>
+                </t>
+            </select>
+
+            <label for="coupon">Coupon Code<span style="color: red;">*</span></label>
+            <input type="text" id="coupon" name="coupon_name" placeholder="e.g. Create coupon" required="required"/>
+
+            <label for="discount">Discount Price<span style="color: red;">*</span></label>
+            <select id="discount" name="discount" required="required">
+                <option value="" selected="selected"><span t-field="currency_id.symbol"/> 100</option>
+                <t t-foreach="discount_ids" t-as="discount">
+                    <option t-att-value="discount.id"><span t-field="currency_id.symbol"/><t t-esc="discount.name"/></option>
+                </t>
+            </select>
+
+            <label>Duration<span style="color: red;">*</span></label>
+            <div class="inline-fields">
+                <span>From</span>
+                <input type="date" id="from-date" name="from_date" placeholder="From" required="required" style="text-transform: uppercase;font-size: 0.75rem;"/>
+                <span>To</span>
+                <input type="date" id="to-date" name="to_date" placeholder="To" required="required" style="text-transform: uppercase;font-size: 0.75rem;"/>
+            </div>
+            <button type="submit" class="generate-btn">Generate Coupon Code</button>
+        </form>
+    </div>
+
+    <div class="image-container">
+        <t t-if="loyalty_ids">
+            <t t-foreach="loyalty_ids[0]" t-as="loyalty">
+                <div class="promo-box">
+                    <h2>Get <t t-esc="'%.0f'% loyalty.discount_id.name"/> Rs Off</h2>
+                    <p>PROMO CODE</p>
+                    <h1><t t-esc="loyalty.name"/></h1>
+                </div>
+            </t>
+        </t>
+        <t t-else="">
+            <div class="promo-box">
+                <h2>Get 100 Rs Off</h2>
+                <p>PROMO CODE</p>
+                <h1>KB100</h1>
+            </div>
+        </t>
+        <img src="/custom_web_kreator/static/src/kreator.png" alt="Bee Image"/>
+    </div>
+</div>
+
+
+
+<div class="coupon-container border1">
+    <h2>Created Coupon</h2>
+    <div class="coupon-grid">
+        <!-- Coupon Box -->
+        <t t-foreach="loyalty_ids" t-as="loyalty">
+            <div class="coupon-box blue1">
+                <p>Course Name Course Name Course Name</p>
+                <h1><t t-esc="loyalty.name"/></h1>
+                <p>(<span t-field="currency_id.name" /><t t-esc="'%.0f'% loyalty.discount_id.name"/>)</p>
+                <span>Valid From <strong>
+                    <t t-if="loyalty.date_from">
+                        <span t-esc="time.strftime('%d %B %Y', time.strptime(str(loyalty.date_from), '%Y-%m-%d'))"/>
+                    </t>
+                    <t t-else="">
+                        <span>No Date</span>
+                    </t>
+                    </strong> 
+                    to <strong>
+                        <t t-if="loyalty.date_to">
+                            <span t-esc="time.strftime('%d %B %Y', time.strptime(str(loyalty.date_to), '%Y-%m-%d'))"/>
+                        </t>
+                        <t t-else="">
+                            <span>No Date</span>
+                        </t>
+                    </strong>
+                </span>
+            </div>
+        </t>
+    </div>
+</div>
+
+
+
+
+                    </div>
+                </div>
+                </body>
+        </template>
+    </data>
+</odoo>

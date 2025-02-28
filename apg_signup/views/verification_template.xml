@@ -1,0 +1,35 @@
+<odoo>
+    <template id="custom_auth_signup_with_toggle" inherit_id="custom_auth_signup">
+        <xpath expr="//form[contains(@class, 'oe_signup_form')]" position="inside">
+            <!-- Verification Fields - Hidden Initially -->
+            <div id="verification_section" style="display: none;">
+                <div class="form-group">
+                    <label for="email_verification_code">Email Verification Code</label>
+                    <input name="email_verification_code" class="form-control" type="text" />
+                </div>
+                <div class="form-group">
+                    <label for="phone_verification_code">Phone Verification Code</label>
+                    <input name="phone_verification_code" class="form-control" type="text" />
+                </div>
+                <button type="submit" class="btn btn-primary">Verify</button>
+            </div>
+        </xpath>
+
+        <!-- Add JavaScript Logic -->
+        <xpath expr="//body" position="inside">
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const signupButton = document.getElementById('signup_button');
+                    const verificationSection = document.getElementById('verification_section');
+
+                    signupButton.addEventListener('click', function (event) {
+                        event.preventDefault(); // Prevent form submission
+                        verificationSection.style.display = 'block'; // Show verification fields
+                        signupButton.style.display = 'none'; // Hide signup button
+                    });
+                });
+            </script>
+        </xpath>
+    </template>
+</odoo>
+

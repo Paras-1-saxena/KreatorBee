@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--   Inherit form view     -->
+        <record id="inherit_partner_form_023de" model="ir.ui.view">
+            <field name="name">Inherit Partner Form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='vat']" position="after">
+                    <group>
+                        <field name="code" string="Code" />
+                    </group>
+
+                </xpath>
+
+            </field>
+        </record>
+
+        <!--   Inherit tree view     -->
+        <record id="inherit_partner_tree_023de" model="ir.ui.view">
+            <field name="name">Inherit Partner Tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='complete_name']" position="after">
+                    <field name="code" string="Code" />
+                </xpath>
+            </field>
+        </record>
+
+        <!--   Inherit search view     -->
+        <record id="inherit_partner_search_023de" model="ir.ui.view">
+            <field name="name">Inherit Partner Search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="replace">
+                    <field name="name" filter_domain="['|', '|', ('complete_name', 'ilike', self), ('ref', '=', self), ('code', 'ilike', self)]"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

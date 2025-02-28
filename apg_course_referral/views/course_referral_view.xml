@@ -1,0 +1,54 @@
+<odoo>
+    <!-- Terms and Conditions -->
+    <record id="view_apg_course_referral_form" model="ir.ui.view">
+        <field name="name">Course Referral</field>
+        <field name="model">apg.course.referral</field>
+        <field name="arch" type="xml">
+            <form string="Course Referral">
+                <sheet>
+                    <header>
+                        <button name="generate_referral_link" type="object" string="Generate Referral" class="oe_stat_button"/>
+                    </header>
+                    <group>
+                        <field name="course_id"/>
+                        <field name="website_url"/>
+                        <field name="partner_id"/>
+                        <field name="generated_url"/>
+                        <field name="expiry_time"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_apg_course_referral_tree" model="ir.ui.view">
+        <field name="name">course terms and conditions</field>
+        <field name="model">apg.course.referral</field>
+        <field name="arch" type="xml">
+            <list string="Course Referral">
+                <field name="course_id"/>
+                <field name="partner_id"/>
+                <field name="generated_url"/>
+                <field name="expiry_time"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_apg_course_referral" model="ir.actions.act_window">
+        <field name="name">Course Referral</field>
+        <field name="res_model">apg.course.referral</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Content Tag
+            </p>
+        </field>
+    </record>
+    <menuitem 
+        id="website_slides_menu_apg_course_referral" 
+        name="Course Referral"
+        parent="website_slides.website_slides_menu_configuration"
+        sequence="5" 
+        action="action_apg_course_referral"/>
+</odoo>
+

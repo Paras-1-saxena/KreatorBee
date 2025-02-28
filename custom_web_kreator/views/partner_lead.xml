@@ -1,0 +1,601 @@
+<odoo>
+    <data>
+        <template id="partner_lead" name="Partner Lead Template">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;display=swap" rel="stylesheet" />
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"/>
+            <link rel="stylesheet" href="https://static.eu1.mindsphere.io/mdsp-css/v2.7.0/css/mdsp-css.min.css" />
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+            <body>
+                <!-- Page-Specific Styles -->
+                <style>
+                    @media (max-width: 769px) {
+                        /* Style the input field */
+                       /* Style the input field */
+                        #fromDate,#toDate {
+                            position: relative;
+                            padding-right: 30px;  /* Space for the calendar icon */
+                        }
+
+                        /* Add the calendar icon using the ::after pseudo-element */
+#fromDate::after,#toDate::after {
+    content: "\f133"; / Font Awesome calendar icon /
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;  / Make sure the icon does not interfere with clicking the input /
+    font-family: "Font Awesome 5 Free"; / Font Awesome font-family /
+    font-weight: 900; / If using Font Awesome 5 /
+    font-size: 18px; / Adjust the size of the calendar icon /
+}
+                    }
+                    body,textarea {
+                        display: block !important;
+                        margin: 0;
+                        font-family: 'Poppins', sans-serif;
+                        background-color: #f8f9fa;
+                         margin: 0;
+                        padding: 0;
+                        line-height: 1.6;
+                    }
+
+                    /* Top Menu */
+                    .top-menu {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 10px 20px;
+                        background-color: #fff;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        top: 0;
+                        z-index: 100;
+                        height: 80px; /* Adjust height for new layout */
+                    }
+
+                    .top-menu .logo img {
+                        height: 60px;
+                        width: auto;
+                    }
+
+                    .top-menu .menu-links {
+                        display: flex;
+                        gap: 40px; /* Space between menu items */
+                        align-items: center;
+                        justify-content: center;
+                        flex: 1;
+                    }
+
+                    .top-menu .menu-links a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 14px;
+                        font-weight: 500;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 15px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        height: 100%;
+                        justify-content: center;
+                    }
+
+                    .top-menu .menu-links a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links i {
+                        font-size: 24px; /* Icon size */
+                    }
+                    .top-menu .user-icon {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        cursor: pointer;
+                        margin-right: 30px; /* Adds space from the edge */
+                    }
+
+                    /* Side Menu */
+                    .side-menu {
+                        width: 250px;
+                        background-color: #fff;
+                        padding: 20px 10px;
+                        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        left: 0;
+                        top: 60px; /* Adjust for top menu */
+                        height: calc(100vh - 60px);
+                        overflow-y: auto;
+                    }
+
+                    .side-menu ul {
+                        list-style: none;
+                        padding: 2;
+                    }
+
+                    .side-menu ul li {
+                        margin: 15px 0;
+                    }
+
+                    .side-menu ul li a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 15px;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                    }
+
+                    .side-menu ul li a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .side-menu ul li a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .main-content {
+                        margin-left: 270px; /* Adjust to create space from the side menu */
+                        padding: 20px;      /* Maintain consistent padding inside the main content */
+                        margin-top: 80px;   /* Adjust for the top menu */
+                        flex-grow: 1;
+                        background-color:#f8f9fa;
+                    }
+
+                    /* Progress Bar */
+                    .progress-bar-container {
+                        width: 100%;
+                        height:10px;
+                        background-color: fef5c5;
+                        margin-bottom: 20px;
+                        position: relative;
+                    }
+
+                    .progress-bar {
+                        height: 10px;
+                        background-color: #ffd001;
+                        width: 75%; /* Adjust for progress percentage */
+                        transition: width 0.3s ease;
+                    }
+
+                    .content-containter {
+    background-color: white;
+    height: 560px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+   
+    
+    overflow: hidden;
+
+
+                        
+                        
+               
+}
+
+
+.form-container {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 20px;
+}
+
+.form-content {
+    flex: 1;
+    padding: 0px 20px;
+    background-color: #fff;
+    overflow-y: auto;
+    margin-right: 10px;
+}
+
+.form-content h3 {
+    margin-top: 0;
+    margin-bottom: 5px; /* Reduce the space between the title and paragraph */
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+}
+
+.form-content p {
+    margin-top: 0; /* Remove any additional top margin */
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 15px; /* Keep some space below the paragraph */
+}
+
+.image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+}
+
+.bottom-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: auto; /* Push to the bottom */
+}
+
+.radio-group {
+    display: flex;
+    justify-content: left;
+    gap: 10px;
+    margin-bottom: 10px;
+
+}
+
+.radio-group label {
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin:10px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: left;
+    width: 100%;
+}
+
+button {
+    background-color: #ffd000;
+                        color: #212529;
+                        font-family: 'Poppins', sans-serif;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        transition: background-color 0.3s ease;
+                        font-size: 16px;
+                        padding:5px 10px;
+                        letter-spacing: 1px;
+                       
+
+}
+
+.card {
+    border: 1px solid #fdf000;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .pagination .page-item .page-link {
+    color: #333;
+  }
+  .pagination  .page-link {
+    background-color: #fff;
+    
+  }
+
+  .page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #ffd000;
+    border-color:#fff;
+}
+  .border1{
+  border: 1px solid #fdf000;
+  }
+  
+  .nav-tabs .nav-link.active {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #000;
+  }
+  .nav-tabs{
+    background-color: #fff;
+    border-color: #ffc107;
+    color: #000;
+  }
+  .bg-warning {
+    background-color: #fff3cd !important;
+  }
+
+
+  /* Tab Container */
+                    .tab-container {
+                        display: flex;
+                        align-items: left;
+                        border: 1px solid #ddd; /* Add a border around the tab container */
+                        border-radius: 5px; /* Rounded corners */
+                        overflow: hidden; /* Ensure rounded corners work with border */
+                        
+                        
+                    }
+
+                    /* Tab Buttons */
+                    .tab-button {
+                        flex: 1; /* Equal width for both tabs */
+                        
+                        border: 1px solid #ffd000;
+                        font-size: 16px;
+                        font-weight: 600;
+                        text-align: center;
+                        cursor: pointer;
+                        background-color: #fff; /* Default background color */
+                        color: #333; /* Default text color */
+                        transition: background-color 0.3s ease, color 0.3s ease;
+                    }
+
+                    /* Active Tab Button */
+                    .tab-button.active {
+                        background-color: #ffd001; /* Highlighted tab background */
+                        color: #000; /* Highlighted tab text color */
+                    }
+
+                    /* Hover Effect */
+                    <!-- .tab-button:hover {
+                        background-color: #f0f0f0;
+                    } -->
+
+                    /* No Border Between Tabs */
+                    .tab-button:first-child {
+                        border-right: 1px solid #ddd; /* Add a divider between buttons */
+                    }
+
+
+
+             </style>
+                <!-- Top Menu -->
+                <div class="top-menu">
+                    <button class="navbar-toggler d-lg-none" type="button" id="burgerMenu" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"><i class="fa fa-solid fa-bars"></i></span>
+                    </button>
+                    <div class="logo">
+                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo" />
+                    </div>
+                    <div class="menu-links">
+                        <a href="/partner" >
+                            <i class="fa fa-chart-bar"></i> Income
+                        </a>
+                        <a href="/partner-lead" class="active">
+                            <i class="fa fa-bullhorn"></i> Leads
+                        </a>
+                        <a href="/partner-kyc">
+                            <i class="fa fa-id-card"></i> KYC
+                        </a>
+                        <a href="/partner-referral">
+                            <i class="fa fa-link"></i> Links
+                        </a>
+                        <a href="/partner-leaderboard">
+                            <i class="fa fa-medal"></i> Leaderboard
+                        </a>
+                    </div>
+                    <!-- Use <img> tag for user icon -->
+                    <t t-call="custom_web_kreator.partner_profile_dropdown"/>
+                </div>
+                <!-- Side Menu -->
+                <t t-call="custom_web_kreator.side_menu"/>
+                <!-- Main Content -->
+                <div class="main-content">
+
+                    <!-- Top Block -->
+                    <t t-call="custom_web_kreator.user_block" />
+
+                    <!-- Tab and Date Picker Section -->
+                    <form method="get" action="/partner-lead" id="date-filter-form">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="tab-container">
+                                    <button type="button" class="tab-button active" id="unverifiedOrdersBtn">Unverified
+                                        Orders
+                                    </button>
+                                    <button type="button" class="tab-button" id="visitorsBtn">Visitors</button>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3"></div>
+                            <div class="col-md-5 d-flex justify-content-end">
+                                <span class="date-range col-md-6">From
+                                    <input type="date" name="start_date" id="fromDate" data-oe-model="ir.ui.view" data-oe-id="2920" data-oe-field="arch" data-oe-xpath="/t[1]/body[1]/div[2]/form[1]/div[1]/div[3]/span[1]/input[1]" style="text-transform: uppercase;font-size: 0.75rem;"/></span>
+                                <span class="col-md-6">            To
+                                    <input type="date" name="end_date" id="toDate" data-oe-model="ir.ui.view" data-oe-id="2920" data-oe-field="arch" data-oe-xpath="/t[1]/body[1]/div[2]/form[1]/div[1]/div[3]/span[1]/input[2]" style="text-transform: uppercase;font-size: 0.75rem;"/>
+                                </span>
+                            </div>
+                            <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const startDateInput = document.getElementById('fromDate');
+        const endDateInput = document.getElementById('toDate');
+        const form = document.getElementById('date-filter-form');
+
+        // Function to get URL parameter by name
+        function getParameterByName(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Set date values from URL parameters if available
+        const startDate = getParameterByName('start_date');
+        const endDate = getParameterByName('end_date');
+
+        if (startDate) {
+            startDateInput.value = startDate;
+        }
+        if (endDate) {
+            endDateInput.value = endDate;
+        }
+
+        // Function to submit form when both dates are selected
+        function submitFormIfBothDatesSelected() {
+            if (startDateInput.value &amp;&amp; endDateInput.value) {
+                form.submit();
+            }
+        }
+
+        startDateInput.addEventListener('change', submitFormIfBothDatesSelected);
+        endDateInput.addEventListener('change', submitFormIfBothDatesSelected);
+    });
+</script>
+                        </div>
+                    </form>
+
+                    <!-- Table Section -->
+                    <div class="row bg-white border1">
+                        <!-- Unverified Orders Table -->
+                        <div class="col-md-12" id="unverifiedOrdersTable">
+                            <div class=" table-responsive">
+                                <table class="table table--alternate">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Contact Number</th>
+                                            <th>State</th>
+                                            <th>Date &amp; Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="sale_orders" t-as="order">
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="order.partner_id.name"/>
+                                                </td>
+                                                <td>
+                                                    <t t-if="order.partner_id.email">
+                                                        <a t-att-href="'mailto:' + order.partner_id.email">
+                                                            <t t-esc="order.partner_id.email"/>
+                                                        </a>
+                                                    </t>
+                                                    <t t-else="">No Email</t>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="order.partner_id.phone"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="order.state"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="order.date_order.strftime('%Y-%m-%d %H:%M:%S')"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Visitors Table -->
+                        <div class="col-md-12" id="visitorsTable" style="display: none;">
+                            <div class=" table-responsive">
+                                <table class="table table--alternate">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Contact Number</th>
+                                            <th>State</th>
+                                            <th>Date &amp; Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="sale_orders" t-as="order">
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="order.partner_id.name"/>
+                                                </td>
+                                                <td>
+                                                    <t t-if="order.partner_id.email">
+                                                        <a t-att-href="'mailto:' + order.partner_id.email">
+                                                            <t t-esc="order.partner_id.email"/>
+                                                        </a>
+                                                    </t>
+                                                    <t t-else="">No Email</t>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="order.partner_id.phone"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="order.state"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="order.date_order.strftime('%Y-%m-%d %H:%M:%S')"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        // Select the buttons
+                        const unverifiedOrdersBtn = document.getElementById('unverifiedOrdersBtn');
+                        const visitorsBtn = document.getElementById('visitorsBtn');
+
+                        // Select the content containers (tables)
+                        const unverifiedOrdersTable = document.getElementById('unverifiedOrdersTable');
+                        const visitorsTable = document.getElementById('visitorsTable');
+
+                        // Function to toggle the active class and table visibility
+                        function switchActive(buttonToActivate) {
+                        // Remove 'active' class from both buttons
+                        unverifiedOrdersBtn.classList.remove('active');
+                        visitorsBtn.classList.remove('active');
+
+                        // Add 'active' class to the clicked button
+                        buttonToActivate.classList.add('active');
+
+                        // Show/Hide the respective tables
+                        if (buttonToActivate === unverifiedOrdersBtn) {
+                        unverifiedOrdersTable.style.display = 'block';
+                        visitorsTable.style.display = 'none';
+                        } else if (buttonToActivate === visitorsBtn) {
+                        unverifiedOrdersTable.style.display = 'none';
+                        visitorsTable.style.display = 'block';
+                        }
+                        }
+
+                        // Add event listeners to the buttons
+                        unverifiedOrdersBtn.addEventListener('click', () => {
+                        switchActive(unverifiedOrdersBtn);
+                        });
+
+                        visitorsBtn.addEventListener('click', () => {
+                        switchActive(visitorsBtn);
+                        });
+
+                        // Initialize by displaying unverifiedOrdersTable and hiding visitorsTable
+                        unverifiedOrdersTable.style.display = 'block';
+                        visitorsTable.style.display = 'none';
+                    </script>
+                </div>
+                <!-- Main content end -->
+            </body>
+            <xpath expr="." position="inside">
+                <!-- Include jQuery -->
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+                <script type="text/javascript" src="/apg_js/static/src/js/menu.js"></script>
+                <link rel="stylesheet" href="/apg_js/static/src/scss/menu.css" />
+            </xpath>
+        </template>
+    </data>
+</odoo>

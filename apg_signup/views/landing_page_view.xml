@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_slide_channel_form_inherit_landing" model="ir.ui.view">
+        <field name="name">slide.channel.form.inherit</field>
+        <field name="model">slide.channel</field>
+        <field name="inherit_id" ref="website_slides.view_slide_channel_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[3]" position="after">
+                <page string="Landing Page">
+                    <group>
+                        <group string="Topbar">
+                            <field name="p1" readonly="1"/>
+                            <field name="price1"/>
+                            <field name="price2"/>
+                            <!-- <field name="primary_color"/>
+                            <field name="secondary_color"/> -->
+                            <field name="combination_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Section 1">
+                            <group>
+                                <field name="main_heading" readonly="1"/>
+                                <field name="p2"/>
+                                <field name="creator_name"/>
+                            </group>
+                            <group>
+                                <field name="image_icon" widget="image"/>
+                            </group>
+                        </page>
+                        <page string="USP">
+                            <group>
+                                <field name="c1"/>
+                                <field name="c2"/>
+                            </group>
+                            <group>
+                                <field name="c3" readonly="1"/>
+                                <field name="c4" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="About Course">
+                            <label for="course_title" string="Title"/>
+                            <field name="course_title" readonly="1"/>
+                            <field name="course_line_ids">
+                                <list editable="bottom">
+                                    <field name="landing_id" column_invisible="1"/>
+                                    <field name="p1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="What an Individual can Learn From This?">
+                            <label for="h1" string="Title"/>
+                            <field name="h1" readonly="1"/>
+                            <field name="individual_line_ids">
+                                <list editable="bottom">
+                                    <field name="landing_id" column_invisible="1"/>
+                                    <field name="c1"/>
+                                </list>
+                            </field>
+
+                        </page>
+                        <page string="Course Curriculum">
+                            <label for="h2" string="Title"/>
+                            <field name="h2" readonly="1"/>
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="landing_id" column_invisible="1"/>
+                                    <field name="h1"/>
+                                    <field name="c1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="About Me">
+                            <group>
+                                <group>
+                                    <field name="h3" readonly="1"/>
+                                    <field name="m1"/>
+                                    <field name="m2"/>
+                                    <field name="m3"/>
+                                    <field name="m4"/>
+                                    <field name="m5"/>
+                                    <field name="m6"/>
+                                </group>
+                                <group>
+                                    <field name="my_image_icon" widget="image"/>
+                                </group>
+                            </group>
+                            <field name="about_me_line_ids">
+                                <list editable="bottom">
+                                    <field name="landing_id" column_invisible="1"/>
+                                    <field name="p1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="WHO SHOULD TAKE THIS COURSE ?">
+                            <group>
+                                <field name="h6" readonly="1"/>
+                                <field name="course_ids" string="Course" widget="many2many_tags" options="{'no_open': True, 'no_create': True}"/>
+                            </group>
+                        </page>
+                        <page string="OUR STUDENTS">
+                            <group>
+                                <group>
+                                    <field name="h7" readonly="1"/>
+                                    <field name="c12"/>
+                                </group>
+                            </group>
+                            <field name="student_line_ids">
+                                <list editable="bottom">
+                                    <field name="landing_id" column_invisible="1"/>
+                                    <field name="name"/>
+                                    <field name="content_type"/>
+                                    <field name="p1"/>
+                                    <field name="rating"/>
+                                    <field name="image"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="FAQ">
+                            <label for="h5" string="Title"/>
+                            <field name="h5" readonly="1"/>
+                            <field name="faq_ids">
+                                <list editable="bottom">
+                                    <field name="landing_id" column_invisible="1"/>
+                                    <field name="q1"/>
+                                    <field name="a1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="The Complete Guide To Starting Up">
+                            <group>
+                                <field name="h4" readonly="1"/>
+                                <field name="c11"/>
+                            </group>
+                            <group>
+                                <field name="image1" widget="image"/>
+                            </group>
+                        </page>
+                        <page string="Certificate">
+                            <group>
+                                <field name="is_this_certificate_course"/>
+                                <field name="issued_by"/>
+                                <field name="upload_signature"/>
+                            </group>
+                        </page>
+                        <!-- <page string="Course Thumbnail">
+                            <group>
+                                <field name="browse_file"/>
+                            </group>
+                        </page> -->
+                    </notebook>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- WHO SHOULD TAKE THIS COURSE  -->
+
+    <record id="view_course_course_tree" model="ir.ui.view">
+        <field name="name">course.course.tree</field>
+        <field name="model">course.course</field>
+        <field name="arch" type="xml">
+            <list string="Course">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_course_course_form" model="ir.ui.view">
+        <field name="name">course.course.form</field>
+        <field name="model">course.course</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="image" widget="image"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_course_course_record" model="ir.actions.act_window">
+        <field name="name">Course</field>
+        <field name="res_model">course.course</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Data
+            </p>
+        </field>
+    </record>
+
+    <!-- Colour Combination  -->
+    <record id="view_colour_combination_tree" model="ir.ui.view">
+        <field name="name">colour.combination.tree</field>
+        <field name="model">colour.combination</field>
+        <field name="arch" type="xml">
+            <list string="Colour Combination">
+                <field name="name"/>
+                <field name="primary_color"/>
+                <field name="secondary_color"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_colour_combination_form" model="ir.ui.view">
+        <field name="name">colour.combination.form</field>
+        <field name="model">colour.combination</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="primary_color"/>
+                            <field name="secondary_color"/>
+                        </group>
+                        <group>
+                            <field name="colors_json" invisible="1"/>
+                            <field name="text_color" readonly="1" force_save="1"/>
+                            <field name="background_color" readonly="1" force_save="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_colour_combination_record" model="ir.actions.act_window">
+        <field name="name">Colour Combination</field>
+        <field name="res_model">colour.combination</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Data
+            </p>
+        </field>
+    </record>
+</odoo>

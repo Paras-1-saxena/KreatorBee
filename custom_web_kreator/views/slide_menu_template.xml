@@ -1,0 +1,287 @@
+<odoo>
+  <data>
+    <template id="side_menu" name="Side Menu">
+        <div class="side-menu collapsed" id="sidebar">
+          <ul>
+            <li class="active">
+              <a href="/partner"  class="nav-link " >
+                <i class="fa fa-chart-line"></i> Sales
+                <i class="fas fa-angle-left right"></i>
+              </a>
+              <ul class="submenu"  style="display: none;">
+                <li >
+                  <a href="/partner">
+                    <i class="fa fa-chart-bar"></i> Income
+                  </a>
+                </li>
+                <li>
+                  <a href="/partner-lead">
+                    <i class="fa fa-bullhorn"></i> Leads
+                  </a>
+                </li>
+                <li>
+                  <a href="/partner-kyc">
+                    <i class="fa fa-id-card"></i> KYC
+                  </a>
+                </li>
+                <li>
+                  <a href="/partner-referral">
+                    <i class="fa fa-link"></i> Links
+                  </a>
+                </li>
+                <li>
+                  <a href="/partner-leaderboard" >
+                    <i class="fa fa-medal"></i> Leaderboard
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <script>
+              document.addEventListener("DOMContentLoaded", function () {
+    let currentPath = window.location.pathname; // Get current page URL path
+    let menuItems = document.querySelectorAll(".submenu a");
+
+    menuItems.forEach(function (item) {
+        if (item.getAttribute("href") === currentPath) {
+            item.classList.add("active"); // Add active class to submenu
+            item.closest("li").parentElement.previousElementSibling.classList.add("active"); // Add active class to Sales menu
+        }
+    });
+});
+
+            </script>
+            
+            <li>
+              <a href="/partner-product"   class="nav-link" >
+                <i class="fa fa-box"></i> Products 
+                <i class="fas fa-angle-left right"></i>
+              </a>
+              <ul class="submenu"  style="display: none;">
+              <li >
+                <a href="/choose-product">
+                  <i class="fa fa-book-reader"></i> Choose Product
+
+                </a>
+              </li>
+              <li>  
+                <a href="/partner-product">
+                  <i class="fa fa-book"></i> My Products
+                </a>
+              </li>
+            </ul>
+          </li>
+            <li>
+              <a href="/npromote" class="nav-link">
+                <i class="fa fa-ad"></i> Promote 
+                <i class="fas fa-angle-left right"></i>
+              </a>
+              <ul class="submenu"  style="display: none;">
+                <li >
+                  <a href="/partner-training">
+                    <i class="fa fa-chalkboard-teacher"></i> Training
+                  </a>
+                </li>
+                <li> 
+                  <a href="/target">
+                    <i class="fa fa-bullseye"></i> Targets
+                  </a>
+                </li>
+                <li>  
+                  <a href="offers-coupon">
+                    <i class="fa fa-cubes"></i> Offers
+                  </a>
+                </li>
+                <li> 
+                  <a href="/npromote">
+                    <i class="fa fa-layer-group"></i> Promotional  Material
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="o-cust-community-menu">
+              <a href="#" class="nav-link">
+                <i class="fa fa-users"></i> Community
+                <i class="fas fa-angle-left right"></i>
+              </a>
+              <ul class="submenu"  style="display: none;">
+                <li>
+                  <a href="#">
+                    <i class="fa fa-users"></i> Updates
+                  </a>
+                  <a href="#">
+                    <i class="fa fa-users"></i> Creator
+                  </a>
+                  <a href="#">
+                    <i class="fa fa-users"></i> Partner
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="/nmy-courses-partner" >
+                <i class="fa fa-book-reader"/> My Courses 
+              </a>
+            </li>
+          </ul>
+      </div>
+    </template>
+
+    <template id="customer_side_menu" name="Side Menu">
+        <div class="side-menu collapsed" id="sidebar">
+          <ul>
+            <li>
+              <a href="/customer">
+                <i class="fa fa-chart-line"></i> My Courses 
+              </a>
+            </li>
+            <li>
+              <a href="/customer_courses_recommend">
+                <i class="fa fa-book-reader"></i> Recommended Courses
+              </a>
+            </li>
+            <li class="o-customer-community-menu">
+              <a href="#">
+                <i class="fa fa-pen-square"></i> Updates
+              </a>
+            </li>
+            <li>
+              <a href="/customer-support">
+                <i class="fa fa-phone-volume"></i> Customer Support
+              </a>
+            </li>
+          </ul>
+      </div>
+    </template>
+
+    <!-- Partner Profile -->
+    <template id="partner_profile_dropdown" name="Profile">
+      <div class="dropdown">
+<!--        <img class="user-icon dropdown-toggle" src="/custom_web_kreator/static/src/user1.png" alt="User Icon" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer;" />-->
+        <img class="user-icon dropdown-toggle" t-att-src="'/user/profile/image'"
+            onerror="this.onerror=null; this.src='/custom_web_kreator/static/src/user1.png';"
+            alt="User Icon" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false"
+            style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer;" />
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+          <li><a class="dropdown-item" href="/partner-profile">My Profile</a></li>
+          <li><a class="dropdown-item" href="/web/session/logout">Log Out</a></li>
+        </ul>
+      </div>
+    </template>
+
+    <!-- Customer Profile -->
+
+    <template id="customer_profile_dropdown" name="Profile">
+      <div class="dropdown">
+        <img class="user-icon dropdown-toggle" src="/custom_web_kreator/static/src/user1.png" alt="User Icon" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer;" />
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+          <li><a class="dropdown-item" href="/customer-profile">My Profile</a></li>
+          <li><a class="dropdown-item" href="/web/session/logout">Log Out</a></li>
+        </ul>
+      </div>
+    </template>
+
+    <!-- Menus for Master -->
+    <!-- /nmy-courses-partner -->
+    <!-- <template id="master_side_menu" name="Side Menu">
+        <div class="side-menu collapsed" id="sidebar">
+          <ul>
+            <li>
+              <a href="/master"  class="nav-link" >
+                <i class="fa fa-home"></i> Get Started  
+                <i class="fas fa-angle-left right"></i>
+              </a>
+              <ul class="submenu"  style="display: none;">
+                <li >
+                  <a href="/master_income_data" class="active">
+                    <i class="fa fa-chart-line"></i> Sales
+                  </a>
+                </li>
+                <li>  
+                  <a href="/nmy-courses">
+                    <i class="fa fa-box"></i> Products
+                  </a>
+                </li>
+                <li>  
+                  <a href="/partner-kyc">
+                    <i class="fa fa-id-card"></i> KYC
+                  </a>
+                </li>
+                <li> 
+                  <a href="/partner-referral">
+                    <i class="fa fa-link"></i> Links
+                  </a>
+                </li>
+                <li>  
+                  <a href="/partner-leaderboard" >
+                    <i class="fa fa-medal"></i> Leaderboard
+                  </a>
+                </li> 
+              </ul> 
+            </li>
+            <li>
+              <a href="/partner-product"   class="nav-link" >
+                <i class="fa fa-chart-line"></i> Sales
+                <i class="fas fa-angle-left right"></i>
+              </a>
+              <ul class="submenu"  style="display: none;">
+              <li >
+                <a href="/choose-product">
+                  <i class="fa fa-book-reader"></i> Choose Product
+
+                </a>
+              </li>
+              <li>  
+                <a href="/partner-product" class="active">
+                  <i class="fa fa-book"></i> My Products
+                </a>
+              </li>
+            </ul>
+          </li>
+            <li>
+              <a href="/nmy-courses" class="nav-link">
+                <i class="fa fa-box"></i> Products
+                <i class="fas fa-angle-left right"></i>
+              </a>
+              <ul class="submenu"  style="display: none;">
+                <li >
+                  <a href="/partner-training">
+                    <i class="fa fa-chalkboard-teacher"></i> Training
+                  </a>
+                </li>
+                <li> 
+                  <a href="/target">
+                    <i class="fa fa-bullseye"></i> Targets
+                  </a>
+                </li>
+                <li>  
+                  <a href="offers-coupon">
+                    <i class="fa fa-cubes"></i> Offers
+                  </a>
+                </li>
+                <li> 
+                  <a href="/npromote" class="active">
+                    <i class="fa fa-layer-group"></i> Promotional  Material
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="/forumsection">
+                <i class="fa fa-users"></i> Connect with Partner
+              </a>
+            </li>
+            <li>
+              <a href="/coming-soon" class="nav-link">
+                <i class="fa fa-address-book"></i> Customer
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link">
+                <i class="fa fa-rocket"></i> Become A Bee Partner
+              </a>
+            </li>
+          </ul>
+      </div>
+    </template> -->
+  </data>
+</odoo>

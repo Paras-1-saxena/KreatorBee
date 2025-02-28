@@ -1,0 +1,2018 @@
+<odoo>
+    <data>
+        <template id="edit_landing_page" name="Edit Landing Page">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap"
+                  rel="stylesheet"/>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+                  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+                  crossorigin="anonymous"/>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                    crossorigin="anonymous"></script>
+            <body>
+                <!-- Page-Specific Styles -->
+                <style>
+                    body,textarea {
+                    display: flex;
+                    margin: 0;
+                    font-family: 'Poppins', sans-serif;
+                    background-color: #f8f9fa;
+                    margin: 0;
+                    padding: 0;
+                    line-height: 1.6;
+                    }
+
+                    /* Top Menu */
+                    .top-menu {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 10px 20px;
+                    background-color: #fff;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    position: fixed;
+                    top: 0;
+                    z-index: 100;
+                    height: 80px; /* Adjust height for new layout */
+                    }
+
+                    .top-menu .logo img {
+                    height: 60px;
+                    width: auto;
+                    }
+
+                    .top-menu .menu-links {
+                    display: flex;
+                    gap: 40px; /* Space between menu items */
+                    align-items: center;
+                    justify-content: center;
+                    flex: 1;
+                    }
+
+                    .top-menu .menu-links a {
+                    text-decoration: none;
+                    color: #333;
+                    font-size: 14px;
+                    font-weight: 500;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 15px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
+                    height: 100%;
+                    justify-content: center;
+                    }
+
+                    .top-menu .menu-links a.active {
+                    background-color: #fef5c5;
+                    color: #000;
+                    }
+
+                    .top-menu .menu-links a:hover {
+                    background-color: #fef5c5;
+                    color: #000;
+                    }
+
+                    .top-menu .menu-links i {
+                    font-size: 24px; /* Icon size */
+                    }
+                    .top-menu .user-icon {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    cursor: pointer;
+                    margin-right: 30px; /* Adds space from the edge */
+                    }
+
+                    /* Side Menu */
+                    .side-menu {
+                    width: 250px;
+                    background-color: #fff;
+                    padding: 20px 10px;
+                    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                    position: fixed;
+                    left: 0;
+                    top: 60px; /* Adjust for top menu */
+                    height: calc(100vh - 60px);
+                    overflow-y: auto;
+                    }
+
+                    .side-menu ul {
+                    list-style: none;
+                    padding: 2;
+                    }
+
+                    .side-menu ul li {
+                    margin: 15px 0;
+                    }
+
+                    .side-menu ul li a {
+                    text-decoration: none;
+                    color: #333;
+                    font-size: 15px;
+                    font-weight: 500;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    padding: 12px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
+                    }
+
+                    .side-menu ul li a.active {
+                    background-color: #fef5c5;
+                    color: #000;
+                    }
+
+                    .side-menu ul li a:hover {
+                    background-color: #fef5c5;
+                    color: #000;
+                    }
+
+                    .main-content {
+                    margin-left: 270px; /* Adjust to create space from the side menu */
+                    padding: 20px; /* Maintain consistent padding inside the main content */
+                    margin-top: 80px; /* Adjust for the top menu */
+                    flex-grow: 1;
+                    background-color:#f8f9fa;
+                    }
+
+                    /* Progress Bar */
+                    .progress-bar-container {
+                    width: 100%;
+                    height:10px;
+                    background-color: fef5c5;
+                    margin-bottom: 20px;
+                    position: relative;
+                    }
+
+                    .progress-bar {
+                    height: 10px;
+                    background-color: #ffd001;
+                    width: 75%; /* Adjust for progress percentage */
+                    transition: width 0.3s ease;
+                    }
+
+                    .content-containter {
+                    background-color: white;
+                    height: 560px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    display: flex;
+                    flex-direction: column;
+
+
+                    overflow: hidden;
+
+
+                    }
+
+
+                    .form-container {
+                    display: flex;
+                    justify-content: space-between;
+                    flex: 1;
+                    overflow-y: auto;
+                    padding-bottom: 20px;
+                    }
+
+                    .form-content {
+                    flex: 1;
+                    padding: 0px 20px;
+                    background-color: #fff;
+                    overflow-y: auto;
+                    margin-right: 10px;
+                    }
+
+                    .form-content h3 {
+                    margin-top: 0;
+                    margin-bottom: 5px; /* Reduce the space between the title and paragraph */
+                    font-size: 16px;
+                    color: #333;
+                    font-weight: bold;
+                    }
+
+                    .form-content p {
+                    margin-top: 0; /* Remove any additional top margin */
+                    font-size: 14px;
+                    color: #333;
+                    line-height: 1.6;
+                    margin-bottom: 15px; /* Keep some space below the paragraph */
+                    }
+
+                    .image-container {
+                    flex: 1;
+                    display: flex;
+                    justify-content: center;
+
+                    }
+
+                    .image-container img {
+                    max-width: 100%;
+                    height: auto;
+                    }
+
+                    .bottom-section {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    margin-top: auto; /* Push to the bottom */
+                    }
+
+                    .radio-group {
+                    display: flex;
+                    justify-content: left;
+                    gap: 10px;
+                    margin-bottom: 10px;
+
+                    }
+
+                    .radio-group label {
+                    font-size: 14px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    margin:10px;
+                    }
+
+                    .form-actions {
+                    display: flex;
+                    justify-content: left;
+                    width: 100%;
+                    }
+
+                    button {
+                    background-color: #ffd000;
+                    color: #212529;
+                    font-family: 'Poppins', sans-serif;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    font-size: 16px;
+                    padding:5px 10px;
+                    letter-spacing: 1px;
+
+
+                    }
+
+                    .card {
+                    border: 1px solid #fdf000;
+                    border-radius: 5px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    }
+                    .pagination .page-item .page-link {
+                    color: #333;
+                    }
+                    .pagination .page-link {
+                    background-color: #fff;
+
+                    }
+
+                    .page-item.active .page-link {
+                    z-index: 3;
+                    color: #fff;
+                    background-color: #ffd000;
+                    border-color:#fff;
+                    }
+                    .border1{
+                    border: 1px solid #ffd000;
+                    border-radius: 5px;
+                    }
+                    .accordion-button {
+                    background-color: #fff;
+                    color: #000;
+                    border:1px solid #ffd000;
+                    }
+                    .accordion-body {
+                    border:1px solid #ffd000;
+                    }
+
+                    .accordion-button:not(.collapsed) {
+                    background-color: #ffd000;
+                    color:#000;
+                    box-shadow: none !important;;
+                    }
+                    .btn{
+                    float: right;
+                    }
+                    .btn-warning {
+                    background-color: #ffd000;
+                    border: none;
+                    color: #000;
+                    }
+
+                    .btn-warning:hover {
+                    background-color: #e0a800;
+                    float:right;
+                    }
+                    .form-label {
+                    margin-bottom: 0;
+                    }
+                    .trash-icon{
+                    text-align: center;
+                    align-content: center;
+                    }
+                </style>
+                <!-- Top Menu -->
+                <div class="top-menu">
+                    <div class="logo">
+                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
+                    </div>
+                    <div class="menu-links">
+                        <a href="/nmy-courses">
+                            <i class="fa fa-book-reader"></i>
+                            My Courses
+
+                        </a>
+<!--                        <a href="/creator-landing-page" class="active">-->
+<!--                            <i class="fa fa-book"></i>-->
+<!--                            Landing Page-->
+
+<!--                        </a>-->
+
+                    </div>
+                    <!-- Use <img> tag for user icon -->
+                    <t t-call="custom_web_kreator.partner_profile_dropdown"/>
+                </div>
+                <!-- Side Menu -->
+                <div class="side-menu">
+                    <ul>
+                        <li>
+                            <a href="/master" class="active">
+                                <i class="fa fa-home"></i>
+                                Get Started
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/master_income_data">
+                                <i class="fa fa-chart-line"></i>
+                                Sales
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/nmy-courses">
+                                <i class="fa fa-box"></i>
+                                Products
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/offers">
+                                <i class="fa fa-users"></i>
+                                Connect with Partner
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/coming-soon">
+                                <i class="fa fa-address-book"></i>
+                                Customer
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/#">
+                                <i class="fa fa-rocket"></i>
+                                Become A Bee Partner
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="main-content">
+
+                    <!-- Top Block -->
+                    <div class="row align-items-center bg-white mb-4 border1">
+                        <div class="col-md-10 d-flex align-items-center">
+                            <img src="/custom_web_kreator/static/src/user1.png" alt="User Image" class="rounded-circle"
+                                 style="width: 50px; height: 50px; margin-right: 15px;"/>
+                            <h5 class="p-3">Welcome,
+                                <t t-esc="user_name"/>
+                            </h5>
+                            <!-- <h6>Let&#39;s get started with your journey</h6> -->
+                        </div>
+                        <div class="col-md-2  float-end text-end">
+                            <button class="btn mt-3 mb-1">Watch Tutorial</button>
+                        </div>
+                    </div>
+
+                    <div class="accordion" id="courseAccordion">
+                        <!-- Accordion Item 1 -->
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="bannerInfoHeading">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#bannerInfo" aria-expanded="true" aria-controls="bannerInfo">
+                                    Banner Information
+                                </button>
+                            </h2>
+                            <div id="bannerInfo" class="accordion-collapse collapse show"
+                                 aria-labelledby="bannerInfoHeading" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <!-- Form Section -->
+                                        <div class="col-md-6">
+                                            <form method="post" action="/edit-landing-page"
+                                                  enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <div class="mb-3">
+                                                    <label for="creatorName" class="form-label">Name of the Creator
+                                                    </label>
+                                                    <input type="text" class="form-control" id="creatorName"
+                                                           name="creatorName"
+                                                           t-att-value="user_name" readonly="readonly"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="courseName" class="form-label">Name of the Course
+                                                    </label>
+                                                    <select class="form-control" id="courseName" name="courseName"
+                                                            disabled="disabled">
+                                                        <t t-foreach="selected_course" t-as="course">
+                                                            <option t-att-value="course.id"
+                                                                    t-att-selected="course.id == selected_course.id">
+                                                                <t t-esc="course.name"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                    <input type="hidden" name="course_id"
+                                                           t-att-value="selected_course.id"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="shortDescription" class="form-label">Course Short
+                                                        Description
+                                                    </label>
+                                                    <textarea class="form-control" id="shortDescription"
+                                                              name="shortDescription" rows="3"
+                                                              placeholder="e.g. Everything you need to know to launch your business idea."><t t-esc="description1.strip() if description1 else ''"/></textarea>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="primaryColor" class="form-label">Primary Color
+                                                    </label>
+                                                    <input type="text" class="form-control" id="primaryColor"
+                                                           name="primaryColor" placeholder="e.g. #DF00A9" t-att-value="primary_color"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="secondaryColor" class="form-label">Secondary Color
+                                                    </label>
+                                                    <input type="text" class="form-control" id="secondaryColor"
+                                                           name="secondaryColor" placeholder="e.g. #12BC00" t-att-value="secondary_color"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="uploadFile" class="form-label">Upload Photo(JPEG,PNG)
+                                                    </label>
+                                                    <div>
+                                                        <img t-att-src="image_data_uri(selected_course.image_icon) if selected_course.image_icon else '/custom_web_kreator/static/src/user2.png'" class="img img-fluid o_we_custom_image" role="img" />
+                                                    </div>
+                                                    <div id="previewContainer" style="margin-top: 10px;">
+                                                        <img id="imagePreview" src="#" alt="Preview"
+                                                             style="display: none; max-width: 100%; height: auto;"/>
+                                                        <p id="docPreview" style="display: none;">
+                                                            <a id="docLink" href="#" target="_blank"></a>
+                                                        </p>
+                                                    </div>
+                                                    <input type="file" class="form-control" id="uploadFile"
+                                                           name="uploadFile" accept="image/*" onchange="previewFile(event)"/>
+                                                </div>
+                                                <button type="submit" class="btn btn-warning">Save</button>
+                                            </form>
+                                        </div>
+                                        <script>
+                                            function previewFile(event) {
+                                            const file = event.target.files[0];
+                                            const previewContainer = document.getElementById('previewContainer');
+                                            const imagePreview = document.getElementById('imagePreview');
+                                            const docPreview = document.getElementById('docPreview');
+                                            const docLink = document.getElementById('docLink');
+                                            const existingImage = document.querySelector(".o_we_custom_image"); // Selecting the existing image
+
+                                            if (file) {
+                                            const reader = new FileReader();
+                                            reader.onload = function (e) {
+                                            const fileType = file.type;
+
+                                            // If it's an image, show it
+                                            if (fileType.startsWith("image/")) {
+                                            imagePreview.src = e.target.result;
+                                            imagePreview.style.display = "block";
+                                            docPreview.style.display = "none";
+                                            existingImage.style.display = "none"; // Hide the existing image
+                                            }
+                                            // If it's a document, show the link
+                                            else {
+                                            docLink.href = e.target.result;
+                                            docLink.textContent = file.name;
+                                            imagePreview.style.display = "none";
+                                            docPreview.style.display = "block";
+                                            existingImage.style.display = "none"; // Hide the existing image
+                                            }
+                                            };
+                                            reader.readAsDataURL(file);
+                                            previewContainer.style.display = "block";
+                                            }
+                                            }
+                                        </script>
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/Banner_Information.png"
+                                                 alt="Well Done" class="img-fluid"
+                                                 style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Accordion Items -->
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="uspHeading">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#usp" aria-expanded="false" aria-controls="usp">
+                                    Unique Selling Points (USPs)
+                                </button>
+                            </h2>
+                            <div id="usp" class="accordion-collapse collapse" aria-labelledby="uspHeading"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <!-- USPs Form Fields -->
+                                        <div class="col-md-6">
+                                            <form method="post" action="/edit-landing-page"
+                                                  enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="course_id" t-att-value="selected_course.id"/>
+
+                                                <div class="mb-3">
+                                                    <label for="UpsContent1" class="form-label">USP Content 1</label>
+                                                    <input type="text" class="form-control" id="upscontent1"
+                                                           name="ups_content1" t-att-value="usp1"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="UpsContent2" class="form-label">USP Content 2</label>
+                                                    <input type="text" class="form-control" id="upscontent2"
+                                                           name="ups_content2" t-att-value="usp2"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="UpsContent3" class="form-label">USP Content 3</label>
+                                                    <input type="text" class="form-control" id="upscontent3"
+                                                           name="ups_content3" t-att-value="usp3" readonly="readonly"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="UpsContent4" class="form-label">USP Content 4</label>
+                                                    <input type="text" class="form-control" id="upscontent4"
+                                                           name="ups_content4" t-att-value="usp4" readonly="readonly"/>
+                                                </div>
+                                                <button type="submit" class="btn btn-warning">Save</button>
+                                            </form>
+                                        </div>
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/usp11.png" alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Accordion Item 3 -->
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="aboutCourseHeading">
+                                <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#aboutCourse" aria-expanded="false"
+                                        aria-controls="aboutCourse">
+                                    About Course
+                                </button>
+                            </h2>
+                            <div id="aboutCourse" class="accordion-collapse collapse"
+                                 aria-labelledby="aboutCourseHeading" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" action="/edit-landing-page"
+                                                  enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="course_id" t-att-value="selected_course.id"/>
+
+                                                <!-- Paragraph Container -->
+                                                <div id="contentContainer" class="content-container">
+                                                    <div id="paragraphContainer">
+                                                        <t t-foreach="course_lines_p1" t-as="paragraph"
+                                                           t-key="paragraph['index']">
+                                                            <div class="mb-3">
+                                                                <!-- Dynamic Label -->
+                                                                <label t-att-for="'paragraph_' + str(paragraph['index'])"
+                                                                       class="form-label">
+                                                                    Paragraph
+                                                                    <t t-esc="paragraph['index']"/>
+                                                                </label>
+
+                                                                <!-- Text Area -->
+                                                                <textarea class="form-control"
+                                                                          t-att-id="'paragraph_' + str(paragraph['index'])"
+                                                                          t-att-name="'paragraph_' + str(paragraph['index'])"
+                                                                          placeholder="e.g. Everything you need to know to launch your business idea."><t t-esc="paragraph['value'].strip() if paragraph.get('value') else ''"/></textarea>
+
+                                                                <!-- Delete Button -->
+                                                                <div class="text-end mt-1">
+                                                                    <button type="button"
+                                                                            class="btn btn-link delete-icon"
+                                                                            onclick="deleteParagraph(this)">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </t>
+                                                    </div>
+
+                                                    <!-- Add More Paragraph Button -->
+                                                    <div class="text-start mt-5"
+                                                         style="display: flex; justify-content: space-between; align-items: center;">
+                                                        <button type="button" class="btn btn-warning add-paragraph-btn"
+                                                                onclick="addLine()">
+                                                            Add More Paragraph +
+                                                        </button>
+                                                        <button type="submit" class="btn btn-warning"
+                                                                style="margin-left: 50px;">
+                                                            Save
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/about_course.png" alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Add custom styles -->
+                                    <style>
+                                        .delete-icon {
+                                        color: black; /* Set icon color to black */
+                                        border: none;
+                                        background: none;
+                                        font-size: 18px;
+                                        cursor: pointer;
+                                        }
+
+                                        .delete-icon i {
+                                        pointer-events: none;
+                                        }
+
+                                        .text-end {
+                                        text-align: end;
+                                        }
+                                    </style>
+
+                                    <!-- Font Awesome for the trash icon -->
+                                    <script src="https://kit.fontawesome.com/a076d05399.js"
+                                            crossorigin="anonymous"></script>
+
+                                    <!-- JavaScript Functions -->
+                                    <script>
+                                        // Function to delete the parent paragraph container
+                                        function deleteParagraph(button) {
+                                        button.closest('.mb-3').remove();
+                                        }
+
+                                        // Function to add a new paragraph
+                                        function addLine() {
+                                        // Find the paragraph container
+                                        const paragraphContainer = document.getElementById('paragraphContainer');
+
+                                        // Get the current number of paragraphs
+                                        const paragraphCount = paragraphContainer.querySelectorAll('.mb-3').length + 1;
+
+                                        // Create a new paragraph div
+                                        const newParagraph = document.createElement('div');
+                                        newParagraph.classList.add('mb-3');
+
+                                        // Add content for the new paragraph
+                                        newParagraph.innerHTML = `
+                                        <label for="paragraph${paragraphCount}" class="form-label">Paragraph
+                                            ${paragraphCount}
+                                        </label>
+                                        <textarea class="form-control" name="paragraph${paragraphCount}"
+                                                  placeholder="e.g. Everything you need to know to launch your business idea."></textarea>
+                                        <!-- Delete Icon Below -->
+                                        <div class="text-end mt-1">
+                                            <button type="button" class="btn btn-link delete-icon"
+                                                    onclick="deleteParagraph(this)">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                        `;
+
+                                        // Append the new paragraph to the container
+                                        paragraphContainer.appendChild(newParagraph);
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accordion Item 4 -->
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="learnFromThisHeading">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#learnFromThis" aria-expanded="false"
+                                        aria-controls="learnFromThis">
+                                    What Can I Learn From This
+                                </button>
+                            </h2>
+                            <div id="learnFromThis" class="accordion-collapse collapse"
+                                 aria-labelledby="learnFromThisHeading" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" action="/edit-landing-page"
+                                                  enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="course_id" t-att-value="selected_course.id"/>
+                                                <!-- One2many Table -->
+                                                <div id="contentContainer1" class="content-container">
+                                                    <div id="individualParagraphContainer">
+                                                        <t t-foreach="individual_line_c1" t-as="paragraph"
+                                                           t-key="paragraph['index']">
+                                                            <div class="mb-3">
+                                                                <!-- Dynamic Label -->
+                                                                <label t-att-for="'paragraph_' + str(paragraph['index'])"
+                                                                       class="form-label">
+                                                                    Paragraph
+                                                                    <t t-esc="paragraph['index']"/>
+                                                                </label>
+
+                                                                <!-- Text Area -->
+                                                                <textarea class="form-control"
+                                                                          t-att-id="'paragraph_' + str(paragraph['index'])"
+                                                                          t-att-name="'paragraph_' + str(paragraph['index'])"
+                                                                          placeholder="e.g. Everything you need to know to launch your business idea."><t t-esc="paragraph['value'].strip() if paragraph.get('value') else ''"/></textarea>
+
+                                                                <!-- Delete Button -->
+                                                                <div class="text-end mt-1">
+                                                                    <button type="button"
+                                                                            class="btn btn-link delete-icon"
+                                                                            onclick="deleteParagraph(this)">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </t>
+                                                    </div>
+
+                                                    <!-- Add New Line Button -->
+                                                    <div class="text-start mt-5"
+                                                         style="display: flex; justify-content: space-between; align-items: center;">
+                                                        <button type="button" class="btn btn-warning add-paragraph-btn"
+                                                                onclick="addIndividualParagraph()">
+                                                            Add More Paragraph +
+                                                        </button>
+                                                        <button type="submit" class="btn btn-warning"
+                                                                style="margin-left: 50px;">
+                                                            Save
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/What_CanI_Learn_From_This.png"
+                                                 alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Add custom styles -->
+                                    <style>
+                                        .delete-icon {
+                                        color: black; /* Set icon color to black */
+                                        border: none;
+                                        background: none;
+                                        font-size: 18px;
+                                        cursor: pointer;
+                                        }
+
+                                        .delete-icon i {
+                                        pointer-events: none;
+                                        }
+
+                                        .text-end {
+                                        text-align: end;
+                                        }
+                                    </style>
+
+                                    <!-- Font Awesome for the trash icon -->
+                                    <script src="https://kit.fontawesome.com/a076d05399.js"
+                                            crossorigin="anonymous"></script>
+
+                                    <!-- JavaScript Functions -->
+                                    <script>
+                                        // Function to delete the parent paragraph container
+                                        function deleteParagraphh(button) {
+                                        button.closest('.mb-3').remove();
+                                        }
+
+                                        function addIndividualParagraph() {
+                                        const container = document.getElementById('individualParagraphContainer');
+                                        const paragraphCount = container.querySelectorAll('.mb-3').length + 1;
+
+                                        const newParagraph = document.createElement('div');
+                                        newParagraph.classList.add('mb-3');
+                                        newParagraph.innerHTML = `
+                                        <label for="individual_paragraph${paragraphCount}" class="form-label">
+                                            Paragraph ${paragraphCount}
+                                        </label>
+                                        <textarea class="form-control" name="individual_paragraph${paragraphCount}"
+                                                  placeholder="e.g. Everything you need to know to launch your business idea."></textarea>
+                                        <div class="text-end mt-1">
+                                            <button type="button" class="btn btn-link delete-icon"
+                                                    onclick="deleteParagraphh(this)">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                        `;
+                                        container.appendChild(newParagraph);
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accordion Item 5 -->
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="curriculumHeading">
+                                <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#curriculum" aria-expanded="false"
+                                        aria-controls="curriculum">
+                                    Course Curriculum
+                                </button>
+                            </h2>
+                            <div id="curriculum" class="accordion-collapse collapse"
+                                 aria-labelledby="curriculumHeading"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" action="/edit-landing-page"
+                                                  enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="course_id" t-att-value="selected_course.id"/>
+                                                <!-- One2many Table -->
+                                                <table class="table table-bordered w-100">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Title</th>
+                                                            <th>Content</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="courseCurriculumTableBody"> <!-- Unique ID here -->
+                                                        <!-- Render rows dynamically -->
+                                                        <t t-foreach="lines" t-as="line" t-key="line.id">
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="text" class="form-control"
+                                                                           t-att-value="line.title"
+                                                                           name="title"
+                                                                           placeholder="Enter content"/>
+                                                                </td>
+                                                                <td>
+                                                                    <textarea class="form-control"
+                                                                              t-att-value="line.content"
+                                                                              name="content"></textarea>
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-danger"
+                                                                            t-att-data-id="line.id"
+                                                                            onclick="removeCourseCurriculumLine(this)">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </t>
+                                                    </tbody>
+                                                </table>
+
+                                                <!-- Add Line Button at the bottom -->
+                                                <div class="text-start mt-3">
+                                                    <button type="button"
+                                                            class="o-cust-add-more-btn"
+                                                            onclick="addCourseCurriculumLine()">
+                                                        Add More +
+                                                    </button>
+                                                    <button type="submit" class="btn btn-warning save-btn"
+                                                            onclick="saveContent()">
+                                                        Save
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <script>
+                                            // Array to hold Course Curriculum data
+                                            let courseCurriculumLines = [
+                                            { id: Date.now(), title: "", content: "" },
+                                            { id: Date.now() + 1, title: "", content: "" },
+                                            { id: Date.now() + 2, title: "", content: "" },
+                                            { id: Date.now() + 3, title: "", content: "" }
+                                            ];
+
+                                            // Function to add a new line
+                                            function addCourseCurriculumLine() {
+                                            const newLine = { id: Date.now(), title: "", content: "" };
+                                            courseCurriculumLines.push(newLine);
+                                            renderCourseCurriculumTable();
+                                            }
+
+                                            // Function to remove a line
+                                            function removeCourseCurriculumLine(button) {
+                                            const lineId = parseInt(button.getAttribute("data-id"));
+                                            courseCurriculumLines = courseCurriculumLines.filter(line => line.id !==
+                                            lineId);
+                                            renderCourseCurriculumTable();
+                                            }
+
+                                            // Function to render the table
+                                            function renderCourseCurriculumTable() {
+                                            const tbody = document.getElementById("courseCurriculumTableBody");
+                                            if (!tbody) {
+                                            console.error("Table body element not found");
+                                            return;
+                                            }
+
+                                            tbody.innerHTML = ""; // Clear the table
+
+                                            courseCurriculumLines.forEach(line => {
+                                            const row = document.createElement("tr");
+
+                                            // Title cell
+                                            const titleCell = document.createElement("td");
+                                            const titleInput = document.createElement("input");
+                                            titleInput.type = "text";
+                                            titleInput.className = "form-control";
+                                            titleInput.value = line.title;
+                                            titleInput.placeholder = "Enter title";
+                                            titleInput.oninput = (event) => {
+                                            line.title = event.target.value;
+                                            };
+                                            titleCell.appendChild(titleInput);
+
+                                            // Content cell
+                                            const contentCell = document.createElement("td");
+                                            const contentInput = document.createElement("textarea");
+                                            contentInput.className = "form-control";
+                                            contentInput.value = line.content;
+                                            contentInput.placeholder = "Enter content";
+                                            contentInput.oninput = (event) => {
+                                            line.content = event.target.value;
+                                            };
+                                            contentCell.appendChild(contentInput);
+
+                                            // Action cell
+                                            const actionCell = document.createElement("td");
+                                            const deleteIcon = document.createElement("i");
+                                            deleteIcon.className = "fas fa-trash"; // Font Awesome trash icon
+                                            deleteIcon.style.color = "black"; // Black color for the icon
+                                            deleteIcon.style.cursor = "pointer"; // Pointer cursor for better UX
+                                            deleteIcon.style.fontSize = "20px"; // Adjust icon size as needed
+                                            deleteIcon.setAttribute("data-id", line.id);
+                                            deleteIcon.onclick = () => removeCourseCurriculumLine(deleteIcon);
+                                            actionCell.appendChild(deleteIcon);
+
+                                            // Append cells to the row
+                                            row.appendChild(titleCell);
+                                            row.appendChild(contentCell);
+                                            row.appendChild(actionCell);
+
+                                            // Append row to the table
+                                            tbody.appendChild(row);
+                                            });
+                                            }
+
+                                            // Attach data to the form before submission
+                                            document.querySelector("form").addEventListener("submit", function
+                                            (event) {
+                                            // Create a hidden input for "Course Curriculum" lines
+                                            const hiddenInput = document.createElement("input");
+                                            hiddenInput.type = "hidden";
+                                            hiddenInput.name = "course_curriculum_data";
+                                            hiddenInput.value = JSON.stringify(courseCurriculumLines);
+                                            this.appendChild(hiddenInput);
+                                            });
+
+                                            // Initial render when the DOM is ready
+                                            document.addEventListener("DOMContentLoaded", function () {
+                                            renderCourseCurriculumTable();
+                                            });
+                                        </script>
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/Course_Curriculum.png" alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accordion Item 6 -->
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="aboutMeHeading">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#aboutMe" aria-expanded="false" aria-controls="aboutMe">
+                                    About Me
+                                </button>
+                            </h2>
+                            <div id="aboutMe" class="accordion-collapse collapse" aria-labelledby="aboutMeHeading"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" action="/edit-landing-page"
+                                                  enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="course_id" t-att-value="selected_course.id"/>
+                                                <div class="mb-3">
+                                                    <label for="faceBook" class="form-label">Facebook
+                                                    </label>
+                                                    <input type="text" class="form-control" id="faceBook"
+                                                           name="face_book" placeholder="e.g. facebook"
+                                                           t-att-value="m1"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="scoialMediaX" class="form-label">X(Formerly Twitter)
+                                                    </label>
+                                                    <input type="text" class="form-control" id="scoialMediaX"
+                                                           name="social_media_x" placeholder="e.g. social media x"
+                                                           t-att-value="m2"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="LinkedIn" class="form-label">Linked In
+                                                    </label>
+                                                    <input type="text" class="form-control" id="LinkedIn"
+                                                           name="linked_in" placeholder="e.g. Linked in"
+                                                           t-att-value="m3"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="youTube" class="form-label">You Tube
+                                                    </label>
+                                                    <input type="text" class="form-control" id="youTube"
+                                                           name="you_tube" placeholder="e.g. You Tube"
+                                                           t-att-value="m4"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="instaGram" class="form-label">Instagram
+                                                    </label>
+                                                    <input type="text" class="form-control" id="instaGram"
+                                                           name="instagram" placeholder="e.g. instagram"
+                                                           t-att-value="m5"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="pinInterest" class="form-label">Pinterest
+                                                    </label>
+                                                    <input type="text" class="form-control" id="pinInterest"
+                                                           name="pinInterest" placeholder="e.g. pinInterest"
+                                                           t-att-value="m6"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="creatorImage" class="form-label">Creator Image</label>
+                                                    <div>
+                                                        <img t-att-src="image_data_uri(selected_course.my_image_icon) if selected_course.my_image_icon else '/custom_web_kreator/static/src/user2.png'" id="existingCreatorImage" class="img img-fluid o_we_custom_image" role="img" />
+                                                    </div>
+                                                    <div id="previewCreatorimage" style="margin-top: 10px;">
+                                                        <img id="creatorimagePreview" src="#" alt="Preview"
+                                                             style="display: none; max-width: 100%; height: auto;"/>
+                                                        <p id="doccPreview" style="display: none;">
+                                                            <a id="doccLink" href="#" target="_blank"></a>
+                                                        </p>
+                                                    </div>
+                                                    <input type="file" class="form-control" id="creatorimageFile"
+                                                           name="creator_image_file" accept="image/*" onchange="previewImage(event)"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <table class="table table-bordered w-100">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Content</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="aboutMeTableBody"> <!-- Unique ID here -->
+                                                            <!-- Render rows dynamically -->
+                                                            <t t-foreach="lines" t-as="line" t-key="line.id">
+                                                                <tr>
+                                                                    <td>
+                                                                        <textarea class="form-control"
+                                                                                  name="content"></textarea>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-danger"
+                                                                                t-att-data-id="line.id"
+                                                                                onclick="removeAboutMeLine(this)">
+                                                                            <i class="fas fa-trash"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </t>
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="text-start mt-3">
+                                                        <button type="button"
+                                                                class="o-cust-add-more-btn"
+                                                                onclick="addAboutMeLine()">
+                                                            Add More +
+                                                        </button>
+                                                        <button type="submit" class="btn btn-warning save-btn"
+                                                                onclick="saveContent()">
+                                                            Save
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <script>
+                                            function previewImage(event) {
+                                            const file = event.target.files[0];
+                                            const previewCreatorimage = document.getElementById('previewCreatorimage');
+                                            const creatorimagePreview = document.getElementById('creatorimagePreview');
+                                            const doccPreview = document.getElementById('doccPreview');
+                                            const doccLink = document.getElementById('doccLink');
+                                            const existingCreatorImage = document.getElementById('existingCreatorImage');
+
+                                            if (file) {
+                                            const reader = new FileReader();
+                                            reader.onload = function (e) {
+                                            const fileType = file.type;
+
+                                            // If it's an image, show it
+                                            if (fileType.startsWith("image/")) {
+                                            creatorimagePreview.src = e.target.result;
+                                            creatorimagePreview.style.display = "block";
+                                            doccPreview.style.display = "none";
+                                            existingCreatorImage.style.display = "none";
+                                            }
+                                            // If it's a document, show the link
+                                            else {
+                                            doccLink.href = e.target.result;
+                                            doccLink.textContent = file.name;
+                                            creatorimagePreview.style.display = "none";
+                                            doccPreview.style.display = "block";
+                                            existingCreatorImage.style.display = "none";
+                                            }
+                                            };
+                                            reader.readAsDataURL(file);
+                                            previewCreatorimage.style.display = "block";
+                                            }
+                                            }
+
+                                            // Declare and initialize the array for "About Me"
+                                            let aboutMeLines = [{ id: Date.now(), content: "" }];
+
+                                            // Function to add a new line for "About Me"
+                                            function addAboutMeLine() {
+                                            const newLine = { id: Date.now(), content: "" };
+                                            aboutMeLines.push(newLine);
+                                            renderAboutMeTable();
+                                            }
+
+                                            // Function to remove a line from "About Me"
+                                            function removeAboutMeLine(button) {
+                                            const lineId = parseInt(button.getAttribute("data-id"));
+                                            aboutMeLines = aboutMeLines.filter(line => line.id !== lineId);
+                                            renderAboutMeTable();
+                                            }
+
+                                            // Function to render the "About Me" table
+                                            function renderAboutMeTable() {
+                                            const tbody = document.getElementById("aboutMeTableBody");
+                                            if (!tbody) {
+                                            console.error("Table body element not found");
+                                            return;
+                                            }
+
+                                            tbody.innerHTML = ""; // Clear the table
+
+                                            aboutMeLines.forEach(line => {
+                                            const row = document.createElement("tr");
+
+                                            // Content cell
+                                            const contentCell = document.createElement("td");
+                                            const textarea = document.createElement("textarea");
+                                            textarea.className = "form-control";
+                                            textarea.value = line.content;
+                                            console.log("Table body element not found",line.content);
+                                            textarea.rows = 3; // Optional: Set number of rows for the textarea
+                                            textarea.placeholder = "Enter content";
+                                            textarea.oninput = (event) => {
+                                            line.content = event.target.value;
+                                            };
+                                            contentCell.appendChild(textarea);
+
+                                            // Action cell
+                                            const actionCell = document.createElement("td");
+                                            const deleteIcon = document.createElement("i");
+                                            deleteIcon.className = "fas fa-trash"; // Font Awesome trash icon class
+                                            deleteIcon.style.color = "black"; // Set icon color to black
+                                            deleteIcon.style.cursor = "pointer"; // Add pointer cursor for better UX
+                                            deleteIcon.setAttribute("data-id", line.id);
+                                            deleteIcon.onclick = () => removeAboutMeLine(deleteIcon);
+                                            actionCell.appendChild(deleteIcon);
+
+                                            // Append cells to the row
+                                            row.appendChild(contentCell);
+                                            row.appendChild(actionCell);
+
+                                            // Append row to the table
+                                            tbody.appendChild(row);
+                                            });
+                                            }
+
+                                            document.querySelector("form").addEventListener("submit", function (event) {
+                                            // Check if the form already has the hidden input to avoid duplicates
+                                            let hiddenInput = this.querySelector('input[name="about_me_data"]');
+                                            if (!hiddenInput) {
+                                            hiddenInput = document.createElement("input");
+                                            hiddenInput.type = "hidden";
+                                            hiddenInput.name = "about_me_data";
+                                            this.appendChild(hiddenInput);
+                                            }
+                                            // Assign JSON string of aboutMeLines to the hidden input
+                                            hiddenInput.value = JSON.stringify(aboutMeLines);
+                                            });
+
+                                            // Initial render for "About Me" table when the DOM is ready
+                                            document.addEventListener("DOMContentLoaded", function () {
+                                            renderAboutMeTable();
+                                            });
+                                        </script>
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/About_Me.png" alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="aboutwhotakecourse">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#whoTakeCourse" aria-expanded="false"
+                                        aria-controls="whoTakeCourse">
+                                    Who Should Take This Course?
+                                </button>
+                            </h2>
+                            <div id="whoTakeCourse" class="accordion-collapse collapse"
+                                 aria-labelledby="aboutwhotakecourse"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" action="/edit-landing-page"
+                                                  enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="course_id" t-att-value="selected_course.id"/>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <t t-foreach="target_audience_options[:28]" t-as="audience">
+                                                            <div class="form-check">
+                                                                <input type="checkbox" class="form-check-input"
+                                                                       t-att-id="'audience_' + str(audience.id)"
+                                                                       t-att-name="'target_audience[]'"
+                                                                       t-att-value="audience.name"
+                                                                       t-att-checked="audience.id in course_ids"/>
+                                                                <label class="form-check-label"
+                                                                       t-att-for="'audience_' + str(audience.id)">
+                                                                    <t t-esc="audience.name"/>
+                                                                </label>
+                                                            </div>
+                                                        </t>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <t t-foreach="target_audience_options[28:]" t-as="audience">
+                                                            <div class="form-check">
+                                                                <input type="checkbox" class="form-check-input"
+                                                                       t-att-id="'audience_' + str(audience.id)"
+                                                                       t-att-name="'target_audience[]'"
+                                                                       t-att-value="audience.name"
+                                                                       t-att-checked="audience.id in course_ids"/>
+                                                                <label class="form-check-label"
+                                                                       t-att-for="'audience_' + str(audience.id)">
+                                                                    <t t-esc="audience.name"/>
+                                                                </label>
+                                                            </div>
+                                                        </t>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <button type="submit" class="btn btn-warning save-btn">
+                                                            Save
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/Who_should_take_this_course_.png"
+                                                 alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="ourstudents_section">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#OurStudents" aria-expanded="false"
+                                        aria-controls="OurStudents">
+                                    Our Students
+                                </button>
+                            </h2>
+                            <div id="OurStudents" class="accordion-collapse collapse" aria-labelledby="ourstudents"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" action="/edit-landing-page"
+                                                  enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="course_id" t-att-value="selected_course.id"/>
+                                                <div id="testimonialContainer">
+                                                    <div class="testimonial-row mb-3 row">
+                                                        <label for="testimonialSection1" class="form-label"
+                                                               style="font-weight: bold;">Section 1
+                                                        </label>
+                                                        <div class="mb-3 row" style="padding-right: 0px;">
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Name</label>
+                                                                <input type="text" class="form-control" name="name[]"
+                                                                       placeholder="e.g. Satish Pandey"/>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Rating</label>
+                                                                <select class="form-select" name="rating[]">
+                                                                    <option value="1">1 star</option>
+                                                                    <option value="2">2 star</option>
+                                                                    <option value="3">3 star</option>
+                                                                    <option value="4">4 star</option>
+                                                                    <option value="5">5 star</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="testimonialtype1" class="form-label">Testimonial
+                                                                Type
+                                                            </label>
+                                                            <select class="form-select testimonial-type"
+                                                                    name="testimonial_type" id="testimonialtype1"
+                                                                    onchange="handleTestimonialTypeChange(1)">
+                                                                <option value="" selected="selected">Select</option>
+                                                                <option value="text">Text</option>
+                                                                <option value="video">Video</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3" id="textField1" style="display: none;">
+                                                            <label class="form-label">Text</label>
+                                                            <input type="text" class="form-control" name="text[]"
+                                                                   placeholder="e.g. Enter text"/>
+                                                        </div>
+                                                        <div class="mb-3" id="testimonialField1" style="display: none;">
+                                                            <label class="form-label">Enter Testimonial</label>
+                                                            <textarea class="form-control" name="content[]"
+                                                                      placeholder="e.g. Enter your testimonial here."></textarea>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Upload Student Photo(JPEG/PNG)
+                                                            </label>
+                                                            <div id="previewstudentphoto" style="margin-top: 10px;">
+                                                                <img id="PreviewPhoto" src="#" alt="Preview"
+                                                                     style="display: none; max-width: 100%; height: auto;"/>
+                                                                <p id="imagePreview" style="display: none;">
+                                                                    <a id="imageLink" href="#" target="_blank"></a>
+                                                                </p>
+                                                            </div>
+                                                            <input type="file" class="form-control" name="pushFile[]" accept="image/*" onchange="previewFileImage(event)"/>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <button type="button" class="btn btn-link delete-icon"
+                                                                    onclick="deleteStudentsLine(this)">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div class="text-start mt-3">
+                                                        <button type="button" class="o-cust-add-more-btn"
+                                                                onclick="addourstudentsLine()">Add More +
+                                                        </button>
+                                                        <button type="submit" class="btn btn-warning save-btn">Save
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            <script>
+                                                function previewFileImage(event) {
+                                                const file = event.target.files[0];
+                                                const previewstudentphoto = document.getElementById('previewstudentphoto');
+                                                const PreviewPhoto = document.getElementById('PreviewPhoto');
+                                                const imagePreview = document.getElementById('imagePreview');
+                                                const imageLink = document.getElementById('imageLink');
+
+                                                if (file) {
+                                                const reader = new FileReader();
+                                                reader.onload = function (e) {
+                                                const fileType = file.type;
+
+                                                // If it's an image, show it
+                                                if (fileType.startsWith("image/")) {
+                                                PreviewPhoto.src = e.target.result;
+                                                PreviewPhoto.style.display = "block";
+                                                imagePreview.style.display = "none";
+                                                }
+                                                // If it's a document, show the link
+                                                else {
+                                                imageLink.href = e.target.result;
+                                                imageLink.textContent = file.name;
+                                                PreviewPhoto.style.display = "none";
+                                                imagePreview.style.display = "block";
+                                                }
+                                                };
+                                                reader.readAsDataURL(file);
+                                                previewstudentphoto.style.display = "block";
+                                                }
+                                                }
+
+                                                let containerCount = 1;
+
+                                                // Function to handle Testimonial Type changes
+                                                function handleTestimonialTypeChange(containerId) {
+                                                const testimonialType =
+                                                document.getElementById(`testimonialtype${containerId}`);
+                                                const textField = document.getElementById(`textField${containerId}`);
+                                                const testimonialField =
+                                                document.getElementById(`testimonialField${containerId}`);
+
+                                                // Reset visibility for both fields
+                                                textField.style.display = 'none';
+                                                testimonialField.style.display = 'none';
+
+                                                // Show the appropriate field based on the selected value
+                                                if (testimonialType.value === 'text') {
+                                                textField.style.display = 'block';
+                                                } else if (testimonialType.value === 'video') {
+                                                testimonialField.style.display = 'block';
+                                                }
+                                                }
+
+                                                // Function to add a new testimonial container
+                                                function addourstudentsLine() {
+                                                containerCount++; // Increment container count
+                                                const testimonialContainer =
+                                                document.getElementById('testimonialContainer');
+
+                                                const newRow = document.createElement('div');
+                                                newRow.className = 'testimonial-row mb-3 row';
+                                                newRow.innerHTML = `
+                                                <label for="testimonialSection${containerCount}" class="form-label"
+                                                       style="font-weight: bold;">Section ${containerCount}
+                                                </label>
+                                                <div class="mb-3 row" style="padding-right: 0px;">
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Name</label>
+                                                        <input type="text" class="form-control" name="name[]"
+                                                               placeholder="e.g. Satish Pandey"/>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Rating</label>
+                                                        <select class="form-select" name="rating[]">
+                                                            <option value="1">1 star</option>
+                                                            <option value="2">2 star</option>
+                                                            <option value="3">3 star</option>
+                                                            <option value="4">4 star</option>
+                                                            <option value="5">5 star</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="testimonialtype${containerCount}" class="form-label">
+                                                        Testimonial Type
+                                                    </label>
+                                                    <select class="form-select testimonial-type"
+                                                            name="Testimonial Type[]"
+                                                            id="testimonialtype${containerCount}"
+                                                            onchange="handleTestimonialTypeChange(${containerCount})">
+                                                        <option value="" selected="selected">Select</option>
+                                                        <option value="text">Text</option>
+                                                        <option value="video">Video</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3" id="textField${containerCount}"
+                                                     style="display: none;">
+                                                    <label class="form-label">Text</label>
+                                                    <input type="text" class="form-control" name="text[]"
+                                                           placeholder="e.g. Enter text"/>
+                                                </div>
+                                                <div class="mb-3" id="testimonialField${containerCount}"
+                                                     style="display: none;">
+                                                    <label class="form-label">Enter Testimonial</label>
+                                                    <textarea class="form-control" name="content[]"
+                                                              placeholder="e.g. Enter your testimonial here."></textarea>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Upload File</label>
+                                                    <input type="file" class="form-control" name="pushFile[]"/>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <button type="button" class="btn btn-link delete-icon"
+                                                            onclick="deleteStudentsLine(this)">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                                `;
+                                                testimonialContainer.appendChild(newRow);
+                                                }
+
+                                                // Function to delete a testimonial container
+                                                function deleteStudentsLine(button) {
+                                                const testimonialRow = button.closest('.testimonial-row');
+                                                if (testimonialRow) {
+                                                testimonialRow.remove();
+                                                }
+                                                }
+                                            </script>
+                                        </div>
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/Testimonials.png" alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="faq_section">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq" aria-expanded="false"
+                                        aria-controls="faq">
+                                    FAQ
+                                </button>
+                            </h2>
+                            <div id="faq" class="accordion-collapse collapse" aria-labelledby="faq"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" action="/edit-landing-page"
+                                                  enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="course_id" t-att-value="selected_course.id"/>
+                                                <div id="faqContainer">
+                                                    <div class="faq-Section">
+                                                        <div class="mb-3">
+                                                            <label for="question" class="form-label">Question 1</label>
+                                                            <input type="text" class="form-control"
+                                                                   name="question"
+                                                                   placeholder="e.g. question 1"/>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="answer" class="form-label">Answer</label>
+                                                            <textarea class="form-control" id="answer" name="answer"
+                                                                      placeholder="e.g. Enter your answer."></textarea>
+                                                            <div class="text-end mt-1">
+                                                                <button type="button" class="btn btn-link delete-icon"
+                                                                        onclick="deleteFaqSection(this)">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="faq-Section">
+                                                        <div class="mb-3">
+                                                            <label for="question" class="form-label">Question 2</label>
+                                                            <input type="text" class="form-control"
+                                                                   name="question"
+                                                                   placeholder="e.g. question 2"/>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="answer" class="form-label">Answer</label>
+                                                            <textarea class="form-control" id="answer" name="answer"
+                                                                      placeholder="e.g. Enter your answer."></textarea>
+                                                            <div class="text-end mt-1">
+                                                                <button type="button" class="btn btn-link delete-icon"
+                                                                        onclick="deleteFaqSection(this)">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-5 mb-3">
+                                                    <div class="text-start mt-3">
+                                                        <button type="button" class="o-cust-add-more-btn"
+                                                                onclick="addFaqLine()">Add More +
+                                                        </button>
+                                                        <button type="submit" class="btn btn-warning save-btn">Save
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <script>
+                                            // Function to add a new testimonial container
+                                            function addFaqLine() {
+                                            const faqContainer = document.getElementById('faqContainer');
+
+                                            const faqCount = faqContainer.querySelectorAll('.faq-Section').length + 1;
+
+                                            const newRow = document.createElement('div');
+                                            newRow.className = 'faq-Section';
+                                            newRow.innerHTML = `
+                                            <div class="mb-3">
+                                                <label for="question${faqCount}" class="form-label">Question
+                                                    ${faqCount}
+                                                </label>
+                                                <input type="text" class="form-control"
+                                                       name="question${faqCount}"
+                                                       placeholder="e.g. question ${faqCount}"/>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="answer" class="form-label">Answer</label>
+                                                <textarea class="form-control" id="answer" name="answer"
+                                                          placeholder="e.g. Enter your answer."></textarea>
+                                                <div class="text-end mt-1">
+                                                    <button type="button" class="btn btn-link delete-icon"
+                                                            onclick="deleteFaqSection(this)">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            `;
+                                            faqContainer.appendChild(newRow);
+                                            }
+
+                                            // Function to delete a FAQ container
+                                            function deleteFaqSection(button) {
+                                            const faqSectionRow = button.closest('.faq-Section');
+                                            if (faqSectionRow) {
+                                            faqSectionRow.remove();
+                                            }
+                                            }
+                                        </script>
+
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/Frequently_asked_questions.png"
+                                                 alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="thecompleteguide">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#completeguide" aria-expanded="false"
+                                        aria-controls="completeguide">
+                                    Footer Information
+                                </button>
+                            </h2>
+                            <div id="completeguide" class="accordion-collapse collapse"
+                                 aria-labelledby="completeguide"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" action="/edit-landing-page"
+                                                  enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="course_id" t-att-value="selected_course.id"/>
+                                                <div class="mb-3">
+                                                    <label for="courseName" class="form-label">Name of the Course
+                                                    </label>
+                                                    <select class="form-control" id="courseName" name="courseName"
+                                                            disabled="disabled">
+                                                        <t t-foreach="selected_course" t-as="course">
+                                                            <option t-att-value="course.id"
+                                                                    t-att-selected="course.id == selected_course.id">
+                                                                <t t-esc="course.name"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                    <input type="hidden" name="course_id"
+                                                           t-att-value="selected_course.id"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="shortDescription" class="form-label">Course Short
+                                                        Description
+                                                    </label>
+
+                                                    <textarea class="form-control" id="shortDescription"
+                                                              name="shortDescription" rows="3"
+                                                              placeholder="e.g. Everything you need to know to launch your business idea."><t t-esc="c11.strip() if c11 else ''"/></textarea>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="uploadFile" class="form-label">Upload Your
+                                                        Photo(JPEG,PNG)
+                                                    </label>
+                                                    <div>
+                                                        <img t-att-src="image_data_uri(selected_course.image1) if selected_course.image1 else '/custom_web_kreator/static/src/user2.png'" id="existingFooterImage" class="img img-fluid o_we_custom_image" role="img" />
+                                                    </div>
+                                                    <div id="previewFooterImage" style="margin-top: 10px;">
+                                                        <img id="footerimagePreview" src="#" alt="Preview"
+                                                             style="display: none; max-width: 100%; height: auto;"/>
+                                                        <p id="footerdocPreview" style="display: none;">
+                                                            <a id="footerdocLink" href="#" target="_blank"></a>
+                                                        </p>
+                                                    </div>
+                                                    <input type="file" class="form-control" id="uploadFile"
+                                                           name="uploadFiless" accept="image/*" onchange="previewFooterFile(event)"/>
+                                                </div>
+                                                <button type="submit" class="btn btn-warning">Save</button>
+                                            </form>
+                                        </div>
+                                        <script>
+                                            function previewFooterFile(event) {
+                                            const file = event.target.files[0];
+                                            const previewFooterImage = document.getElementById('previewFooterImage');
+                                            const footerimagePreview = document.getElementById('footerimagePreview');
+                                            const footerdocPreview = document.getElementById('footerdocPreview');
+                                            const footerdocLink = document.getElementById('footerdocLink');
+                                            const existingFooterImage = document.getElementById('existingFooterImage');
+
+                                            if (file) {
+                                            const reader = new FileReader();
+                                            reader.onload = function (e) {
+                                            const fileType = file.type;
+
+                                            // If it's an image, show it
+                                            if (fileType.startsWith("image/")) {
+                                            footerimagePreview.src = e.target.result;
+                                            footerimagePreview.style.display = "block";
+                                            footerdocPreview.style.display = "none";
+                                            existingFooterImage.style.display = "none";
+                                            }
+                                            // If it's a document, show the link
+                                            else {
+                                            footerdocLink.href = e.target.result;
+                                            footerdocLink.textContent = file.name;
+                                            footerimagePreview.style.display = "none";
+                                            footerdocPreview.style.display = "block";
+                                            existingFooterImage.style.display = "none";
+                                            }
+                                            };
+                                            reader.readAsDataURL(file);
+                                            previewFooterImage.style.display = "block";
+                                            }
+                                            }
+                                        </script>
+
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/Footer_Information.png"
+                                                 alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="certificate_section">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#certificate" aria-expanded="false"
+                                        aria-controls="certificate">
+                                    Certificate
+                                </button>
+                            </h2>
+                            <div id="certificate" class="accordion-collapse collapse" aria-labelledby="certificate"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" action="/edit-landing-page"
+                                                  enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="course_id" t-att-value="selected_course.id"/>
+                                                <div class="mb-3">
+                                                    <label for="certificate_course" class="form-label">Is This
+                                                        Certificate Course?
+                                                    </label>
+                                                    <select class="form-select" name="certificate_course"
+                                                            id="certificate_course">
+                                                        <option value="yes"
+                                                                t-att-selected="is_this_certificate_course == 'yes'">Yes
+                                                        </option>
+                                                        <option value="no"
+                                                                t-att-selected="is_this_certificate_course == 'no'">No
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div id="certificate_fields" style="display: none;">
+                                                    <div class="mb-3">
+                                                        <label for="certificate" class="form-label">Certificate Issued
+                                                            By
+                                                        </label>
+                                                        <input type="text" class="form-control" id="certificate"
+                                                               name="certificate"
+                                                               placeholder="e.g. Company Name / Creator Name"
+                                                               t-att-value="issued_by"/>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="uploadFile" class="form-label">Upload Signature or
+                                                            Logo
+                                                        </label>
+                                                        <div>
+                                                            <img t-att-src="image_data_uri(selected_course.upload_signature) if selected_course.upload_signature else '/custom_web_kreator/static/src/user2.png'" id="existingCertificateImage" class="img img-fluid o_we_custom_image" role="img" />
+                                                        </div>
+                                                        <div id="previewCertificate" style="margin-top: 10px;">
+                                                            <img id="certificateimagePreview" src="#" alt="Preview"
+                                                                 style="display: none; max-width: 100%; height: auto;"/>
+                                                            <p id="certificatedocPreview" style="display: none;">
+                                                                <a id="certificatedocLink" href="#" target="_blank"></a>
+                                                            </p>
+                                                        </div>
+                                                        <input type="file" class="form-control" id="uploadFile"
+                                                               name="certificate_File" accept="image/*" onchange="certificatepreviewFile(event)"/>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-warning">Save</button>
+                                            </form>
+                                        </div>
+                                        <script>
+                                            function certificatepreviewFile(event) {
+                                            const file = event.target.files[0];
+                                            const previewCertificate = document.getElementById('previewCertificate');
+                                            const certificateimagePreview = document.getElementById('certificateimagePreview');
+                                            const certificatedocPreview = document.getElementById('certificatedocPreview');
+                                            const certificatedocLink = document.getElementById('certificatedocLink');
+                                            const existingCertificateImage = document.getElementById('existingCertificateImage');
+
+                                            if (file) {
+                                            const reader = new FileReader();
+                                            reader.onload = function (e) {
+                                            const fileType = file.type;
+
+                                            // If it's an image, show it
+                                            if (fileType.startsWith("image/")) {
+                                            certificateimagePreview.src = e.target.result;
+                                            certificateimagePreview.style.display = "block";
+                                            certificatedocPreview.style.display = "none";
+                                            existingCertificateImage.style.display = "none";
+                                            }
+                                            // If it's a document, show the link
+                                            else {
+                                            certificatedocLink.href = e.target.result;
+                                            certificatedocLink.textContent = file.name;
+                                            certificateimagePreview.style.display = "none";
+                                            certificatedocPreview.style.display = "block";
+                                            existingCertificateImage.style.display = "block";
+                                            }
+                                            };
+                                            reader.readAsDataURL(file);
+                                            previewCertificate.style.display = "block";
+                                            }
+                                            }
+                                        </script>
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/about_course.png" alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                // Get the dropdown and the fields container
+                                const certificateDropdown = document.getElementById('certificate_course');
+                                const certificateFields = document.getElementById('certificate_fields');
+
+                                // Add an event listener to handle the change event
+                                certificateDropdown.addEventListener('change', function () {
+                                if (certificateDropdown.value === 'yes') {
+                                certificateFields.style.display = 'block'; // Show the fields
+                                } else {
+                                certificateFields.style.display = 'none'; // Hide the fields
+                                }
+                                });
+
+                                // Initial check to handle default state on page load
+                                if (certificateDropdown.value === 'yes') {
+                                certificateFields.style.display = 'block';
+                                }
+                            </script>
+                        </div>
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="coursethumbnail_section">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#coursethumbnail" aria-expanded="false"
+                                        aria-controls="coursethumbnail">
+                                    Course Thumbnail
+                                </button>
+                            </h2>
+                            <div id="coursethumbnail" class="accordion-collapse collapse"
+                                 aria-labelledby="coursethumbnail"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" action="/edit-landing-page"
+                                                  enctype="multipart/form-data">
+                                                <div class="mb-3">
+                                                    <input type="hidden" name="csrf_token"
+                                                           t-att-value="request.csrf_token()"/>
+                                                    <input type="hidden" name="course_id"
+                                                           t-att-value="selected_course.id"/>
+                                                    <label for="uploadThumbnailFile" class="form-label">Upload Thumbnail
+                                                    </label>
+                                                    <div>
+                                                        <img t-att-src="image_data_uri(selected_course.image_1920) if selected_course.image_1920 else '/custom_web_kreator/static/src/user2.png'"
+                                                            id="existingThumbnailImage" class="img img-fluid o_we_custom_image" role="img"/>
+                                                    </div>
+                                                    <div id="previewThumbnail" style="margin-top: 10px;">
+                                                        <img id="imagePreviewThumbnail" src="#" alt="Preview"
+                                                             style="display: none; max-width: 100%; height: auto;"/>
+                                                        <p id="ThumbnaildocPreview" style="display: none;">
+                                                            <a id="ThumbnaildocLink" href="#" target="_blank"></a>
+                                                        </p>
+                                                    </div>
+                                                    <input type="file" class="form-control" name="upload_thumbnail"
+                                                         accept="image/*"  onchange="uploadThumbnail(event)"></input>
+                                                </div>
+                                                <button type="submit" class="btn btn-warning">Save</button>
+                                            </form>
+                                        </div>
+                                        <script>
+                                            function uploadThumbnail(event) {
+                                            const file = event.target.files[0];
+                                            const previewThumbnail = document.getElementById('previewThumbnail');
+                                            const imagePreviewThumbnail = document.getElementById('imagePreviewThumbnail');
+                                            const ThumbnaildocPreview = document.getElementById('ThumbnaildocPreview');
+                                            const ThumbnaildocLink = document.getElementById('ThumbnaildocLink');
+                                            const existingThumbnailImage = document.getElementById('existingThumbnailImage');
+
+                                            if (file) {
+                                            const reader = new FileReader();
+                                            reader.onload = function (e) {
+                                            const fileType = file.type;
+
+                                            // If it's an image, show it
+                                            if (fileType.startsWith("image/")) {
+                                            imagePreviewThumbnail.src = e.target.result;
+                                            imagePreviewThumbnail.style.display = "block";
+                                            ThumbnaildocPreview.style.display = "none";
+                                            existingThumbnailImage.style.display = "none";
+                                            }
+                                            // If it's a document, show the link
+                                            else {
+                                            ThumbnaildocLink.href = e.target.result;
+                                            ThumbnaildocLink.textContent = file.name;
+                                            imagePreviewThumbnail.style.display = "none";
+                                            ThumbnaildocPreview.style.display = "block";
+                                            existingThumbnailImage.style.display = "block";
+                                            }
+                                            };
+                                            reader.readAsDataURL(file);
+                                            previewThumbnail.style.display = "block";
+                                            }
+                                            }
+                                        </script>
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/Course_Thumbnail_.png"
+                                                 alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Add More Items as Needed -->
+                    </div>
+
+                </div>
+                <!-- Main content end -->
+            </body>
+        </template>
+    </data>
+</odoo>

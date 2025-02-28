@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="partner_signup_second_page" name="Signup Second page partner">
+           <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty" style="background-color: #FFD000;">
+                    <div class="container">
+                        <div class="content">
+                            <div class="o-cust-signup" style="max-width: 673px !important;">
+                                <form action="/sign-up/about/update" method="post" name="signup_details" class="o-cust-signup-details-form" enctype="multipart/form-data">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="partner_id" t-att-value="partner_id" id="partner_id" class="f14 o-cust-form-control"/>
+                                                           
+                                    <!-- Header -->
+                                    <div class="mt-3" style="text-align: center;">
+                                        <h3 class="freedomMainTitle bold-text">We'd love to know you better!</h3>
+                                        <p class="freedomSubTitle bold-text f14">Your input helps us improve the platform</p>
+                                    </div>
+
+                                    <!-- Full Name -->
+                                    <div class="full-name">
+                                        <label for="full_name" class="mb-1">Full Name<span style="color: red;">*</span></label>
+                                        <div class="mb-2 field-name o-cust-div">
+                                            <input type="text" name="full_name" id="full_name" t-att-value="full_name" class="f14 o-cust-form-control" placeholder="e.g. John Doe" required="required"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Reference (Changed to Text Field) -->
+                                    <div class="refrence">
+                                        <label for="reference" class="mb-1">Where did you hear about Kreator Bee<span style="color: red;">*</span></label>
+                                        <div class="mb-2 field-name o-cust-div">
+                                            <select id="reference" name="reference" class="form-select form-control-lg f14 o-cust-form-control">
+                                                <t t-foreach="request.env['res.partner'].fields_get(['reference'])['reference']['selection']"
+                                                   t-as="option">
+                                                    <option t-att-value="option[0]"
+                                                            t-att-selected="option[0] == (partner.reference if partner else '')">
+                                                        <t t-esc="option[1]"/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- City -->
+                                    <div class="city">
+                                        <label for="city" class="mb-1">City<span style="color: red;">*</span></label>
+                                        <div class="mb-2 field-name o-cust-div">
+                                            <input type="text" name="city" id="city" class="f14 o-cust-form-control" placeholder="e.g. New Delhi" required="required"/>
+                                        </div>
+                                    </div>
+                                    <!-- State Selection (Dropdown) -->
+                                    <div class="state">
+                                        <label for="state" class="mb-1">State<span style="color: red;">*</span></label>
+                                        <div class="mb-2 field-name o-cust-div">
+                                            <select name="state" id="state" class="form-select" required="required">
+                                                <option value="" selected="selected" disabled="disabled">Select State</option>
+                                                <t t-foreach="states" t-as="state">
+                                                    <option t-att-value="state.id"><t t-esc="state.name"/></option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Country Selection -->
+                                    <div class="country">
+                                        <label for="country" class="mb-1">Country<span style="color: red;">*</span></label>
+                                        <div class="mb-2 field-name o-cust-div">
+                                            <select name="country" id="country" class="form-select" disabled="disabled">
+                                                <t t-foreach="countries" t-as="country">
+                                                    <option t-att-value="country.id"
+                                                            t-att-selected="'selected' if country.id == default_country_id else None">
+                                                        <t t-esc="country.name"/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Submit Button -->
+                                    <div id="div_registration_btn mt-5">
+                                        <div class="text-center mt-4">
+                                            <button type="submit" class="btn btn-primary o-cust-reg-button">Complete Registration</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

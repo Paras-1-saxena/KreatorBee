@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>    
+    <record id="apg_social_media.social_js" model="ir.asset">
+        <field name="name">Social JS</field>
+        <field name="bundle">web.assets_frontend</field>
+        <field name="path">/apg_social_media/static/src/js/social.js</field>
+    </record>
+    <record id="apg_social_media.social_scc" model="ir.asset">
+        <field name="name">Social CSS</field>
+        <field name="bundle">web.assets_frontend</field>
+        <field name="path">/apg_social_media/static/src/scss/social.css</field>
+    </record>
+</odoo>

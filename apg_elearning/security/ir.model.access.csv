@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_partner_commission_user,access.partner.commission.user,model_partner_commission,base.group_user,1,1,1,1
+access_direct_commission_user,access.direct.commission.user,model_direct_commission,base.group_user,1,1,1,1
+access_course_standard_user,access.course.standard.user,model_course_standard,base.group_user,1,1,1,1
+access_terms_conditions_user,access.terms.conditions.user,model_terms_conditions,base.group_user,1,1,1,1
+
+access_partner_commission_line_user,access.partner.commission.line.user,model_partner_commission_line,base.group_user,1,1,1,1
+access_direct_commission_line_user,access.direct.commission.line.user,model_direct_commission_line,base.group_user,1,1,1,1
+access_promotional_material_user,access.promotional.material.user,model_slide_channel_promotional_material,base.group_user,1,1,1,1
+access_google_drive_link_user,access.google.drive.link.user,model_slide_channel_google_drive_link,base.group_user,1,1,1,1

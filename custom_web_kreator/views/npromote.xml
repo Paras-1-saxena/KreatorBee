@@ -1,0 +1,350 @@
+<odoo>
+    <data>
+       <template id="npromote" name="NPromote">
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;display=swap" rel="stylesheet" />
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet" />
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+
+            <body>
+                <!-- Page-Specific Styles -->
+                <style>
+                    body,textarea {
+                        display: flex;
+                        margin: 0;
+                        font-family: 'Poppins', sans-serif;
+                        background-color: #f8f9fa;
+                         margin: 0;
+                        padding: 0;
+                        line-height: 1.6;
+                    }
+
+                    /* Top Menu */
+                    .top-menu {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 10px 20px;
+                        background-color: #fff;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        top: 0;
+                        z-index: 100;
+                        height: 80px; /* Adjust height for new layout */
+                    }
+
+                    .top-menu .logo img {
+                        height: 60px;
+                        width: auto;
+                    }
+
+                    .top-menu .menu-links {
+                        display: flex;
+                        gap: 40px; /* Space between menu items */
+                        align-items: center;
+                        justify-content: center;
+                        flex: 1;
+                    }
+
+                    .top-menu .menu-links a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 14px;
+                        font-weight: 500;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 15px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        height: 100%;
+                        justify-content: center;
+                    }
+
+                    .top-menu .menu-links a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links i {
+                        font-size: 24px; /* Icon size */
+                    }
+                    .top-menu .user-icon {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        cursor: pointer;
+                        margin-right: 30px; /* Adds space from the edge */
+                    }
+
+                    /* Side Menu */
+                    .side-menu {
+                        width: 250px;
+                        background-color: #fff;
+                        padding: 20px 10px;
+                        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        left: 0;
+                        top: 60px; /* Adjust for top menu */
+                        height: calc(100vh - 60px);
+                        overflow-y: auto;
+                    }
+
+                    .side-menu ul {
+                        list-style: none;
+                        padding: 2;
+                    }
+
+                    .side-menu ul li {
+                        margin: 15px 0;
+                    }
+
+                    .side-menu ul li a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 15px;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                    }
+
+                    .side-menu ul li a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .side-menu ul li a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .main-content {
+                        margin-left: 270px; /* Adjust to create space from the side menu */
+                        padding: 20px;      /* Maintain consistent padding inside the main content */
+                        margin-top: 80px;   /* Adjust for the top menu */
+                        flex-grow: 1;
+                        background-color:#f8f9fa;
+                    }
+
+                    /* Progress Bar */
+                    .progress-bar-container {
+                        width: 100%;
+                        height:10px;
+                        background-color: fef5c5;
+                        margin-bottom: 20px;
+                        position: relative;
+                    }
+
+                    .progress-bar {
+                        height: 10px;
+                        background-color: #ffd001;
+                        width: 75%; /* Adjust for progress percentage */
+                        transition: width 0.3s ease;
+                    }
+
+                    .content-containter {
+    background-color: white;
+    height: 560px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+   
+    
+    overflow: hidden;
+
+
+                        
+                        
+               
+}
+
+
+.form-container {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 20px;
+}
+
+.form-content {
+    flex: 1;
+    padding: 0px 20px;
+    background-color: #fff;
+    overflow-y: auto;
+    margin-right: 10px;
+}
+
+.form-content h3 {
+    margin-top: 0;
+    margin-bottom: 5px; /* Reduce the space between the title and paragraph */
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+}
+
+.form-content p {
+    margin-top: 0; /* Remove any additional top margin */
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 15px; /* Keep some space below the paragraph */
+}
+
+.image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+}
+
+.bottom-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: auto; /* Push to the bottom */
+}
+
+.radio-group {
+    display: flex;
+    justify-content: left;
+    gap: 10px;
+    margin-bottom: 10px;
+
+}
+
+.radio-group label {
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin:10px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: left;
+    width: 100%;
+}
+
+button {
+    background-color: #ffd000;
+                        color: #212529;
+                        font-family: 'Poppins', sans-serif;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        transition: background-color 0.3s ease;
+                        font-size: 16px;
+                        padding:5px 10px;
+                        letter-spacing: 1px;
+                       
+
+}
+
+.card {
+    border: 1px solid #fdf000;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .pagination .page-item .page-link {
+    color: #333;
+  }
+  .pagination  .page-link {
+    background-color: #fff;
+    
+  }
+
+  .page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #ffd000;
+    border-color:#fff;
+}
+  .border1{
+  border: 1px solid #fdf000;
+  }
+                </style>
+                <!-- Top Menu -->
+                <div class="top-menu">
+                    <button class="navbar-toggler d-lg-none" type="button" id="burgerMenu" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"><i class="fa fa-solid fa-bars"></i></span>
+                    </button>
+                    <div class="logo">
+                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo" />
+                    </div>
+                    <div class="menu-links">
+                       
+                        <a href="/partner-training" >
+                            <i class="fa fa-chalkboard-teacher"></i> Training
+                        </a>
+                        <a href="/target">
+                            <i class="fa fa-bullseye"></i> Targets
+                        </a>
+                        <a href="offers-coupon" >
+                            <i class="fa fa-cubes"></i> Offers
+                        </a>
+                        <a href="/npromote" class="active">
+                            <i class="fa fa-layer-group"></i> Promotional  Material
+                        </a>
+                       
+                    </div>
+                    <!-- Use <img> tag for user icon -->
+                    <t t-call="custom_web_kreator.partner_profile_dropdown"/>
+                </div>
+                <!-- Side Menu -->
+                <t t-call="custom_web_kreator.side_menu"/>
+                <!-- Main Content -->
+                <div class="main-content">
+            
+                    <!-- Top Block -->
+                    <t t-call="custom_web_kreator.user_block" />
+
+                    <div class="row">
+                        <div><h4>Promotional Material</h4></div>
+                        <t t-foreach="promotional_courses" t-as="course">
+                            <div class="col-md-3 mb-4">
+                                <div class="card text-center p-3">
+                                    <a t-att-href="'/landing_page?course_id=%s' % course.id">
+                                        <img t-att-src="image_data_uri(course.image_1920) if course.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'" alt="Course Thumbnail"
+                                         class="rounded mb-3" style="width: 100%; height: 250px;"/>
+                                    </a>
+
+                                    <h6 class="mt-3">
+                                        <t t-esc="course.name"/>
+                                    </h6>
+                                    <a t-att-href="'/promotional-detail?course_id=%s' % course.id"
+                                        class="btn btn-warning mt-3 mb-1">View Now</a>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+                <!-- Main content end -->
+            </body>
+            <xpath expr="." position="inside">
+                <!-- Include jQuery -->
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script type="text/javascript" src="/apg_js/static/src/js/menu.js"></script>
+                <link rel="stylesheet" href="/apg_js/static/src/scss/menu.css" />
+            </xpath>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_apg_social_post_user,access.apg.social.post.user,model_apg_social_post,base.group_user,1,1,1,1
+
+access_apg_social_post_template_user,access.apg.social.post.template.user,model_apg_social_post_template,base.group_user,1,1,1,1
+
+access_apg_post_comment_user,access.apg.post.comment.user,model_apg_post_comment,base.group_user,1,1,1,1
+
+access_apg_post_like_user,access.apg.post.like.user,model_apg_post_like,base.group_user,1,1,1,1
+access_apg_post_like_portal,access.apg.post.like.portal,model_apg_post_like,base.group_portal,1,1,1,1
+access_apg_post_like_public,access.apg.post.like.public,model_apg_post_like,base.group_public,1,1,1,1

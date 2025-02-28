@@ -1,0 +1,2825 @@
+<odoo>
+    <data>
+        <template id="creator_landing_page_js" name="Creator Landing Page">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap"
+                  rel="stylesheet"/>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+                  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+                  crossorigin="anonymous"/>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                    crossorigin="anonymous"></script>
+            <body>
+                <!-- Page-Specific Styles -->
+                <style>
+                    body,textarea {
+                    display: flex;
+                    margin: 0;
+                    font-family: 'Poppins', sans-serif;
+                    background-color: #f8f9fa;
+                    margin: 0;
+                    padding: 0;
+                    line-height: 1.6;
+                    }
+
+                    /* Top Menu */
+                    .top-menu {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 10px 20px;
+                    background-color: #fff;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    position: fixed;
+                    top: 0;
+                    z-index: 100;
+                    height: 80px; /* Adjust height for new layout */
+                    }
+
+                    .top-menu .logo img {
+                    height: 60px;
+                    width: auto;
+                    }
+
+                    .top-menu .menu-links {
+                    display: flex;
+                    gap: 40px; /* Space between menu items */
+                    align-items: center;
+                    justify-content: center;
+                    flex: 1;
+                    }
+
+                    .top-menu .menu-links a {
+                    text-decoration: none;
+                    color: #333;
+                    font-size: 14px;
+                    font-weight: 500;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 15px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
+                    height: 100%;
+                    justify-content: center;
+                    }
+
+                    .top-menu .menu-links a.active {
+                    background-color: #fef5c5;
+                    color: #000;
+                    }
+
+                    .top-menu .menu-links a:hover {
+                    background-color: #fef5c5;
+                    color: #000;
+                    }
+
+                    .top-menu .menu-links i {
+                    font-size: 24px; /* Icon size */
+                    }
+                    .top-menu .user-icon {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    cursor: pointer;
+                    margin-right: 30px; /* Adds space from the edge */
+                    }
+
+                    /* Side Menu */
+                    .side-menu {
+                    width: 250px;
+                    background-color: #fff;
+                    padding: 20px 10px;
+                    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                    position: fixed;
+                    left: 0;
+                    top: 60px; /* Adjust for top menu */
+                    height: calc(100vh - 60px);
+                    overflow-y: auto;
+                    }
+
+                    .side-menu ul {
+                    list-style: none;
+                    padding: 2;
+                    }
+
+                    .side-menu ul li {
+                    margin: 15px 0;
+                    }
+
+                    .side-menu ul li a {
+                    text-decoration: none;
+                    color: #333;
+                    font-size: 15px;
+                    font-weight: 500;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    padding: 12px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
+                    }
+
+                    .side-menu ul li a.active {
+                    background-color: #fef5c5;
+                    color: #000;
+                    }
+
+                    .side-menu ul li a:hover {
+                    background-color: #fef5c5;
+                    color: #000;
+                    }
+
+                    .main-content {
+                    margin-left: 270px; /* Adjust to create space from the side menu */
+                    padding: 20px; /* Maintain consistent padding inside the main content */
+                    margin-top: 80px; /* Adjust for the top menu */
+                    flex-grow: 1;
+                    background-color:#f8f9fa;
+                    }
+
+                    /* Progress Bar */
+                    .progress-bar-container {
+                    width: 100%;
+                    height:10px;
+                    background-color: fef5c5;
+                    margin-bottom: 20px;
+                    position: relative;
+                    }
+
+                    .progress-bar {
+                    height: 10px;
+                    background-color: #ffd001;
+                    width: 75%; /* Adjust for progress percentage */
+                    transition: width 0.3s ease;
+                    }
+
+                    .content-containter {
+                    background-color: white;
+                    height: 560px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    display: flex;
+                    flex-direction: column;
+
+
+                    overflow: hidden;
+
+
+                    }
+
+
+                    .form-container {
+                    display: flex;
+                    justify-content: space-between;
+                    flex: 1;
+                    overflow-y: auto;
+                    padding-bottom: 20px;
+                    }
+
+                    .form-content {
+                    flex: 1;
+                    padding: 0px 20px;
+                    background-color: #fff;
+                    overflow-y: auto;
+                    margin-right: 10px;
+                    }
+
+                    .form-content h3 {
+                    margin-top: 0;
+                    margin-bottom: 5px; /* Reduce the space between the title and paragraph */
+                    font-size: 16px;
+                    color: #333;
+                    font-weight: bold;
+                    }
+
+                    .form-content p {
+                    margin-top: 0; /* Remove any additional top margin */
+                    font-size: 14px;
+                    color: #333;
+                    line-height: 1.6;
+                    margin-bottom: 15px; /* Keep some space below the paragraph */
+                    }
+
+                    .image-container {
+                    flex: 1;
+                    display: flex;
+                    justify-content: center;
+
+                    }
+
+                    .image-container img {
+                    max-width: 100%;
+                    height: auto;
+                    }
+
+                    .bottom-section {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    margin-top: auto; /* Push to the bottom */
+                    }
+
+                    .radio-group {
+                    display: flex;
+                    justify-content: left;
+                    gap: 10px;
+                    margin-bottom: 10px;
+
+                    }
+
+                    .radio-group label {
+                    font-size: 14px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    margin:10px;
+                    }
+
+                    .form-actions {
+                    display: flex;
+                    justify-content: left;
+                    width: 100%;
+                    }
+
+                    button {
+                    background-color: #ffd000;
+                    color: #212529;
+                    font-family: 'Poppins', sans-serif;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    font-size: 16px;
+                    padding:5px 10px;
+                    letter-spacing: 1px;
+
+
+                    }
+
+                    .card {
+                    border: 1px solid #fdf000;
+                    border-radius: 5px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    }
+                    .pagination .page-item .page-link {
+                    color: #333;
+                    }
+                    .pagination .page-link {
+                    background-color: #fff;
+
+                    }
+
+                    .page-item.active .page-link {
+                    z-index: 3;
+                    color: #fff;
+                    background-color: #ffd000;
+                    border-color:#fff;
+                    }
+                    .border1{
+                    border: 1px solid #ffd000;
+                    border-radius: 5px;
+                    }
+                    .accordion-button {
+                    background-color: #fff;
+                    color: #000;
+                    border:1px solid #ffd000;
+                    }
+                    .accordion-body {
+                    border:1px solid #ffd000;
+                    }
+
+                    .accordion-button:not(.collapsed) {
+                    background-color: #ffd000;
+                    color:#000;
+                    box-shadow: none !important;;
+                    }
+                    .btn{
+                    float: right;
+                    }
+                    .btn-warning {
+                    background-color: #ffd000;
+                    border: none;
+                    color: #000;
+                    }
+
+                    .btn-warning:hover {
+                    background-color: #e0a800;
+                    float:right;
+                    }
+                    .form-label {
+                    margin-bottom: 0;
+                    }
+                    .trash-icon{
+                    text-align: center;
+                    align-content: center;
+                    }
+                </style>
+                <!-- Top Menu -->
+                <div class="top-menu">
+                    <div class="logo">
+                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
+                    </div>
+                    <div class="menu-links">
+                        <a href="/nmy-courses">
+                            <i class="fa fa-book-reader"></i>
+                            My Courses
+
+                        </a>
+<!--                        <a href="/creator-landing-page" class="active">-->
+<!--                            <i class="fa fa-book"></i>-->
+<!--                            Landing Page-->
+
+<!--                        </a>-->
+
+                    </div>
+                    <!-- Use <img> tag for user icon -->
+                    <t t-call="custom_web_kreator.partner_profile_dropdown"/>
+                </div>
+                <!-- Side Menu -->
+                <div class="side-menu">
+                    <ul>
+                        <li>
+                            <a href="/master" class="active">
+                                <i class="fa fa-home"></i>
+                                Get Started
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/master_income_data">
+                                <i class="fa fa-chart-line"></i>
+                                Sales
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/nmy-courses">
+                                <i class="fa fa-box"></i>
+                                Products
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/offers">
+                                <i class="fa fa-users"></i>
+                                Connect with Partner
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/coming-soon">
+                                <i class="fa fa-address-book"></i>
+                                Customer
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/#">
+                                <i class="fa fa-rocket"></i>
+                                Become A Bee Partner
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="main-content">
+
+                    <!-- Top Block -->
+                    <div class="row align-items-center bg-white mb-4 border1">
+                        <div class="col-md-10 d-flex align-items-center">
+                            <img src="/custom_web_kreator/static/src/user1.png" alt="User Image" class="rounded-circle"
+                                 style="width: 50px; height: 50px; margin-right: 15px;"/>
+                            <h5 class="p-3">Welcome,
+                                <t t-esc="user_name"/>
+                            </h5>
+                            <!-- <h6>Let&#39;s get started with your journey</h6> -->
+                        </div>
+                        <div class="col-md-2  float-end text-end">
+                            <button class="btn mt-3 mb-1">Watch Tutorial</button>
+                        </div>
+                    </div>
+
+                    <div class="accordion" id="courseAccordion">
+                        <!-- Accordion Item 1 -->
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="bannerInfoHeading">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#bannerInfo" aria-expanded="true" aria-controls="bannerInfo">
+                                    Banner Information
+                                </button>
+                            </h2>
+                            <div id="bannerInfo" class="accordion-collapse collapse show"
+                                 aria-labelledby="bannerInfoHeading" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <!-- Form Section -->
+                                        <div class="col-md-6">
+                                            <form method="post" enctype="multipart/form-data"> 
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <div class="mb-3">
+                                                    <label for="bannerInfoCreatorName" class="form-label">Name of the Creator<span style="color: red;">*</span>
+                                                    </label>
+                                                    <input type="text" class="form-control" id="bannerInfoCreatorName"
+                                                           name="creatorName"
+                                                           t-att-value="user_name" readonly="readonly"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="bannerInfoCourseName" class="form-label">Name of the Course<span style="color: red;">*</span>
+                                                    </label>
+                                                    <select class="form-select" id="bannerInfoCourseName" name="courseName"
+                                                            disabled="disabled">
+                                                        <t t-foreach="courses" t-as="course">
+                                                            <option t-att-value="course.id"
+                                                                    t-att-selected="course.id == selected_course.id">
+                                                                <t t-esc="course.name"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                    <input type="hidden" name="course_id" id="bannerInfoCourseId" t-att-value="selected_course.id"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="bannerInfoShortDescription" class="form-label">Course Short
+                                                        Description<span style="color: red;">*</span>
+                                                    </label>
+                                                    <textarea class="form-control" id="bannerInfoShortDescription"
+                                                              name="shortDescription" rows="3" oninput="checkWordsCount()" t-att-value="description"
+                                                              placeholder="e.g. Everything you need to know to launch your business idea."/>
+                                                    <div id="wordCountIndicator" style="font-size: 0.9em; color: #666;">0 / 25 words</div>
+                                                </div>
+                                                <script>
+                                                    function checkWordsCount() {
+                                                      const textArea = document.getElementById("bannerInfoShortDescription");
+                                                      const words = textArea.value.trim().split(/\s+/).filter(Boolean); // filter out empty strings
+                                                      const wordCount = words.length;
+
+                                                      document.getElementById("wordCountIndicator").innerText = wordCount + " / 25 words";
+                                                    }
+                                                    </script>
+                                                <div class="mb-3">
+                                                    <label for="bannerInfoColourCombination" class="form-label">Colour Combination<span style="color: red;">*</span>
+                                                    </label>
+                                                    <select class="form-select" id="bannerInfoColourCombination" name="colourCombination" onchange="updateColorBoxes()">
+                                                            <option value="" selected="selected">Select</option>
+                                                            <t t-foreach="combinations" t-as="combination">
+                                                                <option t-att-value="combination.id" t-att-data-colors="combination.colors_json">
+                                                                    <t t-esc="combination.name"/>
+                                                                </option>
+                                                            </t>
+                                                    </select>
+                                                </div>
+                                                <!-- Color Preview Boxes -->
+                                                <div id="colorPreviewBoxes" style="display: none; gap: 10px; margin-bottom: 15px;">
+                                                    <div class="color-box" style="width: 40px; height: 40px; border: 1px solid #ccc; background-color: #FFFFFF;"/>
+                                                    <div class="color-box" style="width: 40px; height: 40px; border: 1px solid #ccc; background-color: #FFFFFF;"/>
+                                                    <div class="color-box" style="width: 40px; height: 40px; border: 1px solid #ccc; background-color: #FFFFFF;"/>
+                                                    <div class="color-box" style="width: 40px; height: 40px; border: 1px solid #ccc; background-color: #FFFFFF;"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="bannerInfoUploadFile" class="form-label">
+                                                        Upload Photo (JPEG, PNG) <span style="color: red;">*</span>
+                                                        <br></br>
+                                                        <small>(Width: 700px, Height: 400px)</small>
+                                                    </label>
+                                                    <div id="previewContainer" style="margin-top: 10px;">
+                                                        <img id="imagePreview" src="#" alt="Preview"
+                                                             style="display: none; max-width: 100%; height: auto;"/>
+                                                        <p id="docPreview" style="display: none;">
+                                                            <a id="docLink" href="#" target="_blank"></a>
+                                                        </p>
+                                                    </div>
+                                                    <input type="file" class="form-control" id="bannerInfoUploadFile"
+                                                           name="bannerInfoUploadFile" accept="image/*" onchange="previewFile(event)"/>
+                                                </div>
+                                                <a type="button" class="btn btn-warning" id="bannerInfoSaveButton">Save</a>
+                                                <p id="successMessage" style="display:none; color: green; margin-top: 10px;"></p>
+                                            </form>
+                                        </div>
+    <script>
+        function updateColorBoxes() {
+            const selectElement = document.getElementById('bannerInfoColourCombination');
+            const colourElement = document.getElementById('colorPreviewBoxes');
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            const colorData = selectedOption.getAttribute('data-colors');
+
+            if (colorData) {
+                colourElement.style.display = "flex";
+                const colors = JSON.parse(colorData); // Example: ["#FF0000", "#00FF00", "#FFFFFF", "#000000"]
+                const colorBoxes = document.querySelectorAll('#colorPreviewBoxes .color-box');
+
+                colorBoxes.forEach((box, index) =&gt; {
+                    box.style.backgroundColor = colors[index] || '#FFFFFF'; // Fallback to white
+                });
+            }
+        }
+        document.getElementById("bannerInfoSaveButton").addEventListener("click", function () {
+            const creatorName = document.getElementById('bannerInfoCreatorName').value;
+            const courseId = document.getElementById('bannerInfoCourseName').value;
+            const shortDescription = document.getElementById('bannerInfoShortDescription').value;
+            const fileInput = document.getElementById("bannerInfoUploadFile");
+            const combinationId = document.getElementById('bannerInfoColourCombination').value;
+
+            // Prepare all data in a list
+            const formDataList = [
+                creatorName,
+                courseId,
+                shortDescription,
+                combinationId,
+            ];
+
+            // Create FormData
+            let formData = new FormData();
+            formData.append('form_data', JSON.stringify(formDataList)); // Convert list to JSON string
+
+            // Check if a file is selected and append it
+            if (fileInput.files.length &gt; 0) {
+                formData.append('upload_file', fileInput.files[0]);
+            }
+
+            // Send the FormData via Fetch API
+            fetch("/creator-landing-page-js", {
+                method: "POST",
+                body: formData
+            })
+            .then(response =&gt; response.json())
+            .then(data => {
+            if (data.result.success === true) {
+                // Display a success message without an alert box
+                let messageBox = document.getElementById("successMessage");
+                messageBox.innerText = data.result.message;
+                messageBox.style.display = "block";
+
+                // Hide the message after 3 seconds
+                setTimeout(() => {
+                    messageBox.style.display = "none";
+                }, 3000);
+            } else {
+                alert("Error: " + data.result.message);
+            }
+        })
+            .catch(error =&gt; console.error("Error:", error));
+        });
+
+        function previewFile(event) {
+            const file = event.target.files[0];
+            const previewContainer = document.getElementById('previewContainer');
+            const imagePreview = document.getElementById('imagePreview');
+            const docPreview = document.getElementById('docPreview');
+            const docLink = document.getElementById('docLink');
+
+            if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+            const fileType = file.type;
+
+            // If it's an image, show it
+            if (fileType.startsWith("image/")) {
+            imagePreview.src = e.target.result;
+            imagePreview.style.display = "block";
+            docPreview.style.display = "none";
+            }
+            // If it's a document, show the link
+            else {
+            docLink.href = e.target.result;
+            docLink.textContent = file.name;
+            imagePreview.style.display = "none";
+            docPreview.style.display = "block";
+            }
+            };
+            reader.readAsDataURL(file);
+            previewContainer.style.display = "block";
+            }
+        }
+    </script>
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/Banner_Information.png"
+                                                 alt="Well Done" class="img-fluid"
+                                                 style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Accordion Items -->
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="uspHeading">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#usp" aria-expanded="false" aria-controls="usp">
+                                    Unique Selling Points (USPs)
+                                </button>
+                            </h2>
+                            <div id="usp" class="accordion-collapse collapse" aria-labelledby="uspHeading"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <!-- USPs Form Fields -->
+                                        <div class="col-md-6">
+                                            <form method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="course_id" t-att-value="selected_course.id" id="uspCourseID"/>
+
+                                                <div class="mb-3">
+                                                    <label for="uspContent1" class="form-label">USP Content 1<span style="color: red;">*</span></label>
+                                                    <input type="text" class="form-control" id="uspContent1"
+                                                           name="ups_content1" placeholder="Duration"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="uspcontent2" class="form-label">USP Content 2<span style="color: red;">*</span></label>
+                                                    <input type="text" class="form-control" id="uspcontent2"
+                                                           name="ups_content2" placeholder="Language"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="uspcontent3" class="form-label">USP Content 3</label>
+                                                    <input type="text" class="form-control" id="uspcontent3"
+                                                           name="ups_content3" value="Life Time Access" readonly="readonly"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="uspcontent4" class="form-label">USP Content 4</label>
+                                                    <input type="text" class="form-control" id="uspcontent4"
+                                                           name="ups_content4" value="LIVE QnA Sessions" readonly="readonly"/>
+                                                </div>
+                                                <a type="button" class="btn btn-warning" id="uspSaveButton">Save</a>
+                                                <p id="uspSuccessMessage" style="display:none; margin-top: 10px;"></p>
+                                            </form>
+                                        </div>
+<script>
+    document.getElementById("uspSaveButton").addEventListener("click", function () {
+            const uspCourseID = document.getElementById('uspCourseID').value;
+            const uspContent1 = document.getElementById('uspContent1').value;
+            const uspcontent2 = document.getElementById('uspcontent2').value; 
+            
+
+            let uspDataList = [
+                uspCourseID,
+                uspContent1,
+                uspcontent2,
+            ];
+
+            // Create uspDataList
+                let uspData = new FormData();
+                uspData.append('usp_data', JSON.stringify(uspDataList)); // Convert list to JSON string
+
+            // Send the uspData via Fetch API
+            fetch("/creator-landing-page-js", {
+                method: "POST",
+                body: uspData
+            })
+            .then(response => response.json())
+            .then(data => {
+                let messageBox = document.getElementById("uspSuccessMessage");
+
+                if (data.result.success === true) {
+                    // Display success message
+                    messageBox.innerText = data.result.message;
+                    messageBox.style.display = "block";
+                    messageBox.style.color = "green";
+
+                    // Hide the message after 3 seconds
+                    setTimeout(() => {
+                        messageBox.style.display = "none";
+                    }, 3000);
+                } else {
+                    // Show error message in red
+                    messageBox.innerText = "Error: " + data.result.message;
+                    messageBox.style.display = "block";
+                    messageBox.style.color = "red";
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        });
+</script>
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/usp11.png" alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Accordion Item 3 -->
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="aboutCourseHeading">
+                                <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#aboutCourse" aria-expanded="false"
+                                        aria-controls="aboutCourse">
+                                    About Course
+                                </button>
+                            </h2>
+                            <div id="aboutCourse" class="accordion-collapse collapse"
+                                 aria-labelledby="aboutCourseHeading" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="course_id" id="aboutCourseID" t-att-value="selected_course.id"/>
+                                                <!-- One2many Table -->
+                                                <div id="contentContainer" class="content-container">
+                                                    <div id="paragraphContainer">
+                                                        <div class="mb-3">
+                                                            <label for="paragraph1" class="form-label">Paragraph 1<span style="color: red;">*</span>
+                                                            </label>
+                                                            <textarea id="aboutCoursePara1" class="form-control" name="paragraph1"
+                                                                      placeholder="e.g. Everything you need to know to launch your business idea."></textarea>
+                                                            <!-- Delete Icon Below -->
+                                                            <div class="text-end mt-1">
+                                                                <button type="button" class="btn btn-link delete-icon"
+                                                                        onclick="deleteParagraph(this)">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="paragraph2" class="form-label">Paragraph 2<span style="color: red;">*</span>
+                                                            </label>
+                                                            <textarea id="aboutCoursePara2" class="form-control" name="paragraph2"
+                                                                      placeholder="e.g. Everything you need to know to launch your business idea."></textarea>
+                                                            <!-- Delete Icon Below -->
+                                                            <div class="text-end mt-1">
+                                                                <button type="button" class="btn btn-link delete-icon"
+                                                                        onclick="deleteParagraph(this)">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Add New Line Button -->
+                                                    <div class="text-start mt-5"
+                                                         style="display: flex; justify-content: space-between; align-items: center;">
+                                                        <button type="button" class="btn btn-warning add-paragraph-btn"
+                                                                onclick="addLine()">
+                                                            Add More Paragraph +
+                                                        </button>
+                                                        <p id="aboutCourseSuccessMessage" style="display:none; margin-top: 10px;"></p>
+                                                        <a id="aboutCourseSaveButton" type="button" class="btn btn-warning"
+                                                                style=" margin-left: 50px;">
+                                                            Save
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/about_course.png" alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Add custom styles -->
+                                    <style>
+                                        .delete-icon {
+                                        color: black; /* Set icon color to black */
+                                        border: none;
+                                        background: none;
+                                        font-size: 18px;
+                                        cursor: pointer;
+                                        }
+
+                                        .delete-icon i {
+                                        pointer-events: none;
+                                        }
+
+                                        .text-end {
+                                        text-align: end;
+                                        }
+                                    </style>
+
+                                    <!-- Font Awesome for the trash icon -->
+                                    <script src="https://kit.fontawesome.com/a076d05399.js"
+                                            crossorigin="anonymous"></script>
+
+                                    <!-- JavaScript Functions -->
+<script>
+    document.getElementById("aboutCourseSaveButton").addEventListener("click", function () {
+        const aboutCourseID = document.getElementById('aboutCourseID').value; 
+        const paragraphContainer = document.getElementById("paragraphContainer");
+        
+        // Select all textareas inside paragraphContainer
+        const textareas = paragraphContainer.querySelectorAll("textarea");
+
+        // Array to store all paragraph values
+        let aboutCourseParas = [];
+        aboutCourseParas.push(aboutCourseID);
+
+        // Loop through each textarea and get its value
+        textareas.forEach((textarea) => {
+            aboutCourseParas.push(textarea.value); // Store the value
+        });
+
+        // Create FormData
+            let aboutCourseData = new FormData();
+            aboutCourseData.append('aboutCourse_data', JSON.stringify(aboutCourseParas)); // Convert list to JSON string
+
+        // Send the FormData via Fetch API
+        fetch("/creator-landing-page-js", {
+            method: "POST",
+            body: aboutCourseData
+        })
+        .then(response => response.json())
+        .then(data => {
+            let messageBox = document.getElementById("aboutCourseSuccessMessage");
+
+            if (data.result.success === true) {
+                // Display success message
+                messageBox.innerText = data.result.message;
+                messageBox.style.display = "block";
+                messageBox.style.color = "green";
+
+                // Hide the message after 3 seconds
+                setTimeout(() => {
+                    messageBox.style.display = "none";
+                }, 3000);
+            } else {
+                // Show error message in red
+                messageBox.innerText = "Error: " + data.result.message;
+                messageBox.style.display = "block";
+                messageBox.style.color = "red";
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    });
+
+    // Function to delete the parent paragraph container
+    function deleteParagraph(button) {
+    button.closest('.mb-3').remove();
+    }
+
+    // Function to add a new paragraph
+    function addLine() {
+    // Find the paragraph container
+    const paragraphContainer = document.getElementById('paragraphContainer');
+
+    // Get the current number of paragraphs
+    const paragraphCount = paragraphContainer.querySelectorAll('.mb-3').length + 1;
+
+    // Create a new paragraph div
+    const newParagraph = document.createElement('div');
+    newParagraph.classList.add('mb-3');
+
+    // Add content for the new paragraph
+    newParagraph.innerHTML = `
+    <label for="paragraph${paragraphCount}" class="form-label">Paragraph
+        ${paragraphCount}
+    </label>
+    <textarea id="aboutCoursePara${paragraphCount}" class="form-control" name="paragraph${paragraphCount}"
+              placeholder="e.g. Everything you need to know to launch your business idea."></textarea>
+    <!-- Delete Icon Below -->
+    <div class="text-end mt-1">
+        <button type="button" class="btn btn-link delete-icon"
+                onclick="deleteParagraph(this)">
+            <i class="fas fa-trash"></i>
+        </button>
+    </div>
+    `;
+
+    // Append the new paragraph to the container
+    paragraphContainer.appendChild(newParagraph);
+    }
+</script>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accordion Item 4 -->
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="learnFromThisHeading">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#learnFromThis" aria-expanded="false"
+                                        aria-controls="learnFromThis">
+                                    What Can I Learn From This
+                                </button>
+                            </h2>
+                            <div id="learnFromThis" class="accordion-collapse collapse"
+                                 aria-labelledby="learnFromThisHeading" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="course_id" id="learnFromThisCourseID" t-att-value="selected_course.id"/>
+                                                <!-- One2many Table -->
+                                                <div id="contentContainer1" class="content-container">
+                                                    <div id="individualParagraphContainer">
+                                                        <div class="mb-3">
+                                                            <label for="individual_paragraph1" class="form-label">
+                                                                Paragraph 1
+                                                            </label>
+                                                            <textarea class="form-control" name="individual_paragraph1"
+                                                                      placeholder="e.g. Everything you need to know to launch your business idea."></textarea>
+                                                            <div class="text-end mt-1">
+                                                                <button type="button" class="btn btn-link delete-icon"
+                                                                        onclick="deleteParagraphh(this)">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="individual_paragraph2" class="form-label">
+                                                                Paragraph 2
+                                                            </label>
+                                                            <textarea class="form-control" name="individual_paragraph2"
+                                                                      placeholder="e.g. Everything you need to know to launch your business idea."></textarea>
+                                                            <!-- Delete Icon Below -->
+                                                            <div class="text-end mt-1">
+                                                                <button type="button" class="btn btn-link delete-icon"
+                                                                        onclick="deleteParagraphh(this)">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="individual_paragraph3" class="form-label">
+                                                                Paragraph 3
+                                                            </label>
+                                                            <textarea class="form-control" name="individual_paragraph3"
+                                                                      placeholder="e.g. Everything you need to know to launch your business idea."></textarea>
+                                                            <!-- Delete Icon Below -->
+                                                            <div class="text-end mt-1">
+                                                                <button type="button" class="btn btn-link delete-icon"
+                                                                        onclick="deleteParagraphh(this)">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="individual_paragraph4" class="form-label">
+                                                                Paragraph 4
+                                                            </label>
+                                                            <textarea class="form-control" name="individual_paragraph4"
+                                                                      placeholder="e.g. Everything you need to know to launch your business idea."></textarea>
+                                                            <!-- Delete Icon Below -->
+                                                            <div class="text-end mt-1">
+                                                                <button type="button" class="btn btn-link delete-icon"
+                                                                        onclick="deleteParagraphh(this)">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Add New Line Button -->
+                                                    <div class="text-start mt-5"
+                                                         style="display: flex; justify-content: space-between; align-items: center;">
+                                                        <button type="button" class="btn btn-warning add-paragraph-btn"
+                                                                onclick="addIndividualParagraph()">
+                                                            Add More Paragraph +
+                                                        </button>
+                                                        <p id="learnFromThisSuccessMessage" style="display:none; margin-top: 10px;"></p>
+                                                        <a type="button" id="learnFromThisSaveButton" class="btn btn-warning"
+                                                                style="margin-left: 50px;">
+                                                            Save
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/What_CanI_Learn_From_This.png" alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- Add custom styles -->
+                                    <style>
+                                        .delete-icon {
+                                        color: black; /* Set icon color to black */
+                                        border: none;
+                                        background: none;
+                                        font-size: 18px;
+                                        cursor: pointer;
+                                        }
+
+                                        .delete-icon i {
+                                        pointer-events: none;
+                                        }
+
+                                        .text-end {
+                                        text-align: end;
+                                        }
+                                    </style>
+
+                                    <!-- Font Awesome for the trash icon -->
+                                    <script src="https://kit.fontawesome.com/a076d05399.js"
+                                            crossorigin="anonymous"></script>
+
+                                    <!-- JavaScript Functions -->
+<script>
+    document.getElementById("learnFromThisSaveButton").addEventListener("click", function () {
+        const learnFromThisCourseID = document.getElementById('learnFromThisCourseID').value; 
+        const paragraphContainer = document.getElementById("individualParagraphContainer");
+        const messageBox = document.getElementById("learnFromThisSuccessMessage");
+        
+        // Select all textareas inside paragraphContainer
+        const textareas = paragraphContainer.querySelectorAll("textarea");
+
+        // Array to store all paragraph values
+        let learnFromThisParas = [];
+        learnFromThisParas.push(learnFromThisCourseID);
+
+        let allFilled = true; // Flag to check if all fields are filled
+
+        // Loop through each textarea and get its value
+    textareas.forEach((textarea) => {
+        if (textarea.value.trim() === "") {
+            allFilled = false; // Set flag to false if any field is empty
+            textarea.style.border = "2px solid red"; // Highlight empty fields
+        } else {
+            textarea.style.border = ""; // Reset border for filled fields
+            learnFromThisParas.push(textarea.value);
+        }
+    });
+
+    // If any field is empty, show an alert and stop execution
+    if (!allFilled) {
+        alert("All paragraph fields are required.");
+        return;
+    }
+        // Validation: Ensure paragraph count (excluding course ID) is a multiple of 4
+        if ((learnFromThisParas.length - 1) % 4 !== 0) {
+            alert("The number of paragraphs must be in multiples of 4.");
+            return; // Stop execution if validation fails
+        }
+
+        // Create FormData
+        let learnFromThisParasData = new FormData();
+        learnFromThisParasData.append('learnFromThisParas_data', JSON.stringify(learnFromThisParas)); // Convert list to JSON string
+
+        // Send the FormData via Fetch API
+        fetch("/creator-landing-page-js", {
+            method: "POST",
+            body: learnFromThisParasData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result.success === true) {
+                // Display success message
+                messageBox.innerText = data.result.message;
+                messageBox.style.display = "block";
+                messageBox.style.color = "green";
+
+                // Hide the message after 3 seconds
+                setTimeout(() => {
+                    messageBox.style.display = "none";
+                }, 3000);
+            } else {
+                // Show error message in red
+                messageBox.innerText = "Error: " + data.result.message;
+                messageBox.style.display = "block";
+                messageBox.style.color = "red";
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    });
+
+    // Function to delete the parent paragraph container
+function deleteParagraphh(button) {
+    button.closest('.mb-3').remove();
+}
+
+// Function to add four paragraphs at a time
+function addIndividualParagraph() {
+    const container = document.getElementById('individualParagraphContainer');
+    let paragraphCount = container.querySelectorAll('.mb-3').length;
+
+    for (let i = 1; i &lt;= 4; i++) {
+        paragraphCount++; // Increment paragraph count for each new one
+
+        const newParagraph = document.createElement('div');
+        newParagraph.classList.add('mb-3');
+        newParagraph.innerHTML = `
+        <label for="individual_paragraph${paragraphCount}" class="form-label">
+            Paragraph ${paragraphCount}
+        </label>
+        <textarea class="form-control" name="individual_paragraph${paragraphCount}"
+                  placeholder="e.g. Everything you need to know to launch your business idea."></textarea>
+        <div class="text-end mt-1">
+            <button type="button" class="btn btn-link delete-icon"
+                    onclick="deleteParagraphh(this)">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+        `;
+        container.appendChild(newParagraph);
+    }
+}
+</script>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accordion Item 5 -->
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="curriculumHeading">
+                                <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#curriculum" aria-expanded="false"
+                                        aria-controls="curriculum">
+                                    Course Curriculum
+                                </button>
+                            </h2>
+                            <div id="curriculum" class="accordion-collapse collapse"
+                                 aria-labelledby="curriculumHeading"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="course_id" id="curriculumCourseID" t-att-value="selected_course.id"/>
+                                                <!-- One2many Table -->
+                                                <table class="table table-bordered w-100">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Title</th>
+                                                            <th>Content</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="courseCurriculumTableBody"> <!-- Unique ID here -->
+                                                        <!-- Render rows dynamically -->
+                                                        <t t-foreach="lines" t-as="line" t-key="line.id">
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="text" class="form-control"
+                                                                           t-att-value="line.title"
+                                                                           name="title"
+                                                                           placeholder="Enter content"/>
+                                                                </td>
+                                                                <td>
+                                                                    <textarea class="form-control"
+                                                                              t-att-value="line.content"
+                                                                              name="content"></textarea>
+                                                                </td>
+                                                                <td class="text-center align-middle">
+                                                                    <button type="button" class="btn btn-danger d-flex justify-content-center align-items-center"
+                                                                            t-att-data-id="line.id"
+                                                                            onclick="removeCourseCurriculumLine(this)">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </t>
+                                                    </tbody>
+                                                </table>
+
+                                                <!-- Add Line Button at the bottom -->
+                                                <div class="text-start mt-3">
+                                                    <button type="button"
+                                                            class="o-cust-add-more-btn"
+                                                            onclick="addCourseCurriculumLine()">
+                                                        Add More +
+                                                    </button>
+                                                    <p id="courseCurriculumSuccessMessage" style="display:none; margin-top: 10px;"></p>
+                                                    <a type="button" id="curriculumSaveButton" class="btn btn-warning save-btn"
+                                                            onclick="saveContent()">
+                                                        Save
+                                                    </a>
+                                                </div>
+                                            </form>
+                                        </div>
+<script>
+    document.getElementById("curriculumSaveButton").addEventListener("click", function () {
+        // Get Course ID
+        const courseID = document.getElementById("curriculumCourseID").value;
+        const tableRows = document.querySelectorAll("#courseCurriculumTableBody tr");
+        let allFieldsFilled = true; // Flag to track if all fields are filled
+
+        if (tableRows.length % 4 !== 0) {
+        alert("The number of curriculum rows must be a multiple of 4 before saving.");
+        return; // Stop execution
+    }
+        
+        let curriculumList = [];
+        curriculumList.push({
+            courseID: courseID,
+        });
+
+        tableRows.forEach((row, index) => {
+           let columns = row.querySelectorAll("td");
+        const inputTitle = columns[0].querySelector("input").value.trim();
+        const inputContent = columns[1].querySelector("textarea").value.trim();
+
+        if (!inputTitle || !inputContent) {
+            allFieldsFilled = false;
+            columns[0].querySelector("input").classList.add("is-invalid");
+            columns[1].querySelector("textarea").classList.add("is-invalid");
+        } else {
+            columns[0].querySelector("input").classList.remove("is-invalid");
+            columns[1].querySelector("textarea").classList.remove("is-invalid");
+            curriculumList.push({ title: inputTitle, content: inputContent });
+        }
+    });
+
+    if (!allFieldsFilled) {
+        alert("Please fill all required fields before saving.");
+        return; // Stop execution if any field is empty
+    }
+
+        // Create FormData
+        let curriculumData = new FormData();
+        curriculumData.append('curriculum_data', JSON.stringify(curriculumList)); // Convert list to JSON string
+
+        // Send the FormData via Fetch API
+        fetch("/creator-landing-page-js", {
+            method: "POST",
+            body: curriculumData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result.success === true) {
+                showStatusMessage(data.result.message, "success");
+            } else {
+                showStatusMessage("Error: " + data.result.message, "error");
+            }
+        })
+        .catch(error => showStatusMessage("Error: " + error, "error"));
+    });
+
+    // Function to show a non-intrusive message
+    function showStatusMessage(message, type = "success") {
+        let messageElement = document.getElementById("courseCurriculumSuccessMessage");
+
+        if (!messageElement) {
+            console.error("Message element not found.");
+            return;
+        }
+
+        messageElement.innerText = message;
+        messageElement.style.display = "block";
+        messageElement.style.color = type === "success" ? "#28a745" : "#dc3545"; // Green for success, red for error
+        messageElement.style.padding = "10px";
+        messageElement.style.borderRadius = "5px";
+        messageElement.style.fontSize = "14px";
+        messageElement.style.fontWeight = "bold";
+        messageElement.style.transition = "opacity 0.5s ease-in-out";
+        messageElement.style.opacity = "1";
+
+        // Auto-hide after 3 seconds
+        setTimeout(() => {
+            messageElement.style.opacity = "0";
+            setTimeout(() => { messageElement.style.display = "none"; }, 500);
+        }, 3000);
+    }
+    // Array to hold Course Curriculum data
+    let courseCurriculumLines = [
+    { id: Date.now(), title: "", content: "" },
+    { id: Date.now() + 1, title: "", content: "" },
+    { id: Date.now() + 2, title: "", content: "" },
+    { id: Date.now() + 3, title: "", content: "" }
+    ];
+
+    // Function to add 4 new lines when "Add More" is clicked
+    function addCourseCurriculumLine() {
+    for (let i = 0; i &lt; 4; i++) {  // Add 4 rows at a time
+        const newLine = { id: Date.now() + i, title: "", content: "" };
+        courseCurriculumLines.push(newLine);
+    }
+    renderCourseCurriculumTable(); // Re-render the table
+}
+
+
+    // Function to remove a line
+    function removeCourseCurriculumLine(button) {
+    const lineId = parseInt(button.getAttribute("data-id"));
+    courseCurriculumLines = courseCurriculumLines.filter(line => line.id !==
+    lineId);
+    renderCourseCurriculumTable();
+    }
+
+    // Function to render the table
+    function renderCourseCurriculumTable() {
+    const tbody = document.getElementById("courseCurriculumTableBody");
+    if (!tbody) {
+    console.error("Table body element not found");
+    return;
+    }
+
+    tbody.innerHTML = ""; // Clear the table
+
+    courseCurriculumLines.forEach(line => {
+    const row = document.createElement("tr");
+
+    // Title cell
+    const titleCell = document.createElement("td");
+    const titleInput = document.createElement("input");
+    titleInput.type = "text";
+    titleInput.className = "form-control";
+    titleInput.value = line.title;
+    titleInput.placeholder = "Enter title";
+    titleInput.oninput = (event) => {
+    line.title = event.target.value;
+    };
+    titleCell.appendChild(titleInput);
+
+    // Content cell
+    const contentCell = document.createElement("td");
+    const contentInput = document.createElement("textarea");
+    contentInput.className = "form-control";
+    contentInput.value = line.content;
+    contentInput.placeholder = "Enter content";
+    contentInput.oninput = (event) => {
+    line.content = event.target.value;
+    };
+    contentCell.appendChild(contentInput);
+
+    // Action cell
+    const actionCell = document.createElement("td");
+    actionCell.style.textAlign = "center"; // Center the content
+    actionCell.style.verticalAlign = "middle"; // Align vertically center
+
+    const deleteIcon = document.createElement("i");
+    deleteIcon.className = "fas fa-trash"; // Font Awesome trash icon
+    deleteIcon.style.color = "black"; // Black color for the icon
+    deleteIcon.style.cursor = "pointer"; // Pointer cursor for better UX
+    deleteIcon.style.fontSize = "20px"; // Adjust icon size as needed
+    deleteIcon.setAttribute("data-id", line.id);
+    deleteIcon.onclick = () => removeCourseCurriculumLine(deleteIcon);
+
+    actionCell.appendChild(deleteIcon);
+
+    // Append cells to the row
+    row.appendChild(titleCell);
+    row.appendChild(contentCell);
+    row.appendChild(actionCell);
+
+    // Append row to the table
+    tbody.appendChild(row);
+    });
+    }
+
+    // Attach data to the form before submission
+    document.querySelector("form").addEventListener("submit", function
+    (event) {
+    // Create a hidden input for "Course Curriculum" lines
+    const hiddenInput = document.createElement("input");
+    hiddenInput.type = "hidden";
+    hiddenInput.name = "course_curriculum_data";
+    hiddenInput.value = JSON.stringify(courseCurriculumLines);
+    this.appendChild(hiddenInput);
+    });
+
+    // Initial render when the DOM is ready
+    document.addEventListener("DOMContentLoaded", function () {
+    renderCourseCurriculumTable();
+    });
+</script>
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/Course_Curriculum.png" alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accordion Item 6 -->
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="aboutMeHeading">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#aboutMe" aria-expanded="false" aria-controls="aboutMe">
+                                    About Me
+                                </button>
+                            </h2>
+                            <div id="aboutMe" class="accordion-collapse collapse" aria-labelledby="aboutMeHeading"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" id="aboutMeCourseID" name="course_id" t-att-value="selected_course.id"/>
+                                                <div class="mb-3">
+                                                    <label for="faceBook" class="form-label">Facebook
+                                                    </label>
+                                                    <input type="text" class="form-control" id="aboutMeFaceBook"
+                                                           name="face_book" placeholder="e.g. facebook"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="scoialMediaX" class="form-label">X(Formerly Twitter)
+                                                    </label>
+                                                    <input type="text" class="form-control" id="aboutMeScoialMediaX"
+                                                           name="social_media_x" placeholder="e.g. social media x"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="LinkedIn" class="form-label">Linked In
+                                                    </label>
+                                                    <input type="text" class="form-control" id="aboutMeLinkedIn"
+                                                           name="linked_in" placeholder="e.g. Linked in"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="youTube" class="form-label">You Tube
+                                                    </label>
+                                                    <input type="text" class="form-control" id="aboutMeYouTube"
+                                                           name="you_tube" placeholder="e.g. You Tube"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="instaGram" class="form-label">Instagram
+                                                    </label>
+                                                    <input type="text" class="form-control" id="aboutMeInstaGram"
+                                                           name="instagram" placeholder="e.g. instagram"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="pinInterest" class="form-label">Pinterest
+                                                    </label>
+                                                    <input type="text" class="form-control" id="aboutMePinInterest"
+                                                           name="pinInterest" placeholder="e.g. pinInterest"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="creatorImage" class="form-label">Creator Image<span style="color: red;">*</span>
+                                                        <br></br>
+                                                        <small>(Width: 900px, Height: 1125px)</small>
+                                                    </label>
+                                                    <div id="previewCreatorimage" style="margin-top: 10px;">
+                                                        <img id="creatorimagePreview" src="#" alt="Preview"
+                                                             style="display: none; max-width: 100%; height: auto;"/>
+                                                        <p id="doccPreview" style="display: none;">
+                                                            <a id="doccLink" href="#" target="_blank"></a>
+                                                        </p>
+                                                    </div>
+                                                    <input type="file" class="form-control" id="aboutMeCreatorimageFile"
+                                                           name="creator_image_file" accept="image/*" onchange="previewImage(event)"/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <table class="table table-bordered w-100">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Content</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="aboutMeTableBody"> <!-- Unique ID here -->
+                                                            <!-- Render rows dynamically -->
+                                                            <t t-foreach="lines" t-as="line" t-key="line.id">
+                                                                <tr>
+                                                                    <td>
+                                                                        <textarea class="form-control"
+                                                                                  name="content"></textarea>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-danger"
+                                                                                t-att-data-id="line.id"
+                                                                                onclick="removeAboutMeLine(this)">
+                                                                            <i class="fas fa-trash"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </t>
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="text-start mt-3">
+                                                        <button type="button"
+                                                                class="o-cust-add-more-btn"
+                                                                onclick="addAboutMeLine()">
+                                                            Add More +
+                                                        </button>
+                                                        <p id="aboutmeSuccessMessage" style="display:none; margin-top: 10px;"></p>
+                                                        <a type="button" id="aboutMeSaveButton" class="btn btn-warning save-btn">
+                                                            Save
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+<script>
+    document.getElementById("aboutMeSaveButton").addEventListener("click", function () {
+        const aboutMeCourseID = document.getElementById('aboutMeCourseID').value; 
+        const aboutMeFaceBook = document.getElementById('aboutMeFaceBook').value; 
+        const aboutMeScoialMediaX = document.getElementById('aboutMeScoialMediaX').value; 
+        const aboutMeLinkedIn = document.getElementById('aboutMeLinkedIn').value; 
+        const aboutMeYouTube = document.getElementById('aboutMeYouTube').value; 
+        const aboutMeInstaGram = document.getElementById('aboutMeInstaGram').value; 
+        const aboutMePinInterest = document.getElementById('aboutMePinInterest').value; 
+        const fileInput = document.getElementById("aboutMeCreatorimageFile");
+
+        const tableRows = document.querySelectorAll("#aboutMeTableBody tr");
+        
+        let aboutMeData = [];
+        aboutMeData.push({
+            courseID: aboutMeCourseID,
+            facebook:aboutMeFaceBook,
+            mediaX:aboutMeScoialMediaX,
+            linkedIn:aboutMeLinkedIn,
+            youtube:aboutMeYouTube,
+            instagram:aboutMeInstaGram,
+            pininterest:aboutMePinInterest,
+
+        });
+
+        tableRows.forEach((row, index) => {
+            let columns = row.querySelectorAll("td"); 
+            const inputContent = columns[0].querySelector('textarea').value;
+
+            let content = inputContent ? inputContent.trim() : "";
+
+            if (content) {  // Add only non-empty values
+                aboutMeData.push({
+                    content: content
+                });
+            }
+        });
+
+        // Create FormData
+        let aboutMeDataList = new FormData();
+        aboutMeDataList.append('aboutMe_data', JSON.stringify(aboutMeData)); // Convert list to JSON string
+
+        // Check if a file is selected and append it
+        if (fileInput.files.length > 0) {
+            aboutMeDataList.append('aboutme_upload_file', fileInput.files[0]);
+        }
+
+        // Send the FormData via Fetch API
+        fetch("/creator-landing-page-js", {
+            method: "POST",
+            body: aboutMeDataList
+        })
+        .then(response => response.json())
+        .then(data => {
+        const successMessageElement = document.getElementById("aboutmeSuccessMessage");
+
+        if (data.result.success === true) {
+            successMessageElement.textContent = data.result.message;
+            successMessageElement.style.display = "block";
+            successMessageElement.style.color = "green"; // Success message color
+        } else {
+            successMessageElement.textContent = "Error: " + data.result.message;
+            successMessageElement.style.display = "block";
+            successMessageElement.style.color = "red"; // Error message color
+        }
+
+        // Hide message after 3 seconds
+        setTimeout(() => {
+            successMessageElement.style.display = "none";
+        }, 3000);
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        const successMessageElement = document.getElementById("aboutmeSuccessMessage");
+        successMessageElement.textContent = "An error occurred. Please try again.";
+        successMessageElement.style.display = "block";
+        successMessageElement.style.color = "red";
+
+        setTimeout(() => {
+            successMessageElement.style.display = "none";
+        }, 3000);
+    });
+});
+
+    function previewImage(event) {
+    const file = event.target.files[0];
+    const previewCreatorimage = document.getElementById('previewCreatorimage');
+    const creatorimagePreview = document.getElementById('creatorimagePreview');
+    const doccPreview = document.getElementById('doccPreview');
+    const doccLink = document.getElementById('doccLink');
+
+    if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+    const fileType = file.type;
+
+    // If it's an image, show it
+    if (fileType.startsWith("image/")) {
+    creatorimagePreview.src = e.target.result;
+    creatorimagePreview.style.display = "block";
+    doccPreview.style.display = "none";
+    }
+    // If it's a document, show the link
+    else {
+    doccLink.href = e.target.result;
+    doccLink.textContent = file.name;
+    creatorimagePreview.style.display = "none";
+    doccPreview.style.display = "block";
+    }
+    };
+    reader.readAsDataURL(file);
+    previewCreatorimage.style.display = "block";
+    }
+    }
+
+
+    // Declare and initialize the array for "About Me"
+    let aboutMeLines = [{ id: Date.now(), content: "" }];
+
+    // Function to add a new line for "About Me"
+    function addAboutMeLine() {
+    const newLine = { id: Date.now(), content: "" };
+    aboutMeLines.push(newLine);
+    renderAboutMeTable();
+    }
+
+    // Function to remove a line from "About Me"
+    function removeAboutMeLine(button) {
+    const lineId = parseInt(button.getAttribute("data-id"));
+    aboutMeLines = aboutMeLines.filter(line => line.id !== lineId);
+    renderAboutMeTable();
+    }
+
+    // Function to render the "About Me" table
+    function renderAboutMeTable() {
+    const tbody = document.getElementById("aboutMeTableBody");
+    if (!tbody) {
+    console.error("Table body element not found");
+    return;
+    }
+
+    tbody.innerHTML = ""; // Clear the table
+
+    aboutMeLines.forEach(line => {
+    const row = document.createElement("tr");
+
+    // Content cell
+    const contentCell = document.createElement("td");
+    const textarea = document.createElement("textarea");
+    textarea.className = "form-control";
+    textarea.value = line.content;
+    console.log("Table body element not found",line.content);
+    textarea.rows = 3; // Optional: Set number of rows for the textarea
+    textarea.placeholder = "Enter content";
+    textarea.oninput = (event) => {
+    line.content = event.target.value;
+    };
+    contentCell.appendChild(textarea);
+
+    // Action cell
+    const actionCell = document.createElement("td");
+    actionCell.style.textAlign = "center"; // Center horizontally
+    actionCell.style.verticalAlign = "middle"; // Align vertically center
+
+    const deleteIcon = document.createElement("i");
+    deleteIcon.className = "fas fa-trash"; // Font Awesome trash icon class
+    deleteIcon.style.color = "black"; // Set icon color to black
+    deleteIcon.style.cursor = "pointer"; // Add pointer cursor for better UX
+    deleteIcon.style.fontSize = "20px"; // Adjust icon size if needed
+    deleteIcon.setAttribute("data-id", line.id);
+    deleteIcon.onclick = () => removeAboutMeLine(deleteIcon);
+
+    actionCell.appendChild(deleteIcon);
+    // Append cells to the row
+    row.appendChild(contentCell);
+    row.appendChild(actionCell);
+
+    // Append row to the table
+    tbody.appendChild(row);
+    });
+    }
+
+    document.querySelector("form").addEventListener("submit", function (event) {
+    // Check if the form already has the hidden input to avoid duplicates
+    let hiddenInput = this.querySelector('input[name="about_me_data"]');
+    if (!hiddenInput) {
+    hiddenInput = document.createElement("input");
+    hiddenInput.type = "hidden";
+    hiddenInput.name = "about_me_data";
+    this.appendChild(hiddenInput);
+    }
+    // Assign JSON string of aboutMeLines to the hidden input
+    hiddenInput.value = JSON.stringify(aboutMeLines);
+    });
+
+    // Initial render for "About Me" table when the DOM is ready
+    document.addEventListener("DOMContentLoaded", function () {
+    renderAboutMeTable();
+    });
+</script>
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/About_Me.png" alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="aboutwhotakecourse">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#whoTakeCourse" aria-expanded="false"
+                                        aria-controls="whoTakeCourse">
+                                    Who Should Take This Course?
+                                </button>
+                            </h2>
+                            <div id="whoTakeCourse" class="accordion-collapse collapse"
+                                 aria-labelledby="aboutwhotakecourse"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" id="whoTakeCourseID" name="course_id" t-att-value="selected_course.id"/>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <t t-foreach="target_audience_options[:28]" t-as="audience">
+                                                            <div class="form-check">
+                                                                <input type="checkbox" class="form-check-input target-audience-checkbox"
+                                                                       t-att-id="'audience_' + str(audience.id)"
+                                                                       t-att-name="'target_audience[]'"
+                                                                       t-att-value="audience.name"/>
+                                                                <label class="form-check-label"
+                                                                       t-att-for="'audience_' + str(audience.id)">
+                                                                    <t t-esc="audience.name"/>
+                                                                </label>
+                                                            </div>
+                                                        </t>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <t t-foreach="target_audience_options[28:]" t-as="audience">
+                                                            <div class="form-check">
+                                                                <input type="checkbox" class="form-check-input target-audience-checkbox"
+                                                                       t-att-id="'audience_' + str(audience.id)"
+                                                                       t-att-name="'target_audience[]'"
+                                                                       t-att-value="audience.name"/>
+                                                                <label class="form-check-label"
+                                                                       t-att-for="'audience_' + str(audience.id)">
+                                                                    <t t-esc="audience.name"/>
+                                                                </label>
+                                                            </div>
+                                                        </t>
+                                                    </div>
+                                                    <p id="whoShouldTakeSuccessMessage" style="display:none; margin-top: 10px;"></p>
+                                                    <div class="mb-3">
+                                                        <a type="button" id="whoTakeCourseSaveButton" class="btn btn-warning save-btn">
+                                                            Save
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+<script>
+    document.getElementById("whoTakeCourseSaveButton").addEventListener("click", function () {
+        const checkedCount = document.querySelectorAll('.target-audience-checkbox:checked').length;
+        const successMessageElement = document.getElementById("whoShouldTakeSuccessMessage");
+        if (checkedCount &gt; 5) {
+            alert('You can select up to 5 options only.');
+            this.checked = false; // Uncheck the last selected checkbox
+            return;
+        }
+        if (checkedCount &lt; 5) {
+            alert('You can not select less then 5 options.');
+            this.checked = false; // Uncheck the last selected checkbox
+            return;
+        }
+        // Get Course ID
+        const courseID = document.getElementById("whoTakeCourseID").value;
+
+        // Select all checked checkboxes
+        const selectedAudiences = document.querySelectorAll("input[id^='audience_']:checked");
+        
+        // Extract values
+        let audienceList = [];
+        audienceList.push({
+            courseID,
+        });
+        selectedAudiences.forEach(audience =&gt; {
+            let audienceID = audience.id.replace("audience_", ""); // Remove 'audience_' prefix to get the ID
+            audienceList.push(audienceID);
+        });
+
+        // Create FormData
+        let audienceData = new FormData();
+        audienceData.append('audience_data', JSON.stringify(audienceList)); // Convert list to JSON string
+
+        // Send the FormData via Fetch API
+        fetch("/creator-landing-page-js", {
+            method: "POST",
+            body: audienceData
+        })
+        .then(response => response.json())
+    .then(data => {
+        if (data.result.success === true) {
+            successMessageElement.style.display = "block";
+            successMessageElement.style.color = "green";
+            successMessageElement.textContent = data.result.message;
+
+            // Hide the message after 3 seconds
+            setTimeout(() => {
+                successMessageElement.style.display = "none";
+            }, 3000);
+        } else {
+            successMessageElement.style.display = "block";
+            successMessageElement.style.color = "red";
+            successMessageElement.textContent = "Error: " + data.result.message;
+        }
+    })
+    .catch(error => {
+        successMessageElement.style.display = "block";
+        successMessageElement.style.color = "red";
+        successMessageElement.textContent = "An error occurred. Please try again.";
+        console.error("Error:", error);
+    });
+});
+</script>
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/Who_should_take_this_course_.png" alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="ourstudents_section">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#OurStudents" aria-expanded="false"
+                                        aria-controls="OurStudents">
+                                    Our Students - Testimonials
+                                </button>
+                            </h2>
+                            <div id="OurStudents" class="accordion-collapse collapse" aria-labelledby="ourstudents"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" id="OurStudentsCourseID" name="course_id" t-att-value="selected_course.id"/>
+                                                <div id="testimonialContainer">
+                                                    <div class="testimonial-row mb-3 row">
+                                                        <label for="testimonialSection1" class="form-label"
+                                                               style="font-weight: bold;">Section 1<span style="color: red;">*</span>
+                                                        </label>
+                                                        <div class="mb-3 row" style="padding-right: 0px;">
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Name<span style="color: red;">*</span></label>
+                                                                <input type="text" class="form-control" name="name[]"
+                                                                       placeholder="e.g. Satish Pandey"/>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">Rating<span style="color: red;">*</span></label>
+                                                                <select class="form-select" name="rating[]">
+                                                                    <option value="1">1 star</option>
+                                                                    <option value="2">2 star</option>
+                                                                    <option value="3">3 star</option>
+                                                                    <option value="4">4 star</option>
+                                                                    <option value="5">5 star</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="testimonialtype1" class="form-label">Testimonial
+                                                                Type<span style="color: red;">*</span>
+                                                            </label>
+                                                            <select class="form-select testimonial-type"
+                                                                    name="testimonial_type" id="testimonialtype1"
+                                                                    onchange="handleTestimonialTypeChange(1)">
+                                                                <option value="" selected="selected">Select</option>
+                                                                <option value="text">Text</option>
+                                                                <option value="video">Video</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3" id="textField1" style="display: none;">
+                                                            <label class="form-label">Enter Testimonial<span style="color: red;">*</span></label>
+                                                            <textarea class="form-control" name="text[]" placeholder="e.g. Enter your testimonial here."></textarea>
+                                                        </div>
+                                                        <div class="mb-3" id="testimonialField1" style="display: none;">
+                                                            <label class="form-label">Paste YouTube Shorts url</label>
+                                                            <input type="text" class="form-control" name="content[]" placeholder="e.g. Paste YouTube Shorts url"/>
+                                                            
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Upload Student Photo(JPEG/PNG)<span style="color: red;">*</span>
+                                                                <br></br>
+                                                                <small>(Width: 372px, Height: 423px)</small>
+                                                            </label>
+                                                            <div id="previewstudentphoto" style="margin-top: 10px;">
+                                                                <img id="PreviewPhoto" src="#" alt="Preview"
+                                                                     style="display: none; max-width: 100%; height: auto;"/>
+                                                                <p id="imagePreview" style="display: none;">
+                                                                    <a id="imageLink" href="#" target="_blank"></a>
+                                                                </p>
+                                                            </div>
+                                                            <input type="file" class="form-control" name="pushFile[]" accept="image/*" onchange="previewFileImage(event)"/>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <button type="button" class="btn btn-link delete-icon"
+                                                                    onclick="deleteStudentsLine(this)">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div class="text-start mt-3">
+                                                        <button type="button" class="o-cust-add-more-btn"
+                                                                onclick="addourstudentsLine()">Add More +
+                                                        </button>
+                                                        <p id="ourStudentsSuccessMessage" style="display:none; margin-top: 10px;"></p>
+                                                        <a type="button"  id="OurStudentsSaveButton" class="btn btn-warning save-btn">Save
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+<script>
+    document.getElementById("OurStudentsSaveButton").addEventListener("click", function () {
+        const courseID = document.getElementById("OurStudentsCourseID").value;
+        const testimonialRows = document.querySelectorAll(".testimonial-row");
+
+        // Validation: Check if at least 2 sections exist and the count is even
+        if (testimonialRows.length &lt; 2) {
+            alert("You must add at least 2 testimonial sections before saving.");
+            return;
+        }
+        if (testimonialRows.length % 2 !== 0) {
+            alert("The number of testimonial sections must be even (multiples of 2).");
+            return;
+        }
+
+        let isValid = true; // Flag to check validation
+        let testimonialsData = [];
+        testimonialsData.push({ courseID: courseID });
+
+        // Collect testimonial data (without files)
+    testimonialRows.forEach((row, index) => {
+        let name = row.querySelector("input[name='name[]']").value.trim();
+        let rating = row.querySelector("select[name='rating[]']").value.trim();
+        let testimonialType = row.querySelector(".testimonial-type").value.trim();
+        let textField = row.querySelector("textarea[name='text[]']");
+        let contentField = row.querySelector("input[name='content[]']");
+        let text = textField ? textField.value.trim() : "";
+        let content = contentField ? contentField.value.trim() : "";
+        let fileElement = row.querySelector("input[name='pushFile[]']");
+
+        // Validation for each row
+        if (!name) {
+            alert(`Please enter a name in Section ${index + 1}.`);
+            isValid = false;
+            return;
+        }
+
+        if (!rating) {
+            alert(`Please select a rating in Section ${index + 1}.`);
+            isValid = false;
+            return;
+        }
+
+        if (!testimonialType) {
+            alert(`Please select a testimonial type in Section ${index + 1}.`);
+            isValid = false;
+            return;
+        }
+
+        if (testimonialType === "text" &amp;&amp; !text) {
+            alert(`Please enter a testimonial in Section ${index + 1}.`);
+            isValid = false;
+            return;
+        }
+
+        if (testimonialType === "video" &amp;&amp; !content) {
+            alert(`Please enter a YouTube Shorts URL in Section ${index + 1}.`);
+            isValid = false;
+            return;
+        }
+
+        if (!fileElement.files.length) {
+            alert(`Please upload a student photo in Section ${index + 1}.`);
+            isValid = false;
+            return;
+        }
+
+        testimonialsData.push({
+            name: name,
+            rating: rating,
+            testimonial_type: testimonialType,
+            text: text,
+            content: content,
+            file_key: `upload_file_${index}` // Track the file key for backend mapping
+        });
+    });
+
+    if (!isValid) return; // Stop form submission if validation fails
+
+        // Create FormData
+        let testimonialsDataList = new FormData();
+        testimonialsDataList.append('testimonials_data', JSON.stringify(testimonialsData)); // Convert list to JSON string
+
+        // Attach files
+        testimonialRows.forEach((row, index) => {
+            let fileElement = row.querySelector("input[name='pushFile[]']");
+            if (fileElement.files.length > 0) {
+                testimonialsDataList.append(`upload_file_${index}`, fileElement.files[0]);
+            }
+        });
+
+        // Send the FormData via Fetch API
+        fetch("/creator-landing-page-js", {
+            method: "POST",
+            body: testimonialsDataList
+        })
+        .then(response => response.json())
+        .then(data => {
+            const successMessage = document.getElementById("ourStudentsSuccessMessage");
+
+            if (data.result.success === true) {
+                successMessage.textContent = data.result.message; // Set the success message
+                successMessage.style.display = "block"; // Show the message
+                successMessage.style.color = "green"; // Set text color
+
+                // Hide the message after 3 seconds
+                setTimeout(() => {
+                    successMessage.style.display = "none";
+                }, 3000);
+         }
+        else {
+                successMessage.textContent = "Error: " + data.result.message;
+                successMessage.style.display = "block";
+                successMessage.style.color = "red"; // Optional: Style for errors
+            }
+        })
+
+        .catch(error => console.error("Error:", error));
+    });
+
+
+    function previewFileImage(event) {
+    const file = event.target.files[0];
+    const previewstudentphoto = document.getElementById('previewstudentphoto');
+    const PreviewPhoto = document.getElementById('PreviewPhoto');
+    const imagePreview = document.getElementById('imagePreview');
+    const imageLink = document.getElementById('imageLink');
+
+    if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+    const fileType = file.type;
+
+    // If it's an image, show it
+    if (fileType.startsWith("image/")) {
+    PreviewPhoto.src = e.target.result;
+    PreviewPhoto.style.display = "block";
+    imagePreview.style.display = "none";
+    }
+    // If it's a document, show the link
+    else {
+    imageLink.href = e.target.result;
+    imageLink.textContent = file.name;
+    PreviewPhoto.style.display = "none";
+    imagePreview.style.display = "block";
+    }
+    };
+    reader.readAsDataURL(file);
+    previewstudentphoto.style.display = "block";
+    }
+    }
+
+
+    let containerCount = 1;
+    let firstClick = true;
+
+    // Function to handle Testimonial Type changes
+    function handleTestimonialTypeChange(containerId) {
+    const testimonialType =
+    document.getElementById(`testimonialtype${containerId}`);
+    const textField = document.getElementById(`textField${containerId}`);
+    const testimonialField =
+    document.getElementById(`testimonialField${containerId}`);
+
+    // Reset visibility for both fields
+    textField.style.display = 'none';
+    testimonialField.style.display = 'none';
+
+    // Show the appropriate field based on the selected value
+    if (testimonialType.value === 'text') {
+    textField.style.display = 'block';
+    } else if (testimonialType.value === 'video') {
+    testimonialField.style.display = 'block';
+    }
+    }
+
+    // Function to add a new testimonial container
+    function addourstudentsLine() {
+    let sectionsToAdd = firstClick ? 1 : 2; // First time: 1, Subsequent: 2
+    firstClick = false; // After first addition, always add 2 sections
+
+    const testimonialContainer = document.getElementById('testimonialContainer');
+
+    for (let i = 0; i &lt; sectionsToAdd; i++) {
+        containerCount++; // Increment container count
+        const newRow = document.createElement('div');
+        newRow.className = 'testimonial-row mb-3 row';
+        newRow.innerHTML = `
+        <label for="testimonialSection${containerCount}" class="form-label" style="font-weight: bold;">
+            Section ${containerCount}
+        </label>
+        <div class="mb-3 row" style="padding-right: 0px;">
+            <div class="col-md-6">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" name="name[]" placeholder="e.g. Satish Pandey"/>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Rating</label>
+                <select class="form-select" name="rating[]">
+                    <option value="1">1 star</option>
+                    <option value="2">2 star</option>
+                    <option value="3">3 star</option>
+                    <option value="4">4 star</option>
+                    <option value="5">5 star</option>
+                </select>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="testimonialtype${containerCount}" class="form-label">
+                Testimonial Type
+            </label>
+            <select class="form-select testimonial-type"
+                    name="Testimonial Type[]"
+                    id="testimonialtype${containerCount}"
+                    onchange="handleTestimonialTypeChange(${containerCount})">
+                <option value="" selected="selected">Select</option>
+                <option value="text">Text</option>
+                <option value="video">Video</option>
+            </select>
+        </div>
+        <div class="mb-3" id="textField${containerCount}" style="display: none;">
+            <label class="form-label">Enter Testimonial</label>
+            <textarea class="form-control" name="text[]" placeholder="e.g. Enter your testimonial here."></textarea>
+        </div>
+        <div class="mb-3" id="testimonialField${containerCount}" style="display: none;">
+            <label class="form-label">Paste YouTube Shorts url</label>
+            <input type="text" class="form-control" name="content[]" placeholder="e.g. Paste YouTube Shorts url"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Upload Student Photo(JPEG/PNG)<span style="color: red;">*</span></label>
+            <div id="previewstudentphoto" style="margin-top: 10px;">
+                <img id="PreviewPhoto" src="#" alt="Preview"
+                     style="display: none; max-width: 100%; height: auto;"/>
+                <p id="imagePreview" style="display: none;">
+                    <a id="imageLink" href="#" target="_blank"></a>
+                </p>
+            </div>
+            <input type="file" class="form-control" name="pushFile[]" accept="image/*" onchange="previewFileImage(event)"/>
+        </div>
+        <div class="col-md-12">
+            <button type="button" class="btn btn-link delete-icon" onclick="deleteStudentsLine(this)">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+        `;
+        testimonialContainer.appendChild(newRow);
+    }
+}
+
+// Function to delete a testimonial container
+function deleteStudentsLine(button) {
+    const testimonialRow = button.closest('.testimonial-row');
+    if (testimonialRow) {
+        testimonialRow.remove();
+    }
+}
+</script>
+
+                                        </div>
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/Testimonials.png" alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="faq_section">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq" aria-expanded="false"
+                                        aria-controls="faq">
+                                    FAQs
+                                </button>
+                            </h2>
+                            <div id="faq" class="accordion-collapse collapse" aria-labelledby="faq"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" id="faqCourseID" name="course_id" t-att-value="selected_course.id"/>
+                                                <div id="faqContainer">
+                                                    <div class="faq-Section">
+                                                        <div class="mb-3">
+                                                            <label for="question" class="form-label">Question 1<span style="color: red;">*</span></label>
+                                                            <input type="text" class="form-control"
+                                                                   name="question"
+                                                                   placeholder="e.g. question 1"/>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="answer" class="form-label">Answer<span style="color: red;">*</span></label>
+                                                            <textarea class="form-control" id="answer" name="answer"
+                                                                      placeholder="e.g. Enter your answer."></textarea>
+                                                            <div class="text-end mt-1">
+                                                                <button type="button" class="btn btn-link delete-icon"
+                                                                        onclick="deleteFaqSection(this)">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="faq-Section">
+                                                        <div class="mb-3">
+                                                            <label for="question" class="form-label">Question 2<span style="color: red;">*</span></label>
+                                                            <input type="text" class="form-control"
+                                                                   name="question"
+                                                                   placeholder="e.g. question 2"/>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="answer" class="form-label">Answer<span style="color: red;">*</span></label>
+                                                            <textarea class="form-control" id="answer" name="answer"
+                                                                      placeholder="e.g. Enter your answer."></textarea>
+                                                            <div class="text-end mt-1">
+                                                                <button type="button" class="btn btn-link delete-icon"
+                                                                        onclick="deleteFaqSection(this)">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-5 mb-3">
+                                                    <div class="text-start mt-3">
+                                                        <button type="button" class="o-cust-add-more-btn"
+                                                                onclick="addFaqLine()">Add More +
+                                                        </button>
+                                                        <p id="faqSuccessMessage" style="display:none; margin-top: 10px;"></p>
+                                                        <a type="button" id="faqSaveButton" class="btn btn-warning save-btn">Save
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+<script>
+    document.getElementById("faqSaveButton").addEventListener("click", function () {
+        // Get Course ID
+        const courseID = document.getElementById("faqCourseID").value;
+
+        // Select all testimonial rows
+        const faqRows = document.querySelectorAll(".faq-Section");
+        const sectionCount = faqRows.length;
+        if (sectionCount &lt; 5 || sectionCount &gt; 10) {
+            alert("You must have at least 5 and at most 10 FAQ sections before saving.");
+            return;
+        }
+        let faqData = [];
+        faqData.push({
+            courseID: courseID,
+        });
+
+        // Flag to track validation status
+        let validationFailed = false;
+
+        faqRows.forEach((row, index) => {
+            console.log(`Processing row ${index + 1}...`); // Debugging log
+
+            let questionElement = row.querySelector("input[name='question']");
+            let answerElement = row.querySelector("textarea[name='answer']");
+
+            let question = questionElement ? questionElement.value : "";
+            let answer = answerElement ? answerElement.value : "";
+            
+            // Validation checks
+            if (!question) {
+                alert(`Question in Section ${index + 1} cannot be blank.`);
+                questionElement.focus();
+                validationFailed = true;
+                return; // Stop processing this section
+            }
+            if (!answer) {
+                alert(`Answer in Section ${index + 1} cannot be blank.`);
+                answerElement.focus();
+                validationFailed = true;
+                return; // Stop processing this section
+            }
+            
+            faqData.push({
+                question: question,
+                answer: answer,
+            });
+        });
+
+        // Stop submission if validation failed
+        if (validationFailed) {
+            return;
+        }
+
+        // Create FormData
+        let formDataList = new FormData();
+        formDataList.append('faq_data', JSON.stringify(faqData)); // Convert list to JSON string
+
+        // Send the FormData via Fetch API
+        fetch("/creator-landing-page-js", {
+            method: "POST",
+            body: formDataList
+        })
+        .then(response => response.json())
+        .then(data => {
+            const successMessage = document.getElementById("faqSuccessMessage");
+
+            if (data.result.success === true) {
+                successMessage.textContent = data.result.message; // Set success message
+                successMessage.style.display = "block"; // Show the message
+                successMessage.style.color = "green"; // Set text color
+
+                // Hide message after 3 seconds
+                setTimeout(() => {
+                    successMessage.style.display = "none";
+                }, 3000);
+            } else {
+                alert("Error: " + data.result.message);
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    });
+    // Function to add a new testimonial container
+    function addFaqLine() {
+    const faqContainer = document.getElementById('faqContainer');
+
+    const faqCount = faqContainer.querySelectorAll('.faq-Section').length + 1;
+
+    const newRow = document.createElement('div');
+    newRow.className = 'faq-Section';
+    newRow.innerHTML = `
+    <div class="mb-3">
+        <label for="question${faqCount}" class="form-label">Question
+            ${faqCount}
+        </label>
+        <input type="text" class="form-control"
+               name="question"
+               placeholder="e.g. question ${faqCount}"/>
+    </div>
+    <div class="mb-3">
+        <label for="answer" class="form-label">Answer</label>
+        <textarea class="form-control" id="answer" name="answer"
+                  placeholder="e.g. Enter your answer."></textarea>
+        <div class="text-end mt-1">
+            <button type="button" class="btn btn-link delete-icon"
+                    onclick="deleteFaqSection(this)">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    </div>
+    `;
+    faqContainer.appendChild(newRow);
+    }
+
+    // Function to delete a FAQ container
+    function deleteFaqSection(button) {
+    const faqSectionRow = button.closest('.faq-Section');
+    if (faqSectionRow) {
+    faqSectionRow.remove();
+    }
+    }
+</script>
+
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/Frequently_asked_questions.png"
+                                                 alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="thecompleteguide">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#completeguide" aria-expanded="false"
+                                        aria-controls="completeguide">
+                                    Footer Information
+                                </button>
+                            </h2>
+                            <div id="completeguide" class="accordion-collapse collapse"
+                                 aria-labelledby="completeguide"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" id="completeguideCourseID" name="course_id" t-att-value="selected_course.id"/>
+                                                <div class="mb-3">
+                                                    <label for="courseName" class="form-label">Name of the Course<span style="color: red;">*</span>
+                                                    </label>
+                                                    <select class="form-control" id="completeguideCourseName" name="courseName"
+                                                            disabled="disabled">
+                                                        <t t-foreach="courses" t-as="course">
+                                                            <option t-att-value="course.id"
+                                                                    t-att-selected="course.id == selected_course.id">
+                                                                <t t-esc="course.name"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="shortDescription" class="form-label">Course Short
+                                                        Description<span style="color: red;">*</span>
+                                                    </label>
+
+                                                    <textarea class="form-control" id="completeguideShortDescription"
+                                                              name="shortDescription" rows="3"
+                                                              placeholder="e.g. Everything you need to know to launch your business idea."/>
+
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="uploadFile" class="form-label">Upload Your
+                                                        Photo(JPEG,PNG)<span style="color: red;">*</span>
+                                                        <br></br>
+                                                        <small>(Width: 700px, Height: 400px)</small>
+                                                    </label>
+                                                    <div id="previewFooterImage" style="margin-top: 10px;">
+                                                        <img id="footerimagePreview" src="#" alt="Preview"
+                                                             style="display: none; max-width: 100%; height: auto;"/>
+                                                        <p id="footerdocPreview" style="display: none;">
+                                                            <a id="footerdocLink" href="#" target="_blank"></a>
+                                                        </p>
+                                                    </div>
+                                                    <input type="file" class="form-control" id="completeguideUploadFile"
+                                                           name="uploadFiless" accept="image/*" onchange="previewFooterFile(event)"/>
+                                                </div>
+                                                <p id="footerSuccessMessage" style="display:none; margin-top: 10px;"></p>
+                                                <a type="button" id="completeguideSaveButton" class="btn btn-warning">Save</a>
+                                            </form>
+                                        </div>
+<script>
+    document.getElementById("completeguideSaveButton").addEventListener("click", function () {
+        const courseId = document.getElementById('completeguideCourseID').value; 
+        const shortDescription = document.getElementById('completeguideShortDescription').value;
+
+        let completeGuideList = [
+            courseId,
+            shortDescription,
+        ];
+        let fileInput = document.getElementById("completeguideUploadFile");
+        
+        if (fileInput.files.length &gt; 0) {
+           completeGuideList.push(fileInput.files[0]);
+        }
+
+        // Create FormData
+        let completeGuideData = new FormData();
+        completeGuideData.append('completeGuide_data', JSON.stringify(completeGuideList)); // Convert list to JSON string
+
+        // Check if a file is selected and append it
+        if (fileInput.files.length > 0) {
+            completeGuideData.append('completeGuide_file', fileInput.files[0]);
+        }
+
+        // Send the FormData via Fetch API
+        fetch("/creator-landing-page-js", {
+            method: "POST",
+            body: completeGuideData
+        })
+        .then(response => response.json())
+        .then(data => {
+            const successMessage = document.getElementById("footerSuccessMessage");
+
+            if (data.result.success === true) {
+                successMessage.textContent = data.result.message; // Set success message
+                successMessage.style.display = "block"; // Show the message
+                successMessage.style.color = "green"; // Set text color
+
+                // Hide message after 3 seconds
+                setTimeout(() => {
+                    successMessage.style.display = "none";
+                }, 3000);
+            } else {
+                alert("Error: " + data.result.message);
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    });
+    function previewFooterFile(event) {
+    const file = event.target.files[0];
+    const previewFooterImage = document.getElementById('previewFooterImage');
+    const footerimagePreview = document.getElementById('footerimagePreview');
+    const footerdocPreview = document.getElementById('footerdocPreview');
+    const footerdocLink = document.getElementById('footerdocLink');
+
+    if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+    const fileType = file.type;
+
+    // If it's an image, show it
+    if (fileType.startsWith("image/")) {
+    footerimagePreview.src = e.target.result;
+    footerimagePreview.style.display = "block";
+    footerdocPreview.style.display = "none";
+    }
+    // If it's a document, show the link
+    else {
+    footerdocLink.href = e.target.result;
+    footerdocLink.textContent = file.name;
+    footerimagePreview.style.display = "none";
+    footerdocPreview.style.display = "block";
+    }
+    };
+    reader.readAsDataURL(file);
+    previewFooterImage.style.display = "block";
+    }
+    }
+</script>
+
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/Footer_Information.png" alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="certificate_section">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#certificate" aria-expanded="false"
+                                        aria-controls="certificate">
+                                    Certificate
+                                </button>
+                            </h2>
+                            <div id="certificate" class="accordion-collapse collapse" aria-labelledby="certificate"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" id="certificateCourseID" name="course_id" t-att-value="selected_course.id"/>
+                                                <div class="mb-3">
+                                                    <label for="certificate_course" class="form-label">Is This
+                                                        Certificate Course?<span style="color: red;">*</span>
+                                                    </label>
+                                                    <select class="form-select" name="certificate_course"
+                                                            id="certificate_course">
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </div>
+                                                <div id="certificate_fields" style="display: none;">
+                                                    <div class="mb-3">
+                                                        <label for="certificate" class="form-label">Certificate Issued
+                                                            By<span style="color: red;">*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control" id="certificate"
+                                                               name="certificate"
+                                                               placeholder="e.g. Company Name / Creator Name"/>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="uploadFile" class="form-label">Upload Signature or
+                                                            Logo<span style="color: red;">*</span>
+                                                            <br></br>
+                                                        <small>(Width: 700px, Height: 400px)</small>
+                                                        </label>
+                                                        <div id="previewCertificate" style="margin-top: 10px;">
+                                                            <img id="certificateimagePreview" src="#" alt="Preview"
+                                                                 style="display: none; max-width: 100%; height: auto;"/>
+                                                            <p id="certificatedocPreview" style="display: none;">
+                                                                <a id="certificatedocLink" href="#" target="_blank"></a>
+                                                            </p>
+                                                        </div>
+                                                        <input type="file" class="form-control" id="certificateUploadFile"
+                                                               name="certificate_File" accept="image/*" onchange="certificatepreviewFile(event)"/>
+                                                    </div>
+                                                </div>
+                                                <p id="certificateSuccessMessage" style="display:none; margin-top: 10px;"></p>
+                                                <a type="button" id="certificateSaveButton" class="btn btn-warning">Save</a>
+                                            </form>
+                                        </div>
+<script>
+    document.getElementById("certificateSaveButton").addEventListener("click", function () {
+        const courseId = document.getElementById('certificateCourseID').value; 
+        const certificate_course = document.getElementById('certificate_course').value;
+        const certificate = document.getElementById('certificate').value;
+
+        let certificateList = [
+            courseId,
+            certificate_course,
+            certificate,
+        ];
+        let fileInput = document.getElementById("certificateUploadFile");
+        
+        // Create FormData
+        let certificateData = new FormData();
+        certificateData.append('certificate_data', JSON.stringify(certificateList)); // Convert list to JSON string
+
+        // Check if a file is selected and append it
+        if (fileInput.files.length > 0) {
+            certificateData.append('certificate_upload_file', fileInput.files[0]);
+        }
+
+        // Send the FormData via Fetch API
+        fetch("/creator-landing-page-js", {
+            method: "POST",
+            body: certificateData
+        })
+        .then(response => response.json())
+        .then(data => {
+            const successMessage = document.getElementById("certificateSuccessMessage");
+
+            if (data.result.success === true) {
+                successMessage.textContent = data.result.message; // Set success message
+                successMessage.style.display = "block"; // Show the message
+                successMessage.style.color = "green"; // Set text color
+
+                // Hide message after 3 seconds
+                setTimeout(() => {
+                    successMessage.style.display = "none";
+                }, 3000);
+            } else {
+                alert("Error: " + data.result.message);
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    });
+    function certificatepreviewFile(event) {
+    const file = event.target.files[0];
+    const previewCertificate = document.getElementById('previewCertificate');
+    const certificateimagePreview = document.getElementById('certificateimagePreview');
+    const certificatedocPreview = document.getElementById('certificatedocPreview');
+    const certificatedocLink = document.getElementById('certificatedocLink');
+
+    if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+    const fileType = file.type;
+
+    // If it's an image, show it
+    if (fileType.startsWith("image/")) {
+    certificateimagePreview.src = e.target.result;
+    certificateimagePreview.style.display = "block";
+    certificatedocPreview.style.display = "none";
+    }
+    // If it's a document, show the link
+    else {
+    certificatedocLink.href = e.target.result;
+    certificatedocLink.textContent = file.name;
+    certificateimagePreview.style.display = "none";
+    certificatedocPreview.style.display = "block";
+    }
+    };
+    reader.readAsDataURL(file);
+    previewCertificate.style.display = "block";
+    }
+    }
+</script>
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/about_course.png" alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                // Get the dropdown and the fields container
+                                const certificateDropdown = document.getElementById('certificate_course');
+                                const certificateFields = document.getElementById('certificate_fields');
+
+                                // Add an event listener to handle the change event
+                                certificateDropdown.addEventListener('change', function () {
+                                if (certificateDropdown.value === 'yes') {
+                                certificateFields.style.display = 'block'; // Show the fields
+                                } else {
+                                certificateFields.style.display = 'none'; // Hide the fields
+                                }
+                                });
+
+                                // Initial check to handle default state on page load
+                                if (certificateDropdown.value === 'yes') {
+                                certificateFields.style.display = 'block';
+                                }
+                            </script>
+                        </div>
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header" id="coursethumbnail_section">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#coursethumbnail" aria-expanded="false"
+                                        aria-controls="coursethumbnail">
+                                    Course Thumbnail
+                                </button>
+                            </h2>
+                            <div id="coursethumbnail" class="accordion-collapse collapse"
+                                 aria-labelledby="coursethumbnail"
+                                 data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <form method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="course_id" id="coursethumbnailCourseID" t-att-value="selected_course.id"/>
+                                                <div class="mb-3">
+                                                    <label for="uploadThumbnailFile" class="form-label">Upload Thumbnail
+                                                        <br></br>
+                                                        <small>(Width: 700px, Height: 400px)</small>
+                                                        </label>
+                                                    <div id="previewThumbnail" style="margin-top: 10px;">
+                                                        <img id="imagePreviewThumbnail" src="#" alt="Preview"
+                                                             style="display: none; max-width: 100%; height: auto;"/>
+                                                        <p id="ThumbnaildocPreview" style="display: none;">
+                                                            <a id="ThumbnaildocLink" href="#" target="_blank"></a>
+                                                        </p>
+                                                    </div>
+                                                    <input type="file" class="form-control" id="coursethumbnailUploadThumbnail" name="upload_thumbnail"
+                                                           accept="image/*" onchange="uploadThumbnail(event)"></input>
+                                                </div>
+                                                <a type="button" id="coursethumbnailSaveButton" class="btn btn-warning">Save</a>
+                                            </form>
+                                        </div>
+<script>
+    document.getElementById("coursethumbnailSaveButton").addEventListener("click", function () {
+        const courseId = document.getElementById('coursethumbnailCourseID').value; 
+
+        let courseThumbnailList = [
+            courseId,
+        ];
+        let fileInput = document.getElementById("coursethumbnailUploadThumbnail");
+
+        // Create FormData
+        let courseThumbnailData = new FormData();
+        courseThumbnailData.append('courseThumbnail_data', JSON.stringify(courseThumbnailList)); // Convert list to JSON string
+
+        // Check if a file is selected and append it
+        if (fileInput.files.length > 0) {
+            courseThumbnailData.append('courseThumbnail_upload_file', fileInput.files[0]);
+        }
+
+        // Send the FormData via Fetch API
+        fetch("/creator-landing-page-js", {
+            method: "POST",
+            body: courseThumbnailData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result.success === true) {
+                alert(data.result.message);
+                // Open in a new tab after successful upload
+                window.open(`/landing_page?course_id=${courseId}`, '_blank');
+            } else {
+                alert("Error: " + data.result.message);
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    });
+    function uploadThumbnail(event) {
+    const file = event.target.files[0];
+    const previewThumbnail = document.getElementById('previewThumbnail');
+    const imagePreviewThumbnail = document.getElementById('imagePreviewThumbnail');
+    const ThumbnaildocPreview = document.getElementById('ThumbnaildocPreview');
+    const ThumbnaildocLink = document.getElementById('ThumbnaildocLink');
+
+    if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+    const fileType = file.type;
+
+    // If it's an image, show it
+    if (fileType.startsWith("image/")) {
+    imagePreviewThumbnail.src = e.target.result;
+    imagePreviewThumbnail.style.display = "block";
+    ThumbnaildocPreview.style.display = "none";
+    }
+    // If it's a document, show the link
+    else {
+    ThumbnaildocLink.href = e.target.result;
+    ThumbnaildocLink.textContent = file.name;
+    imagePreviewThumbnail.style.display = "none";
+    ThumbnaildocPreview.style.display = "block";
+    }
+    };
+    reader.readAsDataURL(file);
+    previewThumbnail.style.display = "block";
+    }
+    }
+</script>
+                                        <!-- Image Section -->
+                                        <div class="col-md-6 text-center">
+                                            <img src="/custom_web_kreator/static/src/Course_Thumbnail_.png" alt="Well Done"
+                                                 class="img-fluid" style="max-width: 100%; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Add More Items as Needed -->
+                    </div>
+
+                </div>
+                <!-- Main content end -->
+            </body>
+        </template>
+    </data>
+</odoo>

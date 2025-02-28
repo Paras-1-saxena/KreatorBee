@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_discount_discount_portal,access.discount.discount.portal,model_discount_discount,base.group_portal,1,1,1,1
+access_discount_discount_public,access.discount.discount.public,model_discount_discount,base.group_public,1,1,1,1
+access_discount_discount_user,access.discount.discount.user,model_discount_discount,base.group_user,1,1,1,1
+access_duration_duration_portal,access.duration.duration.portal,model_duration_duration,base.group_portal,1,1,1,1
+access_duration_duration_public,access.duration.duration.public,model_duration_duration,base.group_public,1,1,1,1
+access_duration_duration_user,access.duration.duration.user,model_duration_duration,base.group_user,1,1,1,1

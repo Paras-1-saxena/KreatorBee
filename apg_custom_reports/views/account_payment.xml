@@ -1,0 +1,14 @@
+<odoo>
+    <!-- Inherit the account.journal form view to add the bank_reference field -->
+    <record id="view_journal_form_inherit" model="ir.ui.view">
+        <field name="name">account.journal.form.inherit</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <!-- Add the bank_reference field just below the name field -->
+            <xpath expr="//field[@name='bank_id']" position="after">
+                <field name="bank_reference"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

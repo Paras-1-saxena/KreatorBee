@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <template id="webtemplayout" name="Custom Web Template layout">
+
+        <t t-call="custom_web_kreator.webtemp">
+            <t t-set="website_structure" t-value="True"/> <!-- Use website layout -->
+            <div>
+                HI
+            </div>
+          
+        </t>
+    </template>
+        </data>
+</odoo>

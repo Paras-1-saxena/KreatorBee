@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="inherit_snippets_animate" inherit_id="website.snippets" >
+        <xpath expr="//t[@id='default_snippets']" position="after">
+            <t id="default_snippets_1">
+                <snippets id="snippet_animate" string="Animated Snippets">
+                    <t snippet-group="animated_snippets" string="Animated Snippets" 
+                        t-thumbnail="/animated_snippet/static/src/img/a_columns_thumb.svg">
+                        
+                        <t t-snippet="animated_snippet.a_features_01"
+                            string="Add Animated Snippet"
+                            t-thumbnail="/animated_snippet/static/src/img/a_columns_thumb.svg"/>
+                    </t>
+                </snippets>
+            </t>
+        </xpath>
+    </template>
+    
+
+</odoo>

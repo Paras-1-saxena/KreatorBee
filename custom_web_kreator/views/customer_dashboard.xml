@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <template id="customer_dashboard" name="Customer dashboard">
+
+        <t t-call="custom_web_kreator.customer_webtemp">
+            <t t-set="website_structure" t-value="True"/> <!-- Use website layout -->
+            
+          
+        </t>
+    </template>
+        </data>
+</odoo>

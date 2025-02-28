@@ -1,0 +1,378 @@
+<odoo>
+    <data>
+        <template id="target_page_template" name="target">
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;display=swap" rel="stylesheet" />
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet"/>
+
+            <body>
+               
+                <style>
+                    body {
+                        display: flex;
+                        margin: 0;
+                        font-family: 'Poppins', sans-serif;
+                        background-color: #f8f9fa;
+                    }
+
+                    /* Top Menu */
+                    .top-menu {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 10px 20px;
+                        background-color: #fff;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        top: 0;
+                        z-index: 100;
+                        height: 60px; /* Adjust height for new layout */
+                    }
+
+                    .top-menu .logo img {
+                        height: 60px;
+                        width: auto;
+                    }
+
+                    .top-menu .menu-links {
+                        display: flex;
+                        gap: 40px; /* Space between menu items */
+                        align-items: center;
+                        justify-content: center;
+                        flex: 1;
+                    }
+
+                    .top-menu .menu-links a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 14px;
+                        font-weight: 500;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 15px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        height: 100%;
+                        justify-content: center;
+                    }
+
+                    .top-menu .menu-links a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links i {
+                        font-size: 24px; /* Icon size */
+                    }
+                    .top-menu .user-icon {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        cursor: pointer;
+                        margin-right: 30px; /* Adds space from the edge */
+                    }
+
+                    /* Side Menu */
+                    .side-menu {
+                        width: 250px;
+                        background-color: #fff;
+                        padding: 20px 10px;
+                        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        left: 0;
+                        top: 60px; /* Adjust for top menu */
+                        height: calc(100vh - 60px);
+                        overflow-y: auto;
+                    }
+
+                    .side-menu ul {
+                        list-style: none;
+                        padding: 2;
+                    }
+
+                    .side-menu ul li {
+                        margin: 15px 0;
+                    }
+
+                    .side-menu ul li a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 15px;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                    }
+
+                    .side-menu ul li a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .side-menu ul li a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .main-content {
+                        margin-left: 270px; /* Adjust to create space from the side menu */
+                        padding: 20px;      /* Maintain consistent padding inside the main content */
+                        margin-top: 60px;   /* Adjust for the top menu */
+                        flex-grow: 1;
+                    }
+
+
+                    /* Container for all blocks */
+                    .target-container {
+                        display: block;
+                        padding: 20px;
+                        background-color: #f9f9f9;
+                    }
+
+                    /* Individual Block */
+                    <!-- .target-block {
+                        flex: 1; /* Equal width for each block */
+                        text-align: center;
+                    } -->
+
+                    /* Card Styling */
+                    .card {
+                        background: #fff;
+                        border: 1px solid #ddd;
+                        border-radius: 10px;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        padding: 15px;
+                        transition: box-shadow 0.3s ease;
+                    }
+
+                    .card:hover {
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                    }
+
+                    /* Card Header */
+                    .card-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 10px;
+                    }
+
+                    .card-header span {
+                        font-size: 14px;
+                        font-weight: bold;
+                        color: #ff5722;
+                    }
+
+                    .card-header img {
+                        width: 50px;
+                        height: auto;
+                        border-radius: 5px;
+                    }
+
+                    /* Progress Bar */
+                    .card-progress {
+                        margin: 10px 0;
+                    }
+
+                    .progress-bar {
+                        background: #ddd;
+                        height: 8px;
+                        border-radius: 5px;
+                        overflow: hidden;
+                    }
+
+                    .progress-bar .progress {
+                        background: #ffd001;
+                        height: 100%;
+                        width: 20%; /* Example progress (adjust dynamically) */
+                        transition: width 0.5s ease;
+                    }
+
+                    .progress-text {
+                        display: block;
+                        margin-top: 5px;
+                        font-size: 12px;
+                        color: #333;
+                    }
+
+                    /* Card Footer */
+                    .card-footer {
+                        margin-top: 10px;
+                    }
+
+                    .know-more {
+                        color: #333;
+                        font-weight: bold;
+                        text-decoration: none;
+                        font-size: 14px;
+                    }
+
+                    .know-more:hover {
+                        text-decoration: underline;
+                    }
+
+                    .row {
+    display: flex;
+    flex-wrap: wrap;
+    
+  }
+
+  .col-md-10, .col-md-2 {
+    flex: 0 0 auto;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+ 
+
+  .col-md-2 {
+    width: 16.66667%; /* 2/12 of the row */
+  }
+
+  .align-items-center {
+    align-items: center;
+    display: flex;
+  }
+
+  .d-flex {
+    display: flex;
+  }
+
+  .text-end {
+    text-align: end;
+  }
+
+  .bg-white {
+    background-color: #ffffff;
+  }
+
+
+
+  .border1 {
+    border: 1px solid #ffd000;
+    border-radius: 5px;
+        margin-top: 20px;
+  }
+
+  .rounded-circle {
+    border-radius: 50%;
+  }
+
+  .float-end {
+    margin-left: auto;
+  }
+  h5{
+  font-size:20px;
+  font-weight:500;
+  margin:20px;
+  }
+    h6{
+  font-size:16px;
+  font-weight:500;
+  margin:20px;
+  }
+
+  @media (max-width: 769px) {
+    .target-container {
+        display: block;
+        padding: 20px;
+        background-color: #f9f9f9;
+    }
+}
+
+
+
+                    
+                </style>
+
+                <!-- Top Menu -->
+                <div class="top-menu">
+                    <button class="navbar-toggler d-lg-none" type="button" id="burgerMenu" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"><i class="fa fa-solid fa-bars"></i></span>
+                    </button>
+                    <div class="logo">
+                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
+                    </div>
+                    <div class="menu-links">
+                        <a href="/partner-training" >
+                            <i class="fa fa-chalkboard-teacher"></i> Training
+                        </a>
+                        <a href="/target" class="active">
+                            <i class="fa fa-bullseye"></i> Targets
+                        </a>
+                        <a href="offers-coupon" >
+                            <i class="fa fa-cubes"></i> Offers
+                        </a>
+                        <a href="/npromote" >
+                            <i class="fa fa-layer-group"></i> Promotional  Material
+                        </a>
+                    </div>
+                    <!-- Use <img> tag for user icon -->
+                    <t t-call="custom_web_kreator.partner_profile_dropdown"/>
+                </div>
+
+                <!-- Side Menu -->
+                <t t-call="custom_web_kreator.side_menu"/>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <!-- Top Block -->
+                    <t t-call="custom_web_kreator.user_block" />
+                    <!-- Top block end -->
+                    <div class="target-container row pt-0">
+                        <t t-if="targets">
+                            <t t-foreach="targets" t-as="target">
+                                <!-- First Block -->
+                                <div class="col-md-3 mt-3">
+                                    <h2><t t-esc="target['name']"/></h2>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <span>Achieve this milestone for</span>
+                                            <img src="/custom_web_kreator/static/src/bees2.png" alt="Mega Star Award"/>
+                                        </div>
+                                        <div class="card-progress">
+                                            <div class="progress-bar">
+                                                <div class="progress"></div>
+                                            </div>
+                                            <span class="progress-text">
+                                                <span t-field="currency_id.symbol" /><t t-esc="'%.2f'% target['achievement_amount']"/>  / <span t-field="currency_id.symbol" /><t t-esc="'%.2f'% target['target_amount']"/>
+                                            </span>
+                                        </div>
+                                        <div class="card-footer">
+                                            <a href="#" class="know-more">Know More ></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <div class="text-center">
+                                <h3>No Targets Found</h3>
+                            </div>
+                        </t>
+                    </div>
+                </div>                  
+            </body>
+            <xpath expr="." position="inside">
+                <!-- Include jQuery -->
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script type="text/javascript" src="/apg_js/static/src/js/menu.js"></script>
+                <link rel="stylesheet" href="/apg_js/static/src/scss/menu.css" />
+            </xpath>
+        </template>
+    </data>
+</odoo>

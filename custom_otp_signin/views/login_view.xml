@@ -1,0 +1,169 @@
+<odoo>
+
+    <!-- <template id="custom_login_otp_checkbox_template" inherit_id="web.login">
+        <xpath expr="//input[@name='password']" position="after">
+            <div class="o_login_otp_container">
+                <div style="margin-top:10px; display:flex;">
+                    <a t-attf-href="?otp_login=true" class="btn btn-link" role="button">
+                        Login with OTP
+                    </a>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//form[@role='form' and @method='post']" position="attributes">
+            <attribute name="t-if">not otp_login</attribute>
+        </xpath>
+    </template> -->
+
+    <template id="custom_otp_signin" name="Custom Login Page">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        .content button {
+            background-color: #ffd000;
+                        color: #212529;
+                        font-family: 'Poppins', sans-serif;
+                        padding: 10px 15px;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        transition: background-color 0.3s ease;
+                        font-size: 16px;
+                        padding:10px 20px;
+                        letter-spacing: 1px;
+        }
+        .oe_login_form  {
+    
+    padding: 20px;
+    border-radius: 10px;
+    max-width:446px!important;
+    width:446px;
+    
+}
+
+    </style>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        console.log("Script loaded and running!"); // Debugging script load
+
+        let form = document.getElementById("otpForm");
+        let mobileInput = document.getElementById("login");
+        let errorDiv = document.getElementById("loginError");
+
+        form.addEventListener("submit", function (event) {
+            console.log("Send OTP button clicked!"); // Debugging button click
+
+            let mobileValue = mobileInput.value.replace(/[^0-9]/g, '').slice(0, 10);
+            console.log("Mobile input value:", mobileValue); // Debugging mobile value
+
+            // Enforce 10-digit limit
+            mobileInput.value = mobileValue;
+
+            if (mobileValue.length !== 10) {
+                event.preventDefault();  // Prevent form submission
+                mobileInput.classList.add("is-invalid");
+                errorDiv.textContent = "Mobile number must be exactly 10 digits.";
+                errorDiv.style.display = "block";
+                console.log("Validation failed! Mobile number is not 10 digits."); // Debugging validation failure
+            } else {
+                mobileInput.classList.remove("is-invalid");
+                mobileInput.classList.add("is-valid");
+                errorDiv.style.display = "none";
+                console.log("Validation passed! Form will submit."); // Debugging validation success
+            }
+        });
+    });
+</script>
+
+    <t t-call="website.layout">
+        <div id="wrap" class="oe_structure oe_empty" style="background-color:#ffd000;">
+            <div class="container">
+                <div class="content" >
+                    <form t-if="otp_login and not otp" id="form_otp_login" class="oe_login_form" role="form" t-attf-action="/web/otp/login" method="post" style="background-color:#fff; width:446px;">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="text-center c_signup_logo">
+                                    <a href="/">
+                                        <img src="/apg_signup/static/src/img/signup_logo.png" style="width: 155px;" alt="Logo"/>
+                                    </a>
+                                    <a role="button" class="btn btn-primary mt-1 o-google-login" style="">
+                                        <!-- width: 155px; -->
+                                        <img src="/apg_signup/static/src/img/google_icon.png" alt="Google Logo"/> Sign up with Google
+                                    </a>
+                                    
+                                </div>
+                                <div class="m-1">
+                                    <div class="mb-1" style="display: flex;align-items: center;justify-content: center;width: 100%;">
+                                        <div class="o-line-left"/>
+                                        <span class="or">or</span>
+                                        <div class="o-line-right"/>
+                                    </div>
+                                    <div class="user-phone">
+                        <div class="form-group field-login">
+                            <label t-attf-style="margin-bottom:10px" for="login">Mobile<span style="color: red;">*</span></label>
+
+
+
+
+                            <input type="number" placeholder="Enter your Mobile" name="login" t-att-value="login" id="login"
+                                   t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required"
+                                                       autofocus="autofocus" autocapitalize="off" 
+                                   min="10" max="10"
+                                   inputmode="numeric" oninput="if(this.value.length > 10) this.value = this.value.slice(0, 10);"
+                                   />
+
+                            <div id="loginError" class="invalid-feedback">
+                                Please enter a valid 10-digit mobile number (only numbers allowed).
+                        </div>
+                        </div>
+                        <p t-if="login_error" class="alert alert-danger" role="alert">
+                            The Mobile number entered is incorrect.
+                        </p>
+                        <div t-attf-class="clearfix oe_login_buttons text-center mb-1 {{'pt-2' if form_small else 'pt-3'}}">
+                            <button style="width:100%" type="submit">Send OTP</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="o_signin_div" class="text-center pt-3 f14">
+                                <span>
+                                    Don't have an account?
+                                    <a t-attf-href="/web/signup" class="o-link" role="button">Signup</a>
+                                </span>
+                            </div>
+                    </form>
+                    <form t-if="otp and otp_no" id="form_otp" class="oe_login_form" role="form" t-attf-action="/web/otp/verify" method="post" style="background-color:#fff;">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="form-group">
+                            <label t-attf-style="margin-bottom:10px" for="otp">OTP</label>
+                            <input type="text" placeholder="OTP" name="otp" id="otp"
+                                   t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required"/>
+                            <input t-att-value="login" id="login" type="hidden" name="login"/>
+                        </div>
+                        <div t-attf-class="clearfix oe_login_buttons text-center mb-1 {{'pt-2' if form_small else 'pt-3'}}">
+                            <button style="width:100%" type="submit" class="btn btn-primary btn-block">Verify OTP</button>
+                        </div>
+                    </form>
+                    <form t-if="otp and not otp_no" id="form_resend_otp" class="oe_login_form" role="form" t-attf-action="/web/otp/login" method="post" style="background-color:#fff;" >
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <label t-attf-style="margin-bottom:10px" for="otp">OTP</label>
+                        <input type="text" placeholder="OTP" name="otp" id="otp"
+                               t-attf-class="form-control #{'form-control-sm' if form_small else ''}"/>
+                        <input t-att-value="login" id="login" type="hidden" name="login"/>
+                        <p class="alert alert-danger" role="alert">
+                            The OTP entered is incorrect. Please use the below button to resend the OTP.
+                        </p>
+                        <div t-attf-class="clearfix oe_login_buttons text-center mb-1 {{'pt-2' if form_small else 'pt-3'}}">
+                            <button style="width:100%" type="submit" class="btn btn-primary btn-block">Resend OTP</button>
+                        </div>
+
+                    </form>
+
+
+                </div>
+
+            </div>
+        </div>
+    </t>
+</template>
+
+
+</odoo>

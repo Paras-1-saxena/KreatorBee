@@ -1,0 +1,568 @@
+<odoo>
+    <data>
+        <template id="master_course_detail" name="Master Courser Detail Template">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet"/>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            <body>
+                <!-- Page-Specific Styles -->
+                <style>
+                    body,textarea {
+                        display: flex;
+                        margin: 0;
+                        font-family: 'Poppins', sans-serif;
+                        background-color: #f8f9fa;
+                         margin: 0;
+                        padding: 0;
+                        line-height: 1.6;
+                    }
+
+                    /* Top Menu */
+                    .top-menu {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 10px 20px;
+                        background-color: #fff;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        top: 0;
+                        z-index: 100;
+                        height: 80px; /* Adjust height for new layout */
+                    }
+
+                    .top-menu .logo img {
+                        height: 60px;
+                        width: auto;
+                    }
+
+                    .top-menu .menu-links {
+                        display: flex;
+                        gap: 40px; /* Space between menu items */
+                        align-items: center;
+                        justify-content: center;
+                        flex: 1;
+                    }
+
+                    .top-menu .menu-links a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 14px;
+                        font-weight: 500;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 15px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        height: 100%;
+                        justify-content: center;
+                    }
+
+                    .top-menu .menu-links a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links i {
+                        font-size: 24px; /* Icon size */
+                    }
+                    .top-menu .user-icon {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        cursor: pointer;
+                        margin-right: 30px; /* Adds space from the edge */
+                    }
+
+                    /* Side Menu */
+                    .side-menu {
+                        width: 270px;
+                        background-color: #fff;
+                        padding: 20px 10px;
+                        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        left: 0;
+                        top: 60px; /* Adjust for top menu */
+                        height: calc(100vh - 60px);
+                        overflow-y: auto;
+                    }
+
+                    .side-menu ul {
+                        list-style: none;
+                        padding: 2;
+                    }
+
+                    .side-menu ul li {
+                        margin: 15px 0;
+                    }
+
+                    .side-menu ul li a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 15px;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                    }
+
+                    .side-menu ul li a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .side-menu ul li a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .main-content {
+                        margin-left: 270px; /* Adjust to create space from the side menu */
+                        padding: 20px;      /* Maintain consistent padding inside the main content */
+                        margin-top: 80px;   /* Adjust for the top menu */
+                        flex-grow: 1;
+                        background-color:#f8f9fa;
+                    }
+
+                     /* Progress Bar */
+                    .progress-bar-container {
+                        width: 100%;
+                        height:10px;
+                        background-color: fef5c5;
+                        margin-bottom: 20px;
+                        position: relative;
+                    }
+
+                    .progress-bar {
+                        height: 10px;
+                        background-color: #ffd001!important;
+                        width: 25%; /* Adjust for progress percentage */
+                        transition: width 0.3s ease;
+                    }
+
+                    .content-containter {
+                    background-color: white;
+                    height: 560px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    display: flex;
+                    flex-direction: column;
+                   
+                    
+                    overflow: hidden;
+                    border:1px solid #ffd000;
+
+
+                                        
+                                        
+                               
+                }
+                    /* Form Content */
+                    .form-container {
+                        display: flex;
+                        justify-content: space-between;
+                        <!-- gap: 20px; -->
+                    }
+
+                    .form-content {
+                        flex: 1;
+                        padding: 0px 20px;
+                        background-color: #fff;
+                        
+
+                    }
+
+                    .form-content h2 {
+                        font-size: 18px;
+                        font-weight: 600;
+                        color: #333;
+                        margin-bottom: 20px;
+                    }
+
+                    .form-content label {
+                        font-size: 14px;
+                        font-weight: 600;
+                        display: block;
+                        margin-bottom: 5px;
+                    }
+
+                    .form-content input,
+                    .form-content textarea {
+                        width: 100%;
+                        padding: 10px;
+                        margin-bottom: 15px;
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                        font-size: 14px;
+                    }
+                    textarea {
+                        height:100px;
+                    }
+
+                    .form-content .commission {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-top: 10px;
+                    }
+
+                    .form-content .commission div {
+                        background-color: #fef5c5;
+                        padding: 10px;
+                        font-size: 14px;
+                        font-weight: bold;
+                        color: #333;
+                        border-radius: 5px;
+                    }
+
+                    .form-actions {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-top: 20px;
+                    }
+
+                    .form-actions button {
+                        background-color: #ffd000;
+                        color: #212529;
+                        font-family: 'Poppins', sans-serif;
+                        padding: 10px 15px;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        transition: background-color 0.3s ease;
+                        font-size: 16px;
+                        padding:10px 20px;
+                        letter-spacing: 1px;
+                       
+                                        }
+
+                    
+
+                    .btn-back:hover {
+                        background-color: #e0a800;
+                    }
+
+                   
+
+                    .btn-continue:hover {
+                        background-color: #e0a800;
+                    }
+
+
+
+                    .image-container {
+                        flex: 1;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        
+                    }
+
+                    .image-container img {
+                        max-width: 100%;
+                        height: auto;
+
+                    }
+                    .inline-fields {
+                        display: flex;
+                        gap: 20px; /* Space between the two inputs */
+                        align-items: flex-start; /* Aligns the fields at the start */
+                    }
+
+                    .inline-fields > div {
+                        flex: 1; /* Ensures both inputs take equal space */
+                    }
+
+                    .inline-fields label {
+                        font-size: 14px;
+                        font-weight: 600;
+                        display: block;
+                        margin-bottom: 5px;
+                    }
+
+                    .inline-fields input {
+                        width: 100%;
+                        padding: 10px;
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                        font-size: 14px;
+                    }
+                    .border1{
+  border: 1px solid #ffd000;
+  }
+.disabled-link {
+                        pointer-events: none; /* Prevent clicking */
+                        color: #999; /* Gray out the link */
+                        cursor: not-allowed; /* Show a not-allowed cursor */
+                    }
+                
+                    
+                
+                </style>
+                <!-- script -->
+                <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        // Define commission rates (Modify as needed)
+        const partnerCommissionRate = document.getElementById('partner_commission_rate').textContent || 0;
+        const directCommissionRate = document.getElementById('direct_commission_rate').textContent || 0;
+        
+        // Get input elements
+        const regularPriceInput = document.getElementById('regular-price');
+        const salesPriceInput = document.getElementById('sales-price');
+        const partnerCommissionSpan = document.getElementById('partner_commission');
+        const directCommissionSpan = document.getElementById('direct_commission');
+        
+        function calculateCommissions() {
+            let regularPrice = parseFloat(regularPriceInput.value) || 0;
+            let salesPrice = parseFloat(salesPriceInput.value) || 0;
+            let partnerCommission = salesPrice * partnerCommissionRate;
+            let directCommission = salesPrice * directCommissionRate;
+            partnerCommissionSpan.textContent = partnerCommission.toFixed(2);
+            directCommissionSpan.textContent = directCommission.toFixed(2);
+        }
+
+        // Add event listeners
+        regularPriceInput.addEventListener('input', calculateCommissions);
+        salesPriceInput.addEventListener('input', calculateCommissions);
+    });
+</script>
+                <!-- Top Menu -->
+                <div class="top-menu">
+                    <div class="logo">
+                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
+                    </div>
+                    <div class="menu-links">
+                        <a class="active">
+                            <i class="fa fa-book-reader"></i> Course Details
+                        
+                        </a>
+                        <a>
+                            <i class="fa fa-book"></i> Course Standard
+                        
+                        </a>
+                        <a>
+                            <i class="fa fa-link"></i> T &amp; C
+                        
+                        </a>
+                        <a>
+                            <i class="fa fa-trophy"></i> Welcome
+                        
+                        </a> 
+                    </div>
+                    <!-- Use <img> tag for user icon -->
+                    <div class="dropdown">
+                        <img class="user-icon dropdown-toggle" src="/custom_web_kreator/static/src/user1.png" alt="User Icon" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer;" />
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                          <li><a class="dropdown-item" href="/creator-profile">My Profile</a></li>
+                          <li><a class="dropdown-item" href="/web/session/logout">Log Out</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Side Menu -->
+                <div class="side-menu">
+                    <ul>
+                    <!-- Get Started -->
+                    <li t-if="not course_count">
+                        <a href="/master" class="active">
+                            <i class="fa fa-home"></i> Get Started
+                        </a>
+                    </li>
+
+                    <!-- Hide Get Started if course_count is true -->
+                    <li t-if="course_count" t-class="d-none">
+                        <!-- Get Started is hidden when course_count is true -->
+                    </li>
+
+                    
+
+                    <!-- Products -->
+                    <li>
+                        <a t-att-href="course_count and '/nmy-courses' or '#'" 
+                           t-att-class="('disabled-link' if not course_count else 'active')">
+                            <i class="fa fa-box"></i> Products
+                            <t t-if="not course_count">
+                                <i class="fa fa-lock" style="margin-left: 5px;"></i>
+                            </t>
+                        </a>
+                    </li>
+
+                    <!-- Sales -->
+                    <li>
+                        <a t-att-href="(course_count and approve_course_count) and '/master_income_data' or '#'" 
+                           t-att-class="('disabled-link' if not course_count or (course_count and not approve_course_count) else '')">
+                            <i class="fa fa-chart-line"></i> Sales
+                            <t t-if="not course_count or (course_count and not approve_course_count)">
+                                <i class="fa fa-lock" style="margin-left: 5px;"></i>
+                            </t>
+                        </a>
+                    </li>
+
+                    <!-- Connect with Partner -->
+                    <li>
+                        <a t-att-href="(course_count and approve_course_count) and '/forumsection' or '#'" 
+                           t-att-class="('disabled-link' if not course_count or (course_count and not approve_course_count) else '')">
+                            <i class="fa fa-users"></i> Connect with Partner
+                            <t t-if="not course_count or (course_count and not approve_course_count)">
+                                <i class="fa fa-lock" style="margin-left: 5px;"></i>
+                            </t>
+                        </a>
+                    </li>
+
+                    <!-- Customer -->
+                    <li>
+                        <a t-att-href="(course_count and approve_course_count) and '/coming-soon' or '#'" 
+                           t-att-class="('disabled-link' if not course_count or (course_count and not approve_course_count) else '')">
+                            <i class="fa fa-address-book"></i> Customer
+                            <t t-if="not course_count or (course_count and not approve_course_count)">
+                                <i class="fa fa-lock" style="margin-left: 5px;"></i>
+                            </t>
+                        </a>
+                    </li>
+
+                    <!-- Become A Bee Partner -->
+                    <li>
+                        <a data-bs-toggle="modal" data-bs-target="#logoutModal" 
+                           t-att-href="(course_count and approve_course_count) and '#' or '#'" 
+                           t-att-class="('disabled-link' if not course_count or (course_count and not approve_course_count) else '')">
+                            <i class="fa fa-rocket"></i> Become A Bee Partner
+                            <t t-if="not course_count or (course_count and not approve_course_count)">
+                                <i class="fa fa-lock" style="margin-left: 5px;"></i>
+                            </t>
+                        </a>
+                    </li>
+                </ul>
+                </div>
+                <!-- Main Content -->
+                <div class="main-content">
+                    <t t-call="custom_web_kreator.user_block" />
+                    <!-- Form and Image Section -->
+                    <div class="content-containter">
+                        <!-- Progress Bar -->
+                        <div class="progress-bar-container">
+                            <div class="progress-bar"></div>
+                        </div>
+                        <!-- Form Section -->
+                        <div class="form-container">
+                            <div class="form-content">
+                                <form method="post" action="/master_course_standard">
+                                <!-- CSRF Token for security -->
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <label>Course Name(75 Characters Only)<span style="color: red;">*</span></label>
+                                    <input type="text" name="course_name"
+                                           placeholder="e.g., The Complete Guide to Starting Up" required="required" maxlength="75"/>
+                                    <label>About the Course<span style="color: red;">*</span></label>
+                                    <textarea rows="5" name="course_description" placeholder="e.g., Everything you need to know to launch your business idea." required="required"></textarea>
+                                    <label for="course-image">Upload Course Thumbnail
+                                     <br></br>
+                                    <small>(Width: 1280px, Height: 720px)</small></label>
+                                    <input type="file" id="course-image" name="course_image" class="form-control" accept="image/*" />
+                                    <div class="form-group">
+                                        <div class="inline-fields">
+                                            <div>
+                                                <label for="regular-price">Regular Price<span style="color: red;">*</span> (Excl. GST)</label>
+                                                <input id="regular-price" name="regular_price" type="number" step="0.01" placeholder="Enter regular price" required="required"/>
+                                            </div>
+                                            <div>
+                                                <label for="sales-price">Sales Price<span style="color: red;">*</span> (Excl. GST)</label>
+                                                <input id="sales-price" type="number" step="0.01" name="sales_price" placeholder="Enter sales price" required="required"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="commission">
+                                        <div>Partner Sales Commission: 
+                                            <span t-esc="currency_id.symbol"></span>
+                                            <span id="partner_commission">0.00</span>
+                                            <span id="partner_commission_rate" t-esc="partner_commission_rate" style="display:none"/>
+                                        </div>
+                                        <div>Direct Sales Commission: 
+                                            <span t-esc="currency_id.symbol"></span>
+                                            <span id="direct_commission">0.00</span>
+                                            <span id="direct_commission_rate" t-esc="direct_commission_rate" style="display:none"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions" style="float: right;">
+                                        <!--  -->
+                                        <!-- <a href="/master"><button>Back</button></a> -->
+                                        <button type="submit" class="btn btn-back">Save and Continue</button>
+                                    </div>
+                                </form>
+                                <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form[action="/master_course_standard"]');
+    const regularPriceInput = form.querySelector('input[name="regular_price"]');
+    const salesPriceInput = form.querySelector('input[name="sales_price"]');
+    const courseImageInput = form.querySelector('input[name="course_image"]');
+
+    function validatePrices() {
+        const regularPrice = parseFloat(regularPriceInput.value);
+        const salesPrice = parseFloat(salesPriceInput.value);
+
+        if (!isNaN(regularPrice) &amp;&amp; !isNaN(salesPrice)) {
+            if (salesPrice &lt;= regularPrice) {
+                salesPriceInput.setCustomValidity('Sales price must be greater than regular price.');
+            } else {
+                salesPriceInput.setCustomValidity('');
+            }
+        } else {
+            salesPriceInput.setCustomValidity('');
+        }
+    }
+
+    function validateImageSize(event) {
+        const file = courseImageInput.files[0];
+        if (file) {
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+            img.onload = function() {
+                const validWidth = 1280;
+                const validHeight = 720;
+
+                if (img.width !== validWidth || img.height !== validHeight) {
+                    courseImageInput.setCustomValidity(`Invalid image size! Required: ${validWidth}x${validHeight}px.`);
+                } else {
+                    courseImageInput.setCustomValidity('');
+                }
+                URL.revokeObjectURL(img.src);  // Clean up
+            };
+        } else {
+            courseImageInput.setCustomValidity('');
+        }
+    }
+
+    courseImageInput.addEventListener('change', validateImageSize);
+    regularPriceInput.addEventListener('input', validatePrices);
+    salesPriceInput.addEventListener('input', validatePrices);
+
+    form.addEventListener('submit', function(event) {
+        validatePrices();
+        validateImageSize(); // Ensure image validation is applied before submission
+
+        if (!form.checkValidity()) {
+            event.preventDefault();
+        }
+    });
+});
+</script>
+                            </div>
+                            <div class="image-container">
+                                <img src="/custom_web_kreator/static/src/Course-Details.png" alt="Course Detail Image"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </body>
+            </template>
+        </data>
+    </odoo>

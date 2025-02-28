@@ -1,0 +1,254 @@
+<odoo>
+    <data>
+        <template id="data_page_template" name="incomedata">
+            
+                <body>
+                    <!-- Page-Specific Styles -->
+                    <style>
+                        body {
+                            display: flex;
+                            margin: 0;
+                            font-family: 'Poppins', sans-serif;
+                        }
+
+                        .sidebar {
+                            width: 250px;
+                            background-color: #f8f9fa;
+                            height: 100vh;
+                            position: fixed;
+                            left: 0;
+                            top: 0;
+                            padding: 20px 10px;
+                            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                        }
+
+                        .sidebar .logo img {
+                            width: 100%;
+                            margin-bottom: 20px;
+                        }
+
+                        .sidebar-menu {
+                            list-style: none;
+                            padding: 0;
+                        }
+
+                        .sidebar-menu li {
+                            margin: 20px 0;
+                        }
+
+                        .sidebar-menu li a {
+                            color: #333;
+                            text-decoration: none;
+                            font-size: 15px;
+                            font-weight: bold;
+                            display: flex;
+                            align-items: center;
+                            padding: 10px;
+                            border-radius: 5px;
+                            transition: background-color 0.3s ease, color 0.3s ease;
+                        }
+
+                        .sidebar-menu li a.active {
+                            background-color: #ffd001;
+                            color: #000;
+                        }
+
+                        .sidebar-menu li a:hover {
+                            background-color: #ffd001;
+                            color: #000;
+                        }
+
+                        .sidebar-menu li a i {
+                            font-size: 18px;
+                            margin-right: 15px;
+                        }
+
+                        .main-content {
+                            margin-left: 250px;
+                            flex-grow: 1;
+                            padding: 20px;
+                        }
+                        .top-menu {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 20px; /* Space between menu items */
+                            padding: 10px 20px;
+                            background-color: #fff;
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        }
+
+                        .top-menu .menu-items a {
+                            text-decoration: none;
+                            color: #333;
+                            font-size: 15px;
+                            font-weight: bold;
+                            padding: 10px 15px;
+                            border-radius: 5px;
+                            transition: background-color 0.3s ease, color 0.3s ease;
+                        }
+
+                        .top-menu .menu-items a.active {
+                            background-color: #ffd001;
+                            color: #000;
+                        }
+
+                        .top-menu .menu-items a:hover {
+                            background-color: #ffd001;
+                            color: #000;
+                        }
+
+                        .dashboard-header {
+                            text-align: center;
+                            font-size: 24px;
+                            font-weight: bold;
+                            color: #333;
+                            margin-bottom: 20px;
+                        }
+
+                        .stats-container {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-bottom: 30px;
+                        }
+
+                        .stat-block {
+                            background-color: #fff;
+                            flex: 1;
+                            margin: 0 10px;
+                            text-align: center;
+                            padding: 20px;
+                            border-radius: 10px;
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                            font-size: 20px;
+                            font-weight: bold;
+                        }
+
+                        .stat-block h3 {
+                            font-size: 18px;
+                            margin: 0 0 10px;
+                            color: #888;
+                        }
+
+                        .stat-block p {
+                            font-size: 32px;
+                            color: #555;
+                        }
+
+                        .charts-container {
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            gap: 30px;
+                        }
+
+                        .chart-block {
+                            background-color: #fff;
+                            padding: 20px;
+                            border-radius: 10px;
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                            text-align: center;
+                        }
+
+                        .chart-block canvas {
+                            width: 100%;
+                            height: 250px;
+                        }
+                    </style>
+
+                    <!-- Sidebar -->
+                    <div class="sidebar">
+                        <div class="logo">
+                            <a href="/"><img src="/elearning_course/static/src/logo2.png" style="width: 250px;" alt="Logo" /></a>
+                        </div>
+                        <ul class="sidebar-menu">
+                            <li><a href="/get-started"><i class="fa fa-square-poll-vertical"></i> Get Started</a></li>
+                            <li><a href="/sales" class="active"><i class="fas fa-chart-bar"></i> Sales</a></li>
+                            <li><a href="/products"><i class="fa fa-layer-group"></i> Products</a></li>
+                            <li><a href="/connect-partner"><i class="fa fa-arrows-turn-to-dots"></i> Connect with Partner</a></li>
+                            <li><a href="/customer"><i class="fa fa-users"></i> Customer</a></li>
+                            <li><a href="/bee-partner"><i class="fa fa-rocket"></i> Become A Bee Partner</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Main Content -->
+                    <div class="main-content">
+                        <div class="top-menu">
+                            <div class="menu-items">
+                                <a href="/data" class="active"><i class="fa fa-database"></i> Income</a>
+                                <a href="/kyc"><i class="fa fa-id-card"></i> KYC</a>
+                                <a href="/referral"><i class="fa fa-link"></i> Links</a>
+                                <a href="/leaderboard"><i class="fa fa-trophy"></i> Leaderboard</a>
+                            </div>
+                        </div>
+                        <div class="dashboard-header">Financial Report</div>
+
+                        <!-- Statistics Section -->
+                        <div class="stats-container">
+                            <div class="stat-block">
+                                <h3>Income</h3>
+                                <p>2799</p>
+                            </div>
+                            <div class="stat-block">
+                                <h3>Costs</h3>
+                                <p>800</p>
+                            </div>
+                            <div class="stat-block">
+                                <h3>Profit</h3>
+                                <p>638</p>
+                            </div>
+                        </div>
+
+                        <!-- Charts Section -->
+                        <div class="charts-container">
+                            <div class="chart-block">
+                                <h3>Monthly Sales</h3>
+                                <canvas id="barChart"></canvas>
+                            </div>
+                            <div class="chart-block">
+                                <h3>Units Sold %</h3>
+                                <canvas id="pieChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Include Chart.js -->
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script>
+                        // Bar Chart
+                        const barChart = document.getElementById('barChart');
+                        new Chart(barChart, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Product A', 'Product B', 'Product C'],
+                                datasets: [{
+                                    label: 'Sales',
+                                    data: [120, 150, 80],
+                                    backgroundColor: ['#836FFF', '#6A5ACD', '#7B68EE']
+                                }]
+                            },
+                            options: {
+                                responsive: true
+                            }
+                        });
+
+                        // Pie Chart
+                        const pieChart = document.getElementById('pieChart');
+                        new Chart(pieChart, {
+                            type: 'pie',
+                            data: {
+                                labels: ['Product A', 'Product B', 'Product C'],
+                                datasets: [{
+                                    label: 'Units Sold',
+                                    data: [30, 50, 20],
+                                    backgroundColor: ['#FF9999', '#FFCC99', '#FF6699']
+                                }]
+                            },
+                            options: {
+                                responsive: true
+                            }
+                        });
+                    </script>
+                </body>
+        </template>
+    </data>
+</odoo>

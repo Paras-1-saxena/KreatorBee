@@ -1,0 +1,474 @@
+<odoo>
+    <data> 
+        <template id="landing_page" name="Landing Page">
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    
+                    <section class="s_call_to_action o_colored_level pb0 pt0 o_cc o_cc5 bg-900" data-snippet="s_call_to_action" data-name="Call to Action">
+                        <div class="container">
+                            <div class="row o_grid_mode" data-row-count="1">
+                                <div class="o_grid_item col-lg-2 g-col-lg-2 g-height-1 o_colored_level" style="z-index: 2; grid-area: 1 / 9 / 2 / 11; --grid-item-padding-x: 49px; --grid-item-padding-y: 6px;">
+                                    <h3>
+                                        <a href="#" class="mb-2 btn btn-primary">
+                                            <span class="base-fs">Enroll Now</span>
+                                        </a><br/>
+                                    </h3>
+                                </div>
+                                <div class="o_colored_level o_grid_item g-height-1 g-col-lg-5 col-lg-5" style="z-index: 1; grid-area: 1 / 3 / 2 / 8; --grid-item-padding-y: 12px;">
+                                    <p><t t-esc="landing_id.p1"/>
+                                        <span class="o_text_highlight o_translate_inline o_text_highlight_diagonal" style="--text-highlight-width: 2px;"><t t-esc="landing_id.price1"/></span>/ <t t-esc="landing_id.price2"/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="s_numbers_grid o_colored_level o_cc o_cc2 bg-white-85 pb40 pt16" data-snippet="s_numbers_grid" data-name="Numbers Grid">
+                        <div class="container">
+                            <div class="row o_grid_mode" data-row-count="8" style="grid-auto-rows: auto;">   
+                                <div class="o_grid_item o_colored_level g-height-4 g-col-lg-6 col-lg-6" style="z-index: 9; grid-area: 2 / 1 / 6 / 7;">
+                                    <h2 style="text-align: left;" class="mt-5">
+                                        <font class="text-black">
+                                            <strong>
+                                                <t t-esc="landing_id.main_heading"/>
+                                            </strong>
+                                        </font>
+                                    </h2>
+                                    <h3 style="text-align: left;">
+                                        <span style="font-size: 1.375rem;">
+                                            <font class="text-black">
+                                                <span style="font-size: 1.375rem;">
+                                                    <t t-esc="landing_id.p2"/>
+                                                </span>
+                                            </font>
+                                        </span>
+                                    </h3>
+                                    <a href="#" class="btn btn-primary mt-2" style="width: 14rem;">
+                                        <span style="font-size: 1.5rem;">Enroll Now</span>
+                                    </a><br/><br/>
+                                </div>
+
+                                <div class="o_grid_item o_grid_item_image o_colored_level g-height-8 rounded g-col-lg-6 col-lg-6" style="--grid-item-padding-y: 0px; --grid-item-padding-x: 0px; z-index: 7; grid-area: 1 / 7 / 9 / 13; border-radius: 6px !important; background-color: rgb(128, 104, 0);">
+                                    <img t-att-src="image_data_uri(landing_id.image_icon) if landing_id.image_icon else '/apg_signup/static/src/img/creator1.webp'" class="img img-fluid o_we_custom_image" role="img" />
+                                </div>
+                                <div class="o_grid_item o_colored_level g-height-1 g-col-lg-6 col-lg-6 rounded" style="z-index: 11; grid-area: 8 / 7 / 9 / 13; background-color: rgb(255, 208, 0); border-radius: 6px !important; --grid-item-padding-x: 0px; --grid-item-padding-y: 8px;">
+                                    <p style="text-align: center;">
+                                        <span style="font-size: 1.5rem;">
+                                            <t t-esc="landing_id.creator_name"/>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="s_features o_colored_level pt0 pb8" data-snippet="s_features" data-name="Features" style="background-color: rgb(31, 77, 147);">
+                        <div class="container">
+                            <div class="col-lg-12">
+                                <p><br/></p>
+                            </div>
+                            <div class="row">
+                                <div class="o_colored_level col-lg-3">
+                                    <i class="s_features_icon fa fa-paper-plane-o mb-3 bg-o-color-3 rounded mx-auto d-block" role="img"/>
+                                    <div class="overflow-hidden">
+                                        <h3 style="text-align: center;">
+                                            <span style="font-size: 1.75rem;">
+                                                <font class="text-o-color-4">
+                                                    <span style="font-size: 1.5rem;"><t t-esc="landing_id.c1"/></span>
+                                                </font>
+                                            </span>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="o_colored_level col-lg-3">
+                                    <i class="s_features_icon fa fa-credit-card mb-3 rounded bg-o-color-3 mx-auto d-block" role="img"/>
+                                    <div class="overflow-hidden">
+                                        <h3 style="text-align: center;">
+                                            <span style="font-size: 1.75rem;">
+                                                <font class="text-white">
+                                                    <span style="font-size: 1.5rem;"><t t-esc="landing_id.c2"/></span>
+                                                </font>
+                                            </span>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="o_colored_level col-lg-3">
+                                    <i class="s_features_icon fa fa-flag-o mb-3 rounded bg-o-color-3 mx-auto d-block" role="img"/>
+                                    <div class="overflow-hidden">
+                                        <h3 style="text-align: center;">
+                                            <span style="font-size: 1.75rem;">
+                                                <font class="text-white">
+                                                    <span style="font-size: 1.5rem;"><t t-esc="landing_id.c3"/></span>
+                                                </font>
+                                            </span>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="o_colored_level col-lg-3">
+                                    <i class="s_features_icon fa fa-flag-o mb-3 rounded bg-o-color-3 mx-auto d-block" role="img"/>
+                                    <div class="overflow-hidden">
+                                        <h3 style="text-align: center;">
+                                            <span style="font-size: 1.75rem;">
+                                                <font class="text-white">
+                                                    <span style="font-size: 1.5rem;"><t t-esc="landing_id.c4"/></span>
+                                                </font>
+                                            </span>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="s_title o_colored_level bg-white-75 pt32 pb24" data-vcss="001" data-snippet="s_title" data-name="Title">
+                        <div class="s_allow_columns container">
+                            <h2 class="display-3-fs" style="text-align: center;">
+                                <span style="font-size: 2.5rem;">
+                                    <strong>
+                                        <font class="text-o-color-1"><t t-esc="landing_id.course_title"/></font>
+                                    </strong>
+                                </span>
+                            </h2>
+                        </div>
+                    </section>
+
+
+                    <section class="s_text_image o_colored_level pb0 pt0" data-snippet="s_text_image" data-name="Text - Image">
+                        <div class="container">
+                            <div class="row o_grid_mode" data-row-count="12" style="grid-auto-rows: auto;">
+                                <div class="o_colored_level o_grid_item g-col-lg-6 g-height-12 col-lg-6" style="grid-area: 1 / 1 / 13 / 7; z-index: 1;">
+                                    <t t-foreach="landing_id.course_line_ids" t-as="data">
+                                        <p>
+                                            <span style="font-size: 1.25rem;"><t t-esc="data.p1"/></span>
+                                        </p>
+                                    </t>
+                                </div>
+                                
+                                <div class="o_colored_level o_grid_item o_grid_item_image g-height-11 g-col-lg-6 col-lg-6" style="z-index: 2; grid-area: 1 / 7 / 12 / 13;">
+                                    <img src="/apg_signup/static/src/img/about_course.png" alt="" class="img img-fluid mx-auto rounded o_we_custom_image" data-mimetype="image/webp" data-original-id="1113" data-original-src="/apg_signup/static/src/img/about_course.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="s_title o_colored_level pb0 pt0" data-vcss="001" data-snippet="s_title" data-name="Title" style="background-color: rgb(31, 77, 147);">
+                        <div class="s_allow_columns container">
+                            <h2 class="display-3-fs mt-2" style="text-align: center;">
+                                <span style="font-size: 2.5rem;">
+                                    <strong>
+                                        <font class="text-o-color-1">
+                                            <t t-esc="landing_id.h1"/>
+                                        </font>
+                                    </strong>
+                                </span><br/>
+                            </h2>
+                        </div>
+                    </section>
+
+                    <section class="s_numbers_grid o_colored_level o_cc o_cc2 pb40 pt32" data-snippet="s_numbers_grid" data-name="Numbers Grid" style="background-color: rgb(31, 77, 147);">
+                        <div class="container">
+                            <div class="o-cust-grid-container">
+                                <t t-foreach="landing_id.individual_line_ids" t-as="data">
+                                    <div class="o-cust-grid-item">
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                <span style="font-size: 1.25rem;"><t t-esc="data.c1"/></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="s_title o_colored_level pb0 pt0" data-vcss="001" data-snippet="s_title" data-name="Title" style="background-color: rgb(31, 77, 147);">
+                        <div class="s_allow_columns container">
+                            <h2 class="display-3-fs" style="text-align: center;"><span style="font-size: 2.5rem;"><strong><font class="text-o-color-1"><t t-esc="landing_id.h2"/></font></strong></span><br/></h2>
+                        </div>
+                    </section>
+
+                    <section class="s_numbers_grid o_colored_level o_cc o_cc2 pb56 pt24" data-snippet="s_numbers_grid" data-name="Numbers Grid" style="background-color: rgb(31, 77, 147);">
+                        <div class="container">
+                            <div class="o-cust-grid-container">
+                                <t t-foreach="landing_id.line_ids" t-as="data">
+                                    <div class="o-cust-grid-item">
+                                        <p><span style="font-size: 1.5rem;">
+                                            <strong><t t-esc="data.h1"/></strong></span></p><p><span style="font-size: 1.25rem;"><t t-esc="data.c1"/></span>.</p>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="s_shape_image pb32 o_colored_level pt0" data-snippet="s_shape_image" data-name="Shape image">
+                        <div class="container">
+                            <div class="row o_grid_mode" data-row-count="18" style="grid-auto-rows: auto;">
+                                <div class="o_colored_level o_cc o_cc2 bg-white-75 o_grid_item g-col-lg-6 g-height-18 col-lg-6" style="grid-area: 1 / 1 / 19 / 7; z-index: 1; --grid-item-padding-y: 0px; --grid-item-padding-x: 4px;">
+                                    <b>
+                                        <img t-att-src="image_data_uri(landing_id.my_image_icon) if landing_id.my_image_icon else '/apg_signup/static/src/img/creator2.webp'" class="img img-fluid o_we_custom_image" role="img"/>
+                                    </b>
+                                    <div class="s_social_media o_not_editable text-center" data-snippet="s_social_media" data-name="Social Media">
+                                        <h4 class="s_social_media_title d-none o_default_snippet_text">Social Media</h4>
+                                        <t t-if="landing_id.m1">
+                                            <a t-attf-href="landing_id.m1" class="s_social_media_facebook" target="_blank" aria-label="Facebook">
+                                                <i class="fa fa-facebook o_editable_media rounded-empty-circle shadow-sm"/>
+                                            </a>
+                                        </t>
+
+                                        <t t-if="landing_id.m2">
+                                            <a t-attf-href="landing_id.m2" class="s_social_media_twitter" target="_blank" aria-label="X">
+                                                <i class="fa fa-twitter o_editable_media rounded-empty-circle shadow-sm"/>
+                                            </a>
+                                        </t>
+
+                                        <t t-if="landing_id.m3">
+                                            <a t-attf-href="landing_id.m3" class="s_social_media_linkedin" target="_blank" aria-label="LinkedIn">
+                                                <i class="fa o_editable_media fa-linkedin rounded-empty-circle shadow-sm"/>
+                                            </a>
+                                        </t>
+                                        <t t-if="landing_id.m4">
+                                            <a t-attf-href="landing_id.m4" class="s_social_media_youtube" target="_blank" aria-label="YouTube">
+                                                <i class="fa o_editable_media fa-youtube rounded-empty-circle shadow-sm"/>
+                                            </a>
+                                        </t>
+                                        <t t-if="landing_id.m5">
+                                            <a t-attf-href="landing_id.m5" class="s_social_media_instagram" target="_blank" aria-label="Instagram">
+                                                <i class="fa o_editable_media fa-instagram rounded-empty-circle shadow-sm"/>
+                                            </a>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="o_colored_level o_grid_item g-col-lg-6 g-height-17 col-lg-6" style="grid-area: 1 / 7 / 18 / 13; z-index: 2; --grid-item-padding-x: 8px; --grid-item-padding-y: 8px;">
+                                    <h2 class="h3-fs">
+                                        <span style="font-size: 2.5rem;"><strong><font class="text-o-color-1"><t t-esc="landing_id.h3"/></font></strong></span>
+                                    </h2>
+                                    <t t-foreach="landing_id.about_me_line_ids" t-as="data">
+                                        <p>
+                                            <span style="font-size: 1.25rem;"><t t-esc="data.p1"/></span>
+                                        </p>
+                                    </t>
+                                    <br/><br/>
+                                    <a href="#" class="mb-2 btn btn-primary" aria-describedby="popover92961" style="width: 14rem;">
+                                        <span style="font-size: 1.5rem; display: inline-block;">Enroll Now</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="s_features_wave o_colored_level pt40 pb48 o_cc o_cc4" data-snippet="s_features_wave" data-name="Features Wave" style="background-color: rgb(31, 77, 147);">
+                        <div class="container">
+                            <div class="o-cust-grid-container" data-row-count="10">
+                                <div class="o_colored_level o_grid_item g-col-lg-12 g-height-2 col-lg-12" style="grid-area: 1 / 1 / 3 / 13; z-index: 1;">
+                                    <h2 style="text-align: center;"><font class="text-o-color-1"><strong><t t-esc="landing_id.h6"/></strong></font></h2>
+                                </div>
+                                <t t-foreach="landing_id.course_ids" t-as="course">
+                                    <div class="o-cust-grid-item" style="background-color: rgba(0, 0, 0, 0);border: none;">
+                                        <img t-att-src="image_data_uri(course.image)" alt="" class="fa fa-edit d-block mx-auto rounded text-o-color-4 fa-2x" style="background-color: rgba(0, 0, 0, 0); width: 3rem; height: 3rem;" role="presentation"/>
+                                        <br/>
+                                        <p style="text-align: center;">
+                                            <span style="font-size: 1.25rem;">
+                                                <font class="text-o-color-4">
+                                                    <span style="font-size: 1.3rem;">
+                                                        <t t-esc="course.name"/>
+                                                    </span>
+                                                </font>
+                                            </span>
+                                            <br></br>
+                                        </p>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="s_cards_soft o_cc o_cc1 pb32 o_colored_level pt24" data-snippet="s_cards_soft" data-name="Cards Soft">
+                        <div class="container">
+                            <div class="row s_nb_column_fixed o_grid_mode" data-row-count="2">
+                                <div class="o_grid_item g-col-lg-12 g-height-2 col-lg-12" style="grid-area: 1 / 1 / 3 / 13; z-index: 1;">
+                                    <h2 style="text-align: center;"><strong><font class="text-o-color-1"><t t-esc="landing_id.h7"/></font></strong></h2>
+                                    <p class="lead o_default_snippet_text" style="text-align: center;"><t t-esc="landing_id.c12"/></p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <section class="s_image_text_box pb80 o_colored_level pt0" data-snippet="s_image_text_box" data-name="Image Text Box">
+    <div class="container">
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <t t-foreach="students" t-as="student">
+                    <div t-attf-class="carousel-item#{' active' if student_first else ''}">
+                        <div class="row align-items-center">
+                            <div class="col-md-1 d-none d-md-block"/>
+                            <div class="col-md-5 col-12 o-cust-mob">
+                                <t t-if="student['a']['type'] == 'text'">
+                                    <div class="o-cust-1">
+                                        <div class="o-cust-2">
+                                            <div class="mt-5 o-cust-3">
+                                                <div class="o-cust-4">
+                                                    <img t-att-src="image_data_uri(student['a']['image'])" alt="Student Image" class="img-fluid o-cust-img-rounded-circle"/>
+                                                </div>
+                                                <div class="o-cust-5">
+                                                    <h3 class="o-cust-6"><t t-esc="student['a']['name']"/></h3>
+                                                </div>
+                                                <div class="s_rating o-cust-7">
+                                                    <div class="o_not_editable fa-2x">
+                                                        <!-- Ratings display -->
+                                                        <t t-set="star_count" t-value="int(student['a']['rating'])"/>
+                                                        <t t-foreach="range(star_count)" t-as="star">
+                                                            <span class="text-o-color-1">
+                                                                <i class="fa fa-star"/>
+                                                            </span>
+                                                        </t>
+                                                        <span class="s_rating_inactive_icons"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-center">
+                                            <span class="fs-5"><t t-esc="student['a']['content']"/></span>
+                                        </p>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="media_iframe_video_container o-cust-1">
+                                        <iframe class="w-100 h-100 rounded" loading="lazy" frameborder="0" allowfullscreen="allowfullscreen" t-att-src="student['a']['content']" style="border-radius: 1.1rem !important;"/>
+                                    </div>
+                                </t>
+                            </div>
+                            <div class="col-md-5 col-12 o-cust-mob">
+                                <t t-if="student['b']['type'] == 'text'">
+                                    <!-- Repeated layout for student 'b' -->
+                                    <div class="o-cust-1">
+                                        <div class="o-cust-2">
+                                            <div class="mt-5 o-cust-3">
+                                                <div class="o-cust-4">
+                                                    <img t-att-src="image_data_uri(student['b']['image'])" alt="Student Image" class="img-fluid o-cust-img-rounded-circle"/>
+                                                </div>
+                                                <div class="o-cust-5">
+                                                    <h3 class="o-cust-6"><t t-esc="student['b']['name']"/></h3>
+                                                </div>
+                                                <div class="s_rating o-cust-7">
+                                                    <div class="o_not_editable fa-2x">
+                                                        <!-- Ratings display -->
+                                                        <t t-set="star_count" t-value="int(student['b']['rating'])"/>
+                                                        <t t-foreach="range(star_count)" t-as="star">
+                                                            <span class="text-o-color-1">
+                                                                <i class="fa fa-star"/>
+                                                            </span>
+                                                        </t>
+                                                        <span class="s_rating_inactive_icons"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-center">
+                                            <span class="fs-5"><t t-esc="student['b']['content']"/></span>
+                                        </p>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="media_iframe_video_container o-cust-1">
+                                        <iframe class="w-100 h-100 rounded" loading="lazy" frameborder="0" allowfullscreen="allowfullscreen" t-att-src="student['b']['content']" style="border-radius: 1.1rem !important;"/>
+                                    </div>
+                                </t>
+                            </div>
+                            <div class="col-md-1 d-none d-md-block"/>
+                        </div>
+                    </div>
+                </t>
+                <div>
+                    <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev" style="cursor: auto;">
+                        <span class="carousel-control-prev-icon o-cust-prev-next" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next" style="cursor: auto;">
+                        <span class="carousel-control-next-icon o-cust-prev-next" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+                    
+                    <section class="s_features_wave o_colored_level pt40 o_cc o_cc4 pb0" data-snippet="s_features_wave" data-name="Features Wave" style="background-color: rgb(31, 77, 147);">
+                        <div class="container">
+                            <div class="row s_nb_column_fixed o_grid_mode" data-row-count="2">
+                                <div class="o_colored_level o_grid_item g-col-lg-12 g-height-2 col-lg-12" style="grid-area: 1 / 1 / 3 / 13; z-index: 1;">
+                                    <h2 style="text-align: center;">
+                                        <font class="text-o-color-1">
+                                            <strong>
+                                                <t t-esc="landing_id.h5"/>
+                                            </strong>
+                                        </font><br></br>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="s_features_wave o_colored_level o_cc o_cc4 pb48 pt0" data-snippet="s_features_wave" data-name="Features Wave" style="background-color: rgb(31, 77, 147);">
+                        <div class="container">
+                            <div class="row s_nb_column_fixed o_grid_mode" data-row-count="10">
+                                <div class="o_colored_level o_grid_item g-col-lg-12 o_cc o_cc1 g-height-10 col-lg-12 rounded" style="grid-area: 1 / 1 / 11 / 13; z-index: 1; --grid-item-padding-y: 1px; border-radius: 8px !important; --grid-item-padding-x: 24px;">
+                                    <p><br></br></p>
+                                    <div data-name="Accordion" class="s_accordion">
+                                        <div id="myCollapse1733732501513" class="accordion">
+                                            <t t-foreach="landing_id.faq_ids" t-as="faq">
+                                                <div class="accordion-item position-relative z-1" data-name="Accordion Item">
+                                                    <button type="button" class="accordion-header accordion-button justify-content-between gap-2 bg-transparent h6-fs fw-bold text-decoration-none text-reset transition-none collapsed" data-bs-toggle="collapse" aria-expanded="false" id="myCollapseBtn1733733237188" data-bs-target="#myCollapseTab1733733237187" aria-controls="myCollapseTab1733733237187"><span class="flex-grow-1 o_default_snippet_text">
+                                                        <t t-esc="faq.q1"/>
+                                                    </span></button>
+                                                    <div class="accordion-collapse collapse" data-bs-parent="#myCollapse1733732501513" role="region" id="myCollapseTab1733733237187" aria-labelledby="myCollapseBtn1733733237188">
+                                                        <div class="accordion-body">
+                                                            <p class="o_default_snippet_text"><t t-esc="faq.a1"/></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <p style="text-align: center;"><br></br></p>
+                                </div>     
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="s_shape_image o_colored_level pb0 pt0" data-snippet="s_shape_image" data-name="Shape image">
+                        <div class="container">
+                            <div class="row o_grid_mode" data-row-count="8" style="grid-auto-rows: auto;">
+                                <div class="o_colored_level o_grid_item o_grid_item_image g-height-8 g-col-lg-3 col-lg-3" style="z-index: 1; grid-area: 1 / 8 / 9 / 11; --grid-item-padding-y: 0px;">
+                                    <img t-att-src="image_data_uri(landing_id.image1) if landing_id.image1 else '/apg_signup/static/src/img/creator3.webp'" class="img img-fluid o_we_custom_image" role="img"/>
+                                </div>
+                                <div class="o_colored_level o_grid_item g-height-5 g-col-lg-5 col-lg-5" style="z-index: 2; grid-area: 2 / 3 / 7 / 8;">
+                                    <h3>
+                                        <strong><t t-esc="landing_id.h4"/></strong>
+                                    </h3>
+                                    <p><t t-esc="landing_id.c11"/></p>
+                                    <p>
+                                        <span style="font-size: 1.25rem;"><span class="o_text_highlight o_translate_inline o_text_highlight_diagonal" style="--text-highlight-width: 2px;">INR <t t-esc="landing_id.price1"/></span> / INR <t t-esc="landing_id.price2"/></span><span style="font-size: 1rem;">(Excl. Tax)</span><br/>
+                                        <br/>
+                                        <a href="#" class="mb-2 btn btn-primary"><span style="font-size: 1.5rem; display: inline-block;">Enroll Now</span></a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section class="s_discovery o_colored_level o_cc o_cc3 pb0 pt0" data-snippet="s_discovery" data-name="Discovery" style="background-color: rgb(33, 37, 41);">
+                        <div class="container" style="text-align: center;">
+                            <p style="text-align: center;"><br/></p>
+                        </div>
+                    </section>
+                </div>
+            </t>            
+        </template>
+    </data>
+</odoo>

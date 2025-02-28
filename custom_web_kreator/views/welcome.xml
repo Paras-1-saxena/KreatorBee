@@ -1,0 +1,324 @@
+<odoo>
+    <data>
+        <template id="welcome" name="Welcome Page">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet"/>
+            <body>
+                <!-- Page-Specific Styles -->
+                <style>
+                    body {
+                        display: flex;
+                        margin: 0;
+                        font-family: 'Poppins', sans-serif;
+                        background-color: #f8f9fa;
+                    }
+
+                    /* Top Menu */
+                    .top-menu {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 10px 20px;
+                        background-color: #fff;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        top: 0;
+                        z-index: 100;
+                        height: 60px; /* Adjust height for new layout */
+                    }
+
+                    .top-menu .logo img {
+                        height: 60px;
+                        width: auto;
+                    }
+
+                    .top-menu .menu-links {
+                        display: flex;
+                        gap: 40px; /* Space between menu items */
+                        align-items: center;
+                        justify-content: center;
+                        flex: 1;
+                    }
+
+                    .top-menu .menu-links a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 14px;
+                        font-weight: 500;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 15px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        height: 100%;
+                        justify-content: center;
+                    }
+
+                    .top-menu .menu-links a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 14px;
+                        font-weight: 500;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 15px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        height: 100%;
+                        justify-content: center;
+                    }
+
+                    .top-menu .menu-links a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links i {
+                        font-size: 24px; /* Icon size */
+                    }
+                    .top-menu .user-icon {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        cursor: pointer;
+                        margin-right: 30px; /* Adds space from the edge */
+                    }
+
+                    /* Side Menu */
+                    .side-menu {
+                        width: 250px;
+                        background-color: #fff;
+                        padding: 20px 10px;
+                        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        left: 0;
+                        top: 60px; /* Adjust for top menu */
+                        height: calc(100vh - 60px);
+                        overflow-y: auto;
+                    }
+
+                    .side-menu ul {
+                        list-style: none;
+                        padding: 2;
+                    }
+
+                    .side-menu ul li {
+                        margin: 15px 0;
+                    }
+
+                    .side-menu ul li a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 15px;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                    }
+
+                    .side-menu ul li a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .side-menu ul li a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .main-content {
+                        margin-left: 270px; /* Adjust to create space from the side menu */
+                        padding: 20px;      /* Maintain consistent padding inside the main content */
+                        margin-top: 60px;   /* Adjust for the top menu */
+                        flex-grow: 1;
+                    }
+
+                    /* Progress Bar */
+                    .progress-bar-container {
+                        width: 100%;
+                        height: 10px;
+                        background-color: #ddd;
+                        margin-bottom: 20px;
+                        position: relative;
+                    }
+
+                    .progress-bar {
+                        height: 10px;
+                        background-color: #ffd001;
+                        width: 100%; /* Adjust for progress percentage */
+                        transition: width 0.3s ease;
+                    }
+
+                    .parent-container {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        min-height: 100vh; /* Full viewport height */
+                        background-color: #f7f7f7; /* Optional: Set a background color for the page */
+                        padding: 20px; /* Optional: Padding for the parent container */
+                        box-sizing: border-box; /* Include padding in width/height calculation */
+                        margin-left:160px;
+                    }
+
+                    .content-block {
+                        display: flex;
+                        justify-content: center; /* Center horizontally */
+                        align-items: center; /* Center vertically */
+                        min-height: 80vh; /* Full viewport height */
+                        background-color: #fff; /* Background color of the entire block */
+                        margin: 0; /* Reset margins to prevent extra spacing */
+                    }
+
+                    .content-container {
+                        display: flex;
+                        flex-direction: column; /* Stack children vertically */
+                        justify-content: center; /* Center content within the box vertically */
+                        align-items: center; /* Center content horizontally */
+                        background-color: #fef5c5;
+                        padding: 30px;
+                        border-radius: 10px;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        text-align: center;
+                        max-width: 800px;
+                        width: 100%;
+                    }
+
+                    .content-container img {
+                        width: 80px;
+                        margin-bottom: 20px;
+                    }
+
+                    .content-container h1 {
+                        font-size: 24px;
+                        color: #333;
+                        margin-bottom: 10px;
+                    }
+
+                    .content-container p {
+                        font-size: 16px;
+                        color: #666;
+                        line-height: 1.5;
+                        margin-bottom: 10px;
+                    }
+
+                    .content-container .highlight {
+                        font-weight: bold;
+                        color: #333;
+                    }
+
+.applicable-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between the label and the radio group */
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px; /* Space between radio buttons */
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 8px;
+}
+
+
+
+                    
+                </style>
+
+                <!-- Top Menu -->
+                <div class="top-menu">
+                    <div class="logo">
+                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
+                    </div>
+                    <div class="menu-links">
+                        <a href="/course_details" >
+                            <i class="fa fa-book-reader"></i> Course Details
+                        </a>
+                        <a href="/course-standard">
+                            <i class="fa fa-book"></i> Course Standard
+                        </a>
+                        <a href="/1term_condition">
+                            <i class="fa fa-link"></i> T and C
+                        </a>
+                        <a href="/welcome" class="active">
+                            <i class="fa fa-trophy"></i> Welcome
+                        </a>
+                    </div>
+                    <!-- Use <img> tag for user icon -->
+                    <img class="user-icon" src="/custom_web_kreator/static/src/user1.png" alt="User Icon"/>
+                </div>
+
+                <!-- Side Menu -->
+                <div class="side-menu">
+                    <ul>
+                        <li><a href="/1get_started_home" class="active"><i class="fa fa-home"></i> Get Started</a></li>
+                        <li><a href="/ndata"><i class="fa fa-chart-line"></i> Sales</a></li>
+                        <li><a href="/nmy-courses"><i class="fa fa-box"></i> Products</a></li>
+                        <li><a href="/offers"><i class="fa fa-users"></i> Connect with Partner</a></li>
+                        <li><a href="/customer"><i class="fa fa-address-book"></i> Customer</a></li>
+                        <li><a href="/be_partner"><i class="fa fa-rocket"></i> Become A Bee Partner</a></li>
+                    </ul>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <!-- Progress Bar -->
+                    <div class="progress-bar-container">
+                        <div class="progress-bar"></div>
+                    </div>
+
+                    <!-- Thank You and Next Steps -->
+                    <div class="content-block">
+                    <div class="content-container">
+                        <img src="/custom_web_kreator/static/src/welcome_icon.png" alt="Welcome Icon" />
+                        <h1>Thank You for Creating The Course!</h1>
+                        <p>Here are the next steps:</p>
+                        <p>
+                            <span class="highlight">Wait for 24 hours:</span> Our team will review your submission, and you will receive a notification once it is approved.
+                        </p>
+                        <p>
+                            <span class="highlight">After Approval:</span> You can proceed to fill in the complete details of your course.
+                        </p>
+                        <p>We appreciate your patience and look forward to helping you share your knowledge!</p>
+                    </div>
+                    </div>
+                    
+                </div>
+
+                <div class="applicable-group">
+            <label>Applicable for:</label>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="applicable" value="my_bee_partner" /> My Bee Partner
+                </label>
+                <label>
+                    <input type="radio" name="applicable" value="all_bee_partner" /> All Bee Partner
+                </label>
+            </div>
+        </div>
+               
+            </body>
+        </template>
+    </data>
+</odoo>

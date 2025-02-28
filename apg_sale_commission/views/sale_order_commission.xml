@@ -1,0 +1,130 @@
+<odoo>
+    <data>
+        <!-- Inherit the Sale Order Form view -->
+        <record id="view_order_form_inherit_commission" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit.commission</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='order_lines']/field/list/field[@name='tax_id']" position="after">
+                    <field name="direct_commission_amount"/>
+                    <field name="partner_commission_amount"/>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Commissions">
+                        <!-- Add a form view for the commission details -->
+                        <!-- Add the Order Lines here as well -->
+                        <field name="order_line">
+                            <list editable="bottom">
+                                <field name="is_commission" column_invisible="1"/>
+                                <field name="product_id"/>
+                                <field name="direct_commission_partner_id"/>
+                                <field name="partner_commission_partner_id" force_save="1"/>
+                                <field name="direct_commission_amount"/>
+                                <field name="partner_commission_amount"/>
+                            </list>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_my_commission_tree_inherit" model="ir.ui.view">
+            <field name="name">my.commission.list</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <list string="Commission" create="false" delete="false" duplicate="false">
+                    <field name="is_commission" column_invisible="1"/>
+                    <field name="product_id"/>
+                    <field name="direct_commission_partner_id"/>
+                    <field name="partner_commission_partner_id"/>
+                    <field name="partner_commission_amount"/>
+                    <field name="direct_commission_amount"/>
+                </list>
+            </field>
+        </record>
+        <record id="view_my_commission_search_inherit" model="ir.ui.view">
+            <field name="name">my.commission.search</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <search>
+                    <!-- Filters -->
+                    <!--                    <filter string="Is Commission" name="filter_is_commission" domain="[('is_commission', '=', True)]"/>-->
+                    <filter string="Product" name="filter_product_id"/>
+                    <!-- Group By -->
+                    <group expand="1" string="Group By">
+                        <filter string="Product" name="group_by_product" context="{'group_by':'product_id'}"/>
+                        <filter string="Partner" name="group_by_partner"
+                                context="{'group_by':'direct_commission_partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_menu_my_commission_inherit" model="ir.actions.act_window">
+            <field name="name">Commission</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_mode">list</field>
+            <field name="domain">[('is_commission', '=', true),('state', '=', 'sale')]</field>
+            <field name="context">{'search_default_user_id': 1, 'default_user_id': uid}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a Content Tag
+                </p>
+            </field>
+        </record>
+        <record id="view_sale_target_form_inherit" model="ir.ui.view">
+            <field name="name">sale.target.form.inherit</field>
+            <field name="model">sale.target</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="target_amount"/>
+                            </group>
+                            <group>
+                                <label for="date_from" string="Target Period"/>
+                                <div>
+                                    <field name="date_from" class="oe_inline"/>
+                                    <i class="oi oi-fw oi-arrow-right"/>
+                                    <field name="date_to" class="oe_inline"/>
+                                </div>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Achievements">
+                                <field name="achievement_ids">
+                                    <list editable="bottom">
+                                        <field name="partner_id" force_save="1"/>
+                                        <field name="amount" force_save="1"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_sale_target_tree_inherit" model="ir.ui.view">
+            <field name="name">sale.target.tree.inherit</field>
+            <field name="model">sale.target</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="target_amount"/>
+                </list>
+            </field>
+        </record>
+        <record id="action_target_inherit" model="ir.actions.act_window">
+            <field name="name">Target</field>
+            <field name="res_model">sale.target</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a Target
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

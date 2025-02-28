@@ -1,0 +1,89 @@
+// This file is for compatibility since saas-10 web_editor refactoring.
+// As a fix to work properly in the editor, some classes have been renamed.
+// To allow a smooth transition, old classes alias are created here.
+
+/* The side navigation menu */
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+/* Sidebar links */
+.sidebar ul {
+    list-style: none !important;
+    padding: 0px;
+    border-radius: var(--btn-border-radius);
+}
+
+.sidebar ul li a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+    border-radius: var(--btn-border-radius);
+    font-family: 'Poppins';
+}
+.sidebar ul li:hover a {
+    background-color: #FFD000;
+    color: white;
+}
+.sidebar ul li a i:hover{
+    color: white;
+}
+
+body.oe_website_login_container .oe_signup_form {
+    background-color: #FFD000 !important;/* Replace with your desired color code */
+}
+
+/* Active/current link */
+/*.sidebar ul li .active {
+    background-color: #FFD000;
+    color: white;
+}*/
+/* width */
+::-webkit-scrollbar {
+  width: 1px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+.o_portal_category div a {
+    background-color: white !important;
+}
+
+.o_portal_category div a:hover {
+    border-left: 1px solid #EAEAEA;
+    background: #fff;
+    box-shadow: 1px 0px 12px 0px rgb(0 0 0 / 5%)
+/*    box-shadow: 1px 0px 12px 0px rgb(0 0 0 / 5%)*/
+}
+
+/*.o_portal_category div a {
+    background-color: white !important;
+}
+
+.o_portal_category div a:hover {
+    background-color: #FFD000 !important;
+    color: black;
+}*/
+
+/*@media (min-width: 1200px) {
+  .container-xl, .container-lg, .container-md, .container-sm, .container {
+    max-width: 3140px;
+  }
+}*/
+/*poppins*/
+/*putton border radious*/
+/*box shadow*/

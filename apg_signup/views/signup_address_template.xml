@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="signup_address_mobile_verification" inherit_id="website_sale.address">
+            <xpath expr="//div[@id='div_vat']/label" position="replace">
+                <label class="col-form-label fw-normal label-optional" for="o_vat">
+                    GSTIN
+                </label>
+            </xpath>
+        </template>
+        <!-- Hide View -->
+        <template id="express_checkout_hide" inherit_id="payment.express_checkout" name="Payment Express Checkout">
+            <xpath expr="//form[@name='o_payment_express_checkout_form']" position="attributes">
+                <attribute name="class">container d-none</attribute>
+            </xpath>
+        </template>
+        <!-- Payment page changes -->
+        <template id="billing_address_row_inherit" inherit_id="website_sale.address_on_payment">
+            <xpath expr="//div[@id='delivery_and_billing']" position="before">
+                <div id="billing_address_row_cust" class="js_country_state_form">
+                    <h4 class="text-uppercase small fs-6 fw-bold mt-3">Billing address</h4>
+                    <div class="row">
+                        <div class="w-100"/>
+                        <div id="div_country" class="col-lg-6 mb-2">
+                            <label class="col-form-label fw-bold" for="o_country_id">Country</label>
+                            <select id="o_country_id" name="country_id" class="form-select js_country_select o-cust-div" style="color: var(--secondary-color) !important;">
+                                <option value="">Country...</option>
+                                <t t-foreach="country_id" t-as="c">
+                                    <option t-att-value="c.id" t-att-selected="c.id == order.partner_invoice_id.country_id.id" t-att-code="c.code">
+                                        <t t-esc="c.name" />
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                        <div id="div_state" class="col-lg-6 mb-2">
+                            <label class="col-form-label fw-bold" for="o_state_id">State / Province</label>
+                            <select id="o_state_id" name="state_id" class="form-select js_state_select o-cust-div" style="color: var(--secondary-color) !important;">
+                                <option value="">State / Province...</option>
+                                <t t-foreach="state_id" t-as="s">
+                                    <option t-att-value="s.id" t-att-selected="s.id == order.partner_invoice_id.state_id.id">
+                                        <t t-esc="s.name" />
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//div[@id='delivery_and_billing']" position="attributes">
+                <attribute name="style">display:none !important;</attribute>
+            </xpath>
+        </template>
+        <template id="checkout_layout_inherit1" name="Checkout layout page" inherit_id="website_sale.checkout_layout">
+            <xpath expr="//div[@id='wrap']/div/div/div/t[@t-call='website_sale.wizard_checkout']" position="replace"/>
+        </template>
+        <template id="website_sale.payment" name="Payment">
+            <t t-call="website_sale.checkout_layout">
+                <t t-set="additional_title">Shop - Select Payment Method</t>
+                <t t-set='redirect' t-valuef="/shop/payment"/>
+                <t t-set="oe_structure">
+                    <!-- This is the drag-and-drop area for website building blocs at the end of each
+                         checkout page. This is append at the of the page in `checkout_layout`. The
+                         templates created in the database to store blocs are hooked using XPath on the
+                         `oe_struture` element ID. Therefore, we can't use dynamic IDs (like with
+                         t-att-id) and each template needs to define a div element. -->
+                    <div class="oe_structure" id="oe_structure_website_sale_payment_2"/>
+                </t>
+                <div class="col-12" t-if="errors">
+                    <t t-set="hide_payment_button" t-value="True"/>
+                    <t t-foreach="errors" t-as="error">
+                        <div class="alert alert-danger" t-if="error" role="alert">
+                            <h4>
+                                <t t-esc="error[0]" />
+                            </h4>
+                            <t t-esc="error[1]" />
+                        </div>
+                    </t>
+                </div>
+                <h3 class="mb-4">Checkout</h3>
+                <div id="address_on_payment" class="mb-4">
+                    <t t-call="website_sale.address_on_payment"/>
+                </div>
+                <div class="oe_structure clearfix mt-3" id="oe_structure_website_sale_payment_1"/>
+
+                <div t-if="not errors and website_sale_order.amount_total" name="website_sale_non_free_cart">
+                    <div id="payment_method" class="o_not_editable mt-4">
+                        <t t-call="payment.form"/>
+                    </div>
+                    <t t-if="not (payment_methods_sudo or tokens_sudo)" t-set="hide_payment_button" t-value="True"/>
+                </div>
+            </t>
+        </template>
+        <template name="Buy Course Button" id="website_sale_slides.course_buy_course_button">
+            <t t-if="product_info and channel.product_id.website_published and not channel.is_member">
+                <div t-attf-class="text-center d-flex align-items-center text-center pb-1 #{'justify-content-between' if product_info['has_discounted_price'] else 'justify-content-around'}">
+                    <div class="css_editable_mode_hidden">
+                        <!-- real price -->
+                        <div t-attf-class="oe_price fw-bold text-nowrap my-2 #{'h4' if len(str(product_info['price'])) > 10 else 'h2'}"
+                             t-esc="product_info['price']"
+                             t-options="{'widget': 'monetary', 'display_currency': product_info['currency']}"/>
+                        <span itemprop="price" style="display:none;" t-esc="product_info['price']"/>
+                        <span itemprop="priceCurrency" style="display:none;" t-esc="product_info['currency'].name"/>
+                        <!-- original discounted price, if any -->
+                        <del t-att-class="'text-600 text-nowrap oe_default_price %s' % ('' if product_info['has_discounted_price'] else 'd-none')"
+                             t-esc="product_info['list_price']"
+                             t-options="{'widget': 'monetary', 'display_currency': product_info['currency']}"/>
+                    </div>
+                    <div class="css_non_editable_mode_hidden decimal_precision oe_price fw-bold text-nowrap h2 my-2"
+                         t-att-data-precision="str(product_info['currency'].decimal_places)">
+                        <span t-field="channel.product_id.list_price" t-options="{'widget': 'monetary', 'display_currency': product_info['currency']}"/>
+                    </div>
+                </div>
+                <t t-if="not invite_preview and channel.prerequisite_channel_ids and not channel.prerequisite_user_has_completed">
+                    <small t-if="len(channel.prerequisite_channel_ids) == 1" class="text-center mb-2">
+                        Prerequisite:
+                        <a t-attf-href="/slides/{{channel.prerequisite_channel_ids[0].id}}"
+                           t-out="channel.prerequisite_channel_ids[0].name"/>
+                    </small>
+                    <small t-else="" class="text-center mb-2">
+                        There are some
+                        <a href="#" class="o_wslides_js_prerequisite_course"
+                           t-att-data-channels="json.dumps([
+                              {'course_id': course.id, 'course_name': course.name}
+                              for course in channel.prerequisite_channel_ids]
+                           )">
+                            prerequisite courses.
+                        </a>
+                    </small>
+                </t>
+                <t t-if="invite_preview">
+                    <a type="button" class="btn btn-primary text-uppercase ms-2"
+                        t-att-aria-label="'Sign up' if is_partner_without_user else 'Log in'"
+                        t-attf-href="/slides/#{channel.id}/identify?#{keep_query('invite_partner_id', 'invite_hash')}">
+                        <t t-if="is_partner_without_user">Sign up</t>
+                        <t t-else="">Log in</t>
+                    </a>
+                </t>
+                <div t-else="" class="oe_website_sale">
+                    <div class="add_to_cart_button">
+                        <form action="/shop/cart/update" method="POST">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                            <input type="hidden" name="product_template_id" t-att-value="channel.product_id.product_tmpl_id.id"/>
+                            <input type="hidden" class="product_id" name="product_id" t-att-value="channel.product_id.id"/>
+                            <a id="add_to_cart" role="button" href="#"
+                               class="btn btn-primary d-block js_check_product o_js_add_to_cart a-submit"
+                               data-animation-selector=".o_wslides_course_pict">
+                                <i class="fa fa-shopping-cart"></i> Buy Now
+                            </a>
+                            <div id="product_option_block"/>
+                        </form>
+                    </div>
+                </div>
+            </t>
+            <t t-elif="not channel.is_member">
+                <div class="alert my-0 bg-200 text-center">
+                    Course Unavailable
+                </div>
+            </t>
+        </template>
+
+        <template id="navigation_buttons_inherit_hide" inherit_id="website_sale.navigation_buttons">
+            <xpath expr="//div/div[@t-if='not hide_payment_button']" position="replace"/>
+            <xpath expr="//div/a" position="replace"/>
+            <!-- <xpath expr="//div/a/t[@t-out='step_specific_values['back_button']']" position="replace"/> -->
+        </template>
+
+        <template id="payment_demo.payment_details">
+        <div class="row gap2 gap-md-0">
+            <input name="provider_id" type="hidden" id="provider_id" t-att-value="id"/>
+            <input name="partner_id" type="hidden" t-att-value="partner_id"/>
+            <div class="col-12 col-md mt-0 mb-0">
+                <label for="customer_input" class="mt-0">
+                    <small>Payment Details (test data)</small>
+                </label>
+                <input type="text"
+                       name="customer_input"
+                       id="customer_input"
+                       class="form-control o-cust-div"
+                       placeholder="XXXX XXXX XXXX XXXX"/>
+            </div>
+            <div class="col-12 col-md mb-0">
+                <label for="simulated_payment_state" class="mt-0 text-muted">
+                    <small>Payment Status</small>
+                </label>
+                <select id="simulated_payment_state" class="form-select o-cust-div">
+                    <option value="done" title="Successful payment">
+                        Successful
+                    </option>
+                    <option value="pending" title="Payment processing">
+                        Pending
+                    </option>
+                    <option value="cancel" title="Payment cancelled by customer">
+                        Cancelled
+                    </option>
+                    <option value="error" title="Processing error">
+                        Error
+                    </option>
+                </select>
+            </div>
+        </div>
+    </template>
+
+        <template id="coupon_form_inherit_addClass" inherit_id="website_sale.coupon_form">
+            <xpath expr="//form/div/input[@name='promo']" position="attributes">
+                <attribute name="class">form-control o-cust-div</attribute>
+            </xpath>
+        </template>
+        
+    </data>
+</odoo>

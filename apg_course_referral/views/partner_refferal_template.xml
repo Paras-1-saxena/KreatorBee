@@ -1,0 +1,471 @@
+<odoo>
+    <data>
+        <template id="partner_referral_link_page" name=" Partner Referral Link Page">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet"/>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;display=swap" rel="stylesheet" />
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <body>
+                <!-- Page-Specific Styles -->
+                <style>
+                    body,textarea {
+                        display: flex;
+                        margin: 0;
+                        font-family: 'Poppins', sans-serif;
+                        background-color: #f8f9fa;
+                    }
+
+                    /* Top Menu */
+                    .top-menu {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 10px 20px;
+                        background-color: #fff;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        top: 0;
+                        z-index: 100;
+                        height: 60px; /* Adjust height for new layout */
+                    }
+
+                    .top-menu .logo img {
+                        height: 60px;
+                        width: auto;
+                    }
+
+                    .top-menu .menu-links {
+                        display: flex;
+                        gap: 40px; /* Space between menu items */
+                        align-items: center;
+                        justify-content: center;
+                        flex: 1;
+                    }
+
+                    .top-menu .menu-links a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 14px;
+                        font-weight: 500;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 15px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        height: 100%;
+                        justify-content: center;
+                    }
+
+                    .top-menu .menu-links a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links i {
+                        font-size: 24px; /* Icon size */
+                    }
+                    .top-menu .user-icon {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        cursor: pointer;
+                        margin-right: 30px; /* Adds space from the edge */
+                    }
+
+                    /* Side Menu */
+                    .side-menu {
+                        width: 250px;
+                        background-color: #fff;
+                        padding: 20px 10px;
+                        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        left: 0;
+                        top: 60px; /* Adjust for top menu */
+                        height: calc(100vh - 60px);
+                        overflow-y: auto;
+                    }
+
+                    .side-menu ul {
+                        list-style: none;
+                        padding: 2;
+                        line-height: 1.5rem;
+                    }
+
+                    .side-menu ul li {
+                        margin: 15px 0;
+                    }
+
+                    .side-menu ul li a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 15px;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                    }
+
+                    .side-menu ul li a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .side-menu ul li a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .main-content {
+                        margin-left: 270px; /* Adjust to create space from the side menu */
+                        padding: 20px;      /* Maintain consistent padding inside the main content */
+                        margin-top: 60px;   /* Adjust for the top menu */
+                        flex-grow: 1;
+                    }
+
+
+                    /* Tab Container */
+                    .tab-container {
+                        display: flex;
+                        align-items: left;
+                        border: 1px solid #ddd; /* Add a border around the tab container */
+                        border-radius: 5px; /* Rounded corners */
+                        overflow: hidden; /* Ensure rounded corners work with border */
+                        max-width: 400px; /* Set a max width for the tabs (adjust as needed) */
+                        margin-bottom: 10px;
+                        margin-top: 10px;
+                    }
+
+                    /* Tab Buttons */
+                    .tab-button {
+                        flex: 1; /* Equal width for both tabs */
+                        padding: 15px 10px;
+                        border: none; /* Remove default button borders */
+                        font-size: 16px;
+                        font-weight: 500;
+                        text-align: center;
+                        cursor: pointer;
+                        background-color: #fff; /* Default background color */
+                        color: #333; /* Default text color */
+                        transition: background-color 0.3s ease, color 0.3s ease;
+                    }
+
+                    /* Active Tab Button */
+                    .tab-button.active {
+                        background-color: #ffd001; /* Highlighted tab background */
+                        color: #000; /* Highlighted tab text color */
+                    }
+
+                    /* Hover Effect */
+                    .tab-button:hover {
+                        background-color: #f0f0f0;
+                    }
+
+                    /* No Border Between Tabs */
+                    .tab-button:first-child {
+                        border-right: 1px solid #ddd; /* Add a divider between buttons */
+                    }
+
+                    .link-section {
+                        display: grid;
+                        grid-template-columns: repeat(2, 1fr);
+                        gap: 20px;
+                        margin-top:20px;
+                    }
+
+                    .link-box {
+                        background-color: #fff;
+                        padding: 20px;
+                        border: 1px solid #ddd;
+                        border-radius: 10px;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        border: 1px solid #ffd000;
+                    }
+
+                    .link-box label {
+                         color: #000;
+                        font-size: 14px;
+                        display: block;
+                        margin-bottom: 10px;
+                        font-weight:600;
+                    }
+
+                    .link-box input,
+                    .link-box select {
+                        width: 100%;
+                        padding: 10px;
+                        margin-bottom: 10px;
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                        font-size: 14px;
+
+                        color: #4c4c4b;
+                    }
+
+                    .link-box button {
+                        background-color: #ffd000;
+                        color: #212529;
+                        font-family: 'Poppins', sans-serif;
+                        padding: 10px 15px;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        transition: background-color 0.3s ease;
+                        font-size: 16px;
+                        padding:10px 20px;
+                        letter-spacing: 1px;
+                    }
+
+                    .link-box button:hover {
+                        background-color: #e6c000;
+                    }
+                    button{
+                    margin-right:10px;
+                    }
+                    .row {
+    display: flex;
+    flex-wrap: wrap;
+    
+  }
+
+  .col-md-10, .col-md-2 {
+    flex: 0 0 auto;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .col-md-10 {
+    width: 97.33333%; /* 10/12 of the row */
+  }
+
+  .col-md-2 {
+    width: 16.66667%; /* 2/12 of the row */
+  }
+
+  .align-items-center {
+    align-items: center;
+    display: flex;
+  }
+
+  .d-flex {
+    display: flex;
+  }
+
+  .text-end {
+    text-align: end;
+  }
+
+  .bg-white {
+    background-color: #ffffff;
+  }
+
+
+
+  .border1 {
+    border: 1px solid #ffd000;
+    border-radius: 5px;
+        margin-top: 20px;
+  }
+
+  .rounded-circle {
+    border-radius: 50%;
+  }
+
+  .float-end {
+    margin-left: auto;
+  }
+  h5{
+  font-size:20px;
+  font-weight:500;
+  margin:20px;
+  }
+    h6{
+  font-size:16px;
+  font-weight:500;
+  margin:20px;
+  }
+
+                    
+                </style>
+
+                <!-- Top Menu -->
+                <div class="top-menu">
+                    <button class="navbar-toggler d-lg-none" type="button" id="burgerMenu" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"><i class="fa fa-solid fa-bars"></i></span>
+                    </button>
+                    <div class="logo">
+                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
+                    </div>
+                    <div class="menu-links">
+                        <a href="/partner" >
+                            <i class="fa fa-chart-bar"></i> Income
+                        </a>
+                        <a href="/partner-lead" >
+                            <i class="fa fa-bullhorn"></i> Leads
+                        </a>
+                        <a href="/partner-kyc">
+                            <i class="fa fa-id-card"></i> KYC
+                        </a>
+                        <a href="/partner-referral" class="active">
+                            <i class="fa fa-link"></i> Links
+                        </a>
+                        <a href="/partner-leaderboard">
+                            <i class="fa fa-medal"></i> Leaderboard
+                        </a>
+                    </div>
+                    <!-- Use <img> tag for user icon -->
+                    <t t-call="custom_web_kreator.partner_profile_dropdown"/>
+                </div>
+
+                <!-- Side Menu -->
+                <t t-call="custom_web_kreator.side_menu"/>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <!-- Top Block -->
+                    <t t-call="custom_web_kreator.user_block" />
+                        <!-- Tab Navigation -->
+                    <!-- <div class="tab-container">
+                        
+                    </div> -->
+
+                    <!-- Referral Links Section -->
+                    <div class="link-section">
+                       
+                        <!-- Referral Link -->
+                        <form method="post" action="/partner-referral">
+                            <!-- CSRF Token for security -->
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="link-box">
+                                <label>Referral Link</label>
+                                <select id="course_id" name="course_id" required="required">
+                                    <option value="" selected="selected">e.g. Select Product</option>
+                                    <t t-if="referral_id">
+                                        <t t-foreach="product_cart_ids or []" t-as="course">
+                                            <option t-att-value="course.id" t-att-selected="course.id == referral_id.course_id.id">
+                                                <t t-esc="course.name"/>
+                                            </option>
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-foreach="product_cart_ids or []" t-as="course">
+                                            <option t-att-value="course.id">
+                                                <t t-esc="course.name"/>
+                                            </option>
+                                        </t>
+                                    </t>
+                                </select>
+                                <select id="expiry_time" name="expiry_time">
+                                    <option value="5_minutes">5 minutes</option>
+                                    <option value="15_minutes">15 minutes</option>
+                                    <option value="30_minutes">30 minutes</option>
+                                    <option value="no_limit">No Limit</option>
+                                </select>
+                                <label>Generated Link</label>
+                                <t t-if="referral_id">
+                                    <input type="text" id="pgenerated_url" readonly="readonly" t-att-value="referral_id.generated_url"/>
+                                </t>
+                                <t t-else="">
+                                    <input type="text" id="pgenerated_url" readonly="readonly"/>
+                                </t> 
+                                <button type="submit" class="mr-5">Generate Link</button>
+                                <a type="button" class="fa fa-copy" id="pcopy_icon" style="cursor: pointer;margin-left: 10px;color: black;"/>
+                                
+                            </div>
+                            <script>
+                                document.getElementById("pcopy_icon").addEventListener("click", function () {
+                                    const copyButton = document.getElementById('pcopy_icon');  // Copy button ID
+                                    const fieldTextElement = document.getElementById('generated_url');
+                                    const fieldText = fieldTextElement.value.trim();
+                                    navigator.clipboard.writeText(fieldText).then(() =&gt; {
+                                        alert("Referral link copied");
+                                    }).catch(err =&gt; {
+                                        console.error('Failed to copy:', err);
+                                        alert("Failed to copy the Referral link.");
+                                    });
+                                });
+
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    const courseSelect = document.getElementById("course_id");
+                                    const generatedUrlField = document.getElementById("generated_url");
+
+                                    if (courseSelect) {
+                                        if(generatedUrlField){
+                                            courseSelect.addEventListener("change", function() {
+                                                generatedUrlField.value = "";  // Clear the generated URL field
+                                            });
+                                        }
+                                    }
+                                });
+                            </script>
+                        </form>
+
+                        <!-- Payment Link -->
+                        <div class="link-box">
+                            <label>Payment Link</label>
+                            <select>
+                                <option>All Courses</option>
+                                <option>Marketing and above</option>
+                                <option>Branding and above</option>
+                                <option>Traffic and above</option>
+                                <option>Influence and above</option>
+                                <option>Finance Mastery and Business Mastery</option>
+                            </select>
+                            <select>
+                                <option>No Limit</option>
+                                <option>1 Day</option>
+                                <option>7 Days</option>
+                                <option>30 Days</option>
+                            </select>
+                            <label>Generated Link</label>
+                            <input type="text" readonly="readonly" value="https://www.bizgurukul.com/Signup?id=cbcDJ7DVHoQ&gt;ref=BGbh/Jf$+jbdjlL+ohZsSg==" />
+                            <button class="mr-5">Generate Link</button><i class="fa fa-copy" style="cursor: pointer;margin-left: 10px;"/>
+                        </div>
+                        <!-- Referral Links Section -->
+                        
+                       
+                    </div>
+                </div>
+            </body>
+            <xpath expr="." position="inside">
+                <!-- Include jQuery -->
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script type="text/javascript" src="/apg_js/static/src/js/menu.js"></script>
+                <link rel="stylesheet" href="/apg_js/static/src/scss/menu.css" />
+            </xpath>
+        </template>
+        <template id="partner_product_referralLink" inherit_id="custom_web_kreator.partner_product" priority="30">
+            <xpath expr="//form/div[1]" position="inside">
+                <input type="hidden" id="cartReferralLink" name="cartPartnerID" readonly="readonly" t-att-value="cart.referral_id.generated_url"/>
+            </xpath>
+            <xpath expr="//a[hasclass('o-cust-referral-link')]" position="replace">
+                <a type="button" class="btn o-cust-referral-link" id="cartCopyReferralLink" style="width: 100%; height: auto;background-color: #ffd000;">Copy Affiliate Link</a>
+            </xpath>
+            <xpath expr="//form" position="inside">
+                <script>
+                    document.getElementById("cartCopyReferralLink").addEventListener("click", function () {
+                        const cartReferralLink = document.getElementById('cartReferralLink').value;
+                        navigator.clipboard.writeText(cartReferralLink).then(() =&gt; {
+                        alert("Post link copied to clipboard");
+                        }).catch(err =&gt; {
+                            console.error('Failed to copy:', err);
+                            alert("Failed to copy the post link.");
+                        });
+                    });
+                </script>
+            </xpath>
+        </template>
+    </data>
+</odoo>

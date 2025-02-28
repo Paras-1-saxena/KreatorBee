@@ -1,0 +1,433 @@
+<odoo>
+    <data>
+        <template id="master_welcome" name="Master welcome Template">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet"/>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+                  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+                  crossorigin="anonymous"/>
+                  
+            <body>
+                <!-- Page-Specific Styles -->
+                <style>
+                    body,textarea {
+                        display: flex;
+                        margin: 0;
+                        font-family: 'Poppins', sans-serif;
+                        background-color: #f8f9fa;
+                         margin: 0;
+                        padding: 0;
+                        line-height: 1.6;
+                    }
+
+                    /* Top Menu */
+                    .top-menu {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 10px 20px;
+                        background-color: #fff;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        top: 0;
+                        z-index: 100;
+                        height: 80px; /* Adjust height for new layout */
+                    }
+
+                    .top-menu .logo img {
+                        height: 60px;
+                        width: auto;
+                    }
+
+                    .top-menu .menu-links {
+                        display: flex;
+                        gap: 40px; /* Space between menu items */
+                        align-items: center;
+                        justify-content: center;
+                        flex: 1;
+                    }
+
+                    .top-menu .menu-links a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 14px;
+                        font-weight: 500;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 15px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        height: 100%;
+                        justify-content: center;
+                    }
+
+                    .top-menu .menu-links a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links i {
+                        font-size: 24px; /* Icon size */
+                    }
+                    .top-menu .user-icon {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        cursor: pointer;
+                        margin-right: 30px; /* Adds space from the edge */
+                    }
+
+                    /* Side Menu */
+                    .side-menu {
+                        width: 270px;
+                        background-color: #fff;
+                        padding: 20px 10px;
+                        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        left: 0;
+                        top: 60px; /* Adjust for top menu */
+                        height: calc(100vh - 60px);
+                        overflow-y: auto;
+                    }
+
+                    .side-menu ul {
+                        list-style: none;
+                        padding: 2;
+                    }
+
+                    .side-menu ul li {
+                        margin: 15px 0;
+                    }
+
+                    .side-menu ul li a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 15px;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                    }
+
+                    .side-menu ul li a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .side-menu ul li a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .main-content {
+                        margin-left: 270px; /* Adjust to create space from the side menu */
+                        padding: 0px 20px;  /* Maintain consistent padding inside the main content */
+                        margin-top: 80px;   /* Adjust for the top menu */
+                        flex-grow: 1;
+                        background-color:#f8f9fa;
+                    }
+
+                     /* Progress Bar */
+                    .progress-bar-container {
+                        width: 100%;
+                        height:10px;
+                        background-color: fef5c5;
+                        margin-bottom: 20px;
+                        position: relative;
+                    }
+
+                    .progress-bar {
+                        height: 10px;
+                        background-color: #ffd001;
+                        width: 100%; /* Adjust for progress percentage */
+                        transition: width 0.3s ease;
+                    }
+
+                    .content-containter {
+                        
+                     background-color:white;
+                        height:560px;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        
+                        gap: 20px;
+                    }
+
+                    .content-block {
+                        display: flex;
+                        justify-content: center; /* Center horizontally */
+                        align-items: center; /* Center vertically */
+                        min-height: 80vh; /* Full viewport height */
+                        background-color: #fff; /* Background color of the entire block */
+                        margin: 0; /* Reset margins to prevent extra spacing */
+                    }
+
+                    .content-section {
+                        display: flex;
+                        flex-direction: column; /* Stack children vertically */
+                        justify-content: center; /* Center content within the box vertically */
+                        align-items: center; /* Center content horizontally */
+                        background-color: #fef5c5;
+                        padding: 30px;
+                        border-radius: 10px;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        text-align: center;
+                        max-width: 800px;
+                        width: 100%;
+                    }
+
+                    .content-section img {
+                        width: 280px;
+                        margin-bottom: 20px;
+                    }
+
+                    .content-section h1 {
+                        font-size: 24px;
+                        color: #333;
+                        margin-bottom: 10px;
+                    }
+
+                    .content-section p {
+                        font-size: 16px;
+                        color: #333;
+                        line-height: 1.5;
+                        margin-bottom: 10px;
+                    }
+
+                    .content-section .highlight {
+                        font-weight: bold;
+                        color: #333;
+                    }
+                    .disabled-link {
+                        pointer-events: none; /* Prevent clicking */
+                        color: #999; /* Gray out the link */
+                        cursor: not-allowed; /* Show a not-allowed cursor */
+                    }
+                    .border1{
+                    border: 1px solid #fdf000;
+                    }
+
+
+                
+                    
+                
+                </style>
+                <!-- Top Menu -->
+                <div class="top-menu">
+                    <div class="logo">
+                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
+                    </div>
+                    <div class="menu-links">
+                        <a>
+                            <i class="fa fa-book-reader"></i> Course Details
+                        
+                        </a>
+                        <a>
+                            <i class="fa fa-book"></i> Course Standard
+                        
+                        </a>
+                        <a>
+                            <i class="fa fa-link"></i> T &amp; C
+                        
+                        </a>
+                        <a class="active">
+                            <i class="fa fa-trophy"></i> Welcome
+                        
+                        </a>
+                    </div>
+                    <!-- Use <img> tag for user icon -->
+                    <div class="dropdown">
+                        <img class="user-icon dropdown-toggle" src="/custom_web_kreator/static/src/user1.png" alt="User Icon" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer;" />
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                          <li><a class="dropdown-item" href="/creator-profile">My Profile</a></li>
+                          <li><a class="dropdown-item" href="/web/session/logout">Log Out</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Side Menu -->
+                <div class="side-menu">
+                    <ul>
+                    <!-- Get Started -->
+                    <li t-if="not course_count">
+                        <a href="/master" class="active">
+                            <i class="fa fa-home"></i> Get Started
+                        </a>
+                    </li>
+
+                    <!-- Hide Get Started if course_count is true -->
+                    <li t-if="course_count" t-class="d-none">
+                        <!-- Get Started is hidden when course_count is true -->
+                    </li>
+
+                    
+
+                    <!-- Products -->
+                    <li>
+                        <a t-att-href="course_count and '/nmy-courses' or '#'" 
+                           t-att-class="('disabled-link' if not course_count else 'active')">
+                            <i class="fa fa-box"></i> Products
+                            <t t-if="not course_count">
+                                <i class="fa fa-lock" style="margin-left: 5px;"></i>
+                            </t>
+                        </a>
+                    </li>
+
+                    <!-- Sales -->
+                    <li>
+                        <a t-att-href="(course_count and approve_course_count) and '/master_income_data' or '#'" 
+                           t-att-class="('disabled-link' if not course_count or (course_count and not approve_course_count) else '')">
+                            <i class="fa fa-chart-line"></i> Sales
+                            <t t-if="not course_count or (course_count and not approve_course_count)">
+                                <i class="fa fa-lock" style="margin-left: 5px;"></i>
+                            </t>
+                        </a>
+                    </li>
+
+                    <!-- Connect with Partner -->
+                    <li>
+                        <a t-att-href="(course_count and approve_course_count) and '/forumsection' or '#'" 
+                           t-att-class="('disabled-link' if not course_count or (course_count and not approve_course_count) else '')">
+                            <i class="fa fa-users"></i> Connect with Partner
+                            <t t-if="not course_count or (course_count and not approve_course_count)">
+                                <i class="fa fa-lock" style="margin-left: 5px;"></i>
+                            </t>
+                        </a>
+                    </li>
+
+                    <!-- Customer -->
+                    <li>
+                        <a t-att-href="(course_count and approve_course_count) and '/coming-soon' or '#'" 
+                           t-att-class="('disabled-link' if not course_count or (course_count and not approve_course_count) else '')">
+                            <i class="fa fa-address-book"></i> Customer
+                            <t t-if="not course_count or (course_count and not approve_course_count)">
+                                <i class="fa fa-lock" style="margin-left: 5px;"></i>
+                            </t>
+                        </a>
+                    </li>
+
+                    <!-- Become A Bee Partner -->
+                    <li>
+                        <a data-bs-toggle="modal" data-bs-target="#logoutModal" 
+                           t-att-href="(course_count and approve_course_count) and '#' or '#'" 
+                           t-att-class="('disabled-link' if not course_count or (course_count and not approve_course_count) else '')">
+                            <i class="fa fa-rocket"></i> Become A Bee Partner
+                            <t t-if="not course_count or (course_count and not approve_course_count)">
+                                <i class="fa fa-lock" style="margin-left: 5px;"></i>
+                            </t>
+                        </a>
+                    </li>
+                </ul>
+                </div>
+                <!-- Main Content -->
+                <div class="main-content">
+                    <div class="row align-items-center bg-white mb-4 mt-4 border1">
+                        <div class="col-md-10 d-flex align-items-center">
+                            <img src="/custom_web_kreator/static/src/user1.png" alt="User Image" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 15px;" />
+                            <h5 class="p-3">Welcome, <t t-esc="request.env.user.name"/></h5>
+                            <!-- <h6>Let&#39;s get started with your journey</h6> -->
+                        </div>
+                        <div class="col-md-2  float-end text-end">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#videoModal" 
+                                data-video-url="https://www.youtube.com/embed/GYsHQ3L2aG0?si=PxeJgCHMW-mu_sgP">
+                            <h6 style="cursor: pointer;" >Watch Tutorial</h6>
+                        </a>
+                        </div>
+                    </div>
+                    <!-- Video Modal -->
+                <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="videoModalLabel">Watch Video</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="ratio ratio-16x9">
+                                    <iframe id="videoIframe" src="" title="YouTube video"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        var videoModal = document.getElementById('videoModal');
+                        var videoIframe = document.getElementById('videoIframe');
+                    
+                        videoModal.addEventListener('show.bs.modal', function (event) {
+                            var button = event.relatedTarget;
+                            var videoUrl = button.getAttribute('data-video-url');
+                            videoIframe.src = videoUrl;
+                        });
+                    
+                        videoModal.addEventListener('hidden.bs.modal', function () {
+                            videoIframe.src = "";
+                        });
+                    });
+                </script>
+                    <!-- Form and Image Section -->
+                    <div class="content-containter">
+                        <!-- Progress Bar -->
+                        <div class="progress-bar-container">
+                            <div class="progress-bar"></div>
+                        </div>
+                        
+                         <!-- Thank You and Next Steps -->
+                    <div class="content-block">
+                         
+                            <div class="content-section">
+                            <t t-if="agreement == 'agree'">
+                                <img src="/custom_web_kreator/static/src/thankyou.png" alt="Welcome Icon" />
+                                <h1>Thank You for Creating The Course!</h1>
+                                <p>Here are the next steps:</p>
+                                <p>
+                                    <span class="highlight">Wait for 24 hours:</span> Our team will review your submission, and you will receive a notification once it is approved.
+                                </p>
+                                <p>
+                                    <span class="highlight">After Approval:</span> You can proceed to fill in the complete details of your course.
+                                </p>
+                                <p>We appreciate your patience and look forward to helping you share your knowledge!</p>
+                            
+                        </t>
+                            <t t-else="">
+                               <img src="/custom_web_kreator/static/src/thankyou.png" alt="Welcome Icon" />
+                                <h1>Thank You for Creating The Course!</h1>
+                                
+                               
+                                <p>
+                                    Our team will contact you within 24 hours, or you can reach us directly at 0120-4162586.
+                                </p>
+                                <p>Sorry to hear that you do not agree with our terms and conditions.</p>
+                                
+                            </t>
+                            </div>
+                    </div>
+
+                    </div>
+                </div>
+                </body>
+            <script>
+                // Listen for the popstate event (which is triggered when the user navigates in the history)
+                window.addEventListener("popstate", function(event) {
+                    // Redirect to /my-courses when the user tries to go back
+                    window.location.href = "/nmy-courses";
+                });
+
+                // Push a new state to the browser's history so that the back action can be intercepted
+                history.pushState(null, null, window.location.href);
+            </script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            </template>
+        </data>
+    </odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_duration_duration_form" model="ir.ui.view">
+        <field name="name">duration.duration.tree</field>
+        <field name="model">duration.duration</field>
+        <field name="arch" type="xml">
+            <form string="Duration">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="duration"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_duration_duration_tree" model="ir.ui.view">
+        <field name="name">duration.duration.tree</field>
+        <field name="model">duration.duration</field>
+        <field name="arch" type="xml">
+            <list string="Duration">
+                <field name="name"/>
+                <field name="duration"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_duration_duration_search" model="ir.ui.view">
+        <field name="name">duration.duration.search</field>
+        <field name="model">duration.duration</field>
+        <field name="arch" type="xml">
+            <search string="Duration">
+                <field name="name"/>
+                <field name="duration"/>
+            </search>
+        </field>
+    </record>
+    <record id="action_duration_duration_record" model="ir.actions.act_window">
+        <field name="name">Duration</field>
+        <field name="res_model">duration.duration</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Data
+            </p>
+        </field>
+    </record>   
+</odoo>

@@ -1,0 +1,8 @@
+<odoo>
+    <record id="entertainment_type_acting" model="entertainment.type">
+        <field name="name">Acting</field>
+    </record>
+    <record id="entertainment_type_dancing" model="entertainment.type">
+        <field name="name">Dancing</field>
+    </record>
+</odoo>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem
+        id="submenu_contact"
+        name="Contact"
+        parent="contacts.menu_contacts"
+        sequence="0"/>
+
+        <menuitem
+            id="contacts.res_partner_menu_contacts"
+            name="Contacts"
+            action="contacts.action_contacts"
+            parent="submenu_contact"
+            sequence="1"/>
+
+        <menuitem
+            id="menu_creator"
+            name="Creator"
+            parent="submenu_contact"
+            sequence="2"
+            action="action_creator_record"/>
+
+        <menuitem
+            id="menu_partner"
+            name="Partner"
+            parent="submenu_contact"
+            sequence="3"
+            action="action_partner_record"/>
+
+        <menuitem
+            id="menu_customer"
+            name="Customer"
+            parent="submenu_contact"
+            sequence="4"
+            action="action_customer_record"/>
+
+        <menuitem
+            id="menu_niche_type_tag"
+            name="Niche Type"
+            parent="contacts.res_partner_menu_config"
+            sequence="4"
+            action="apg_signup.action_niche_type_record"/>
+
+        <menuitem
+            id="menu_course_menu"
+            name="Course"
+            parent="website_slides.website_slides_menu_configuration"
+            sequence="5"
+            action="apg_signup.action_course_course_record"/>
+
+        <menuitem
+            id="menu_colour_combination_menu"
+            name="Colour Combination"
+            parent="website_slides.website_slides_menu_configuration"
+            sequence="6"
+            action="apg_signup.action_colour_combination_record"/>
+</odoo>
+
+

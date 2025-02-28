@@ -1,0 +1,491 @@
+<odoo>
+    <data>
+       <template id="nleaderboard_page" name="NLeaderboard">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+                <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet"/>
+            <body>
+                
+                <!-- Page-Specific Styles -->
+                <style>
+                    body {
+                        display: flex;
+                        margin: 0;
+                        font-family: 'Poppins', sans-serif;
+                        background-color: #f8f9fa;
+                    }
+
+                    /* Top Menu */
+                    .top-menu {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 10px 20px;
+                        background-color: #fff;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        top: 0;
+                        z-index: 100;
+                        height: 80px; /* Adjust height for new layout */
+                    }
+
+                    .top-menu .logo img {
+                        height: 60px;
+                        width: auto;
+                    }
+
+                    .top-menu .menu-links {
+                        display: flex;
+                        gap: 40px; /* Space between menu items */
+                        align-items: center;
+                        justify-content: center;
+                        flex: 1;
+                    }
+
+                    .top-menu .menu-links a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 14px;
+                        font-weight: 500;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 15px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        height: 100%;
+                        justify-content: center;
+                    }
+
+                    .top-menu .menu-links a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .top-menu .menu-links i {
+                        font-size: 24px; /* Icon size */
+                    }
+                    .top-menu .user-icon {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        cursor: pointer;
+                        margin-right: 30px; /* Adds space from the edge */
+                    }
+
+                    /* Side Menu */
+                    .side-menu {
+                        width: 250px;
+                        background-color: #fff;
+                        padding: 20px 10px;
+                        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        left: 0;
+                        top: 60px; /* Adjust for top menu */
+                        height: calc(100vh - 60px);
+                        overflow-y: auto;
+                    }
+
+                    .side-menu ul {
+                        list-style: none;
+                        padding: 2;
+                        line-height: 1.5rem;
+                    }
+
+                    .side-menu ul li {
+                        margin: 15px 0;
+                    }
+
+                    .side-menu ul li a {
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 15px;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                    }
+
+                    .side-menu ul li a.active {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .side-menu ul li a:hover {
+                        background-color: #fef5c5;
+                        color: #000;
+                    }
+
+                    .main-content {
+                        margin-left: 270px; /* Adjust to create space from the side menu */
+                        padding: 20px;      /* Maintain consistent padding inside the main content */
+                        margin-top: 80px;   /* Adjust for the top menu */
+                        flex-grow: 1;
+                    }
+
+
+                    .leaderboard-container {
+                        display: flex;
+                        gap: 30px;
+                    }
+
+                    .leaderboard-list,
+                    .user-stats {
+                        background-color: #fff;
+                        border-radius: 10px;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        padding: 20px;
+                    }
+
+                    .leaderboard-list {
+                        flex: 2;
+                        border:1px solid #ffd000;
+                    }
+
+                    .leaderboard-list h3 {
+                        font-size: 18px;
+                        font-weight: 500;
+                        margin-bottom: 15px;
+                    }
+
+                    .leaderboard-list .entry {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center; /* Ensures vertical alignment */
+                        padding: 10px 15px; /* Add consistent padding */
+                        border-bottom: 1px solid #f1f1f1;
+                    }
+
+
+                    .leaderboard-list .entry:last-child {
+                        border-bottom: none;
+                    }
+
+                    .leaderboard-list .entry .name {
+                        display: flex;
+                        align-items: center; /* Ensures the image and text are vertically aligned */
+                        flex: 1; /* Allow the name section to grow */
+                        gap: 10px; /* Space between the image and the name */
+                    }
+
+                    .leaderboard-list .entry img {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        display: block; /* Ensure proper alignment */
+                    }
+
+                    .leaderboard-list .entry .name span {
+                        font-size: 18px;
+                        font-weight: normal;
+                        color: #333;
+                        white-space: nowrap; /* Prevent text wrapping */
+                    }
+
+                    .leaderboard-list .entry .rank {
+                        flex: 0 0 50px; /* Fix width for the rank column */
+                        text-align: left;
+                        font-weight: 500;
+                        color: #555;
+                    }
+
+                    .user-stats {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 300px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        font-family: Arial, sans-serif;
+        border:1px solid #ffd000;
+    }
+
+    .user-stats img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+<!--        margin-bottom: 10px;-->
+<!--        border: 2px solid #ddd;-->
+    }
+
+    .user-stats .username {
+        font-size: 18px;
+        font-weight: bold;
+<!--        margin-bottom: 10px;-->
+        color: #333;
+    }
+
+    .stats-row {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+    }
+
+    .stat-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .stat-item p {
+        font-size: 14px;
+        color: #999;
+        margin: 0;
+        margin-bottom: 5px;
+    }
+
+    .stat-item span {
+        font-size: 18px;
+        font-weight: bold;
+        color: #ff6600;
+    }
+
+    .stat-item:last-child span {
+        color: #333;
+    }
+
+    @media (max-width: 768px) {
+        .user-stats {
+            width: 100%;
+            padding: 15px;
+        }
+    }
+
+                    .tab-menu {
+                        display: flex;
+                        justify-content: left;
+                        margin-bottom: 20px;
+                        margin-top: 20px;
+                        gap: 10px;
+                    }
+
+                    .tab-menu button {
+                        background-color: #fff;
+                        border: 1px solid #ddd;
+                        padding: 10px 20px;
+                        border-radius: 5px;
+                        font-size: 16px;
+                        cursor: pointer;
+                        transition: background-color 0.3s ease, color 0.3s ease;
+                        font-weight:500;
+                    }
+
+                    .tab-menu button.active {
+                        background-color: #ffd001;
+                        color: #000;
+                    }
+
+                    .tab-menu button:hover {
+                        background-color: #ffd000;
+                        color: #000;
+                    }
+
+                    .row {
+    display: flex;
+    flex-wrap: wrap;
+    
+  }
+
+  .col-md-10, .col-md-2 {
+    flex: 0 0 auto;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .col-md-10 {
+    width: 97.33333%; /* 10/12 of the row */
+  }
+
+  .col-md-2 {
+    width: 16.66667%; /* 2/12 of the row */
+  }
+
+  .align-items-center {
+    align-items: center;
+    display: flex;
+  }
+
+  .d-flex {
+    display: flex;
+  }
+
+  .text-end {
+    text-align: end;
+  }
+
+  .bg-white {
+    background-color: #ffffff;
+  }
+
+
+
+  .border1 {
+    border: 1px solid #ffd000;
+    border-radius: 5px;
+        margin-top: 20px;
+  }
+
+  .rounded-circle {
+    border-radius: 50%;
+  }
+
+  .float-end {
+    margin-left: auto;
+  }
+  h5{
+  font-size:20px;
+  font-weight:500;
+  margin:20px;
+  }
+    h6{
+  font-size:16px;
+  font-weight:500;
+  margin:20px;
+  }
+
+                    
+                </style>
+
+                <!-- Top Menu -->
+                <div class="top-menu">
+                    <div class="logo">
+                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
+                    </div>
+                    <div class="menu-links">
+                        <a href="/master_income_data">
+                            <i class="fa fa-chart-bar"></i> Income
+                        </a>
+                        <a href="/creator-lead">
+                            <i class="fa fa-bullhorn"></i> Leads
+                        </a>
+                        <a href="/nkyc" >
+                            <i class="fa fa-id-card"></i> KYC
+                        </a>
+                        <a href="/nreferral">
+                            <i class="fa fa-link"></i> Links
+                        </a>
+                        <a href="/nleaderboard" class="active">
+                            <i class="fa fa-medal"></i> Leaderboard
+                        </a>
+                    </div>
+                    <!-- Use <img> tag for user icon -->
+                    <t t-call="custom_web_kreator.partner_profile_dropdown"/>
+                </div>
+
+                <!-- Side Menu -->
+                <div class="side-menu">
+                    <ul>
+                        <li><a href="/master" class="d-none"><i class="fa fa-home"></i> Get Started</a></li>
+                        
+                        <li><a href="/nmy-courses"><i class="fa fa-box"></i> Products</a></li>
+                        <li><a href="/master_income_data" class="active"><i class="fa fa-chart-line"></i> Sales</a></li>
+                        <li><a href="/offers"><i class="fa fa-users"></i> Connect with Partner</a></li>
+                        <li><a href="#"><i class="fa fa-address-book"></i> Customer</a></li>
+                        <li>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                <i class="fa fa-rocket"></i> Become A Bee Partner
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Logout Confirmation Modal -->
+                <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to log out?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Not Now</button>
+                                <button id="confirmLogout" class="btn btn-warning">Yes, Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    document.getElementById("confirmLogout").addEventListener("click", function() {
+                        // Perform the logout by navigating to the logout URL
+                        window.location.href = "/web/session/logout?redirect=/web/signup?user_type=partner";
+                    });
+                </script>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <!-- Top Block -->
+                    <t t-call="custom_web_kreator.user_block" />
+                        <!-- Tab Menu -->
+                    <div class="tab-menu">
+                        <button class="active">All Time</button>
+                        <button>Yearly</button>
+                        <button>Monthly</button>
+                        <button>This Week</button>
+                    </div>
+
+                    <!-- Leaderboard Content -->
+                    <div class="leaderboard-container">
+                        <!-- Leaderboard List -->
+                        <div class="leaderboard-list">
+                            <h3>(March to February)</h3>
+                            <t t-if="leaderboard">
+                                <t t-foreach="leaderboard" t-as="data">
+                                    <div class="entry">
+                                        <span class="rank">
+                                            <img src="/custom_web_kreator/static/src/price1.png" alt="User 1" />
+                                        </span>
+                                        <div class="name">
+                                            <img src="/custom_web_kreator/static/src/user1.png" alt="User 1" />
+                                            <t t-esc="data['partner_name']"/>
+                                        </div>
+                                        <span><span t-field="currency_id.symbol" /><t t-esc="'%.2f'% data['total_commission']"/></span>
+                                    </div>
+                                </t>
+                            </t>
+                        </div>
+
+                        <!-- User Stats -->
+                        <div class="user-stats">
+                            <t t-foreach="leaderboard[:3]" t-as="data">
+                                <img src="/custom_web_kreator/static/src/user2.png" alt="User" />
+                                <p class="username"><t t-esc="data['partner_name']"/></p>
+                                <div class="stats-row">
+                                    <div class="stat-item">
+                                        <p>EARNINGS</p>
+                                        <span><span t-esc="currency_id.symbol" /><t t-esc="'%.2f' % data['total_commission']"/></span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <p>RANKING</p>
+                                        <span>#<t t-esc="data_index + 1"/></span>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+
+                    </div>
+                </div>
+            </body>
+        </template>
+    </data>
+</odoo>

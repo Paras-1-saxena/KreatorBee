@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="partner_details_template" name="Signup About">
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty" style="background-color: #FFD000;">
+                    <div class="container">
+                        <div class="content">
+                            <div class="o-cust-signup" style="max-width: 673px !important;">
+                                <form action="/sign-up/about/update" method="post" name="signup_details" class="o-cust-signup-details-form" enctype="multipart/form-data">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="partner_id" t-att-value="partner_id" id="partner_id" class="f14 o-cust-form-control"/>
+                                    <div class="mt-3" style="text-align: center;">
+                                        <h3 class="freedomMainTitle bold-text">We'd to know you better!</h3>
+                                        <p class="freedomSubTitle bold-text f14">Your input helps us improve the platform</p>
+                                    </div>
+                                    <div name="niche_type_ids_div" class="niche-type">
+                                        <label for="name" class="mb-1">Niche Type<span style="color: red;">*</span></label>
+                                        <div class="mb-2 field-name o-cust-div">
+                                            <!--<input type="text" name="name" t-att-value="name" id="name" class="f14 o-cust-form-control" placeholder="e.g. John Doe" required="required" t-att-readonly="'readonly' if only_passwords else None" t-att-autofocus="'autofocus' if login and not only_passwords else None"/>-->
+                                            <select name="niche_type_ids" id="multiselect"
+                                            t-attf-class="form-select select_box_test f14 o-cust-form-control" t-att-value="niche_type"
+                                            placeholder="..........................Select....................................">
+                                                <t t-foreach="niche_type or []" t-as="niche">
+                                                    <option t-att-value="niche.id">
+                                                        <t t-esc="niche.name"/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="refrence">
+                                        <label for="name" class="mb-1">Where did you hear about Kreator Bee<span style="color: red;">*</span></label>
+                                        <div class="mb-2 field-name o-cust-div">
+                                            <select id="reference" name="reference" class="form-select form-control-lg f14 o-cust-form-control">
+                                                <t t-foreach="request.env['res.partner'].fields_get(['reference'])['reference']['selection']"
+                                                   t-as="option">
+                                                    <option t-att-value="option[0]"
+                                                            t-att-selected="option[0] == (partner.reference if partner else '')">
+                                                        <t t-esc="option[1]"/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="product-type">
+                                        <label for="name" class="mb-1">Type of Product<span style="color: red;">*</span></label>
+                                        <span class="tooltip-icon" style="margin-left: 8px; position: relative; cursor: pointer;">
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                            <div class="tooltip-content"
+                                                 style="display: none; position: absolute; top: 100%; left: 0; background: #f9f9f9; color: #333; padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); z-index: 10; font-size: 12px; white-space: nowrap;">
+                                                Per-recorded Course: This is a course you can purchase before it is
+                                                officially available.
+                                            </div>
+                                        </span>
+                                        <div class="mb-2 field-name o-cust-div">
+                                            
+                                            <select id="product_type" name="product_type" class="form-select form-control-lg f14 o-cust-form-control" t-att-disabled="True">
+                                                <t t-foreach="request.env['res.partner'].fields_get(['product_type'])['product_type']['selection']"
+                                                   t-as="option">
+                                                    <option t-att-value="option[0]"
+                                                            t-att-selected="option[0] == 'pre_orded_course'">
+                                                        <t t-esc="option[1]"/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="description">
+                                        <label for="name" class="mb-1">About yourself<span style="color: red;">*</span></label>
+                                        <div class="mb-2 field-name o-cust-div">
+                                            <textarea id="description" name="description" class="f14 o-cust-form-control"  placeholder="Max 200 to 300 words" rows="4" required="required"></textarea>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="social-media">
+                                        <label for="social_section_line" class="mb-1">Add your social media profile</label>
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-borderless" style="margin: 0px;">
+                                                <tbody class="o-cust-social-media">
+                                                </tbody>
+                                            </table>
+                                            <button type="button" name="add_social_media" class="o-cust-add-more-btn">
+                                                Add More +
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="div_registration_btn">
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary o-cust-reg-button">Complete Registration</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,8 @@
+<odoo>
+    <record id="education_type_finance" model="education.type">
+        <field name="name">Finance</field>
+    </record>
+    <record id="education_type_personality_development" model="education.type">
+        <field name="name">Personality Development</field>
+    </record>
+</odoo>

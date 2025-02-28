@@ -1,0 +1,44 @@
+<odoo>
+    <template id="sign_up_design_changes" inherit_id="auth_signup.signup" name="SignUp detail">
+        <xpath expr="//form[@class='oe_signup_form']" position="attributes">
+            <attribute name="class">oe_signup_form c_signup</attribute>
+        </xpath>
+        <!-- <xpath expr="//div[@class='text-center oe_login_buttons d-grid pt-3']/button" position="after">
+            <a role="button" class="fa fa-google btn btn-primary mt-2 f16"> Sign up With Google</a>
+        </xpath> -->
+        <xpath expr="//form[@class='oe_signup_form c_signup']/input[1]" position="after">
+            <div class="text-center c_signup_logo">
+                <span t-field="res_company.logo" t-options="{'widget': 'image'}" role="img"/>
+            </div>
+            <div style="color: #000;padding:10px; text-align: justify;">
+                <t t-if="user_type == 'creator'">
+                    <h5 class="text-center">Signup With Creator</h5>
+                </t>
+                <t t-if="user_type == 'partner'">
+                    <h5 class="text-center">Signup With Partner</h5>
+                </t>
+                <!-- <p class="m-0">Welcome! First things first...</p>
+                <p>
+                    You can always change them later.<br></br>
+                </p> -->
+            </div>
+        </xpath>
+    </template>
+    <!-- <template id="signup_changes" inherit_id="apg_custom_website_signup.account_sign_up_details_id" name="SignUp detail">
+        <xpath expr="//div[@class='mb-3 field-user_type']" position="before">
+            <div class="text-center c_signup_logo">
+                <span t-field="res_company.logo" t-options="{'widget': 'image'}" role="img"/>
+            </div>
+            <div style="color: #808080;padding:10px; text-align: justify;">
+                <t t-if="user_type == 'creator'">
+                    <h4 class="text-center">Signup With Creator</h4>
+                </t>
+                <t t-if="user_type == 'partner'">
+                    <h4 class="text-center">Signup With Partner</h4>
+                </t>
+                <p>We provide personalized solutions to meet your unique needs. Our team works with you to ensure optimal results from start to finish.<br></br>
+                </p>
+            </div>
+        </xpath>
+    </template> -->
+</odoo>

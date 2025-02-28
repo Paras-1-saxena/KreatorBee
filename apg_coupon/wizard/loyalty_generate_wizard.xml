@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="loyalty_generate_wizard_view_form_inherit" model="ir.ui.view">
+        <field name="name">loyalty.program.form.inherit.discount</field>
+        <field name="model">loyalty.generate.wizard</field>
+        <field name="inherit_id" ref="loyalty.loyalty_generate_wizard_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/group/group[1]/field[@name='valid_until']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//form/sheet/group/group[1]/field[@name='valid_until']" position="before">
+                <field name="discount_id" options="{'no_open': True, 'no_create': True}"/>
+                <label for="duration_id" string="Duration"/>
+                <div name="duration_id" class="o_row">
+                    <field name="duration_id" options="{'no_open': True, 'no_create': True}"/>
+                    <field name="duration" class="oe_inline" options="{'no_open': True, 'no_create': True}"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

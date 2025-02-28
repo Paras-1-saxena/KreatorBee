@@ -1,0 +1,7 @@
+<odoo>
+    <template id="custom_assets_frontend" inherit_id="web.frontend_layout" name="Frontend Assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/apg_signup/static/src/js/social_media_toggle.js"></script>
+        </xpath>
+    </template>
+</odoo>

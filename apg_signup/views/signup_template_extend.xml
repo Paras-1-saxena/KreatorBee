@@ -1,0 +1,107 @@
+<odoo>
+    <template id="my_account_page" inherit_id="portal.portal_my_details_fields">
+        <xpath expr="//div[.//select[@name='country_id']]" position="after">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="social_media">Social Media</label>
+                        <select id="social_media" name="social_media" class="form-select form-control">
+                            <t t-foreach="request.env['res.partner'].fields_get(['social_media'])['social_media']['selection']"
+                               t-as="option">
+                                <option t-att-value="option[0]" t-att-selected="option[0] == partner.social_media">
+                                    <t t-esc="option[1]"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Follower field next to Social Media -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="follower">Follower</label>
+                        <input type="text" id="follower" name="follower" class="form-control"
+                               t-att-value="partner.follower or ''"/>
+                    </div>
+                </div>
+
+                <!-- Niche Type field next to Follower -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="niche_type">Niche Type</label>
+                        <select id="niche_type" name="niche_type" class="form-select form-control">
+                            <t t-foreach="request.env['res.partner'].fields_get(['niche_type'])['niche_type']['selection']"
+                               t-as="option">
+                                <option t-att-value="option[0]" t-att-selected="option[0] == partner.niche_type">
+                                    <t t-esc="option[1]"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Education Type field (Many2one) -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="education_type_id">Education Type</label>
+                        <select id="education_type_id" name="education_type_id" class="form-control">
+                            <t t-foreach="request.env['education.type'].search([])" t-as="education">
+                                <option t-att-value="education.id"
+                                        t-att-selected="education.id == partner.education_type_id.id">
+                                    <t t-esc="education.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Entertainment Type field (Many2one) -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="entertainment_type_id">Entertainment Type</label>
+                        <select id="entertainment_type_id" name="entertainment_type_id" class="form-control">
+                            <t t-foreach="request.env['entertainment.type'].search([])" t-as="entertainment">
+                                <option t-att-value="entertainment.id"
+                                        t-att-selected="entertainment.id == partner.entertainment_type_id.id">
+                                    <t t-esc="entertainment.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Product Type field (Selection) -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="product_type">Product Type</label>
+                        <select id="product_type" name="product_type" class="form-select form-control">
+                            <t t-foreach="request.env['res.partner'].fields_get(['product_type'])['product_type']['selection']"
+                               t-as="option">
+                                <option t-att-value="option[0]" t-att-selected="option[0] == partner.product_type">
+                                    <t t-esc="option[1]"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Reference field (Selection) -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="reference">Reference</label>
+                        <select id="reference" name="reference" class="form-select form-control">
+                            <t t-foreach="request.env['res.partner'].fields_get(['reference'])['reference']['selection']"
+                               t-as="option">
+                                <option t-att-value="option[0]" t-att-selected="option[0] == partner.reference">
+                                    <t t-esc="option[1]"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

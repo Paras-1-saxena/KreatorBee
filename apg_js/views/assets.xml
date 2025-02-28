@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="apg_custom_js" name="Custom JS and CSS">
+        <t t-call="website.layout">
+            <script type="text/javascript" src="/apg_js/static/src/js/menu.js"></script>
+            <script type="text/javascript" src="/apg_js/static/src/js/social.js"></script>
+            <link rel="stylesheet" href="/apg_js/static/src/scss/menu.css"/>
+            <link rel="stylesheet" href="/apg_js/static/src/scss/social.css"/>
+        </t>
+    </template>
+    <record id="apg_js.social_js" model="ir.asset">
+        <field name="name">APG Social JS</field>
+        <field name="bundle">web.assets_frontend</field>
+        <field name="path">/apg_js/static/src/js/social.js</field>
+    </record>
+    <record id="apg_js.social_scc" model="ir.asset">
+        <field name="name">APG Social CSS</field>
+        <field name="bundle">web.assets_frontend</field>
+        <field name="path">/apg_js/static/src/scss/social.css</field>
+    </record>
+</odoo>
