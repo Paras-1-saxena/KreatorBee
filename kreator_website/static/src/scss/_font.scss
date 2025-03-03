@@ -1,0 +1,33 @@
+@font-face {
+  font-family: "Futura";
+  src: url("../../fonts/Futura Book.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../../fonts/Futura Bold.ttf") format("truetype");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../../fonts/Futura Medium.ttf") format("truetype");
+  font-weight: 500;
+}
+.fs-45 {
+    font-size: 44px;
+    line-height: 117%; /* 53.447px */
+}
+.fs-64 {
+    font-size: 64px;
+    line-height: 117%; /* 53.447px */
+}
+.fs-40 {
+    font-size: 40px;
+    line-height: 117%; /* 53.447px */
+}
+.fs-48 {
+    font-size: 48px;
+    line-height: 117%; /* 53.447px */
+}

@@ -1,0 +1,557 @@
+<odoo>
+    <template id="landing_page_1">
+        <t t-call="website.layout">
+            <t t-call="kreator_website.section_1"/>
+            <t t-call="kreator_website.section_2"/>
+            <t t-call="kreator_website.section_3"/>
+            <t t-call="kreator_website.section_4"/>
+            <t t-call="kreator_website.section_5"/>
+            <t t-call="kreator_website.section_6"/>
+            <t t-call="kreator_website.section_7"/>
+            <t t-call="kreator_website.section_8"/>
+            <t t-call="kreator_website.section_9"/>
+        </t>
+    </template>
+
+    <template id="section_1">
+        <div id="section_1" class="p-5 container">
+            <div class="row d-flex justify-content-center rounded-50 bg-black align-items-center">
+                <div class="col-4 p-5">
+                    <div class="d-flex flex-column justify-content-center gap-4 pt-4">
+                        <span class="fs-45">
+                            Start <span class="text-kreator-yellow-900">MONETIZING</span> Your Financial Expertise Today
+                        </span>
+                        <div>Share your expertise in finance by creating impactful online courses. Teach budgeting, investing, or wealth management and earn effortlessly while our Bee Partners connect you with the right audience.</div>
+                        <button class="btn btn-kreator-yellow-900 fw-bold text-black w-50 py-3 rounded-pill mt-4">Enroll now</button>
+                    </div>
+                </div>
+                <div class="col-7 p-5">
+                    <img src="/kreator_website/static/src/img/image1.png" alt="section_1" class="img-fluid rounded-50 w-100"/>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="section_2">
+        <div id="section_2" class="p-5 container">
+            <div class="container d-flex justify-content-center align-items-center">
+                <div class="container-box rounded-30 w-100 p-5 pe-0 border border-black">
+                    <div class="w-50 d-flex justify-content-center flex-column gap-3">
+                        <span class="fs-64 fw-bold">About the
+                            <span class="text-kreator-yellow-900">COURSE.</span>
+                        </span>
+                        <span class="fw-bold">Building something you love. Working on your own terms. Your dream startup idea shouldn’t be limited to your dreams.
+                        </span>
+                        <span class="text-kreator-yellow-900">It’s time you make it a reality.</span>
+                        <span class="fw-bold">From idea to marketing, this course will guide you through all the nuances of idea selection, finding your founding team, raising the funds, <span class="italic-text text-kreator-yellow-900">building</span> your first product, pricing it, and finding your first 1000 customers.
+                        </span>
+                        <button class="rounded-pill bg-black text-white py-2 w-25 mt-5 fw-bold">READ MORE</button>
+                    </div>
+                    <div class="w-50 image-section ms-5">
+                        <img src="/kreator_website/static/src/img/image2.png" alt="Online Course Illustration"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="section_3">
+        <div id="section_3" class="p-5 container">
+            <div class="container d-flex justify-content-between align-items-center">
+                <div class="col-5 rounded-50 p-5" style="box-shadow: 0px 3.519px 28.503px 9.677px rgba(0, 0, 0, 0.25);">
+                    <div class="icon-box row">
+                        <div class="align-items-center col-6 d-flex flex-column icon-item justify-content-center p-5">
+                            <img width="82" src="/kreator_website/static/src/img/image 108.png" alt="icon1"/>
+                            <span class="text-center">16+ Hours of Content</span>
+                        </div>
+                        <div class="align-items-center col-6 d-flex flex-column icon-item justify-content-center p-5">
+                            <img width="82" src="/kreator_website/static/src/img/image 110.png" alt="icon1"/>
+                            <span class="text-center">16+ Hours of Content</span>
+                        </div>
+                        <div class="align-items-center col-6 d-flex flex-column icon-item justify-content-center p-5">
+                            <img width="82" src="/kreator_website/static/src/img/image 111.png" alt="icon1"/>
+                            <span class="text-center">16+ Hours of Content</span>
+                        </div>
+                        <div class="align-items-center col-6 d-flex flex-column icon-item justify-content-center p-5">
+                            <img width="82" src="/kreator_website/static/src/img/image 112.png" alt="icon1"/>
+                            <span class="text-center">16+ Hours of Content</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-7">
+                    <div class="d-flex flex-column gap-4 justify-content-center px-5">
+                        <span class="fs-40 fw-normal w-75">
+                            What an Individual can <span class="text-kreator-yellow-900">LEARN</span> from this?
+                        </span>
+                        <div class="d-flex gap-5">
+                            <div class="section3_shadow col-6 px-5 py-3 text-center d-flex flex-column gap-3 rounded-30 bg-kreator-yellow-300">
+                                <span class="fs-6 pt-3">Community</span>
+                                <div>
+                                    Building something you love. Working on your own terms. Your dream startup idea shouldn’t be limited to your dreams.
+                                </div>
+                            </div>
+                            <div class="section3_shadow col-6 px-5 py-3 text-center d-flex flex-column gap-3 rounded-30 bg-kreator-yellow-300">
+                                <span class="fs-6 pt-3">Community</span>
+                                <div>
+                                    Building something you love. Working on your own terms. Your dream startup idea shouldn’t be limited to your dreams.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-5">
+                            <div class="section3_shadow col-6 px-5 py-3 text-center d-flex flex-column gap-3 rounded-30 bg-kreator-yellow-300">
+                                <span class="fs-6 pt-3">Community</span>
+                                <div>
+                                    Building something you love. Working on your own terms. Your dream startup idea shouldn’t be limited to your dreams.
+                                </div>
+                            </div>
+                            <div class="section3_shadow col-6 px-5 py-3 text-center d-flex flex-column gap-3 rounded-30 bg-kreator-yellow-300">
+                                <span class="fs-6 pt-3">Community</span>
+                                <div>
+                                    Building something you love. Working on your own terms. Your dream startup idea shouldn’t be limited to your dreams.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="section_4">
+        <div id="section_4" class="w-100">
+            <div class="rounded-30 bg-kreator-yellow-300">
+                <div class="p-5 d-flex justify-content-center gap-4 flex-column align-items-center">
+                    <div class="d-flex justify-content-center flex-column align-items-center">
+                        <div style="color: #000;text-align: center;font-family: Futura-Bold;font-size: 35.94px;font-style: normal;font-weight: 400;line-height: normal;">Who should take this</div>
+                        <div style="color: #FFCD00;text-align: center;font-family: Futura-Bold;font-size: 86.256px;font-style: normal;font-weight: 400;line-height: normal;">COURSE?</div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="px-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="163" height="163" viewBox="0 0 163 163" fill="none">
+                                <circle cx="81.2502" cy="81.2509" r="81.2503" transform="rotate(180 81.2502 81.2509)" fill="black"/>
+                            </svg>
+                        </div>
+                        <div class="px-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="163" height="163" viewBox="0 0 163 163" fill="none">
+                                <circle cx="81.2502" cy="81.2509" r="81.2503" transform="rotate(180 81.2502 81.2509)" fill="black"/>
+                            </svg>
+                        </div>
+                        <div class="px-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="163" height="163" viewBox="0 0 163 163" fill="none">
+                                <circle cx="81.2502" cy="81.2509" r="81.2503" transform="rotate(180 81.2502 81.2509)" fill="black"/>
+                            </svg>
+                        </div>
+                        <div class="px-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="163" height="163" viewBox="0 0 163 163" fill="none">
+                                <circle cx="81.2502" cy="81.2509" r="81.2503" transform="rotate(180 81.2502 81.2509)" fill="black"/>
+                            </svg>
+                        </div>
+                        <div class="px-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="163" height="163" viewBox="0 0 163 163" fill="none">
+                                <circle cx="81.2502" cy="81.2509" r="81.2503" transform="rotate(180 81.2502 81.2509)" fill="black"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="section_5">
+        <div id="section_5" class="p-5 container">
+            <div class="row">
+                <div class="col-1 text-end">
+                    <span class="curriculum-title" style="padding-top:60px;">CURRICULUM</span>
+                </div>
+                <div class="col-md-10">
+                    <h2 style="color: #292929;font-family: Futura-Bold;font-size: 94.078px;font-style: normal;font-weight: 400;line-height: normal;">Course</h2>
+                    <div class="accordion mt-3" id="courseAccordion">
+
+                        <!-- PART 1 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed d-flex justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    PART 1
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    Content for Part 1 goes here.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 2 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    PART 2
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    Content for Part 2 goes here.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 3 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    PART 3
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    Content for Part 3 goes here.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 4 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    PART 4
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    Content for Part 4 goes here.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 5 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFive">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    PART 5
+                                </button>
+                            </h2>
+                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    Content for Part 5 goes here.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 6 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingSix">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                    PART 6
+                                </button>
+                            </h2>
+                            <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    Content for Part 6 goes here.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 7 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingSeven">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                    PART 7
+                                </button>
+                            </h2>
+                            <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    Content for Part 7 goes here.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 8 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingEight">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                    PART 8
+                                </button>
+                            </h2>
+                            <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    Content for Part 8 goes here.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="section_6">
+        <div id="section_6" class="p-5 container">
+            <div class="row aboutme_section">
+                <div class="col-4">
+                    <div class="d-flex flex-column gap-5 justify-content-end">
+                        <div class="fs-45 p-5">About
+                            <span class="text-kreator-yellow-900">Me</span>
+                        </div>
+                        <img src="/kreator_website/static/src/img/aboutme.png" alt="About Me" class="img-fluid object-fit-cover rounded-30"/>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex flex-column py-5 gap-4">
+                        <div class="w-75 fs-40 pt-5">
+                            <span>"<span class="text-kreator-yellow-900">GREATNESS</span> comes to those who work for it”
+                            </span>
+                        </div>
+                        <div class="d-flex flex-column gap-3">
+                            <span style="opacity: 0.85;color: #000;font-family: 'Futura Md BT';font-size: 21.199px;font-style: normal;font-weight: 400;line-height: normal;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic
+                                typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. 
+                            </span>
+                            <button class="btn btn-kreator-yellow-900 fw-bold text-black w-25 py-2 rounded-pill mt-4">Enroll now</button>
+                        </div>
+                        <img src="/kreator_website/static/src/img/social.png" alt="Quote" class="w-50 mt-3 img-fluid object-fit-cover rounded-30"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="section_7">
+        <div id="section_7" class="p-5 container">
+            <div class="row">
+                <div class="col-4 px-5">
+                    <div class="d-flex gap-4 align-items-center justify-content-center">
+                        <img src="/kreator_website/static/src/img/Camera.png" alt="section7" class="img-fluid object-fit-cover rounded-30"/>
+                        <div class="d-flex flex-column gap-3">
+                            <span style="color: #000;font-family: Futura-Bold;font-size: 45px;font-style: normal;font-weight: 400;line-height: normal;">From our</span>
+                            <span style="color: #FFCD00;font-family: Futura-Bold;font-size: 50px;font-style: normal;font-weight: 400;line-height: normal;">Students</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 px-5">
+                    <div class="review_video d-flex border-11 border-kreator-yellow-900" style="border-radius: 14.274px;">
+                        <div class="review w-50 bg-black">
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                <img width="94" height="94" src="/kreator_website/static/src/img/section7.png" alt="Quote" class="img-fluid object-fit-cover"/>
+                                <div class="d-flex gap-5 justify-content-center align-items-center flex-start">
+                                    <span class="text-kreator-yellow-900 fs-4">Ankur S.</span>
+                                    <img src="/kreator_website/static/src/img/star.png" width="88" height="72" style="top: -10%" alt="Quote" class="img-fluid"/>
+                                </div>
+                                <span class="px-3">
+                                    The frameworks presented in each module are a true highlight. Ankur's expertise shines through as he introduces practical frameworks that can be applied across various business scenarios. These frameworks serve as invaluable tools for analysis, enabling a comprehensive understanding of situations and paving the way for informed decision-making,
+                                    enabling a comprehensive understanding of situations and paving the way for informed decision-making.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="video w-50">
+                            <img src="/kreator_website/static/src/img/video.png" alt="Quote" class="img-fluid object-fit-cover"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="section_8">
+        <div id="section_8" class="py-5 w-100">
+            <div class="row">
+                <div class="d-flex fs-45 fw-bold justify-content-center gap-2 flex-column align-items-center">
+                    <div>Frequently Asked</div>
+                    <div class="text-kreator-yellow-900">Questions</div>
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <img src="/kreator_website/static/src/img/section8.png" alt="FAQ" class="img-fluid w-25 h-75"/>
+                    <div class="accordion mt-3 w-100" id="courseAccordion">
+
+                        <!-- PART 1 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed d-flex justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    PART 1
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    Content for Part 1 goes here.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 2 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    PART 2
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    Content for Part 2 goes here.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 3 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    PART 3
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    Content for Part 3 goes here.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 4 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    PART 4
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    Content for Part 4 goes here.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 5 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFive">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    PART 5
+                                </button>
+                            </h2>
+                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    Content for Part 5 goes here.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 6 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingSix">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                    PART 6
+                                </button>
+                            </h2>
+                            <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    Content for Part 6 goes here.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 7 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingSeven">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                    PART 7
+                                </button>
+                            </h2>
+                            <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    Content for Part 7 goes here.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 8 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingEight">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                    PART 8
+                                </button>
+                            </h2>
+                            <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">
+                                    Content for Part 8 goes here.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <img src="/kreator_website/static/src/img/section8.png" alt="FAQ" class="img-fluid w-25 h-75"/>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="section_9">
+        <div id="section_9" class="py-5 w-100">
+            <div class="row">
+                <img class="img-fluid" src="/kreator_website/static/src/img/section9.png" alt="section9"/>
+            </div>
+        </div>
+    </template>
+    <template id="section_10">
+        <div id="section_10" class="bg-black">
+            <div class="container py-5">
+                <div class="row p-5" style="border-radius: 41.283px;background: #FFF;box-shadow: 0.826px 1.651px 12.88px 12px #FFCD00;">
+                    <div class="col-8">
+                        <div class="d-flex flex-column justify-content-center gap-4 pt-4">
+                            <div class="fs-48" style="color: #000;font-family: Futura-Bold;font-style: normal;font-weight: 400;line-height: normal;">
+                                THE COMPLETE GUIDE TO <span class="text-kreator-yellow-900">STARTING</span> IT UP.
+                            </div>
+                            <div class="w-50 text-black">Share your expertise in finance by creating impactful online courses. Teach budgeting, investing, or wealth management and earn effortlessly while our Bee Partners connect you with the right audience.</div>
+                            <div class="py-4">
+                                <button class="btn bg-black fw-bold text-white w-25 py-3 rounded-pill mt-4">Enroll now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <img src="/kreator_website/static/src/img/aboutme.png" alt="section_10" class="img-fluid w-100"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="section_11">
+        <div id="section_11" class="w-100 bg-black">
+            <div class="container py-5">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="d-flex flex-column justify-content-center">
+                            <span class="fs-40">Who should take this</span>
+                            <span class="fs-64 text-kreator-yellow-900">COURSE?</span>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="163" height="163" viewBox="0 0 163 163" fill="none">
+                                        <circle cx="81.2503" cy="81.2503" r="81.2503" transform="matrix(1 0 0 -1 0 162.501)" fill="white"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="163" height="163" viewBox="0 0 163 163" fill="none">
+                                        <circle cx="81.2503" cy="81.2503" r="81.2503" transform="matrix(1 0 0 -1 0 162.501)" fill="white"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="163" height="163" viewBox="0 0 163 163" fill="none">
+                                        <circle cx="81.2503" cy="81.2503" r="81.2503" transform="matrix(1 0 0 -1 0 162.501)" fill="white"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center gap-5 align-items-center">
+                                <div class="px-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="163" height="163" viewBox="0 0 163 163" fill="none">
+                                        <circle cx="81.2503" cy="81.2503" r="81.2503" transform="matrix(1 0 0 -1 0 162.501)" fill="white"/>
+                                    </svg>
+                                </div>
+                                <div class="px-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="163" height="163" viewBox="0 0 163 163" fill="none">
+                                        <circle cx="81.2503" cy="81.2503" r="81.2503" transform="matrix(1 0 0 -1 0 162.501)" fill="white"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="section_12">
+        <div id="section_12" class="container p-5">
+            <img class="img-fluid" src="/kreator_website/static/src/img/section12.png" alt="section12"/>
+        </div>
+    </template>
+</odoo>
