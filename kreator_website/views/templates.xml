@@ -13,6 +13,20 @@
         </t>
     </template>
 
+    <template id="landing_page_2">
+        <t t-call="website.layout">
+            <t t-call="kreator_website.section_10"/>
+            <t t-call="kreator_website.section_2"/>
+            <t t-call="kreator_website.section_12"/>
+            <t t-call="kreator_website.section_11"/>
+            <t t-call="kreator_website.section_5"/>
+            <t t-call="kreator_website.section_6"/>
+            <t t-call="kreator_website.section_7"/>
+            <t t-call="kreator_website.section_8"/>
+            <t t-call="kreator_website.section_9"/>
+        </t>
+    </template>
+
     <template id="section_1">
         <div id="section_1" class="p-5 container">
             <div class="row d-flex justify-content-center rounded-50 bg-black align-items-center">
