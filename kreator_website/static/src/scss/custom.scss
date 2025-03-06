@@ -43,36 +43,99 @@
     font-weight: 400;
     line-height: normal;
 }
+.accordion {
+    width: 100%;
+    background-color: black;
+    border-radius: 8px;
+    overflow: hidden;
+}
 
-.accordion-button {
-    background-color: black !important;
-    color: white !important;
-    border: none;
-    font-size: 18px;
-}
-.accordion-button:focus {
-    box-shadow: none;
-}
 .accordion-item {
-    background-color: black;
-    border: none;
-}
-.accordion-body {
-    color: white;
-    background-color: black;
+    border-bottom: 1px solid #444;
 }
 
-.accordion-button::after {
-    flex-shrink: 0;
-    width: var(--accordion-btn-icon-width);
-    height: var(--accordion-btn-icon-width);
-    margin-left: auto;
-    content: "";
-    background-image: url("../img/fi-bs-angle-down.svg") !important;
-    background-repeat: no-repeat;
-    background-size: var(--accordion-btn-icon-width);
-    transition: var(--accordion-btn-icon-transition);
+.accordion-header {
+    background-color: black;
+    color: white;
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid;
 }
+
+.accordion-header img {
+    width: 15px;
+    transition: transform 0.3s ease;
+}
+
+.accordion-content {
+    display: none;
+    padding: 15px;
+    background-color: #222;
+    color: white;
+}
+
+.active .accordion-content {
+    display: block;
+}
+
+.active .accordion-header img {
+    transform: rotate(180deg);
+}
+
+#customAccordion {
+    width: 400px;
+    background-color: black;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.accordion-section {
+    border-bottom: 1px solid white;
+}
+
+.accordion-section:last-child {
+    border-bottom: none;
+}
+
+.accordion-title {
+    background-color: black;
+    color: white;
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+}
+
+.accordion-title:hover {
+    background-color: #222;
+}
+
+.accordion-title img {
+    width: 16px;
+    transition: transform 0.3s ease;
+}
+
+.accordion-body {
+    display: none;
+    padding: 20px;
+    background-color: #222;
+    color: white;
+    font-size: 14px;
+}
+
+.expanded .accordion-body {
+    display: block;
+}
+
+.expanded .accordion-title img {
+    transform: rotate(180deg);
+}
+
 .aboutme_section{
     border-radius: 52.873px;
     background: linear-gradient(180deg, #FFF 0%, #FFF2BE 100%);
@@ -89,4 +152,12 @@
 }
 .w-60{
     width: 60%;
+}
+.text-ibm {
+    color: #000;
+    font-family: "IBM Plex Mono";
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.336px;
 }

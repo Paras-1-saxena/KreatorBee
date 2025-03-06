@@ -1,19 +1,25 @@
 @font-face {
   font-family: "Futura";
-  src: url("../../fonts/Futura Book.ttf") format("truetype");
+  src: url("../fonts/Futura Book.ttf") format("truetype");
   font-weight: 400;
 }
 
 @font-face {
   font-family: "Futura";
-  src: url("../../fonts/Futura Bold.ttf") format("truetype");
+  src: url("../fonts/Futura-Bold.otf") format("truetype");
   font-weight: 700;
 }
 
 @font-face {
   font-family: "Futura";
-  src: url("../../fonts/Futura Medium.ttf") format("truetype");
-  font-weight: 500;
+  src: url("../fonts/Futura Medium.ttf") format("truetype");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fonts/IBMPlexMono-Medium.ttf") format("truetype");
+  font-weight: 600;
 }
 .fs-45 {
     font-size: 44px;
@@ -31,3 +37,7 @@
     font-size: 48px;
     line-height: 117%; /* 53.447px */
 }
+.fs-34{
+    font-size:  34px;
+}
+
