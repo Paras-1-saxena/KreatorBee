@@ -212,7 +212,7 @@ height: 167.092px;
 }
 
 .sec_19_title {
-    font-size: 28px;
+    font-size: 50px;
     font-weight: bold;
     text-align: center;
 }
@@ -309,4 +309,29 @@ right: 650px;
     background-image: url('/kreator_website/static/src/img/Vector 95.png');
     background-size: contain;
     background-repeat: no-repeat;
+}
+
+.jost-bold {
+    font-family: 'Jost-Bold';
+}
+.black-section {
+    background-color: #000;
+    color: #fff;
+    padding: 50px 0;
+}
+.yellow-section {
+    padding: 50px;
+}
+.feature-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: #000;
+}
+.times_font{
+    font-family: 'Times New Roman';
+    font-style: italic;
+    font-weight: 700;
+    line-height: normal;
 }

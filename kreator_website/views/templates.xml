@@ -50,7 +50,7 @@
             <div class="container d-flex justify-content-center align-items-center">
                 <div class="container-box rounded-30 w-100 p-5 pe-0 border border-black">
                     <div class="w-50 d-flex justify-content-center flex-column gap-3">
-                        <span class="fs-64 fw-bold">About the
+                        <span class="fs-54 fw-bold">About the
                             <span class="text-kreator-yellow-900">COURSE.</span>
                         </span>
                         <span class="fw-bold">Building something you love. Working on your own terms. Your dream startup idea shouldn’t be limited to your dreams.
@@ -92,7 +92,7 @@
                 </div>
                 <div class="col-7">
                     <div class="d-flex flex-column gap-4 justify-content-center px-5">
-                        <span class="fs-40 fw-normal w-75">
+                        <span class="fs-40 fw-normal w-75 jost-bold">
                             What an Individual can <span class="text-kreator-yellow-900">LEARN</span> from this?
                         </span>
                         <div class="d-flex gap-5">
@@ -133,8 +133,8 @@
             <div class="rounded-30 bg-kreator-yellow-300">
                 <div class="p-5 d-flex justify-content-center gap-4 flex-column align-items-center">
                     <div class="d-flex justify-content-center flex-column align-items-center">
-                        <div style="color: #000;text-align: center;font-family: Jost-Bold;font-size: 35.94px;font-style: normal;font-weight: 400;line-height: normal;">Who should take this</div>
-                        <div style="color: #FFCD00;text-align: center;font-family: Jost-Bold;font-size: 86.256px;font-style: normal;font-weight: 400;line-height: normal;">COURSE?</div>
+                        <div class="jost-bold" style="color: #000;text-align: center;font-size: 35.94px;font-style: normal;font-weight: 400;line-height: normal;">Who should take this</div>
+                        <div class="jost-bold" style="color: #FFCD00;text-align: center;font-size: 86.256px;font-style: normal;font-weight: 400;line-height: normal;">COURSE?</div>
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="px-5">
@@ -263,7 +263,7 @@
                     <span class="curriculum-title" style="padding-top:60px;">CURRICULUM</span>
                 </div>
                 <div class="col-md-10">
-                    <h2 style="color: #292929;font-family: Jost-Bold;font-size: 94.078px;font-style: normal;font-weight: 400;line-height: normal;">Course</h2>
+                    <h2 class="jost-bold" style="color: #292929;font-size: 94.078px;font-style: normal;font-weight: 400;line-height: normal;">Course</h2>
                     <div id="customAccordion" class="w-100">
                         <div class="accordion-section">
                             <div class="accordion-title pe-5">
@@ -359,7 +359,7 @@
             <div class="row aboutme_section">
                 <div class="col-4">
                     <div class="d-flex flex-column gap-5 justify-content-end">
-                        <div class="fs-45 p-5">About
+                        <div class="fs-45 p-5 jost-bold">About
                             <span class="text-kreator-yellow-900">Me</span>
                         </div>
                         <img src="/kreator_website/static/src/img/aboutme.png" alt="About Me" class="img-fluid object-fit-cover rounded-30"/>
@@ -367,7 +367,7 @@
                 </div>
                 <div class="col-6">
                     <div class="d-flex flex-column py-5 gap-4">
-                        <div class="w-75 fs-40 pt-5">
+                        <div class="w-75 fs-40 pt-5 jost-bold">
                             <span>"<span class="text-kreator-yellow-900">GREATNESS</span> comes to those who work for it”
                             </span>
                         </div>
@@ -396,8 +396,8 @@
                     <div class="d-flex gap-4 align-items-center">
                         <img src="/kreator_website/static/src/img/Camera.png" alt="section7" class="img-fluid object-fit-cover rounded-30"/>
                         <div class="d-flex gap-3">
-                            <span style="color: #000;font-family: Jost-Bold;font-size: 45px;font-style: normal;font-weight: 400;line-height: normal;">From our</span>
-                            <span style="color: #FFCD00;font-family: Jost-Bold;font-size: 50px;font-style: normal;font-weight: 400;line-height: normal;">Students</span>
+                            <span class="jost-bold" style="color: #000;font-family: Jost-Bold;font-size: 45px;font-style: normal;font-weight: 400;line-height: normal;">From our</span>
+                            <span class="jost-bold" style="color: #FFCD00;font-family: Jost-Bold;font-size: 50px;font-style: normal;font-weight: 400;line-height: normal;">Students</span>
                         </div>
                     </div>
                 </div>
@@ -432,8 +432,8 @@
                     <div class="d-flex gap-4 align-items-center justify-content-center">
                         <img src="/kreator_website/static/src/img/Camera.png" alt="section7" class="img-fluid object-fit-cover rounded-30"/>
                         <div class="d-flex flex-column gap-3">
-                            <span style="color: #000;font-family: Jost-Bold;font-size: 45px;font-style: normal;font-weight: 400;line-height: normal;">From our</span>
-                            <span style="color: #FFCD00;font-family: Jost-Bold;font-size: 50px;font-style: normal;font-weight: 400;line-height: normal;">Students</span>
+                            <span class="jost-bold" style="color: #000;font-family: Jost-Bold;font-size: 45px;font-style: normal;font-weight: 400;line-height: normal;">From our</span>
+                            <span class="jost-bold" style="color: #FFCD00;font-family: Jost-Bold;font-size: 50px;font-style: normal;font-weight: 400;line-height: normal;">Students</span>
                         </div>
                     </div>
                 </div>
@@ -498,7 +498,7 @@
                 <div class="row p-5" style="border-radius: 41.283px;background: #FFF;box-shadow: 0.826px 1.651px 12.88px 12px #FFCD00;">
                     <div class="col-8 ">
                         <div class="d-flex flex-column justify-content-center gap-4 pt-4">
-                            <div class="" style="font-size:54px;color: #000;font-family: Jost-Bold;font-style: normal;font-weight: 400;line-height: normal;">
+                            <div class="jost-bold" style="font-size:54px;color: #000;font-family: Jost-Bold;font-style: normal;font-weight: 400;line-height: normal;">
                                 THE COMPLETE GUIDE TO <span class="text-kreator-yellow-900">STARTING</span> IT UP.
                             </div>
                             <div class="w-50 text-black">Share your expertise in finance by creating impactful online courses. Teach budgeting, investing, or wealth management and earn effortlessly while our Bee Partners connect you with the right audience.</div>
@@ -519,7 +519,7 @@
             <div class="container py-5">
                 <div class="row">
                     <div class="col-4">
-                        <div class="d-flex flex-column justify-content-center">
+                        <div class="d-flex flex-column justify-content-center jost-bold">
                             <span class="fs-40">Who should take this</span>
                             <span class="fs-64 text-kreator-yellow-900">COURSE?</span>
                         </div>
@@ -564,7 +564,7 @@
     <template id="section_12">
         <div id="section_12" class="p-5 d-flex justify-content-center">
             <div class="banner">
-                <div class="text p-5 fs-48" style="color: #000;font-family: Jost-Bold;font-style: normal;font-weight: 400;line-height: 117%; /* 73.481px */">
+                <div class="jost-bold text p-5 fs-48" style="color: #000;font-family: Jost-Bold;font-style: normal;font-weight: 400;line-height: 117%; /* 73.481px */">
                     <div class="mb-4"> <span class="bg-white"> ENROLL</span> NOW AND<br/> </div>
                     AVAIL THE <span class="bg-white"> BENEFITS </span>
                 </div>
@@ -601,7 +601,9 @@
             <t t-call="kreator_website.section_16"/>
             <t t-call="kreator_website.section_17"/>
             <t t-call="kreator_website.section_18"/>
-            <t t-call="kreator_website.section_19"/>
+            <t t-call="kreator_website.section_19">
+                <t t-set="bg" t-value="'bg-kreator-yellow-300'"/>
+            </t>
             <t t-call="kreator_website.section_6"/>
             <t t-call="kreator_website.section_7"/>
             <t t-call="kreator_website.section_8"/>
@@ -764,27 +766,27 @@
     </template>
 
      <template id="section_19">
-        <div id="section_19" class="bg-kreator-yellow-300 p-5">
+        <div id="section_19" t-attf-class="{{bg}} p-5">
             <div class="container  mt-5">
-                <h3 class="sec_19_title">Course
-                    <span class="sec_19_highlight">Curriculum</span>
+                <h3  class="space_gro sec_19_title">Course
+                    <span  class="space_gro sec_19_highlight">Curriculum</span>
                 </h3>
 
                 <div class="d-flex flex-column justify-content-center align-items-center">
-                    <div class="accordion bg-kreator-yellow-300 mt-4 p-5" id="sec_19_courseAccordion">
+                    <div t-attf-class="accordion {{bg}} mt-4 p-5" id="sec_19_courseAccordion">
                         <!-- Part 1 -->
-                        <div class="sec_19_accordion-item px-5" id="sec_19_part1">
-                            <h2 class="sec_19_accordion-header px-5" id="sec_19_headingOne">
-                                <button class="sec_19_accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#sec_19_collapseOne" aria-expanded="true" aria-controls="sec_19_collapseOne">
+                        <div  class="space_gro sec_19_accordion-item px-5" id="sec_19_part1">
+                            <h2  class="space_gro sec_19_accordion-header px-5" id="sec_19_headingOne">
+                                <button  class="space_gro sec_19_accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#sec_19_collapseOne" aria-expanded="true" aria-controls="sec_19_collapseOne">
                                     <span>
-                                        <span class="sec_19_part-number">01</span>
+                                        <span  class="space_gro sec_19_part-number">01</span>
                                         PART 1
                                     </span>
-                                    <img src="/kreator_website/static/src/img/minus.svg" class="sec_19_icon sec_19_toggle-icon" id="sec_19_iconOne"/>
+                                    <img src="/kreator_website/static/src/img/minus.svg"  class="space_gro sec_19_icon sec_19_toggle-icon" id="sec_19_iconOne"/>
                                 </button>
                             </h2>
                             <div id="sec_19_collapseOne" class="accordion-collapse collapse show px-5" aria-labelledby="sec_19_headingOne" data-bs-parent="#sec_19_courseAccordion">
-                                <div class="sec_19_accordion-body">
+                                <div  class="space_gro sec_19_accordion-body">
                                     <p>SUBPART 1</p>
                                     <p>SUBPART 2</p>
                                 </div>
@@ -792,90 +794,90 @@
                         </div>
 
                         <!-- Part 2 -->
-                        <div class="sec_19_accordion-item px-5" id="sec_19_part2">
-                            <h2 class="sec_19_accordion-header px-5" id="sec_19_headingTwo">
-                                <button class="sec_19_accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sec_19_collapseTwo" aria-expanded="false" aria-controls="sec_19_collapseTwo">
+                        <div  class="space_gro sec_19_accordion-item px-5" id="sec_19_part2">
+                            <h2  class="space_gro sec_19_accordion-header px-5" id="sec_19_headingTwo">
+                                <button  class="space_gro sec_19_accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sec_19_collapseTwo" aria-expanded="false" aria-controls="sec_19_collapseTwo">
                                     <span>
-                                        <span class="sec_19_part-number">02</span>
+                                        <span  class="space_gro sec_19_part-number">02</span>
                                         PART 2
                                     </span>
-                                    <img src="/kreator_website/static/src/img/plus.svg" class="sec_19_icon sec_19_toggle-icon" id="sec_19_iconTwo"/>
+                                    <img src="/kreator_website/static/src/img/plus.svg"  class="space_gro sec_19_icon sec_19_toggle-icon" id="sec_19_iconTwo"/>
                                 </button>
                             </h2>
                             <div id="sec_19_collapseTwo" class="accordion-collapse collapse px-5" aria-labelledby="sec_19_headingTwo" data-bs-parent="#sec_19_courseAccordion">
-                                <div class="sec_19_accordion-body">
+                                <div  class="space_gro sec_19_accordion-body">
                                     <p>Details for Part 2</p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Part 3 -->
-                        <div class="sec_19_accordion-item px-5" id="sec_19_part3">
-                            <h2 class="sec_19_accordion-header px-5" id="sec_19_headingThree">
-                                <button class="sec_19_accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sec_19_collapseThree" aria-expanded="false" aria-controls="sec_19_collapseThree">
+                        <div  class="space_gro sec_19_accordion-item px-5" id="sec_19_part3">
+                            <h2  class="space_gro sec_19_accordion-header px-5" id="sec_19_headingThree">
+                                <button  class="space_gro sec_19_accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sec_19_collapseThree" aria-expanded="false" aria-controls="sec_19_collapseThree">
                                     <span>
-                                        <span class="sec_19_part-number">03</span>
+                                        <span  class="space_gro sec_19_part-number">03</span>
                                         PART 3
                                     </span>
-                                    <img src="/kreator_website/static/src/img/plus.svg" class="sec_19_icon sec_19_toggle-icon" id="sec_19_iconThree"/>
+                                    <img src="/kreator_website/static/src/img/plus.svg"  class="space_gro sec_19_icon sec_19_toggle-icon" id="sec_19_iconThree"/>
                                 </button>
                             </h2>
                             <div id="sec_19_collapseThree" class="accordion-collapse collapse px-5" aria-labelledby="sec_19_headingThree" data-bs-parent="#sec_19_courseAccordion">
-                                <div class="sec_19_accordion-body">
+                                <div  class="space_gro sec_19_accordion-body">
                                     <p>Details for Part 3</p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Part 4 -->
-                        <div class="sec_19_accordion-item px-5" id="sec_19_part4">
-                            <h2 class="sec_19_accordion-header px-5" id="sec_19_headingFour">
-                                <button class="sec_19_accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sec_19_collapseFour" aria-expanded="false" aria-controls="sec_19_collapseFour">
+                        <div  class="space_gro sec_19_accordion-item px-5" id="sec_19_part4">
+                            <h2  class="space_gro sec_19_accordion-header px-5" id="sec_19_headingFour">
+                                <button  class="space_gro sec_19_accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sec_19_collapseFour" aria-expanded="false" aria-controls="sec_19_collapseFour">
                                     <span>
-                                        <span class="sec_19_part-number">04</span>
+                                        <span  class="space_gro sec_19_part-number">04</span>
                                         PART 4
                                     </span>
-                                    <img src="/kreator_website/static/src/img/plus.svg" class="sec_19_icon sec_19_toggle-icon" id="sec_19_iconFour"/>
+                                    <img src="/kreator_website/static/src/img/plus.svg"  class="space_gro sec_19_icon sec_19_toggle-icon" id="sec_19_iconFour"/>
                                 </button>
                             </h2>
                             <div id="sec_19_collapseFour" class="accordion-collapse collapse px-5" aria-labelledby="sec_19_headingFour" data-bs-parent="#sec_19_courseAccordion">
-                                <div class="sec_19_accordion-body">
+                                <div  class="space_gro sec_19_accordion-body">
                                     <p>Details for Part 4</p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Part 5 -->
-                        <div class="sec_19_accordion-item px-5" id="sec_19_part5">
-                            <h2 class="sec_19_accordion-header px-5" id="sec_19_headingFive">
-                                <button class="sec_19_accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sec_19_collapseFive" aria-expanded="false" aria-controls="sec_19_collapseFive">
+                        <div  class="space_gro sec_19_accordion-item px-5" id="sec_19_part5">
+                            <h2  class="space_gro sec_19_accordion-header px-5" id="sec_19_headingFive">
+                                <button  class="space_gro sec_19_accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sec_19_collapseFive" aria-expanded="false" aria-controls="sec_19_collapseFive">
                                     <span>
-                                        <span class="sec_19_part-number">05</span>
+                                        <span  class="space_gro sec_19_part-number">05</span>
                                         PART 5
                                     </span>
-                                    <img src="/kreator_website/static/src/img/plus.svg" class="sec_19_icon sec_19_toggle-icon" id="sec_19_iconFive"/>
+                                    <img src="/kreator_website/static/src/img/plus.svg"  class="space_gro sec_19_icon sec_19_toggle-icon" id="sec_19_iconFive"/>
                                 </button>
                             </h2>
                             <div id="sec_19_collapseFive" class="accordion-collapse collapse px-5" aria-labelledby="sec_19_headingFive" data-bs-parent="#sec_19_courseAccordion">
-                                <div class="sec_19_accordion-body">
+                                <div  class="space_gro sec_19_accordion-body">
                                     <p>Details for Part 5</p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Part 6 -->
-                        <div class="sec_19_accordion-item px-5" id="sec_19_part6">
-                            <h2 class="sec_19_accordion-header px-5" id="sec_19_headingSix">
-                                <button class="sec_19_accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sec_19_collapseSix" aria-expanded="false" aria-controls="sec_19_collapseSix">
+                        <div  class="space_gro sec_19_accordion-item px-5" id="sec_19_part6">
+                            <h2  class="space_gro sec_19_accordion-header px-5" id="sec_19_headingSix">
+                                <button  class="space_gro sec_19_accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sec_19_collapseSix" aria-expanded="false" aria-controls="sec_19_collapseSix">
                                     <span>
-                                        <span class="sec_19_part-number">06</span>
+                                        <span  class="space_gro sec_19_part-number">06</span>
                                         PART 6
                                     </span>
-                                    <img src="/kreator_website/static/src/img/plus.svg" class="sec_19_icon sec_19_toggle-icon" id="sec_19_iconSix"/>
+                                    <img src="/kreator_website/static/src/img/plus.svg"  class="space_gro sec_19_icon sec_19_toggle-icon" id="sec_19_iconSix"/>
                                 </button>
                             </h2>
                             <div id="sec_19_collapseSix" class="accordion-collapse collapse px-5" aria-labelledby="sec_19_headingSix" data-bs-parent="#sec_19_courseAccordion">
-                                <div class="sec_19_accordion-body">
+                                <div  class="space_gro sec_19_accordion-body">
                                     <p>Details for Part 6</p>
                                 </div>
                             </div>
@@ -926,4 +928,6 @@
     </script>
         </div>
      </template>
+
+   
 </odoo>
