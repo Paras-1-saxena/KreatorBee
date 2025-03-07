@@ -5,8 +5,8 @@
 }
 
 @font-face {
-  font-family: "Futura";
-  src: url("../fonts/Futura-Bold.otf") format("truetype");
+  font-family: "Jost-Bold";
+  src: url("../fonts/Jost-Bold.ttf") format("truetype");
   font-weight: 700;
 }
 
@@ -29,6 +29,12 @@
     font-size: 64px;
     line-height: 117%; /* 53.447px */
 }
+.fs-60 {
+    font-size: 60px;
+}
+.fs-54 {
+    font-size: 54px;
+}
 .fs-40 {
     font-size: 40px;
     line-height: 117%; /* 53.447px */
@@ -39,5 +45,11 @@
 }
 .fs-34{
     font-size:  34px;
+}
+.space_gro {
+    font-family: "Space Grotesk";
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
 }
 

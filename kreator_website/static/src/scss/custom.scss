@@ -37,7 +37,7 @@
     writing-mode: vertical-rl;
     color: var(--kreator-yellow-900);
 
-    font-family: Futura-Bold;
+    font-family: Jost-Bold;
     font-size: 76.415px;
     font-style: normal;
     font-weight: 400;
@@ -160,4 +160,153 @@
     font-weight: 600;
     line-height: normal;
     letter-spacing: 0.336px;
+}
+.custombox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-weight: bold;
+    min-height: 188px;
+    border-radius: 31.188px;
+    border: 0.693px solid var(--Dark, #191A23);
+    background: var(--Grey, #F3F3F3);
+    box-shadow: 0px 3.465px 0px 0px #191A23;
+}
+.light-gray { background-color: #f5f5f5; border: 1px solid #ccc; }
+.dark { background-color: #18181b; color: white; }
+.yellow { background-color: #ffcc00; }
+.badge-custom { background-color: #c9a000; color: white; font-size: 14px; }
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+}
+.highlight {
+    color: #ffcc00;
+}
+.card-custom {
+width: 210.286px;
+height: 167.092px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+    border-radius: 35.636px;
+    border: 0.792px solid #191A23;
+    background: #FFF;
+    box-shadow: 0px 3.96px 0px 0px #191A23;
+}
+.circle {
+    width: 48px;
+    height: 48px;
+    background-color: black;
+    border-radius: 50%;
+    margin-bottom: 5px;
+}
+.text-label {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.sec_19_title {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+}
+.sec_19_highlight {
+    color: #ffcc00;
+}
+.sec_19_accordion-item {
+    border: none;
+    margin-bottom: 10px;
+}
+.sec_19_accordion-button {
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-radius: 28.088px;
+    border: 0.624px solid #191A23;
+    background: #FFCD00;
+    box-shadow: 0px 3.121px 0px 0px #191A23;
+}
+.sec_19_accordion-button.collapsed {
+    background-color: #f5f5f5;
+}
+.sec_19_accordion-button:not(.collapsed) {
+    background-color: #ffcc00;
+    color: black;
+}
+.sec_19_accordion-body {
+    background-color: white;
+    border-radius: 0 0 15px 15px;
+    padding: 15px;
+}
+.sec_19_part-number {
+    font-size: 22px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.sec_19_icon {
+    width: 38px;
+    height: 37px;
+}
+
+.banner {
+    position: relative;
+    background-image: url('/kreator_website/static/src/img/Subtract.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 526px;
+    min-width: 1350px;
+}
+
+.golden-ball {
+    position: absolute;
+    right: 180px;
+    top: 130px;
+    width: 280px;
+    height: 230px;
+    background-image: url('/kreator_website/static/src/img/abstract-spheres-vector-realistic-spheres 1.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.usp-12 {
+    position: absolute;
+    right: 1089px;
+    top: 295px;
+    width: 180px;
+    height: 200px;
+    background-image: url('/kreator_website/static/src/img/Vector 93.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.usp-23 {
+    position: absolute;
+    right: 852px;
+    top: 273px;
+    width: 167px;
+    height: 161px;
+    background-image: url('/kreator_website/static/src/img/Vector 94.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.usp-34 {
+    position: absolute;
+right: 650px;
+    top: 345px;
+    width: 167px;
+    height: 161px;
+    background-image: url('/kreator_website/static/src/img/Vector 95.png');
+    background-size: contain;
+    background-repeat: no-repeat;
 }
