@@ -227,7 +227,7 @@ height: 167.092px;
     color: black;
     font-size: 18px;
     font-weight: bold;
-    padding: 15px;
+    padding: 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -241,13 +241,18 @@ height: 167.092px;
     background-color: #f5f5f5;
 }
 .sec_19_accordion-button:not(.collapsed) {
-    background-color: #ffcc00;
+    background-color: var(--kreator-yellow-900);
     color: black;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 .sec_19_accordion-body {
-    background-color: white;
-    border-radius: 0 0 15px 15px;
-    padding: 15px;
+    background-color: var(--kreator-yellow-900);
+    color: black;
+    border-radius: 0 0 28.088px 28.088px;
+    padding: 30px;
+    border: 0.624px solid #191A23;
+
 }
 .sec_19_part-number {
     font-size: 22px;
@@ -302,7 +307,7 @@ height: 167.092px;
 }
 .usp-34 {
     position: absolute;
-right: 650px;
+    right: 650px;
     top: 345px;
     width: 167px;
     height: 161px;
@@ -335,3 +340,361 @@ right: 650px;
     font-weight: 700;
     line-height: normal;
 }
+
+.lato_font{
+    font-family: 'Lato';
+}
+.red-rectangle{
+    background-image: url('/kreator_website/static/src/img/Rectangle 50.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+        width: 25px;
+    height: 25px;
+    position: absolute;
+}
+.red-rectangle-1 {
+    right: 4px;
+    top: 380px;
+}
+.red-rectangle-2 {
+    right: 4px;
+    top: 125px;
+}
+.red-rectangle-3 {
+    left:4px;
+    top: 125px;
+}
+.red-rectangle-4 {
+    left:4px;
+    top: 380px;
+}
+
+.purple-bg {
+    position: absolute;
+    top: 249px;
+    width: 400px;
+    height: 415px;
+    background-image: url('/kreator_website/static/src/img/Rectangle 53.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.union-svg {
+    position: absolute;
+    top: 280px;
+    width: 350px;
+    height: 334px;
+    background-image: url('/kreator_website/static/src/img/Union.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index:10;
+}
+
+.star-6 {
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    right: 487px;
+    top: 190px;
+    width: 130px;
+    height: 130px;
+    background-image: url('/kreator_website/static/src/img/Star 6.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index:100;
+}
+
+.asterisk {
+    position: absolute;
+    width: 78px;
+    height: 78px;
+    right: 145px;
+    top: 619px;
+    background-image: url('/kreator_website/static/src/img/Asterisk 2.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index:100;
+}
+.eclipse-1 {
+    position: absolute;
+    width: 380px;
+    height: 547px;
+    left: 151px;
+    top: 49px;
+    background-image: url('/kreator_website/static/src/img/Ellipse 2155.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index:100;
+}
+.eclipse-2 {
+    position: absolute;
+    width: 380px;
+    height: 547px;
+    top: 91px;
+    left: 126px;
+    background-image: url('/kreator_website/static/src/img/Ellipse 2155.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index:100;
+}
+.eclipse-3 {
+    position: absolute;
+    width: 380px;
+    height: 547px;
+    top: 130px;
+    background-image: url('/kreator_website/static/src/img/Ellipse 2155.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index:100;
+}
+
+.eclipse-4 {
+    position: absolute;
+    width: 380px;
+    height: 547px;
+    right: 110px;
+    top: 40px;
+    background-image: url('/kreator_website/static/src/img/Ellipse 2155.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index:100;
+}
+
+.eclipse-5 {
+    position: absolute;
+    width: 380px;
+    height: 547px;
+    background-image: url('/kreator_website/static/src/img/Ellipse 2155.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index:100;
+}
+.eclipse-6 {
+    position: absolute;
+    width: 380px;
+    height: 547px;
+    right: 48px;
+    top: -60px;
+    background-image: url('/kreator_website/static/src/img/Ellipse 2155.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index:100;
+}
+.eclipse-7 {
+    position: absolute;
+    width: 380px;
+    height: 547px;
+    right: 110px;
+    top: 40px;
+    background-image: url('/kreator_website/static/src/img/Ellipse 2155.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index:100;
+}
+
+.eclipse-8 {
+    position: absolute;
+    width: 380px;
+    height: 547px;
+    background-image: url('/kreator_website/static/src/img/Ellipse 2155.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index:100;
+}
+.eclipse-9 {
+    position: absolute;
+    width: 380px;
+    height: 547px;
+    right: 90px;
+    top: -28px;
+    background-image: url('/kreator_website/static/src/img/Ellipse 2155.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index:100;
+}
+.eclipse-10 {
+    position: absolute;
+    width: 380px;
+    height: 547px;
+    right: 42px;
+    top: -5px;
+    background-image: url('/kreator_website/static/src/img/Ellipse 2155.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index:100;
+}
+.eclipse-11 {
+    position: absolute;
+    width: 380px;
+    height: 547px;
+    right: 60px;
+    top: 35px;
+    background-image: url('/kreator_website/static/src/img/Ellipse 2155.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index:100;
+}
+.eclipse-12 {
+    position: absolute;
+    width: 380px;
+    height: 500px;
+    right: 72px;
+    top: 75px;
+    background-image: url('/kreator_website/static/src/img/Ellipse 2155.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index:100;
+}
+.star2_26 {
+    top:0;
+    left:0;
+}
+.sec_28_title {
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+}
+.sec_28_highlight {
+    color: #ffcc00;
+}
+.sec_28_accordion-item {
+    border: none;
+    z-index: 999;
+}
+
+.sec_28_accordion-header {
+    margin-bottom:  0px !important;
+}
+.sec_28_accordion-button {
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-radius: 28.088px;
+    border: 0.624px solid #191A23;
+    background: #FFCD00;
+    box-shadow: 0px 3.121px 0px 0px #191A23;
+}
+.sec_28_accordion-button.collapsed {
+    background-color: #f5f5f5;
+}
+.sec_28_accordion-button:not(.collapsed) {
+    background-color: #FF6363;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    color: black;
+}
+.sec_28_accordion-body {
+    background-color: #FF6363;
+    border-radius: 0 0 28.088px 28.088px;
+    padding: 15px;
+    border: 0.624px solid #191A23;
+    border-top: 0;
+    color: black;
+}
+.sec_28_part-number {
+    font-size: 22px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.sec_28_icon {
+    width: 38px;
+    height: 37px;
+}
+.sec_19_accordion-header {
+    margin-bottom: 0px;
+}
+.red-eclipse {
+    width: 292.959px;
+    height: 157.826px;
+    flex-shrink: 0;
+    border-radius: 292.959px;
+    background: #F55;
+    filter: blur(51.5772819519043px);
+    position: absolute;
+    z-index:2;
+    top: 350px;
+}
+
+.yellow-eclipse {
+    width: 299.148px;
+    height: 157.826px;
+    flex-shrink: 0;
+    border-radius: 299.148px;
+    background: #FDE598;
+    filter: blur(51.5772819519043px);
+    z-index:2;
+    top:400px;
+    left:0px;
+    position: absolute;
+}
+
+.sec_29_about {
+    border-bottom: 4px solid #f70;
+    width: 50%;
+    padding-bottom: 8px;
+}
+.sec_293_about {
+    border-bottom: 2px solid black;
+    width: 50%;
+    padding-bottom: 8px;
+}
+
+.w-40{
+    width: 40%;
+}
+.faq-card {
+            border: none;
+            transition: all 0.3s ease;
+        }
+        .faq-card.active {
+            background-color: #F55;
+        }
+        .faq-card .faq-header {
+            cursor: pointer;
+            padding: 30px;
+            font-weight: bold;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0px 0px 10px rgba(255, 92, 92, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-card.active .faq-header {
+            background-color: #F55;;
+        }
+        .faq-card .faq-body {
+            display: none;
+            padding: 30px;
+            padding-right:45px;
+            padding-top:0px;
+        }
+        .faq-card.active .faq-body {
+            display: block;
+        }
+        .icon {
+            background: #F55;;
+            color: white;
+            border-radius: 8px;;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+        .faq-card.active .icon {
+            background: white;
+            color: #F55;;
+        }
+
+    .black-triangle {
+        position: absolute;
+        width:50px;
+        background-image: url('/kreator_website/static/src/img/Polygon 1 (1).png');
+    }
