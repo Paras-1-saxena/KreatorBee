@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_input_tax_report_excel,input.tax.report.excel,model_input_tax_report_excel,,1,1,1,1
+access_wizard_input_tax_report,wizard.input.tax.report,model_wizard_input_tax_report,,1,1,1,1
+access_output_tax_report_excel,output.tax.report.excel,model_output_tax_report_excel,,1,1,1,1
+access_wizard_output_tax_report,wizard.output.tax.report,model_wizard_output_tax_report,,1,1,1,1

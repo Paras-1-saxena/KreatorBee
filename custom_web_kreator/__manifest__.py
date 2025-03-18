@@ -58,7 +58,7 @@
         'views/creator_lead.xml',
         'views/partner_income_data.xml',
         'views/creator_landing_page_js.xml',
-	'views/edit_landing_page.xml',
+	    'views/edit_landing_page.xml',
         'views/landing_page_template1.xml',
         # 'views/partner_refferal.xml',
         'views/partner_leaderboard.xml',
@@ -77,6 +77,10 @@
         'views/partner_term.xml',
         'views/partner_welcome.xml',
     ],
+    # 'assets': {
+    #     'web.assets_frontend': [
+    #         'custom_web_kreator/static/src/css/custom_styl.css',
+    #     ]},
 
     'installable': True,
     'application': False,

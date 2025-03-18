@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_input_tax_report_wizard_form" model="ir.ui.view">
+            <field name="name">input.tax.report.wizard.form</field>
+            <field name="model">wizard.input.tax.report</field>
+            <field name="arch" type="xml">
+                <form string="Input Tax Report">
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                    <footer>
+                        <button string="Print Report" type="object" name="print_input_tax_report" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_leave_balance_form" model="ir.ui.view">
+            <field name="name">view.leave.balances.excel.form</field>
+            <field name="model">input.tax.report.excel</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field filename="file_name" name="excel_file" readonly="1"/>
+                        <field invisible="1" name="file_name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_input_tax_report_wizard1" model="ir.actions.act_window">
+            <field name="name">Input Tax Report</field>
+            <field name="res_model">wizard.input.tax.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field> <!-- Ensures it opens as a popup -->
+        </record>
+
+
+        <menuitem name="Input Tax Report"
+                  id="sub_menu_input_tax_report1"
+                  parent="account.menu_finance_reports"
+                  sequence="3"
+                  action="action_input_tax_report_wizard1"
+        />
+
+    </data>
+</odoo>

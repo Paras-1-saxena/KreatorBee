@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_output_tax_report_wizard_form" model="ir.ui.view">
+            <field name="name">output.tax.report.wizard.form</field>
+            <field name="model">wizard.output.tax.report</field>
+            <field name="arch" type="xml">
+                <form string="Output Tax Report">
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                    <footer>
+                        <button string="Print Report" type="object" name="print_output_tax_report" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+
+        <record id="view_output_tax_form" model="ir.ui.view">
+            <field name="name">view.leave.balances.excel.form</field>
+            <field name="model">output.tax.report.excel</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field filename="file_name" name="excel_file" readonly="1"/>
+                        <field invisible="1" name="file_name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+
+
+        <record id="action_output_tax_report_wizard" model="ir.actions.act_window">
+            <field name="name">Output Tax Report Wizard</field>
+            <field name="res_model">wizard.output.tax.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field> <!-- Ensures it opens as a popup -->
+        </record>
+
+        <menuitem name="Output Tax Report"
+                  id="sub_menu_output_tax_report1"
+                  parent="account.menu_finance_reports"
+                  sequence="3"
+                  action="action_output_tax_report_wizard"
+        />
+    </data>
+</odoo>

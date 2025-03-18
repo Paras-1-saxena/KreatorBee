@@ -198,14 +198,14 @@
                         border-right: 1px solid #ddd; /* Add a divider between buttons */
                     }
 
-                    
+
                     button{
                     margin-right:10px;
                     }
                     .row {
     display: flex;
     flex-wrap: wrap;
-    
+
   }
 
   .col-md-10, .col-md-2 {
@@ -265,7 +265,7 @@
   margin:20px;
   }
 
-                    
+
                 </style>
 
                 <!-- Top Menu -->
@@ -311,12 +311,12 @@
                     <t t-call="custom_web_kreator.user_block" />
                         <!-- Tab Navigation -->
                     <!-- <div class="tab-container">
-                        
+
                     </div> -->
 
                     <!-- Referral Links Section -->
                     <div class="link-section">
-                       
+
                         <!-- Referral Link -->
                         <div class="link-box">
                             <label>Referral Link</label>
@@ -361,8 +361,8 @@
                             <button class="mr-5">Generate Link</button><i class="fa fa-copy"></i>
                         </div>
                         <!-- Referral Links Section -->
-                        
-                       
+
+
                     </div>
                 </div>
 

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="hide_show_temp_cost_price_form_knk" model="ir.ui.view">
+        <field name="name">hide.show.temp.cost.price.form.knk</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="standard_price" position="before">
+                <field name="is_sales_user" invisible="1"/>
+            </field>
+            <field name="standard_price" position="attributes">
+                <attribute name="invisible">is_sales_user == True</attribute>
+            </field>
+            <label for="standard_price" position="attributes">
+                <attribute name="invisible">is_sales_user == True</attribute>
+            </label>
+
+            <xpath expr="//div[@name='standard_price_uom']/span" position="replace">
+                <span invisible="is_sales_user"> per
+                    <field name="uom_po_id" class="oe_inline" style="max-width:136px" options="{'no_create': True}"
+                               on_change="1" can_create="True" can_write="True"/>
+                </span>
+            </xpath>
+
+
+            <label for="list_price" position="attributes">
+                <attribute name="invisible">is_sales_user == True</attribute>
+            </label>
+            <label for="taxes_id" position="attributes">
+                <attribute name="invisible">is_sales_user == True</attribute>
+            </label>
+            <xpath expr="//div[@name='taxes_div']" position="replace">
+                <div name="taxes_div" class="o_row" invisible="type == 'combo' or is_sales_user == True">
+                    <field name="taxes_id" widget="many2many_tags" class="oe_inline"
+                           context="{                                 'default_type_tax_use': 'sale',                                 'search_default_sale': 1,                                 'search_default_service': type == 'service',                                 'search_default_goods': type == 'consu',                             }"
+                           on_change="1" can_create="True" can_write="True"/>
+                    <field name="tax_string" class="oe_inline"/>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[@name='list_price_uom']" position="replace">
+                <div name="list_price_uom" invisible="is_sales_user == True">
+                    <field name="list_price" class="oe_inline" widget="monetary"
+                           options="{'currency_field': 'currency_id', 'field_digits': True}" on_change="1"/>
+                    <span name="uom_span" invisible="type == 'combo'">
+                        per
+                        <field name="uom_id" class="oe_inline" style="max-width:136px" options="{'no_create': True}"
+                               on_change="1" can_create="True" can_write="True"/>
+                    </span>
+                </div>
+
+            </xpath>
+<!--            -->
+
+        </field>
+    </record>
+
+    <record id="inherit_kanban_view" model="ir.ui.view">
+        <field name="name">product.template.kanban.inherit</field>
+        <field name="model">product.template</field> <!-- Replace with the correct model -->
+        <field name="inherit_id"
+               ref="product.product_template_kanban_view"/> <!-- Replace with the actual Kanban view ID -->
+        <field name="arch" type="xml">
+            <!-- Locate the span containing the list_price field -->
+            <xpath expr="//span[contains(., 'Price:')]" position="replace">
+                <span invisible="is_sales_user == True">
+                    Price:
+                    <field name="list_price" widget="monetary"
+                           options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                </span>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hide_show_temp_cost_price_tree_knk" model="ir.ui.view">
+        <field name="name">hide.show.temp.cost.price.tree.knk</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="standard_price" position="attributes">
+                <attribute name="invisible">is_sales_user == True</attribute>
+
+            </field>
+            <field name="list_price" position="attributes">
+                <attribute name="invisible">is_sales_user == True</attribute>
+
+            </field>
+        </field>
+    </record>
+</odoo>

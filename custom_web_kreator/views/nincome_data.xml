@@ -236,7 +236,7 @@
 
                 <!-- Main Content -->
                 <div class="main-content">
-                        <div class="dashboard-header">Financial Report</div>
+                        <!-- <div class="dashboard-header">Financial Report</div> -->
 
                         <!-- Statistics Section -->
                         <div class="stats-container">

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--    Inherited form view of res.users inorder to add new fields related to
+            the module.-->
+    <!--    <record id="view_users_form" model="ir.ui.view">-->
+    <!--        <field name="name">res.users.view.form.inherit.hide.all.print.button</field>-->
+    <!--        <field name="model">res.users</field>-->
+    <!--        <field name="priority" eval="20"/>-->
+    <!--        <field name="inherit_id" ref="base.view_users_form"/>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <xpath expr="//page[@name='access_rights']//group" position="after">-->
+    <!--                <group string="Hide Print Button" id="hide_print">-->
+    <!--                    <group>-->
+    <!--                        <group>-->
+    <!--                            <field name="hide_sale_print"/>-->
+    <!--                            <field name="hide_invoicing_print"/>-->
+    <!--                            <field name="hide_purchase_print"/>-->
+    <!--                            <field name="hide_inventory_print"/>-->
+    <!--                        </group>-->
+    <!--                        <group invisible="hide_inventory_print == False">-->
+    <!--                            <field name="hide_stock_picking_print"/>-->
+    <!--                            <field name="hide_stock_picking_type_print"/>-->
+    <!--                            <field name="hide_stock_quant_package_print"/>-->
+    <!--                            <field name="hide_stock_lot_print"/>-->
+    <!--                            <field name="hide_stock_location_print"/>-->
+    <!--                        </group>-->
+    <!--                    </group>-->
+    <!--                    <group>-->
+    <!--                        <group>-->
+    <!--                            <field name="hide_project_task_print"/>-->
+    <!--                            <field name="hide_hr_employee_print"/>-->
+    <!--                            <field name="hide_mrp_print"/>-->
+    <!--                        </group>-->
+    <!--                        <group invisible="hide_mrp_print == False">-->
+    <!--                            <field name="hide_mrp_production_print"/>-->
+    <!--                            <field name="hide_mrp_bom_print"/>-->
+    <!--                        </group>-->
+    <!--                    </group>-->
+    <!--                </group>-->
+    <!--            </xpath>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <record id="account.account_invoices" model="ir.actions.report">
+        <field name="name">PDF</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account.report_invoice_with_payments</field>
+        <field name="report_file">account.report_invoice_with_payments</field>
+        <field name="is_invoice_report">True</field>
+        <field name="print_report_name">(object._get_report_base_filename())</field>
+        <field name="attachment"/>
+        <field name="binding_model_id"
+               eval="False"/>  <!-- removes the action from the Print menu (forced False value for update) -->
+        <field name="groups_id" eval="[(4, ref('account.group_account_invoice')),
+ (4, ref('account.group_account_readonly'))]"/>
+        <field name="domain">[('state', '!=', 'draft')]</field>
+    </record>
+
+    <record id="account.action_account_original_vendor_bill" model="ir.actions.report">
+        <field name="name">Original Bills</field>
+        <field name="model">account.move</field>
+        <!--        <field name="binding_model_id" ref="model_account_move"/>-->
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account.report_original_vendor_bill</field>
+        <field name="report_file">account.report_original_vendor_bill</field>
+        <field name="attachment">'original_vendor_bill.pdf'</field>
+        <field name="attachment_use">True</field>
+        <field name="domain"
+               eval="[('move_type', 'in', ('in_invoice', 'in_refund', 'in_receipt')), ('message_main_attachment_id', '!=', False)]"/>
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+    </record>
+
+    <record id="account.account_invoices_without_payment" model="ir.actions.report">
+        <field name="name">PDF without Payment</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account.report_invoice</field>
+        <field name="report_file">account.report_invoice</field>
+        <field name="print_report_name">(object._get_report_base_filename())</field>
+        <field name="attachment"/>
+        <!--        <field name="binding_model_id" ref="model_account_move"/>-->
+        <field name="binding_type">report</field>
+        <field name="domain" eval="[('move_type', '!=', 'entry')]"/>
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+
+    </record>
+
+    <record id="account.action_report_payment_receipt" model="ir.actions.report">
+        <field name="name">Payment Receipt</field>
+        <field name="model">account.payment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account.report_payment_receipt</field>
+        <field name="report_file">account.report_payment_receipt</field>
+        <!--        <field name="binding_model_id" ref="model_account_payment"/>-->
+        <field name="binding_type">report</field>
+        <field name="domain">[('state', '!=', 'draft')]</field>
+    </record>
+
+    <!-- The top margin on the default A4 format is way too big -->
+    <record id="paperformat_euro_bank_statement" model="report.paperformat">
+        <field name="name">A4 - statement</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">20</field>
+        <field name="margin_bottom">32</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">15</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="account.action_report_account_statement" model="ir.actions.report">
+        <field name="name">Statement</field>
+        <field name="model">account.bank.statement</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account.report_statement</field>
+        <field name="report_file">account.report_statement</field>
+        <field name="paperformat_id" ref="account.paperformat_euro_bank_statement"/>
+        <field name="binding_type">report</field>
+        <field name="domain">[('state', '!=', 'draft')]</field>
+    </record>
+
+    <record id="account.action_report_account_hash_integrity" model="ir.actions.report">
+        <field name="name">Hash integrity result PDF</field>
+        <field name="model">res.company</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account.report_hash_integrity</field>
+        <field name="report_file">account.report_hash_integrity</field>
+        <field name="domain">[('state', '!=', 'draft')]</field>
+    </record>
+
+
+    <!--    stock reports-->
+    <record id="stock.action_report_picking" model="ir.actions.report">
+        <field name="name">Picking Operations</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock.report_picking</field>
+        <field name="report_file">stock.report_picking_operations</field>
+        <field name="print_report_name">'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)
+        </field>
+        <!--            <field name="binding_model_id" ref="model_stock_picking"/>-->
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+        <field name="binding_type">report</field>
+    </record>
+    <record id="stock.action_report_delivery" model="ir.actions.report">
+        <field name="name">Delivery Slip</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock.report_deliveryslip</field>
+        <field name="report_file">stock.report_deliveryslip</field>
+        <field name="print_report_name">'Delivery Slip - %s - %s' % (object.partner_id.name or '', object.name)</field>
+        <!--            <field name="binding_model_id" ref="model_stock_picking"/>-->
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+        <field name="binding_type">report</field>
+    </record>
+    <record id="stock.action_report_picking_packages" model="ir.actions.report">
+        <field name="name">Packages</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock.report_picking_packages</field>
+        <field name="report_file">stock.report_picking_packages</field>
+        <field name="print_report_name">'Packages - %s' % (object.name)</field>
+        <!--            <field name="binding_model_id" ref="model_stock_picking"/>-->
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[Command.link(ref('stock.group_tracking_lot'))]"/>
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+    </record>
+    <record id="stock.action_report_inventory" model="ir.actions.report">
+        <field name="name">Count Sheet</field>
+        <field name="model">stock.quant</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock.report_inventory</field>
+        <field name="report_file">stock.report_inventory</field>
+        <field name="print_report_name">'Count Sheet'</field>
+        <!--            <field name="binding_model_id" ref="model_stock_quant"/>-->
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+        <field name="binding_type">report</field>
+    </record>
+    <record id="stock.action_report_quant_package_barcode" model="ir.actions.report">
+        <field name="name">Package Barcode with Contents</field>
+        <field name="model">stock.quant.package</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock.report_package_barcode</field>
+        <field name="report_file">stock.report_package_barcode</field>
+        <!--            <field name="binding_model_id" ref="model_stock_quant_package"/>-->
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+        <field name="binding_type">report</field>
+    </record>
+    <record id="stock.action_report_quant_package_barcode_small" model="ir.actions.report">
+        <field name="name">Package Barcode (PDF)</field>
+        <field name="model">stock.quant.package</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock.report_package_barcode_small</field>
+        <field name="report_file">stock.report_package_barcode</field>
+        <!--            <field name="binding_model_id" ref="model_stock_quant_package"/>-->
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+        <field name="binding_type">report</field>
+    </record>
+    <record id="stock.action_report_location_barcode" model="ir.actions.report">
+        <field name="name">Location Barcode</field>
+        <field name="model">stock.location</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock.report_location_barcode</field>
+        <field name="report_file">stock.report_location_barcode</field>
+        <field name="paperformat_id" ref="product.paperformat_label_sheet"/>
+        <field name="print_report_name">'Location - %s' % object.name</field>
+        <!--            <field name="binding_model_id" ref="model_stock_location"/>-->
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+        <field name="binding_type">report</field>
+    </record>
+    <record id="stock.action_report_lot_label" model="ir.actions.report">
+        <field name="name">Lot/Serial Number (PDF)</field>
+        <field name="model">stock.lot</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock.report_lot_label</field>
+        <field name="report_file">stock.report_lot_label</field>
+        <field name="paperformat_id" ref="product.paperformat_label_sheet"/>
+        <field name="print_report_name">'Lot-Serial - %s' % object.name</field>
+        <!--            <field name="binding_model_id" ref="model_stock_lot"/>-->
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+        <field name="binding_type">report</field>
+    </record>
+    <record id="stock.action_report_picking_type_label" model="ir.actions.report">
+        <field name="name">Operation type (PDF)</field>
+        <field name="model">stock.picking.type</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock.report_picking_type_label</field>
+        <field name="report_file">stock.report_picking_type_label</field>
+        <field name="paperformat_id" ref="product.paperformat_label_sheet"/>
+        <field name="print_report_name">'Operation-type - %s' % object.name</field>
+        <!--            <field name="binding_model_id" ref="model_stock_picking_type"/>-->
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+        <field name="binding_type">report</field>
+    </record>
+    <record id="stock.action_report_stock_rule" model="ir.actions.report">
+        <field name="name">Product Routes Report</field>
+        <field name="model">product.template</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">stock.report_stock_rule</field>
+        <field name="report_file">stock.report_stock_rule</field>
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+    </record>
+    <record id="stock.label_product_product" model="ir.actions.report">
+        <field name="name">Product Label (ZPL)</field>
+        <field name="model">product.product</field>
+        <field name="report_type">qweb-text</field>
+        <field name="report_name">stock.label_product_product_view</field>
+        <field name="report_file">stock.label_product_product_view</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+    </record>
+    <record id="stock.label_lot_template" model="ir.actions.report">
+        <field name="name">Lot/Serial Number (ZPL)</field>
+        <field name="model">stock.lot</field>
+        <field name="report_type">qweb-text</field>
+        <field name="report_name">stock.label_lot_template_view</field>
+        <field name="report_file">stock.label_lot_template_view</field>
+        <!--            <field name="binding_model_id" ref="model_stock_lot"/>-->
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+        <field name="binding_type">report</field>
+    </record>
+    <record id="stock.label_package_template" model="ir.actions.report">
+        <field name="name">Package Barcode (ZPL)</field>
+        <field name="model">stock.quant.package</field>
+        <field name="report_type">qweb-text</field>
+        <field name="report_name">stock.label_package_template_view</field>
+        <field name="report_file">stock.label_package_template_view</field>
+        <!--            <field name="binding_model_id" ref="model_stock_quant_package"/>-->
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+        <field name="binding_type">report</field>
+    </record>
+    <record id="stock.label_product_packaging" model="ir.actions.report">
+        <field name="name">Product Packaging (ZPL)</field>
+        <field name="model">product.packaging</field>
+        <field name="report_type">qweb-text</field>
+        <field name="report_name">stock.label_product_packaging_view</field>
+        <field name="report_file">stock.label_product_packaging_view</field>
+        <!--            <field name="binding_model_id" ref="product.model_product_packaging"/>-->
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+        <field name="binding_type">report</field>
+    </record>
+    <record id="stock.label_picking_type" model="ir.actions.report">
+        <field name="name">Operation type (ZPL)</field>
+        <field name="model">stock.picking.type</field>
+        <field name="report_type">qweb-text</field>
+        <field name="report_name">stock.label_picking_type_view</field>
+        <field name="report_file">stock.label_picking_type_view</field>
+        <!--            <field name="binding_model_id" ref="model_stock_picking_type"/>-->
+        <field name="binding_type">report</field>
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+    </record>
+
+        <record id="stock.return_label_report" model="ir.actions.report">
+        <field name="name">Return slip</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock.report_return_slip</field>
+        <field name="report_file">return_slip</field>
+<!--        <field name="binding_model_id" ref="model_stock_picking"/>-->
+        <field name="binding_type">report</field>
+        <field name="domain">[('state', '!=', 'draft')]</field>
+
+    </record>
+
+  <record id="stock.action_print_labels" model="ir.actions.server">
+    <field name="name">Labels</field>
+    <field name="model_id" ref="stock.model_stock_picking"/>
+    <field name="binding_model_id" ref="stock.model_stock_picking"/>
+    <field name="binding_view_types">list,form</field>
+    <field name="binding_type">report</field>
+    <field name="state">code</field>
+    <field name="code">
+if records and all(rec.state != 'draft' for rec in records):
+    action = records.action_open_label_type()
+else:
+    raise UserError("You cannot print labels for records in the 'draft' state.")
+    </field>
+</record>
+
+</odoo>

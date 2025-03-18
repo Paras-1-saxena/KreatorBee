@@ -11,7 +11,6 @@ from odoo.addons.website.controllers.main import QueryURL
 from odoo.http import content_disposition
 
 
-
 class PortalMyCourses(http.Controller):
 
     # Not in Use Bharat/Roystan
@@ -141,7 +140,8 @@ class PortalMyCourses(http.Controller):
 
     @http.route('/nleaderboard', type='http', auth='public', website=True)
     def nleaderboard(self, **kwargs):
-        orders_lines = request.env['sale.order.line'].sudo().search([('is_commission','=', True),('state', '=', 'sale'),('partner_commission_partner_id', '!=', False)])
+        orders_lines = request.env['sale.order.line'].sudo().search(
+            [('is_commission', '=', True), ('state', '=', 'sale'), ('partner_commission_partner_id', '!=', False)])
         order_lines = sorted(orders_lines, key=attrgetter('partner_commission_partner_id'))
         # Group by commission partner ID
         grouped_data = {}
@@ -151,20 +151,19 @@ class PortalMyCourses(http.Controller):
                 'total_commission': sum(line.partner_commission_amount for line in lines),
             }
         for data in grouped_data:
-            lines = orders_lines.search([('partner_commission_partner_id','=',data.id)])
+            lines = orders_lines.search([('partner_commission_partner_id', '=', data.id)])
             leaderboard.append({
-                'partner_name':data.name,
+                'partner_name': data.name,
                 'total_commission': sum(line.partner_commission_amount for line in lines),
             })
         leaderboard = sorted(leaderboard, key=lambda x: x['total_commission'], reverse=True)
         values = {
-            'leaderboard':leaderboard,
+            'leaderboard': leaderboard,
             'currency_id': request.env.company.currency_id
         }
-        
 
-        return http.request.render('custom_web_kreator.nleaderboard_page',values)
-    
+        return http.request.render('custom_web_kreator.nleaderboard_page', values)
+
     # Not in Use Bharat/Roystan
     # @http.route('/sales', type='http', auth='public', website=True)
     # def sales_page(self, **kwargs):
@@ -273,7 +272,7 @@ class PortalMyCourses(http.Controller):
                         front_data = document_front.read()
                         partner_values[doc_fields['front_file_field']] = base64.b64encode(front_data).decode('utf-8')
                     except Exception as e:
-                        print("Front file upload failed",e)
+                        print("Front file upload failed", e)
                         # return request.render('custom_web_kreator.error_page_template', {
                         #     'error': f"Front file upload failed: {e}"
                         # })
@@ -284,7 +283,7 @@ class PortalMyCourses(http.Controller):
                         back_data = document_back.read()
                         partner_values[doc_fields['back_file_field']] = base64.b64encode(back_data).decode('utf-8')
                     except Exception as e:
-                        print("Back file upload failed",e)
+                        print("Back file upload failed", e)
                         # return request.render('custom_web_kreator.error_page_template', {
                         #     'error': f"Back file upload failed: {e}"
                         # })
@@ -312,7 +311,7 @@ class PortalMyCourses(http.Controller):
                     file_content = base64.b64encode(file_data).decode('utf-8')
                     partner_values['pan_card_file'] = file_content
                 except Exception as e:
-                    print("PAN card file upload failed",e)
+                    print("PAN card file upload failed", e)
                     # return request.render('custom_web_kreator.error_page_template', {
                     #     'error': f"PAN card file upload failed: {e}"
                     # })
@@ -322,7 +321,7 @@ class PortalMyCourses(http.Controller):
             account_holder_number = kwargs.get('account_number')
             ifsc_code = kwargs.get('ifsc_code')
             bank_id = kwargs.get('bank_id')
-            print("bank_id",bank_id)
+            print("bank_id", bank_id)
 
             # Search for the bank record using the bank_name
             if bank_id:
@@ -352,7 +351,7 @@ class PortalMyCourses(http.Controller):
                     file_content = base64.b64encode(file_data).decode('utf-8')
                     partner_values['upload_file'] = file_content
                 except Exception as e:
-                    print("File upload failed",e)
+                    print("File upload failed", e)
                     # return request.render('custom_web_kreator.error_page_template', {
                     #     'error': f"File upload failed: {e}"
                     # })
@@ -360,8 +359,9 @@ class PortalMyCourses(http.Controller):
             # Write all updates to the partner record
             if partner_values:
                 partner.write(partner_values)
+                partner.state_selection = 'under_review'
 
-            return request.redirect('/nkyc')
+            return request.redirect('/partner-kyc')
 
         # If the request is a GET request (loading the form), fetch partner details to pre-populate
         selected_document = partner.select_document
@@ -408,14 +408,14 @@ class PortalMyCourses(http.Controller):
             'file_upload_back': file_upload_back,
             'account_holder_name': partner.Account_holder_name,
             'account_number': partner.Account_holder_number,
-            'bank_id': bank_id if bank_id else '',# This will render the bank's name in the template
+            'bank_id': bank_id if bank_id else '',  # This will render the bank's name in the template
             'ifsc_code': partner.ifsc_code,
             'upi_mobile_number': partner.upi_mobile_number,
             'bank_file': bank_file,
             'pan_number': partner.pan_card_number,
             'pan_name': partner.pan_card_name,
             'pan_file': pan_file,
-            'state_selection' : partner.state_selection,
+            'state_selection': partner.state_selection,
 
         }
         return request.render('custom_web_kreator.nkyc_page_template', values)
@@ -428,7 +428,7 @@ class PortalMyCourses(http.Controller):
     @http.route('/nreferral', type='http', auth='public', website=True)
     def nreferral_page(self, **kwargs):
         # Render the data page template
-        return http.request.render('custom_web_kreator.nreferral_link_page')
+        return http.request.render('custom_web_kreator.nreferral_links_page')
 
     # @http.route('/partner-home', type='http', auth='public', website=True)
     # def partner_page(self, **kwargs):
@@ -470,7 +470,100 @@ class PortalMyCourses(http.Controller):
                 'total': partner_total_commission,
                 'today': partner_commission_today,
                 'last_7_days': partner_commission_last_7_days,
-                'last_30_days': partner_commission_last_30_days
+                'last_30_days': partner_commission_last_30_days,
+                'graph': """
+                <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Get the context of the canvas elements for the doughnut charts
+                    const ctx1 = document.getElementById('doughnutChart-four').getContext('2d');
+                    const ctx2 = document.getElementById('doughnutChart-five').getContext('2d');
+
+                    // Doughnut Chart for 'doughnutChart-four'
+                    new Chart(ctx1, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Electronics', 'Clothing', 'Food', 'Books', 'Other'],
+                            datasets: [{
+                                label: 'Sales Distribution',
+                                data: [322, 2576, 2087, 15787, 5787],
+                                backgroundColor: [
+                                    'rgba(255, 205, 0, 1)',
+                                    'rgba(255, 255, 255, 1)',
+                                    'rgba(8, 0, 102, 1)',
+                                    'rgba(255, 119, 0, 1)',
+                                    'rgba(255, 245, 198, 1)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 205, 0, 0.7)',
+                                    'rgba(255, 255, 255, 0.7)',
+                                    'rgba(8, 0, 102, 0.7)',
+                                    'rgba(255, 119, 0, 0.7)',
+                                    'rgba(255, 245, 198, 0.7)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            cutout: '65%',
+                            animation: {
+                                animateScale: true,
+                                animateRotate: true,
+                                duration: 2000
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false // This hides the labels in the legend
+                                }
+                            },
+                        }
+                    });
+
+                    // Doughnut Chart for 'doughnutChart-five'
+                    new Chart(ctx2, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Electronics', 'Clothing', 'Food', 'Books', 'Other'],
+                            datasets: [{
+                                label: 'Sales Distribution',
+                                data: [30, 30, 10, 20, 10],
+                                backgroundColor: [
+                                    'rgba(255, 205, 0, 1)',
+                                    'rgba(255, 255, 255, 1)',
+                                    'rgba(8, 0, 102, 1)',
+                                    'rgba(255, 119, 0, 1)',
+                                    'rgba(255, 245, 198, 1)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 205, 0, 0.7)',
+                                    'rgba(255, 255, 255, 0.7)',
+                                    'rgba(8, 0, 102, 0.7)',
+                                    'rgba(255, 119, 0, 0.7)',
+                                    'rgba(255, 245, 198, 0.7)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            cutout: '65%',
+                            animation: {
+                                animateScale: true,
+                                animateRotate: true,
+                                duration: 2000
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false // This hides the labels in the legend
+                                }
+                            },
+                        }
+                    });
+                });
+            </script>
+                """
             }
         }
         # Render the data page template
@@ -488,53 +581,50 @@ class PortalMyCourses(http.Controller):
         # Get the partner record associated with the current user
         partner = current_user.partner_id
 
-        print("-------------currnt user",current_user)
+        print("-------------currnt user", current_user)
 
         # Initialize course lists
         published_courses = []
         draft_review_courses = []
 
         # Check if the user is of type 'creator'
-        if partner.user_type in ['creator','internal_user']:
+        if partner.user_type in ['creator', 'internal_user']:
             # Fetch published courses created by the user
             approved_courses = request.env['slide.channel'].sudo().search([
                 ('create_uid', '=', current_user.id),
                 ('state', '=', 'course_preview')
             ])
-            
+
             # Fetch draft and under review courses created by the user
             published_courses = request.env['slide.channel'].sudo().search([
                 ('create_uid', '=', current_user.id),
                 ('state', '=', 'published')  # Filter for draft and under review
             ])
-            
+
             under_review_courses = request.env['slide.channel'].sudo().search([
                 ('create_uid', '=', current_user.id),
                 ('state', '=', 'draft')  # Filter for draft and under review
             ])
-            
+
             all_courses = request.env['slide.channel'].sudo().search([
                 ('create_uid', '=', current_user.id),
             ])
-            
 
         course_count = request.env['slide.channel'].sudo().search([
-                ('create_uid', '=', current_user.id),
-                ('state', 'in', ['draft', 'course_preview','published'])  # Filter for draft and under review
-            ])
+            ('create_uid', '=', current_user.id),
+            ('state', 'in', ['draft', 'course_preview', 'published'])  # Filter for draft and under review
+        ])
         approve_course_count = True if published_courses else False
         course_count = True if course_count else False
-
-        
 
         # Render the template and pass the course lists
         return request.render('custom_web_kreator.nmy_courses_template', {
             'approved_courses': approved_courses,
             'published_courses': published_courses,
             'under_review_courses': under_review_courses,
-            'approve_course_count':approve_course_count,
-            'course_count':course_count,
-            'all_courses':all_courses,
+            'approve_course_count': approve_course_count,
+            'course_count': course_count,
+            'all_courses': all_courses,
         })
 
     @http.route('/nmy-courses-partner', type='http', auth='public', website=True)
@@ -546,7 +636,7 @@ class PortalMyCourses(http.Controller):
         courses = []
 
         # Check if the user is of type 'customer'
-        if partner.user_type in ['partner','internal_user']:
+        if partner.user_type in ['partner', 'internal_user']:
             # Fetch sale orders linked to the customer
             sale_orders = request.env['sale.order'].sudo().search(
                 [('partner_id', '=', partner.id), ('state', 'in', ['sale'])])
@@ -573,7 +663,7 @@ class PortalMyCourses(http.Controller):
     @http.route(['/consume/course/<int:course_id>'], type='http', auth="public", website=True)
     def consume_to_course(self, course_id, **kwargs):
         # You can add custom logic here before redirecting
-        course = request.env['slide.channel'].sudo().search([('id', '=', course_id)],limit=1)
+        course = request.env['slide.channel'].sudo().search([('id', '=', course_id)], limit=1)
         if not course.exists():
             return request.redirect('/404')  # Redirect if the course does not exist
         # Redirect to the target URL
@@ -661,7 +751,7 @@ class PortalMyCourses(http.Controller):
             'currency_id': request.env.company.currency_id
         }
 
-        return request.render('custom_web_kreator.offers_page',values)
+        return request.render('custom_web_kreator.offers_page', values)
 
     @http.route('/offers-create', type='http', auth='public', website=True, methods=['GET', 'POST'])
     def offers_create(self, **kwargs):
@@ -715,7 +805,6 @@ class PortalMyCourses(http.Controller):
         })
         return request.redirect('/offers')
 
-
     @http.route('/partner-lead', type='http', auth="user", website=True)
     def partner_lead(self, **kwargs):
         # Get the current logged-in user
@@ -766,37 +855,39 @@ class PortalMyCourses(http.Controller):
     def master(self, **kwargs):
         # Render the data page template
         user = request.env.user
-        
+
         # Count the number of courses created by the user
         course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id)])
-        approve_course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id),('state', '=', 'published')]) > 0
-        
-    
-       
-        if course_count:
-            return http.request.redirect('/nmy-courses')
-        else:
-            return http.request.render('custom_web_kreator.master',{'course_count': course_count})
+        approve_course_count = request.env['slide.channel'].sudo().search_count(
+            [('create_uid', '=', user.id), ('state', '=', 'published')]) > 0
+
+        # if course_count:
+        #     return http.request.redirect('/nmy-courses')
+        # else:
+        return http.request.render('custom_web_kreator.master', {'course_count': course_count})
 
     @http.route('/master_course_detail', type='http', auth='public', website=True)
     def master_course_detail(self, **kwargs):
-        partner_commission_rate = (request.env['partner.commission'].sudo().search([],order='create_date desc',  # Order by creation date, latest first
-                    limit=1).rate)/100
-        direct_commission_rate = (request.env['direct.commission'].sudo().search([],order='create_date desc',  # Order by creation date, latest first
-                    limit=1).rate)/100
+        partner_commission_rate = (request.env['partner.commission'].sudo().search([], order='create_date desc',
+                                                                                   # Order by creation date, latest first
+                                                                                   limit=1).rate) / 100
+        direct_commission_rate = (request.env['direct.commission'].sudo().search([], order='create_date desc',
+                                                                                 # Order by creation date, latest first
+                                                                                 limit=1).rate) / 100
         values = {
-            'partner_commission_rate':partner_commission_rate,
-            'direct_commission_rate':direct_commission_rate,
+            'partner_commission_rate': partner_commission_rate,
+            'direct_commission_rate': direct_commission_rate,
             'currency_id': request.env.company.currency_id
         }
         user = request.env.user
         course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id)]) > 0
-        approve_course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id),('state', '=', 'published')]) > 0
+        approve_course_count = request.env['slide.channel'].sudo().search_count(
+            [('create_uid', '=', user.id), ('state', '=', 'published')]) > 0
         values['course_count'] = course_count
         values['approve_course_count'] = approve_course_count
         # Render the data page template
         return http.request.render('custom_web_kreator.master_course_detail', values)
- 
+
     @http.route('/master_course_standard', type='http', auth='public', website=True)
     def master_course_standard(self, **kwargs):
         course_data = {
@@ -809,10 +900,12 @@ class PortalMyCourses(http.Controller):
 
         user = request.env.user
         course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id)]) > 0
-        approve_course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id),('state', '=', 'published')]) > 0
+        approve_course_count = request.env['slide.channel'].sudo().search_count(
+            [('create_uid', '=', user.id), ('state', '=', 'published')]) > 0
         # Render the data page template
         return http.request.render('custom_web_kreator.master_course_standard', {'course_data': course_data,
-            'course_count':course_count,'approve_course_count':approve_course_count})
+                                                                                 'course_count': course_count,
+                                                                                 'approve_course_count': approve_course_count})
 
     @http.route('/master_term', type='http', auth='public', website=True, methods=['POST'])
     def master_term(self, **kwargs):
@@ -830,7 +923,7 @@ class PortalMyCourses(http.Controller):
 
         # Extract Google Drive links from the form
         google_drive_links = request.httprequest.form.getlist('google_drive_link[]')
-        print("google_drive_links",google_drive_links)
+        print("google_drive_links", google_drive_links)
         if isinstance(google_drive_links, str):  # If only one link is provided, convert to list
             google_drive_links = [google_drive_links]
 
@@ -845,11 +938,14 @@ class PortalMyCourses(http.Controller):
 
         user = request.env.user
         course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id)]) > 0
-        approve_course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id),('state', '=', 'published')]) > 0
-        print('-----------apporve',approve_course_count)
-        print('-----------course_count',course_count)
+        approve_course_count = request.env['slide.channel'].sudo().search_count(
+            [('create_uid', '=', user.id), ('state', '=', 'published')]) > 0
+        print('-----------apporve', approve_course_count)
+        print('-----------course_count', course_count)
         # Render the data page template
-        return http.request.render('custom_web_kreator.master_term', {'course_data': course_data,'course_count':course_count,'approve_course_count':approve_course_count})
+        return http.request.render('custom_web_kreator.master_term',
+                                   {'course_data': course_data, 'course_count': course_count,
+                                    'approve_course_count': approve_course_count})
 
     @http.route('/master_welcome', type='http', auth='public', website=True)
     def master_welcome(self, **kwargs):
@@ -875,7 +971,7 @@ class PortalMyCourses(http.Controller):
                 'name': course_data.get('course_name'),
                 'description': course_data.get('course_description'),
                 'regular_price': course_data.get('regular_price'),
-                'sales_price': course_data.get('sales_price'), 
+                'sales_price': course_data.get('sales_price'),
                 # Add other fields as required from course_data
             })
             # ✅ Add Google Drive links to google_drive_links1
@@ -883,66 +979,67 @@ class PortalMyCourses(http.Controller):
             if google_drive_links:
                 google_drive_link_records = [(0, 0, {'link': link}) for link in google_drive_links]
                 slide_channel.sudo().write({'google_drive_links1': google_drive_link_records})
-            return request.render('custom_web_kreator.master_welcome', {'course_data': course_data,'agreement':agreement})
+            return request.render('custom_web_kreator.master_welcome',
+                                  {'course_data': course_data, 'agreement': agreement})
         elif agreement == 'disagree':
             print(course_data.get('course_name'))
             # Create a record in crm.lead
             CrmLead = request.env['crm.lead']
             crm_lead = CrmLead.sudo().create({
                 'name': course_data.get('course_name'),
-                'type' : 'lead',
+                'type': 'lead',
                 # Add other fields as required from course_data
             })
 
-            return request.render('custom_web_kreator.master_welcome', {'course_data': course_data, 'agreement': agreement})
-
+            return request.render('custom_web_kreator.master_welcome',
+                                  {'course_data': course_data, 'agreement': agreement})
 
         # Get the logged-in user
         current_user = request.env.user
         # Get the partner record associated with the current user
         partner = current_user.partner_id
 
-        
         published_courses = request.env['slide.channel'].sudo().search([
-                ('create_uid', '=', current_user.id),
-                ('state', '=', 'published')
-            ])
+            ('create_uid', '=', current_user.id),
+            ('state', '=', 'published')
+        ])
         course_count = request.env['slide.channel'].sudo().search([
-                ('create_uid', '=', current_user.id),
-                ('state', 'in', ['draft', 'course_preview','published'])  # Filter for draft and under review
-            ])
+            ('create_uid', '=', current_user.id),
+            ('state', 'in', ['draft', 'course_preview', 'published'])  # Filter for draft and under review
+        ])
         approve_course_count = True if published_courses else False
         course_count = True if course_count else False
 
-        print("||||approve_course_count||||||",approve_course_count)
-        print("||||course_count||||||",course_count)
-        
+        print("||||approve_course_count||||||", approve_course_count)
+        print("||||course_count||||||", course_count)
+
         # If the user disagrees, just return the page without creating anything
-        return request.render('custom_web_kreator.master_welcome', {'course_data': course_data,'agreement':agreement,'approve_course_count':approve_course_count,
-            'course_count':course_count,})
-    
+        return request.render('custom_web_kreator.master_welcome', {'course_data': course_data, 'agreement': agreement,
+                                                                    'approve_course_count': approve_course_count,
+                                                                    'course_count': course_count, })
+
     @http.route('/master_income_data', type='http', auth='public', website=True)
     def master_income(self, **kwargs):
         current_user = request.env.user
         partner = current_user.partner_id
-        
+
         # Define date ranges
         today = datetime.today().date()
         # today = fields.Date.today()
         last_7_days = today - timedelta(days=7)
         last_30_days = today - timedelta(days=30)
-        
+
         # Fetch product IDs linked to the user's courses
         courses_obj = request.env['slide.channel']
         orders_obj = request.env['sale.order.line']
         product_ids = courses_obj.sudo().search([('create_uid', '=', current_user.id)]).product_id.ids
-        
+
         # Initialize commission data
         direct_total_commission = partner_total_commission = total_commission = 0.0
         direct_commission_today = partner_commission_today = commission_today = 0.0
         direct_commission_last_7_days = partner_commission_last_7_days = commission_last_7_days = 0.0
         direct_commission_last_30_days = partner_commission_last_30_days = commission_last_30_days = 0.0
-        
+
         if product_ids:
             # Fetch order lines with commissions
             order_lines = orders_obj.sudo().search([
@@ -955,7 +1052,7 @@ class PortalMyCourses(http.Controller):
             for line in order_lines:
                 order_date = line.create_date.date()
                 total_commission += line.direct_commission_amount + line.partner_commission_amount
-                direct_total_commission += line.direct_commission_amount 
+                direct_total_commission += line.direct_commission_amount
                 partner_total_commission += line.partner_commission_amount
                 if order_date == today:
                     commission_today += line.direct_commission_amount + line.partner_commission_amount
@@ -1011,7 +1108,8 @@ class PortalMyCourses(http.Controller):
         # Check if the user is of type 'customer'
         if partner.user_type == 'customer':
             # Fetch sale orders linked to the customer
-            sale_orders = request.env['sale.order'].sudo().search([('partner_id', '=', partner.id),('state', 'in', ['sale'])])
+            sale_orders = request.env['sale.order'].sudo().search(
+                [('partner_id', '=', partner.id), ('state', 'in', ['sale'])])
 
             # Extract product template IDs from sale order lines
             product_template_ids = sale_orders.mapped('order_line.product_template_id')
@@ -1047,7 +1145,7 @@ class PortalMyCourses(http.Controller):
 
     # @http.route('/creator-dashboard', type='http', auth="public", website=True)
     # def creator_layout(self, **kwargs):
-        # return http.request.render('custom_web_kreator.creator_dashboard', {})
+    # return http.request.render('custom_web_kreator.creator_dashboard', {})
 
     # @http.route('/partner-dashboard', type='http', auth="public", website=True)
     # def partner_layout(self, **kwargs):
@@ -1077,14 +1175,14 @@ class PortalMyCourses(http.Controller):
             ('partner_id', '=', partner.id)
         ]).course_id.ids
         domain = [('state', '=', 'published')]  # Base domain to filter published courses
-        
+
         # If a specific course is selected, show only that course
         if selected_course_id:
             domain.append(('id', '=', int(selected_course_id)))
-        
+
         elif search_query:
             domain.append(('name', 'ilike', search_query))  # Filter by course name
-        
+
         # if course_ids:
         #     domain.append(('id', 'not in', course_ids))
         # domain = '[('state', ' = ', 'published'),('course_id', ' in ', course_ids)]'
@@ -1134,16 +1232,18 @@ class PortalMyCourses(http.Controller):
         my_cart_id = request.env['my.product.cart'].sudo().create({
             'course_id': course_id,
             'partner_id': partner.id,
-            })
+        })
         return request.redirect('/choose-product')
-
 
     @http.route('/partner-product', type='http', auth="public", website=True)
     def partner_product(self, **kwargs):
         user = request.env.user
         partner = user.partner_id
-        product_cart_ids = request.env['my.product.cart'].sudo().search([('partner_id', '=', partner.id)], order='create_date desc')
+        product_cart_ids = request.env['my.product.cart'].sudo().search([('partner_id', '=', partner.id)],
+                                                                        order='create_date desc')
+        total_product_cart = request.env['my.product.cart'].sudo().search_count([('partner_id', '=', partner.id)])
         values = {
+            'total_product_cart': total_product_cart,
             'product_cart': product_cart_ids,
             'currency_id': request.env.company.currency_id
         }
@@ -1153,15 +1253,16 @@ class PortalMyCourses(http.Controller):
     def remove_partner_product(self, **kwargs):
         course_id = kwargs.get('cartCourseID')
         partner_id = kwargs.get('cartPartnerID')
-        product_cart_id = request.env['my.product.cart'].sudo().search([
-            ('course_id', '=', int(course_id)),
-            ('partner_id', '=', int(partner_id))],limit=1)
-        if product_cart_id:
-            product_cart_id.sudo().unlink()
-            print("Product Removed Successfully")
+        try:
+            product_cart_id = request.env['my.product.cart'].sudo().search([
+                ('course_id', '=', int(course_id)),
+                ('partner_id', '=', int(partner_id))], limit=1)
+            if product_cart_id:
+                product_cart_id.sudo().unlink()
+                print("Product Removed Successfully")
+        except Exception:
+            return request.redirect('/partner-product')
         return request.redirect('/partner-product')
-
-
 
     @http.route('/my-product', type='http', auth="public", website=True)
     def myproduct_new(self, **kwargs):
@@ -1252,7 +1353,7 @@ class PortalMyCourses(http.Controller):
                         front_data = document_front.read()
                         partner_values[doc_fields['front_file_field']] = base64.b64encode(front_data).decode('utf-8')
                     except Exception as e:
-                        print("Front file upload failed",e)
+                        print("Front file upload failed", e)
                         # return request.render('custom_web_kreator.error_page_template', {
                         #     'error': f"Front file upload failed: {e}"
                         # })
@@ -1263,7 +1364,7 @@ class PortalMyCourses(http.Controller):
                         back_data = document_back.read()
                         partner_values[doc_fields['back_file_field']] = base64.b64encode(back_data).decode('utf-8')
                     except Exception as e:
-                        print("Back file upload failed",e)
+                        print("Back file upload failed", e)
                         # return request.render('custom_web_kreator.error_page_template', {
                         #     'error': f"Back file upload failed: {e}"
                         # })
@@ -1291,7 +1392,7 @@ class PortalMyCourses(http.Controller):
                     file_content = base64.b64encode(file_data).decode('utf-8')
                     partner_values['pan_card_file'] = file_content
                 except Exception as e:
-                    print("PAN card file upload failed",e)
+                    print("PAN card file upload failed", e)
                     # return request.render('custom_web_kreator.error_page_template', {
                     #     'error': f"PAN card file upload failed: {e}"
                     # })
@@ -1302,7 +1403,7 @@ class PortalMyCourses(http.Controller):
             ifsc_code = kwargs.get('ifsc_code')
             upi_mobile_number = kwargs.get('upi_mobile_number')
             bank_id = kwargs.get('bank_id')
-            print("bank_name",bank_id)
+            print("bank_name", bank_id)
             if bank_id:
                 bank = request.env['res.partner.bank'].sudo().search([('id', '=', bank_id)], limit=1)
                 if bank:
@@ -1329,7 +1430,7 @@ class PortalMyCourses(http.Controller):
                     file_content = base64.b64encode(file_data).decode('utf-8')
                     partner_values['upload_file'] = file_content
                 except Exception as e:
-                    print("File upload failed",e)
+                    print("File upload failed", e)
                     # return request.render('custom_web_kreator.error_page_template', {
                     #     'error': f"File upload failed: {e}"
                     # })
@@ -1385,14 +1486,14 @@ class PortalMyCourses(http.Controller):
             "file_upload_back": file_upload_back,
             'account_holder_name': partner.Account_holder_name,
             'account_number': partner.Account_holder_number,
-            'bank_id': bank_id if bank_id else '',# This will render the bank's name in the template
+            'bank_id': bank_id if bank_id else '',  # This will render the bank's name in the template
             'ifsc_code': partner.ifsc_code,
             'upi_mobile_number': partner.upi_mobile_number,
             'bank_file': bank_file,
             'pan_number': partner.pan_card_number,
             'pan_name': partner.pan_card_name,
             'pan_file': pan_file,
-            'state_selection' : partner.state_selection,
+            'state_selection': partner.state_selection,
         }
         return http.request.render('custom_web_kreator.nkyc_partner_template', values)
 
@@ -1420,10 +1521,10 @@ class PortalMyCourses(http.Controller):
         domain = [('program_type', '=', 'promo_code')]  # Base domain to filter Discount coupons
         selected_coupon_id = kwargs.get('coupon_id')  # Get selected coupon ID from reques
         # If a specific course is selected, show only that course
-        
+
         if selected_coupon_id:
             domain.append(('id', '=', int(selected_coupon_id)))
-        
+
         elif search_query:
             domain.append(('name', 'ilike', search_query))  # Filter by course name
 
@@ -1495,7 +1596,6 @@ class PortalMyCourses(http.Controller):
 
         return request.render('custom_web_kreator.creator_lead', context)
 
-
     # @http.route('/partner_income_data', type='http', auth='public', website=True)
     # def partner_income(self, **kwargs):
     #     # Render the data page template
@@ -1506,19 +1606,18 @@ class PortalMyCourses(http.Controller):
     #     # Render the data page template
     #     return http.request.render('custom_web_kreator.creator_landing_page')
 
-
-    #Pass Data through JS
+    # Pass Data through JS
     @http.route('/creator-landing-page-js', type='http', auth='public', methods=['POST'], csrf=False)
     def handle_form_data(self, **kwargs):
         # Get the list from the form_data field
         # Banner Information
         if kwargs.get('form_data'):
             try:
-                print("\n\n\n=========1==============",kwargs.get('form_data'))
+                print("\n\n\n=========1==============", kwargs.get('form_data'))
                 form_data_json = kwargs.get('form_data')
                 form_data_list = json.loads(form_data_json) if form_data_json else []
                 # Unpack the list values
-                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[1])],limit=1)
+                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[1])], limit=1)
                 upload_file = kwargs.get('upload_file')
                 file_content = False
                 if upload_file:
@@ -1526,10 +1625,10 @@ class PortalMyCourses(http.Controller):
                     file_name = upload_file.filename
                 if course_id:
                     course_id.sudo().write({
-                        'creator_name':form_data_list[0],
-                        'main_heading':course_id.name,
-                        'p2':form_data_list[2],
-                        'combination_id':int(form_data_list[3]),
+                        'creator_name': form_data_list[0],
+                        'main_heading': course_id.name,
+                        'p2': form_data_list[2],
+                        'combination_id': int(form_data_list[3]),
                         'image_icon': base64.b64encode(file_content),
                     })
                     return request.make_response(
@@ -1578,7 +1677,7 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-        
+
         # About Course Data Updating
         elif kwargs.get('aboutCourse_data'):
             try:
@@ -1592,7 +1691,7 @@ class PortalMyCourses(http.Controller):
                 para_lines = []
                 for para in form_data_list[1:]:
                     vals = {
-                        'p1':para,
+                        'p1': para,
                     }
                     para_lines.append((0, 0, vals))
                 if course_id:
@@ -1625,7 +1724,7 @@ class PortalMyCourses(http.Controller):
                 para_lines = []
                 for para in form_data_list[1:]:
                     vals = {
-                        'c1':para,
+                        'c1': para,
                     }
                     para_lines.append((0, 0, vals))
                 if course_id:
@@ -1644,7 +1743,7 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-        
+
         # Course Curriculum Data Updating
         elif kwargs.get('curriculum_data'):
             try:
@@ -1653,12 +1752,13 @@ class PortalMyCourses(http.Controller):
                 form_data_json = kwargs.get('curriculum_data')
                 form_data_list = json.loads(form_data_json) if form_data_json else []
                 # Search for the course
-                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])], limit=1)
+                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])],
+                                                                       limit=1)
                 para_lines = []
                 for para in form_data_list[1:]:
                     vals = {
-                        'h1':para['title'],
-                        'c1':para['content'],
+                        'h1': para['title'],
+                        'c1': para['content'],
                     }
                     para_lines.append((0, 0, vals))
                 if course_id:
@@ -1677,7 +1777,7 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-        
+
         # About Me Data Updating
         elif kwargs.get('aboutMe_data'):
             try:
@@ -1687,7 +1787,8 @@ class PortalMyCourses(http.Controller):
                 form_data_list = json.loads(form_data_json) if form_data_json else []
 
                 # Search for the course
-                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])], limit=1)
+                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])],
+                                                                       limit=1)
                 para_lines = []
                 upload_file = kwargs.get('aboutme_upload_file')
                 file_content = False
@@ -1695,7 +1796,7 @@ class PortalMyCourses(http.Controller):
                     file_content = upload_file.read()
                 for para in form_data_list[1:]:
                     vals = {
-                        'p1':para['content'],
+                        'p1': para['content'],
                     }
                     para_lines.append((0, 0, vals))
                 if course_id:
@@ -1723,7 +1824,7 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-        
+
         # Who Should Take This Course? Data Updating
         elif kwargs.get('audience_data'):
             try:
@@ -1733,7 +1834,8 @@ class PortalMyCourses(http.Controller):
                 form_data_list = json.loads(form_data_json) if form_data_json else []
 
                 # Search for the course
-                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])], limit=1)
+                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])],
+                                                                       limit=1)
                 para_lines = []
                 for para in form_data_list[1:]:
                     para_lines.append(para)
@@ -1755,7 +1857,7 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-        
+
         # Our Students - Testimonials Data Updating
         elif kwargs.get('testimonials_data'):
             try:
@@ -1765,30 +1867,31 @@ class PortalMyCourses(http.Controller):
                 form_data_list = json.loads(form_data_json) if form_data_json else []
 
                 # Search for the course
-                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])], limit=1)
+                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])],
+                                                                       limit=1)
                 para_lines = []
                 file_content = False
                 i = 0
                 for para in form_data_list[1:]:
-                    upload_file = kwargs.get('upload_file_'+str(i))
+                    upload_file = kwargs.get('upload_file_' + str(i))
                     file_content = upload_file.read()
                     if para['testimonial_type'] == 'text':
                         vals = {
-                            'name':para['name'],
-                            'content_type':para['testimonial_type'],
-                            'p1':para['text'],
-                            'rating':para['rating'],
+                            'name': para['name'],
+                            'content_type': para['testimonial_type'],
+                            'p1': para['text'],
+                            'rating': para['rating'],
                             'image': base64.b64encode(file_content),
                         }
                     else:
                         vals = {
-                            'name':para['name'],
-                            'content_type':para['testimonial_type'],
-                            'p1':para['content'],
-                            'rating':para['rating'],
+                            'name': para['name'],
+                            'content_type': para['testimonial_type'],
+                            'p1': para['content'],
+                            'rating': para['rating'],
                             'image': base64.b64encode(file_content),
                         }
-                    i +=1
+                    i += 1
                     para_lines.append((0, 0, vals))
                 if course_id:
                     course_id.sudo().write({
@@ -1808,7 +1911,7 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-        
+
         # FAQs Data Updating
         elif kwargs.get('faq_data'):
             try:
@@ -1818,12 +1921,13 @@ class PortalMyCourses(http.Controller):
                 form_data_list = json.loads(form_data_json) if form_data_json else []
 
                 # Search for the course
-                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])], limit=1)
+                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])],
+                                                                       limit=1)
                 para_lines = []
                 for para in form_data_list[1:]:
                     vals = {
-                        'q1':para['question'],
-                        'a1':para['answer'],
+                        'q1': para['question'],
+                        'a1': para['answer'],
                     }
                     para_lines.append((0, 0, vals))
                 if course_id:
@@ -1863,7 +1967,7 @@ class PortalMyCourses(http.Controller):
                 if course_id:
                     course_id.sudo().write({
                         'c11': form_data_list[1],
-                        'image1':base64.b64encode(file_content),
+                        'image1': base64.b64encode(file_content),
                     })
                     return request.make_response(
                         json.dumps({'result': {'success': True, 'message': 'Data received successfully!'}}),
@@ -1879,7 +1983,7 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-        
+
         # Certificate Data Updating
         elif kwargs.get('certificate_data'):
             try:
@@ -1901,11 +2005,11 @@ class PortalMyCourses(http.Controller):
                             'is_this_certificate_course': 'yes',
                             'issued_by': form_data_list[2],
                             'upload_signature': base64.b64encode(file_content),
-                            })
+                        })
                     else:
                         course_id.sudo().write({
                             'is_this_certificate_course': 'no',
-                            })
+                        })
                     return request.make_response(
                         json.dumps({'result': {'success': True, 'message': 'Data received successfully!'}}),
                         headers=[('Content-Type', 'application/json')]
@@ -1920,7 +2024,7 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-        
+
         # Course Thumbnail Data Updating
         elif kwargs.get('courseThumbnail_data'):
             try:
@@ -1938,7 +2042,7 @@ class PortalMyCourses(http.Controller):
                 if course_id:
                     course_id.sudo().write({
                         'image_1920': base64.b64encode(file_content),
-                        })
+                    })
                     return request.make_response(
                         json.dumps({'result': {'success': True, 'message': 'Data received successfully!'}}),
                         headers=[('Content-Type', 'application/json')]
@@ -1953,14 +2057,13 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-        
+
 
         else:
             return request.make_response(
                 json.dumps({'result': {'success': False, 'message': 'No data provided!'}}),
                 headers=[('Content-Type', 'application/json')]
             )
-        
 
     @http.route('/creator-landing-page', type='http', auth='public', website=True, csrf=True, methods=['GET', 'POST'])
     def creator_landing_page(self, **post):
@@ -2150,7 +2253,7 @@ class PortalMyCourses(http.Controller):
         return http.request.render('custom_web_kreator.creator_landing_page_js', {
             'user_name': user.name,
             'courses': courses,
-            'combinations':combination_id,
+            'combinations': combination_id,
             'selected_course': selected_course,
             'description': course.p2,
             'target_audience_options': target_audience_options
@@ -2437,8 +2540,8 @@ class PortalMyCourses(http.Controller):
             'text_color': text_color,
             'background_color': background_color,
         }
-        print("values",values)
-        
+        print("values", values)
+
         if landing_id:
             product_id = landing_id.product_id.id
             if not product_id:
@@ -2446,11 +2549,11 @@ class PortalMyCourses(http.Controller):
             product_template_id = landing_id.product_id.id
             values['product_id'] = product_id
             values['product_template_id'] = product_template_id
-            
+
         # Check if session has referral access
         session_data = request.session.get('course_access', {})
         partner_id = session_data.get('partner_id')
-        
+
         user = request.env.user
         partner = user.partner_id
 
@@ -2466,7 +2569,8 @@ class PortalMyCourses(http.Controller):
 
     @http.route('/partner-leaderboard', type='http', auth='public', website=True)
     def partner_leaderboard(self, **kwargs):
-        orders_lines = request.env['sale.order.line'].sudo().search([('is_commission','=', True),('state', '=', 'sale'),('partner_commission_partner_id', '!=', False)])
+        orders_lines = request.env['sale.order.line'].sudo().search(
+            [('is_commission', '=', True), ('state', '=', 'sale'), ('partner_commission_partner_id', '!=', False)])
         order_lines = sorted(orders_lines, key=attrgetter('partner_commission_partner_id'))
         # Group by commission partner ID
         grouped_data = {}
@@ -2476,28 +2580,28 @@ class PortalMyCourses(http.Controller):
                 'total_commission': sum(line.partner_commission_amount for line in lines),
             }
         for data in grouped_data:
-            lines = orders_lines.search([('partner_commission_partner_id','=',data.id)])
+            lines = orders_lines.search([('partner_commission_partner_id', '=', data.id)])
             leaderboard.append({
-                'partner_name':data.name,
+                'partner_name': data.name,
                 'total_commission': sum(line.partner_commission_amount for line in lines),
             })
         leaderboard = sorted(leaderboard, key=lambda x: x['total_commission'], reverse=True)
         values = {
-            'leaderboard':leaderboard,
+            'leaderboard': leaderboard,
             'currency_id': request.env.company.currency_id
         }
         # Render the data page template
-        return http.request.render('custom_web_kreator.partner_leaderboard_page',values)
+        return http.request.render('custom_web_kreator.partner_leaderboard_page', values)
 
     @http.route('/partner-training', type='http', auth='public', website=True)
     def partner_training(self, **kwargs):
         print("comingggggg")
         # Fetch courses where is_training_course is True and sort them alphabetically by name
         training_courses = request.env['slide.channel'].sudo().search(
-            [('is_training_course', '=', True),('state', '=', 'published')],
+            [('is_training_course', '=', True), ('state', '=', 'published')],
             order='name asc'
         )
-        print("training_courses",training_courses)
+        print("training_courses", training_courses)
         # Render the template and pass the courses
         return request.render('custom_web_kreator.partner_training', {
             'training_courses': training_courses
@@ -2521,7 +2625,6 @@ class PortalMyCourses(http.Controller):
             'promotional_materials': course.promotional_material_ids
         })
 
-
     @http.route('/download_attachment/<int:material_id>', type='http', auth='public')
     def download_attachment(self, material_id, **kwargs):
         material = request.env['slide.channel.promotional.material'].sudo().browse(material_id)
@@ -2540,12 +2643,12 @@ class PortalMyCourses(http.Controller):
         # Render the data page template
         return http.request.render('custom_web_kreator.coming_soon')
 
-    @http.route('/creator-profile', type='http', auth='user', website=True, methods=['GET', 'POST'],csrf=False)
+    @http.route('/creator-profile', type='http', auth='user', website=True, methods=['GET', 'POST'], csrf=False)
     def creator_profile(self, **post):
         user = request.env.user
         partner = user.partner_id  # Get the linked partner record
         image_file = request.httprequest.files.get('image')
-        print("image_file",image_file)
+        print("image_file", image_file)
         # Map input fields to social media types
         social_media_map = {
             'facebook': 'facebook',
@@ -2559,7 +2662,7 @@ class PortalMyCourses(http.Controller):
             if image_file:
                 image_data = image_file.read()
                 user.image_1920 = base64.b64encode(image_data)
-                print("user.image_1920",user.image_1920)
+                print("user.image_1920", user.image_1920)
             # Get existing social media records
             existing_socials = {line.social_media: line for line in partner.social_section_line}
 
@@ -2580,7 +2683,7 @@ class PortalMyCourses(http.Controller):
                 partner.write({'social_section_line': social_data})
 
         user_image = user.image_1920 and f"data:image/png;base64,{user.image_1920.decode('utf-8')}" or "/web/image/res.users/%s/image_1920" % user.id
-        print("user_image",user_image)
+        print("user_image", user_image)
         # Pass existing values to the template
         values = {
             'name': user.name,
@@ -2722,7 +2825,6 @@ class PortalMyCourses(http.Controller):
         # Render the data page template
         return http.request.render('custom_web_kreator.partner_video2')
 
-
     @http.route('/partner-video3', type='http', auth='public', website=True)
     def partner_video_three(self, **kwargs):
         # Render the data page template
@@ -2731,7 +2833,7 @@ class PortalMyCourses(http.Controller):
     @http.route('/partner-term', type='http', auth='public', website=True)
     def partner_term(self, **kwargs):
         # Render the data page template
-        return http.request.render('custom_web_kreator.partner_term',)
+        return http.request.render('custom_web_kreator.partner_term', )
 
     @http.route('/submit-terms', type='http', auth='public', website=True, methods=['POST'])
     def submit_terms(self, **post):
@@ -2753,10 +2855,9 @@ class PortalMyCourses(http.Controller):
 
         return request.redirect('/partner-welcome')
 
-
     @http.route('/partner-welcome', type='http', auth='public', website=True)
     def partner_welcome(self, **kwargs):
         # Render the data page template
-        
+
         agreement = request.session.get('agreement', 'No Selection')
-        return http.request.render('custom_web_kreator.partner_welcome',{'agreement':agreement})
+        return http.request.render('custom_web_kreator.partner_welcome', {'agreement': agreement})
