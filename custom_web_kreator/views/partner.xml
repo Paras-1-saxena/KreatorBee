@@ -206,19 +206,19 @@ img{
                         <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
                     </div>
                     <div class="menu-links">
-                        <a href="/partner" class="active">
+                        <a href="/partner/income" class="active">
                             <i class="fa fa-chart-bar"></i> Income
                         </a>
-                        <a href="/partner-lead">
+                        <a href="/partner/lead">
                             <i class="fa fa-bullhorn"></i> Leads
                         </a>
-                        <a href="/partner-kyc">
+                        <a href="/partner/kyc">
                             <i class="fa fa-id-card"></i> KYC
                         </a>
-                        <a href="/partner-referral">
+                        <a href="/partner/referral">
                             <i class="fa fa-link"></i> Links
                         </a>
-                        <a href="/partner-leaderboard" >
+                        <a href="/partner/leaderboard" >
                             <i class="fa fa-medal"></i> Leaderboard
                         </a>
                     </div>
@@ -228,11 +228,11 @@ img{
                 <!-- Side Menu -->
                 <div class="side-menu">
                     <ul>
-                        <li><a href="/partner" class="active"><i class="fa fa-chart-line"></i> Sales</a></li>
-                        <li><a href="/partner-product" class="active"><i class="fa fa-box"></i> Products</a></li>
-                        <li><a href="/npromote"><i class="fa fa-ad"></i> Promote</a></li>
+                        <li><a href="/partner/income" class="active"><i class="fa fa-chart-line"></i> Sales</a></li>
+                        <li><a href="/partner/myproducts" class="active"><i class="fa fa-box"></i> Products</a></li>
+                        <li><a href="/partner/promotional-material"><i class="fa fa-ad"></i> Promote</a></li>
                         <li><a href="#"><i class="fa fa-users"></i> Community</a></li>
-                        <li><a href="/nmy-courses-partner"><i class="fa fa-book-reader"></i> My Courses</a></li>
+                        <li><a href="/partner/mycourses"><i class="fa fa-book-reader"></i> My Courses</a></li>
                     </ul>
                 </div>
                 <!-- Main Content -->

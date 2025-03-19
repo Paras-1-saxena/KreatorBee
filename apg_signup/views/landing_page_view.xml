@@ -16,9 +16,6 @@
                             <field name="secondary_color"/> -->
                             <field name="combination_id"/>
                         </group>
-                        <group>
-                            <field name="landing_page_id"/>
-                        </group>
                     </group>
                     <notebook>
                         <page string="Section 1">

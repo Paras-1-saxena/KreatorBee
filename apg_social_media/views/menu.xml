@@ -4,16 +4,16 @@
     <!-- Website Menu -->
     <template id="partner_side_menu" inherit_id="custom_web_kreator.side_menu" priority="30">
         <xpath expr="//li[hasclass('o-cust-community-menu')]/a" position="attributes">
-            <attribute name="href">/forumsection-company</attribute>
+            <attribute name="href">/partner/community/updates</attribute>
         </xpath>
         <xpath expr="//li[hasclass('o-cust-community-menu')]/ul/li/a[1]" position="attributes">
-            <attribute name="href">/forumsection-company</attribute>
+            <attribute name="href">/partner/community/updates</attribute>
         </xpath>
         <xpath expr="//li[hasclass('o-cust-community-menu')]/ul/li/a[2]" position="attributes">
-            <attribute name="href">/forumsection-creator</attribute>
+            <attribute name="href">/partner/community/creator</attribute>
         </xpath>
         <xpath expr="//li[hasclass('o-cust-community-menu')]/ul/li/a[3]" position="attributes">
-            <attribute name="href">/forumsection-partner</attribute>
+            <attribute name="href">/partner/community/partner</attribute>
         </xpath>
     </template>
 

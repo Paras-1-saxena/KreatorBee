@@ -9,6 +9,7 @@
     'depends': ['base', 'web', 'website'],  # List of dependent modules
     'data': [
         'views/assets.xml',
+        'views/mobile_view_restriction_template.xml',
     ],
     'demo': [
         # Demo data (optional)

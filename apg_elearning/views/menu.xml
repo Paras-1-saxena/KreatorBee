@@ -28,4 +28,10 @@
         parent="website_slides.website_slides_menu_configuration"
         sequence="4" 
         action="action_terms_conditions"/>
+    <menuitem
+        id="menu_slide_video_config"
+        name="Video Configurations"
+        parent="website_slides.website_slides_menu_configuration"
+        sequence="5"
+        action="action_slide_video_config"/>
 </odoo>

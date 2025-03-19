@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="mobile_restricted_page">
+        <t t-name="apg_js.mobile_restricted_page">
+            <html>
+                <head>
+                    <title>Access Restricted</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            text-align: center;
+                            padding: 50px;
+                            background-color: #f8f9fa;
+                        }
+                        .container {
+                            background: white;
+                            padding: 20px;
+                            border-radius: 10px;
+                            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                            max-width: 400px;
+                            margin: auto;
+                        }
+                        h1 {
+                            font-size: 24px;
+                            color: #d9534f;
+                        }
+                        p {
+                            font-size: 16px;
+                            margin: 10px 0;
+                        }
+                        .btn {
+                            background: #007bff;
+                            color: white;
+                            padding: 10px 15px;
+                            border: none;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            text-decoration: none;
+                            display: inline-block;
+                        }
+                        .btn:hover {
+                            background: #0056b3;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <h1>Access Restricted</h1>
+                        <p>This page is not accessible on mobile devices. Please use a desktop.</p>
+                        <a href="javascript:history.back()" class="btn">Go Back</a>
+                    </div>
+                </body>
+            </html>
+        </t>
+    </template>
+</odoo>

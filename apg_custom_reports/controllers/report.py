@@ -79,14 +79,14 @@ class CommissionReportWizard(models.TransientModel):
             worksheet.write(row, 2, partner.code or '')  # Affiliate ID
             worksheet.write(row, 3, '')  # Affiliate User ID
             worksheet.write(row, 4, partner.email or '')  # Affiliate Email
-            worksheet.write(row, 5, '')  # Affiliate Plan
+            worksheet.write(row, 5, 'Influence Mastery')  # Affiliate Plan
             worksheet.write(row, 6, commission_total or 0.0)  # Commission (Total for the partner)
             worksheet.write(row, 7, partner.phone)  # Phone
             worksheet.write(row, 8, partner.email)
             worksheet.write(row, 9, '')
             worksheet.write(row, 10, '')
-            worksheet.write(row, 11, '')
-            worksheet.write(row, 12, '')
+            worksheet.write(row, 11, 'Ok Case')
+            worksheet.write(row, 12, 'Payu')
 
             row += 1  # Increment row for the next partner
 

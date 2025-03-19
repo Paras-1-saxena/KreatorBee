@@ -33,9 +33,9 @@ class OtpLoginHome(Home):
                     if user_id.partner_id.user_type == 'creator':
                         redirect = '/master'
                     elif user_id.partner_id.user_type == 'partner':
-                        redirect = '/partner'
+                        redirect = '/partner/income'
                     elif user_id.partner_id.user_type == 'customer':
-                        redirect = '/customer'
+                        redirect = '/customer/mycourses'
                     else:
                         redirect=None
                 else:

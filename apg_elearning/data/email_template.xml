@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <record id="email_template_course_under_review" model="mail.template">
+            <field name="name">Course Under Review Notification</field>
+            <field name="model_id" ref="apg_elearning.model_slide_channel"/>
+            <field name="email_from">info@kreatorbee.in</field>
+            <field name="email_to">{{ object.create_uid.email }}</field>
+            <field name="subject">Your Course is Under Review</field>
+            <field name="body_html"><![CDATA[
+                <p>Dear <t t-out="object.create_uid.name"/>,</p>
+                <p>Your course "<strong><t t-out="object.name"/></strong>" has been submitted for review.</p>
+                <p>Our team will review it soon, and you will receive a notification once it is approved.</p>
+                <p>Best regards,</p>
+                <p>Your Team</p>
+            ]]></field>
+        </record>
+
+        <record id="email_template_course_published" model="mail.template">
+            <field name="name">Course Published Notification</field>
+            <field name="model_id" ref="apg_elearning.model_slide_channel"/>
+            <field name="email_from">info@kreatorbee.in</field>
+            <field name="email_to">{{ object.create_uid.email }}</field>
+            <field name="subject">Your Course is Now Published</field>
+            <field name="body_html"><![CDATA[
+                <p>Dear <t t-out="object.create_uid.name"/>,</p>
+                <p>Congratulations! Your course "<strong><t t-out="object.name"/></strong>" has been published successfully.</p>
+                <p>It is now available for learners.</p>
+                <p>Best regards,</p>
+                <p>Your Team</p>
+            ]]></field>
+        </record>
+    </data>
+</odoo>

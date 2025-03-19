@@ -243,4 +243,45 @@
             </p>
         </field>
     </record>
+    <record id="view_slide_video_config_tree" model="ir.ui.view">
+        <field name="name">slide.video.config.tree</field>
+        <field name="model">slide.video.config</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="page_key"/>
+                <field name="video_url"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_slide_video_config_form" model="ir.ui.view">
+        <field name="name">slide.video.config.form</field>
+        <field name="model">slide.video.config</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="page_key"/>
+                            <field name="video_url"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_slide_video_config" model="ir.actions.act_window">
+        <field name="name">Video Configurations</field>
+        <field name="res_model">slide.video.config</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Content Tag
+            </p>
+        </field>
+    </record>
 </odoo>

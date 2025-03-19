@@ -23,14 +23,19 @@ _logger = logging.getLogger(__name__)
 class AuthSignupHome(Home):
     @http.route()
     def web_login(self, *args, **kw):
-        print("cominggggggg login")
         ensure_db()
         response = super().web_login(*args, **kw)
         partner_id = False
         response.qcontext.update(self.get_auth_signup_config())
         redirect_url = request.session.get('redirect_after_signup')
         if request.session.uid:
-            partner_id = request.env['res.users'].sudo().browse(request.session.uid).partner_id
+            user = request.env['res.users'].sudo().browse(request.session.uid)
+            partner_id = user.partner_id
+
+            # Redirect internal users (admin or backend users) to Discuss (/web)
+            if user.has_group('base.group_user'):
+                return request.redirect('/web')
+
             if request.httprequest.method == 'GET' and request.params.get('redirect'):
                 # Redirect if already logged in and redirect param is present
                 return request.redirect(request.params.get('redirect'))
@@ -41,13 +46,13 @@ class AuthSignupHome(Home):
             if partner_id.user_type == 'creator':
                 return request.redirect('/master')
             elif partner_id.user_type == 'partner':
-                return request.redirect('/partner')
+                return request.redirect('/partner/income')
             elif partner_id.user_type == 'customer':
                 if redirect_url:
                     del request.session['redirect_after_signup']  # Clear session value after use
                     return request.redirect(redirect_url)
                 else:
-                    return request.redirect('/customer')
+                    return request.redirect('/customer/mycourses')
             else:
                 return request.redirect('/')
         return response
@@ -79,14 +84,13 @@ class AuthSignupHome(Home):
                 if kw.get('otp_6'):
                     otp_code += kw.get('otp_6')
 
-                if kw.get('phone'):
-                # if len(otp_code) == 6 and kw.get('phone'): 
+                if len(otp_code) == 6 and kw.get('phone'): 
                     # Check if the OTP exists for the mobile number
-                    otp_record = otp_obj.sudo().search([], order='create_date desc', limit=1)
-                    # otp_record = otp_obj.sudo().search([
-                    #     ("mobile", "=", kw.get('phone')), 
-                    #     ('otp','=',otp_code), 
-                    #     ('is_verify', '=', True)], order='create_date desc', limit=1)
+                    # otp_record = otp_obj.sudo().search([], order='create_date desc', limit=1)
+                    otp_record = otp_obj.sudo().search([
+                        ("mobile", "=", kw.get('phone')), 
+                        ('otp','=',otp_code), 
+                        ('is_verify', '=', True)], order='create_date desc', limit=1)
                     if otp_record: 
                         self.do_signup(qcontext)
                         # Set user to public if they were not signed in by do_signup
@@ -114,7 +118,7 @@ class AuthSignupHome(Home):
                                 del request.session['redirect_after_signup']  # Clear session value after use
                                 return request.redirect(redirect_url)
                             else:
-                                return request.redirect('/customer')
+                                return request.redirect('/customer/mycourses')
                         else:
                             return self.web_login(*args, **kw)
                     else:
@@ -136,10 +140,9 @@ class AuthSignupHome(Home):
                 if user.partner_id.user_type == 'creator':
                     return request.redirect("sign-up/about?partner=%d" % user.partner_id)
                 elif user.partner_id.user_type == 'partner':
-                    print("comingggg2222222")
                     return request.redirect("sign-up/about?partner=%d" % user.partner_id)
                 elif partner_id.user_type == 'customer':
-                    return request.redirect('/customer')
+                    return request.redirect('/customer/mycourses')
                 else:
                     return request.redirect('/web/login?%s' % url_encode({'login': user.login, 'redirect': '/web'}))
         response = request.render('apg_signup.custom_signup', qcontext)
@@ -147,34 +150,38 @@ class AuthSignupHome(Home):
         response.headers['Content-Security-Policy'] = "frame-ancestors 'self'"
         return response
 
-
+ 
     # Generate OTP
     @http.route(['/generate/otp'], type='json', auth="public", website=True)
-    def generate_otp(self, mobile=False, **post):
+    def generate_otp(self, mobile=False, email=False, **post):
         values = {}
         language = request.context.get('lang')
         # base_url = "https://mobicomm.dove-sms.com//generateOtp.jsp?userid=SACHIN&key=6e637e20bfXX&mobileno=+918354887130&timetoalive=200&message=Dear%20Customer%20Do%20Not%20Share%20OTP%20%7Botp%7D%20OMKARENT&senderid=OMENTO&accusage=1&entityid=1401487200000053882&tempid=1407167569369094246"
+        if email:
+            if request.env["res.partner"].sudo().search([("email", "=", email)]):
+                values['error'] = 'Another user is already registered using this email'
+                return values
         if mobile:
             if request.env["res.partner"].sudo().search([("mobile", "=", mobile)]):
                 values['error'] = 'Another user is already registered using this mobile No'
                 return values
-            values['true'] = True
-            return values
-            # base_url = "https://mobicomm.dove-sms.com//generateOtp.jsp?userid=SACHIN&key=6e637e20bfXX&mobileno=+918354887130&timetoalive=200&message=Dear%20Customer%20Do%20Not%20Share%20OTP%20%7Botp%7D%20OMKARENT&senderid=OMENTO&accusage=1&entityid=1401487200000053882&tempid=1407167569369094246"
+            # values['true'] = True
+            # return values
+            base_url = "https://mobicomm.dove-sms.com//generateOtp.jsp?userid=SACHIN&key=6e637e20bfXX&mobileno=+918354887130&timetoalive=200&message=Dear%20Customer%20Do%20Not%20Share%20OTP%20%7Botp%7D%20OMKARENT&senderid=OMENTO&accusage=1&entityid=1401487200000053882&tempid=1407167569369094246"
             # # Construct the URL with parameters
             
-            # try:
-            #     response = requests.get(base_url)
-            #     print("Response",response)
-            #     data = response.json()
-            #     print("Response",data['result'])
-            #     if data['result'] == 'success':
-            #         values['true'] = True
-            #     else:
-            #         return f"Failed to send OTP: {data['reason']}"
-            # except Exception as e:
-            #     return f"An error occurred: {str(e)}"
-            # return values
+            try:
+                response = requests.get(base_url)
+                print("Response",response)
+                data = response.json()
+                print("Response",data['result'])
+                if data['result'] == 'success':
+                    values['true'] = True
+                else:
+                    return f"Failed to send OTP: {data['reason']}"
+            except Exception as e:
+                return f"An error occurred: {str(e)}"
+            return values
         else:
             values['error'] = 'Please enter valid Mobile Number'
             return values
@@ -186,21 +193,21 @@ class AuthSignupHome(Home):
         otp_obj = request.env['otp.otp']
         if mobile and otp:
             # Check if the OTP exists for the mobile number
-            otp_id = otp_obj.sudo().create({'otp':otp,'mobile':mobile,'is_verify':True})
-            values['true'] = True
-            return values
-            # base_url = "https://mobicomm.dove-sms.com//validateOtpApi.jsp?otp="+otp+"&mobileno=+918354887130"
-            # response = requests.get(base_url)
-            # data = response.json()
-            # print("Response",data)
-            # if data['result'] == 'success':
-            #     otp_id = otp_obj.sudo().create({'otp':otp,'mobile':mobile,'is_verify':True})
-            #     values['true'] = True
-            #     return values
-            # else:
-            #     # return f"Failed to send OTP: {data['reason']}"
-            #     values['error'] = f"Failed to send OTP: {data['result']}"
-            #     return values
+            # otp_id = otp_obj.sudo().create({'otp':otp,'mobile':mobile,'is_verify':True})
+            # values['true'] = True
+            # return values
+            base_url = "https://mobicomm.dove-sms.com//validateOtpApi.jsp?otp="+otp+"&mobileno=+918354887130"
+            response = requests.get(base_url)
+            data = response.json()
+            print("Response",data)
+            if data['result'] == 'success':
+                otp_id = otp_obj.sudo().create({'otp':otp,'mobile':mobile,'is_verify':True})
+                values['true'] = True
+                return values
+            else:
+                # return f"Failed to send OTP: {data['reason']}"
+                values['error'] = f"Failed to send OTP: {data['result']}"
+                return values
         else:
             values['error'] = 'Missing mobile number or OTP. Please try again.'
             return values
@@ -327,7 +334,7 @@ class AuthSignupHome(Home):
             elif partner_id.user_type == 'partner':
                 return request.redirect('/master-partner')
             elif partner_id.user_type == 'customer':
-                return request.redirect('/customer')
+                return request.redirect('/customer/mycourses')
             else:
                 return request.redirect('/')
 
@@ -407,14 +414,24 @@ class WebsiteSale(payment_portal.PaymentPortal):
         values.update(self._cart_values(**post))
         # Check if the user is logged in
         user = request.env.user
-        if user and user.id != request.website.user_id.id:  # Check if the user is not the public user
-            # Redirect registered users to the payment page
+        user_type = user.partner_id.user_type  # Assuming user_type is a field in res.partner
+        public_user_id = request.website.user_id.id  # Get the public user ID
+
+        if user.id != public_user_id and order and order.order_line:
+            # ✅ Fix: Check if already redirected once to prevent loops
+            if request.session.get('checkout_redirected'):
+                return request.redirect('/shop/checkout?try_skip_step=true')
+            request.session['checkout_redirected'] = True
             return request.redirect('/shop/checkout?try_skip_step=true')
-        else:
-            # Store the current product URL to return after signup
-            current_url = request.httprequest.referrer
-            request.session['redirect_after_signup'] = current_url
-            return request.redirect('/web/signup?user_type=customer')
+
+        request.session['checkout_redirected'] = False
+        if user_type == 'creator':  # Check if user is a creator
+            return request.redirect('/creator/my-courses#')  # Redirect to custom page
+        elif user_type == 'customer':
+            return request.redirect('/customer/courses_recommend')
+        elif user_type == 'partner':
+            return request.redirect('/partner/myproducts')
+        return request.render("website_sale.cart", values)
 
     @route('/shop/payment', type='http', auth='public', website=True, sitemap=False)
     def shop_payment(self, **post):

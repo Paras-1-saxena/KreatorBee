@@ -76,6 +76,25 @@ class ResPartner(models.Model):
     def action_reject(self):
         self.write({'state_selection': 'rejected'})
 
+    def write(self, vals):
+        """Send email when state changes"""
+        res = super(ResPartner, self).write(vals)
+        if 'state_selection' in vals:
+            if vals['state_selection'] == 'under_review':
+                self._send_kyc_email('apg_signup.email_template_kyc_under_review')
+            elif vals['state_selection'] == 'approved':
+                self._send_kyc_email('apg_signup.email_template_kyc_approved')
+            elif vals['state_selection'] == 'rejected':
+                self._send_kyc_email('apg_signup.email_template_kyc_rejected')
+        return res
+
+    def _send_kyc_email(self, template_xml_id):
+        """Helper function to send email"""
+        template = self.env.ref(template_xml_id, raise_if_not_found=False)
+        if template and self.email:
+            template.sudo().send_mail(self.id, force_send=True)
+
+
     aadhaar_number = fields.Char('Aadhaar Number')
     aadhaar_name = fields.Char('Name on Aadhaar')
     aadhaar_front = fields.Binary('Upload Front Side')

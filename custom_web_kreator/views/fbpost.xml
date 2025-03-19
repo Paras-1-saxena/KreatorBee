@@ -386,13 +386,13 @@
                         <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
                     </div>
                     <div class="menu-links" >
-                        <a href="/forumsection" class="active">
+                        <a href="/creator/community" class="active">
                             <i class="fa fa-user-friends"></i>  Community
                         </a>
-                         <a href="/forumsection">
+                         <a href="/creator/community">
                             <i class="fa fa-user-plus"></i>  My Bee Partners
                         </a>
-                        <a href="/offers" >
+                        <a href="/creator/offers" >
                             <i class="fa fa-book-reader"></i> Offers
                         </a>
                     
@@ -411,22 +411,22 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/master_income_data">
+                            <a href="/creator/income">
                                 <i class="fa fa-chart-line"></i> Sales
                             </a>
                         </li>
                         <li>
-                            <a href="/nmy-courses">
+                            <a href="/creator/my-courses">
                                 <i class="fa fa-box"></i> Products
                             </a>
                         </li>
                         <li>
-                            <a href="/forumsection" class="active">
+                            <a href="/creator/community" class="active">
                                 <i class="fa fa-users"></i> Connect with Partner
                             </a>
                         </li>
                         <li>
-                            <a href="/coming-soon">
+                            <a href="/creator/customer">
                                 <i class="fa fa-address-book"></i> Customer
                             </a>
                         </li>
