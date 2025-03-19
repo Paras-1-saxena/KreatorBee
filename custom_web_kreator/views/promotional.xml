@@ -288,13 +288,13 @@
                         <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo" />
                     </div>
                     <div class="menu-links">
-                        <a href="/partner-training" class="active">
+                        <a href="/partner/training" class="active">
                             <i class="fa fa-chalkboard-teacher"></i> Training
                         </a>
-                        <a href="/target">
+                        <a href="/partner/target">
                             <i class="fa fa-bullseye"></i> Targets
                         </a>
-                        <a href="/offers-coupon" >
+                        <a href="/partner/offers" >
                             <i class="fa fa-cubes"></i> Offers
                         </a>
                         <a href="/promotional">

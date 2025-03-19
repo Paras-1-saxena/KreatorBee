@@ -52,7 +52,7 @@
                             <div
                                 class="p-lg-2 p-1 d-flex flex-column align-items-center"
                             >
-                                <a href="/master_income_data" class='text-center'>
+                                <a href="/creator/income" class='text-center'>
                                     <i class="ri-line-chart-fill"></i>
                                     <p>
                                         Income Data
@@ -60,7 +60,7 @@
                                 </a>
                             </div>
                             <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
-                                <a href="/nreferral" class='text-center'>
+                                <a href="/creator/referral" class='text-center'>
                                     <i class="ri-links-fill"></i>
                                     <p>
                                         Links
@@ -68,7 +68,7 @@
                                 </a>
                             </div>
                             <div class="active p-lg-2 p-1 d-flex flex-column align-items-center">
-                                <a href="/nkyc" class='text-center'>
+                                <a href="/creator/kyc" class='text-center'>
                                     <i class="ri-profile-fill"></i>
                                     <p>
                                         KYC
@@ -76,7 +76,7 @@
                                 </a>
                             </div>
                             <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
-                                <a href="/creator-lead" class='text-center'>
+                                <a href="/creator/lead" class='text-center'>
                                     <i class="ri-megaphone-fill"></i>
                                     <p>
                                         Lead
@@ -84,7 +84,7 @@
                                 </a>
                             </div>
                             <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
-                                <a href="/nleaderboard" class='text-center'>
+                                <a href="/creator/leaderboard" class='text-center'>
                                     <i class="ri-award-fill"></i>
                                     <p>
                                         Leaderboard
@@ -108,40 +108,40 @@
                                     <li>
                                         <i class="ri-dashboard-fill"></i> Get Started </li>
                                 </a>
-                                <a href="/master_income_data">
+                                <a href="/creator/income">
                                     <li class="active">
                                         <i class="ri-discount-percent-fill"></i> Sales </li>
                                 </a>
                                 <!-- Sales Dropdown -->
                                 <div class="ps-2 d-block d-lg-none">
                                     <li>
-                                        <a href="/master_income_data"><i
+                                        <a href="/creator/income"><i
                                                 class="ri-subtract-fill"></i> Income Data</a>
                                     </li>
                                     <li>
-                                        <a href="/nreferral"><i class="ri-subtract-fill"></i> Links</a>
+                                        <a href="/creator/referral"><i class="ri-subtract-fill"></i> Links</a>
                                     </li>
                                     <li>
-                                        <a href="/nkyc"><i class="ri-subtract-fill"></i> kyc</a>
+                                        <a href="/creator/kyc"><i class="ri-subtract-fill"></i> kyc</a>
                                     </li>
                                     <li>
                                         <i class="ri-subtract-fill"></i>
-                                        <a href="/creator-lead">Lead</a>
+                                        <a href="/creator/lead">Lead</a>
                                     </li>
                                     <li>
-                                        <a href="/nleaderboard"><i
+                                        <a href="/creator/leaderboard"><i
                                                 class="ri-subtract-fill"></i> Leaderboard</a>
                                     </li>
                                 </div>
-                                <a href="/nmy-courses">
+                                <a href="/creator/my-courses">
                                     <li>
                                         <i class="ri-product-hunt-fill"></i> Products </li>
                                 </a>
-                                <a href="/forumsection">
+                                <a href="/creator/community">
                                     <li>
                                         <i class="ri-user-community-fill"></i> Connect with Partner </li>
                                 </a>
-                                <a href="/coming-soon">
+                                <a href="/creator/customer">
                                     <li>
                                         <i class="ri-user-fill"></i> Customer </li>
                                 </a>
@@ -181,7 +181,7 @@
 
                         <!-- KYC Details -->
                         <section class="kyc my-5">
-                            <form method="POST" action="/nkyc" enctype="multipart/form-data"
+                            <form method="POST" action="/creator/kyc" enctype="multipart/form-data"
                                 id="kyc-form">
                                 <input type="hidden" name="csrf_token"
                                     t-att-value="request.csrf_token()" />

@@ -355,7 +355,7 @@
                                 <div
                                         class="p-lg-2 p-1 d-flex flex-column align-items-center"
                                 >
-                                    <a href="/nmy-courses" class='text-center'>
+                                    <a href="/creator/my-courses" class='text-center'>
                                         <i class="fa fa-book-reader"></i>
                                         <p>
                                             My Courses
@@ -381,7 +381,7 @@
                             <nav class="py-3 px-2">
                                 <!-- Sidebar Menu -->
                                 <ul class="d-flex flex-column gap-2">
-                                    <a href="/master_income_data">
+                                    <a href="/creator/income">
                                         <li>
                                             <i class="ri-discount-percent-fill"></i>
                                             Sales
@@ -390,50 +390,50 @@
                                     <!-- Sales Dropdown -->
                                     <div class="ps-2 d-block d-lg-none">
                                         <li>
-                                            <a href="/master_income_data">
+                                            <a href="/creator/income">
                                                 <i
                                                         class="ri-subtract-fill"></i>
                                                 Income Data
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/nreferral">
+                                            <a href="/creator/referral">
                                                 <i class="ri-subtract-fill"></i>
                                                 Links
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/nkyc">
+                                            <a href="/creator/kyc">
                                                 <i class="ri-subtract-fill"></i>
                                                 kyc
                                             </a>
                                         </li>
                                         <li>
                                             <i class="ri-subtract-fill"></i>
-                                            <a href="/creator-lead">Lead</a>
+                                            <a href="/creator/lead">Lead</a>
                                         </li>
                                         <li>
-                                            <a href="/nleaderboard">
+                                            <a href="/creator/leaderboard">
                                                 <i
                                                         class="ri-subtract-fill"></i>
                                                 Leaderboard
                                             </a>
                                         </li>
                                     </div>
-                                    <a href="/nmy-courses">
+                                    <a href="/creator/my-courses">
                                         <li class="active">
                                             <i class="ri-product-hunt-fill"></i>
                                             Products
                                         </li>
                                     </a>
-                                    <a href="/forumsection">
+                                    <a href="/creator/community">
                                         <li>
                                             <i class="ri-user-community-fill"></i>
                                             Connect with
                                             Partner
                                         </li>
                                     </a>
-                                    <a href="/coming-soon">
+                                    <a href="/creator/customer">
                                         <li>
                                             <i class="ri-user-fill"></i>
                                             Customer
@@ -648,6 +648,17 @@
                                                     const combinationId =
                                                     document.getElementById('bannerInfoColourCombination').value;
 
+                                                    // Function to count words
+                                                    function countWords(str) {
+                                                    return str.trim().split(/\s+/).length;
+                                                    }
+
+                                                    // Validate word count (limit: 30 words)
+                                                    if (countWords(shortDescription) > 30) {
+                                                    alert("Error: Course Short Description cannot exceed 30 words.");
+                                                    return;
+                                                    }
+
                                                     // Prepare all data in a list
                                                     const formDataList = [
                                                     creatorName,
@@ -667,12 +678,12 @@
                                                     }
 
                                                     // Send the FormData via Fetch API
-                                                    fetch("/creator-landing-page-js", {
+                                                    fetch("/creator/landing-page-js", {
                                                     method: "POST",
                                                     body: formData
                                                     })
                                                     .then(response =&gt; response.json())
-                                                    .then(data => {
+                                                    .then(data =&gt; {
                                                     if (data.result.success === true) {
                                                     // Display a success message without an alert box
                                                     let messageBox = document.getElementById("successMessage");
@@ -680,7 +691,7 @@
                                                     messageBox.style.display = "block";
 
                                                     // Hide the message after 3 seconds
-                                                    setTimeout(() => {
+                                                    setTimeout(() =&gt; {
                                                     messageBox.style.display = "none";
                                                     }, 3000);
                                                     } else {
@@ -809,7 +820,7 @@
                                                     list to JSON string
 
                                                     // Send the uspData via Fetch API
-                                                    fetch("/creator-landing-page-js", {
+                                                    fetch("/creator/landing-page-js", {
                                                     method: "POST",
                                                     body: uspData
                                                     })
@@ -971,6 +982,26 @@
                                                 let aboutCourseParas = [];
                                                 aboutCourseParas.push(aboutCourseID);
 
+                                                let totalWordCount = 0; // Track total word count
+
+                                                // Function to count words
+                                                function countWords(str) {
+                                                return str.trim().split(/\s+/).filter(word => word.length > 0).length;
+                                                }
+
+                                                textareas.forEach((textarea) => {
+                                                const words = countWords(textarea.value);
+                                                totalWordCount += words;
+                                                aboutCourseParas.push(textarea.value);
+                                                });
+
+                                                // Validate total word count (limit: 110 words)
+                                                if (totalWordCount > 110) {
+                                                alert("Error: Total word count across all paragraphs cannot exceed 110
+                                                words.");
+                                                return;
+                                                }
+
                                                 // Loop through each textarea and get its value
                                                 textareas.forEach((textarea) => {
                                                 aboutCourseParas.push(textarea.value); // Store the value
@@ -982,7 +1013,7 @@
                                                 JSON.stringify(aboutCourseParas)); // Convert list to JSON string
 
                                                 // Send the FormData via Fetch API
-                                                fetch("/creator-landing-page-js", {
+                                                fetch("/creator/landing-page-js", {
                                                 method: "POST",
                                                 body: aboutCourseData
                                                 })
@@ -1216,9 +1247,17 @@
                                                 learnFromThisParas.push(learnFromThisCourseID);
 
                                                 let allFilled = true; // Flag to check if all fields are filled
+                                                let wordLimitExceeded = false;
+
+                                                // Function to count words
+                                                function countWords(str) {
+                                                return str.trim().split(/\s+/).filter(word => word.length > 0).length;
+                                                }
 
                                                 // Loop through each textarea and get its value
                                                 textareas.forEach((textarea) => {
+                                                const words = countWords(textarea.value);
+
                                                 if (textarea.value.trim() === "") {
                                                 allFilled = false; // Set flag to false if any field is empty
                                                 textarea.style.border = "2px solid red"; // Highlight empty fields
@@ -1226,11 +1265,21 @@
                                                 textarea.style.border = ""; // Reset border for filled fields
                                                 learnFromThisParas.push(textarea.value);
                                                 }
+                                                if (words > 30) {
+                                                wordLimitExceeded = true;
+                                                textarea.style.border = "2px solid red";
+                                                } else {
+                                                textarea.style.border = "";
+                                                }
                                                 });
 
                                                 // If any field is empty, show an alert and stop execution
                                                 if (!allFilled) {
                                                 alert("All paragraph fields are required.");
+                                                return;
+                                                }
+                                                if (wordLimitExceeded) {
+                                                alert("Each paragraph must not exceed 30 words.");
                                                 return;
                                                 }
                                                 // Validation: Ensure paragraph count (excluding course ID) is a
@@ -1246,7 +1295,7 @@
                                                 JSON.stringify(learnFromThisParas)); // Convert list to JSON string
 
                                                 // Send the FormData via Fetch API
-                                                fetch("/creator-landing-page-js", {
+                                                fetch("/creator/landing-page-js", {
                                                 method: "POST",
                                                 body: learnFromThisParasData
                                                 })
@@ -1395,6 +1444,7 @@
                                                     document.querySelectorAll("#courseCurriculumTableBody tr");
                                                     let allFieldsFilled = true; // Flag to track if all fields are
                                                     filled
+                                                    let wordLimitExceeded = false; // Flag to check word limit
 
                                                     if (tableRows.length % 4 !== 0) {
                                                     alert("The number of curriculum rows must be a multiple of 4 before
@@ -1407,11 +1457,20 @@
                                                     courseID: courseID,
                                                     });
 
+                                                    // Function to count words
+                                                    function countWords(text) {
+                                                    return text.trim().split(/\s+/).filter(word => word.length >
+                                                    0).length;
+                                                    }
+
                                                     tableRows.forEach((row, index) => {
                                                     let columns = row.querySelectorAll("td");
                                                     const inputTitle = columns[0].querySelector("input").value.trim();
                                                     const inputContent =
                                                     columns[1].querySelector("textarea").value.trim();
+                                                    const wordCount = countWords(inputContent); // Count words in
+                                                    content
+
 
                                                     if (!inputTitle || !inputContent) {
                                                     allFieldsFilled = false;
@@ -1420,13 +1479,25 @@
                                                     } else {
                                                     columns[0].querySelector("input").classList.remove("is-invalid");
                                                     columns[1].querySelector("textarea").classList.remove("is-invalid");
-                                                    curriculumList.push({ title: inputTitle, content: inputContent });
+
                                                     }
+                                                    if (wordCount > 30) {
+                                                    wordLimitExceeded = true;
+                                                    columns[1].querySelector("textarea").style.border = "2px solid red";
+                                                    } else {
+                                                    columns[1].querySelector("textarea").style.border = "";
+                                                    }
+                                                    curriculumList.push({ title: inputTitle, content: inputContent });
                                                     });
 
                                                     if (!allFieldsFilled) {
                                                     alert("Please fill all required fields before saving.");
                                                     return; // Stop execution if any field is empty
+                                                    }
+
+                                                    if (wordLimitExceeded) {
+                                                    alert("Each content field must not exceed 30 words.");
+                                                    return;
                                                     }
 
                                                     // Create FormData
@@ -1435,7 +1506,7 @@
                                                     JSON.stringify(curriculumList)); // Convert list to JSON string
 
                                                     // Send the FormData via Fetch API
-                                                    fetch("/creator-landing-page-js", {
+                                                    fetch("/creator/landing-page-js", {
                                                     method: "POST",
                                                     body: curriculumData
                                                     })
@@ -1739,6 +1810,8 @@
                                                     const tableRows = document.querySelectorAll("#aboutMeTableBody tr");
 
                                                     let aboutMeData = [];
+                                                    let totalWordCount = 0; // Initialize word count
+
                                                     aboutMeData.push({
                                                     courseID: aboutMeCourseID,
                                                     facebook:aboutMeFaceBook,
@@ -1754,6 +1827,18 @@
                                                     let columns = row.querySelectorAll("td");
                                                     const inputContent = columns[0].querySelector('textarea').value;
 
+                                                    let wordCount = inputContent ? inputContent.split(/\s+/).length : 0;
+                                                    totalWordCount += wordCount;
+
+                                                    if (totalWordCount > 200) {
+                                                    alert("Total content cannot exceed 200 words.");
+                                                    columns[0].querySelector('textarea').classList.add("is-invalid");
+                                                    return; // Stop execution
+                                                    } else {
+                                                    columns[0].querySelector('textarea').classList.remove("is-invalid");
+                                                    }
+
+
                                                     let content = inputContent ? inputContent.trim() : "";
 
                                                     if (content) { // Add only non-empty values
@@ -1762,6 +1847,10 @@
                                                     });
                                                     }
                                                     });
+
+                                                    if (totalWordCount > 200) {
+                                                    return; // Stop execution if word count exceeds 200
+                                                    }
 
                                                     // Create FormData
                                                     let aboutMeDataList = new FormData();
@@ -1774,7 +1863,7 @@
                                                     }
 
                                                     // Send the FormData via Fetch API
-                                                    fetch("/creator-landing-page-js", {
+                                                    fetch("/creator/landing-page-js", {
                                                     method: "POST",
                                                     body: aboutMeDataList
                                                     })
@@ -2052,7 +2141,7 @@
                                                     // Convert list to JSON string
 
                                                     // Send the FormData via Fetch API
-                                                    fetch("/creator-landing-page-js", {
+                                                    fetch("/creator/landing-page", {
                                                     method: "POST",
                                                     body: audienceData
                                                     })
@@ -2275,10 +2364,20 @@
                                                         return;
                                                         }
 
-                                                        if (testimonialType === "text" &amp;&amp; !text) {
+                                                        if (testimonialType === "text") {
+                                                        let wordCount = text.split(/\s+/).filter(word => word.length >
+                                                        0).length;
+                                                        if (!text) {
                                                         alert(`Please enter a testimonial in Section ${index + 1}.`);
                                                         isValid = false;
                                                         return;
+                                                        }
+                                                        if (wordCount > 70) {
+                                                        alert(`Testimonial in Section ${index + 1} must not exceed 70
+                                                        words.`);
+                                                        isValid = false;
+                                                        return;
+                                                        }
                                                         }
 
                                                         if (testimonialType === "video" &amp;&amp; !content) {
@@ -2324,7 +2423,7 @@
                                                         });
 
                                                         // Send the FormData via Fetch API
-                                                        fetch("/creator-landing-page-js", {
+                                                        fetch("/creator/landing-page-js", {
                                                         method: "POST",
                                                         body: testimonialsDataList
                                                         })
@@ -2668,7 +2767,7 @@
                                                     list to JSON string
 
                                                     // Send the FormData via Fetch API
-                                                    fetch("/creator-landing-page-js", {
+                                                    fetch("/creator/landing-page-js", {
                                                     method: "POST",
                                                     body: formDataList
                                                     })
@@ -2827,6 +2926,17 @@
                                                     const shortDescription =
                                                     document.getElementById('completeguideShortDescription').value;
 
+                                                    // Function to count words
+                                                    function countWords(str) {
+                                                    return str.trim().split(/\s+/).length;
+                                                    }
+
+                                                    // Validate word count (limit: 30 words)
+                                                    if (countWords(shortDescription) > 30) {
+                                                    alert("Error: Course Short Description cannot exceed 30 words.");
+                                                    return;
+                                                    }
+
                                                     let completeGuideList = [
                                                     courseId,
                                                     shortDescription,
@@ -2848,7 +2958,7 @@
                                                     }
 
                                                     // Send the FormData via Fetch API
-                                                    fetch("/creator-landing-page-js", {
+                                                    fetch("/creator/landing-page-js", {
                                                     method: "POST",
                                                     body: completeGuideData
                                                     })
@@ -3019,7 +3129,7 @@
                                                     }
 
                                                     // Send the FormData via Fetch API
-                                                    fetch("/creator-landing-page-js", {
+                                                    fetch("/creator/landing-page-js", {
                                                     method: "POST",
                                                     body: certificateData
                                                     })
@@ -3179,7 +3289,7 @@
                                                     }
 
                                                     // Send the FormData via Fetch API
-                                                    fetch("/creator-landing-page-js", {
+                                                    fetch("/creator/landing-page-js", {
                                                     method: "POST",
                                                     body: courseThumbnailData
                                                     })

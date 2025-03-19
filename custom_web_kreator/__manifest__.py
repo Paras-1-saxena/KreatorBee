@@ -7,7 +7,8 @@
     'description': 'A module allowing portal users to create courses for the eLearning module in the backend.',
     'author': 'Your Name',
     'website': 'https://yourwebsite.com',
-    'depends': ['website','web' , 'apg_js', 'website_slides', 'website_sale_slides', 'apg_elearning'],
+    'depends': ['website', 'web', 'apg_js', 'website_slides', 'website_sale_slides', 'apg_elearning', 'website_sale',
+                'crm', 'mail'],
     'data': [
         'security/ir.model.access.csv',
         # 'views/get_started.xml',
@@ -58,7 +59,7 @@
         'views/creator_lead.xml',
         'views/partner_income_data.xml',
         'views/creator_landing_page_js.xml',
-	    'views/edit_landing_page.xml',
+        'views/edit_landing_page.xml',
         'views/landing_page_template1.xml',
         # 'views/partner_refferal.xml',
         'views/partner_leaderboard.xml',
@@ -76,6 +77,9 @@
         'views/partner_video3.xml',
         'views/partner_term.xml',
         'views/partner_welcome.xml',
+        'views/payment_page_cart.xml',
+        # 'views/blog_post_views.xml',
+        'data/email_templates.xml'
     ],
     # 'assets': {
     #     'web.assets_frontend': [

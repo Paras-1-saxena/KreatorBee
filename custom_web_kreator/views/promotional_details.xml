@@ -308,16 +308,16 @@ button {
                     </div>
                     <div class="menu-links">
                        
-                        <a href="/partner-training" >
+                        <a href="/partner/training" >
                             <i class="fa fa-chalkboard-teacher"></i> Training
                         </a>
-                        <a href="/target">
+                        <a href="/partner/target">
                             <i class="fa fa-bullseye"></i> Targets
                         </a>
                         <a href="offers-coupon" >
                             <i class="fa fa-cubes"></i> Offers
                         </a>
-                        <a href="/npromote" class="active">
+                        <a href="/partner/promotional-material" class="active">
                             <i class="fa fa-layer-group"></i> Promotional  Material
                         </a>
                        

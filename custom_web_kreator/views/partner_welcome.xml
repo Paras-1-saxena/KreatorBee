@@ -348,7 +348,7 @@
                 // Listen for the popstate event (which is triggered when the user navigates in the history)
                 window.addEventListener("popstate", function(event) {
                     // Redirect to /my-courses when the user tries to go back
-                    window.location.href = "/nmy-courses";
+                    window.location.href = "/creator/my-courses";
                 });
 
                 // Push a new state to the browser's history so that the back action can be intercepted

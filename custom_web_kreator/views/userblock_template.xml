@@ -1,14 +1,19 @@
 <odoo>
     <data>
         <template id="user_block" name="User Block Template">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;display=swap" rel="stylesheet" />
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;display=swap"
+                  rel="stylesheet"/>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+                  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+                  crossorigin="anonymous"/>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                    crossorigin="anonymous"></script>
 
             <body>
                 <style>
-                     body,textarea {
+                    body,textarea {
                     display: flex;
                     margin: 0;
                     font-family: 'Poppins', sans-serif;
@@ -20,31 +25,76 @@
                 </style>
                 <!-- Page-Specific Styles -->
                 <div class="row align-items-center bg-white mb-4 border1">
-                        <div class="col-md-10 d-flex align-items-center">
-                            <img src="/custom_web_kreator/static/src/user1.png" alt="User Image" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 15px;" />
-                            <h5 class="p-3">Welcome, <t t-esc="request.env.user.name"/></h5>
-                            <!-- <h6>Let&#39;s get started with your journey</h6> -->
-                        </div>
-                        <div class="col-md-2  float-end text-end">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#videoModal" 
-                                data-video-url="https://www.youtube.com/embed/GYsHQ3L2aG0?si=PxeJgCHMW-mu_sgP">
-                            <h6 style="cursor: pointer;" >Watch Tutorial</h6>
+                    <div class="col-md-10 d-flex align-items-center">
+                        <img src="/custom_web_kreator/static/src/user1.png" alt="User Image" class="rounded-circle"
+                             style="width: 50px; height: 50px; margin-right: 15px;"/>
+                        <h5 class="p-3">Welcome,
+                            <t t-esc="request.env.user.name"/>
+                        </h5>
+                    </div>
+
+                    <div class="col-md-2 float-end text-end">
+                        <a href="#" id="watch-tutorial" data-bs-toggle="modal" data-bs-target="#videoModal"
+                           t-att-data-video-url="
+                request.env['slide.video.config'].sudo().search(
+                    [('page_key', '=', {
+                        '/creator/my-courses': 'nmy_courses',
+                        '/creator/income': 'sales_page',
+                        '/creator/community': 'connect_partner',
+                        '/creator/lead': 'creator_lead',
+                        '/creator/kyc': 'creator_nkyc',
+                        '/creator/referral': 'creator_link',
+                        '/creator/leaderboard': 'creator_leaderboard',
+                        '/creator/offers': 'creator_offers',
+                        '/creator/course_detail': 'master_course_detail',
+                        '/creator/course_standard': 'master_course_standard',
+                        '/creator/terms': 'master_terms',
+                        '/creator/welcome': 'master_welcome',
+                        '/creator/landing-page': 'creator_landing_page',
+                        '/creator/edit-landing-page': 'creator_edit_landing_page',
+                        '/partner/income': 'partner_income',
+                        '/partner/lead': 'partner_lead',
+                        '/partner/kyc': 'bee_partner',
+                        '/partner/referral': 'partner_links',
+                        '/partner/leaderboard': 'partner_leaderboard',
+                        '/partner/myproducts': 'partner_my_product',
+                        '/partner/product': 'partner_choose_product',
+                        '/partner/product-detail': 'partner_choose_product_detail',
+                        '/partner/promotional-material': 'partner_promotional_material',
+                        '/partner/promotional-material/details': 'partner_promotional_material_detail',
+                        '/partner/offers': 'partner_offers',
+                        '/partner/target': 'partner_target',
+                        '/partner/training': 'partner_training',
+                        '/partner/mycourses': 'partner_courses',
+                        '/customer/mycourses': 'customer_page',
+                        '/customer/courses_recommend': 'customer__recommended_page',
+                    }.get(request.httprequest.path, ''))],
+                    limit=1
+                ).video_url">
+                            <h6 style="cursor: pointer;">Watch Tutorial</h6>
                         </a>
+
+
                         <div class="mt-2 d-flex align-items-center justify-content-end">
-                            <a href="https://wa.me/1234567890" target="_blank" style="text-decoration: none; color: #25D366;">
+                            <a href="https://wa.me/1234567890" target="_blank"
+                               style="text-decoration: none; color: #25D366;">
                                 <i class="fab fa-whatsapp" style="font-size: 24px; margin-right: 10px;"></i>
                             </a>
                             <span style="font-size: 14px; color: #000;">+1 234 567 890</span>
                         </div>
-                        </div>
+                    </div>
                 </div>
+
+
                 <!-- Video Modal -->
-                <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+                <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel"
+                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="videoModalLabel">Watch Video</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="ratio ratio-16x9">
@@ -54,20 +104,22 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- JavaScript to Update iframe with Dynamic Video URL -->
                 <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        var videoModal = document.getElementById('videoModal');
-                        var videoIframe = document.getElementById('videoIframe');
-                    
-                        videoModal.addEventListener('show.bs.modal', function (event) {
-                            var button = event.relatedTarget;
-                            var videoUrl = button.getAttribute('data-video-url');
-                            videoIframe.src = videoUrl;
-                        });
-                    
-                        videoModal.addEventListener('hidden.bs.modal', function () {
-                            videoIframe.src = "";
-                        });
+                    document.addEventListener("DOMContentLoaded", function () {
+                    var videoModal = document.getElementById('videoModal');
+                    var videoIframe = document.getElementById('videoIframe');
+
+                    videoModal.addEventListener('show.bs.modal', function (event) {
+                    var button = event.relatedTarget;
+                    var videoUrl = button.getAttribute('data-video-url');
+                    videoIframe.src = videoUrl;
+                    });
+
+                    videoModal.addEventListener('hidden.bs.modal', function () {
+                    videoIframe.src = "";
+                    });
                     });
                 </script>
 

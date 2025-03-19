@@ -20,27 +20,30 @@ import pytz
 import re
 
 class ForumSection(http.Controller):
-    @http.route('/forumsection', type='http', auth='public', website=True)
+
+    @http.route('/creator/community', type='http', auth='public', website=True)
     def forumpost(self, **kwargs):
         pattern = r'(?:v=|/v/|youtu\.be/|embed/)([a-zA-Z0-9_-]{11})'
         post_obj = request.env['apg.social.post']
         user_id = request.env.user.id
         user_type = request.env.user.partner_id.user_type
-        posts = post_obj.sudo().search([('partner_type','=', 'creator')], order='create_date desc')
+        posts = post_obj.sudo().search([('partner_type', '=', 'creator')], order='create_date desc')
         user_tz = request.env.user.tz or 'UTC'  # Get the user's timezone, default to UTC
         local_tz = pytz.timezone(user_tz)  # Convert to timezone object
 
         post_data = []
         for post in posts:
             # Fetch like status and comments for each post
-            is_liked = bool(request.env['apg.post.like'].sudo().search([('post_id', '=', post.id), ('create_uid', '=', user_id)], limit=1))
+            is_liked = bool(
+                request.env['apg.post.like'].sudo().search([('post_id', '=', post.id), ('create_uid', '=', user_id)],
+                                                           limit=1))
             # comments = request.env['apg.post.comment'].sudo().search([('post_id', '=', post.id)])
-            
+
             # Convert create_date to user's timezone
             create_date_utc = post.create_date.replace(tzinfo=pytz.utc)  # Ensure it's in UTC
             create_date_local = create_date_utc.astimezone(local_tz)  # Convert to local timezone
             create_date = create_date_local.strftime('%B %d, %Y, %I:%M %p')
-            print("create_date",create_date)
+            print("create_date", create_date)
             videoID = False
             media_files = []
             if post.video_url:
@@ -54,7 +57,7 @@ class ForumSection(http.Controller):
                     'type': img.mimetype.split("/")[0],  # 'image' or 'video'
                     'mimetype': img.mimetype,  # Full MIME type (e.g., 'image/png', 'video/mp4')
                 })
-            
+
             # Add post data
             post_data.append({
                 'id': post.id,
@@ -64,7 +67,7 @@ class ForumSection(http.Controller):
                 'create_date': create_date,
                 'is_liked': is_liked,
                 'media': media_files,  # Pass media files here
-                'video_url': 'https://www.youtube.com/embed/'+str(videoID) if videoID else False,
+                'video_url': 'https://www.youtube.com/embed/' + str(videoID) if videoID else False,
                 'comments': self.get_comments(post)
                 # [
                 #     {
@@ -76,32 +79,34 @@ class ForumSection(http.Controller):
                 #     } for comment in comments
                 # ],
             })
-        values = {'post_ids': post_data,'user_type':user_type}
+        values = {'post_ids': post_data, 'user_type': user_type}
         return http.request.render('apg_social_media.fbpostforum', values)
 
     # Partner Community Menu URLS START
-    @http.route('/forumsection-partner', type='http', auth='public', website=True)
+    @http.route('/partner/community/partner', type='http', auth='public', website=True)
     def partner_forumpost(self, **kwargs):
         pattern = r'(?:v=|/v/|youtu\.be/|embed/)([a-zA-Z0-9_-]{11})'
         post_obj = request.env['apg.social.post']
         user_id = request.env.user.id
         user_type = request.env.user.partner_id.user_type
         partner_type = 'partner'
-        posts = post_obj.sudo().search([('partner_type','=', partner_type)], order='create_date desc')
+        posts = post_obj.sudo().search([('partner_type', '=', partner_type)], order='create_date desc')
         user_tz = request.env.user.tz or 'UTC'  # Get the user's timezone, default to UTC
         local_tz = pytz.timezone(user_tz)  # Convert to timezone object
 
         post_data = []
         for post in posts:
             # Fetch like status and comments for each post
-            is_liked = bool(request.env['apg.post.like'].sudo().search([('post_id', '=', post.id), ('create_uid', '=', user_id)], limit=1))
+            is_liked = bool(
+                request.env['apg.post.like'].sudo().search([('post_id', '=', post.id), ('create_uid', '=', user_id)],
+                                                           limit=1))
             comments = request.env['apg.post.comment'].sudo().search([('post_id', '=', post.id)])
-            
+
             # Convert create_date to user's timezone
             create_date_utc = post.create_date.replace(tzinfo=pytz.utc)  # Ensure it's in UTC
             create_date_local = create_date_utc.astimezone(local_tz)  # Convert to local timezone
             create_date = create_date_local.strftime('%B %d, %Y, %I:%M %p')
-            print("create_date",create_date)
+            print("create_date", create_date)
             videoID = False
             media_files = []
             if post.video_url:
@@ -115,7 +120,7 @@ class ForumSection(http.Controller):
                     'type': img.mimetype.split("/")[0],  # 'image' or 'video'
                     'mimetype': img.mimetype,  # Full MIME type (e.g., 'image/png', 'video/mp4')
                 })
-            
+
             # Add post data
             post_data.append({
                 'id': post.id,
@@ -125,7 +130,7 @@ class ForumSection(http.Controller):
                 'create_date': create_date,
                 'is_liked': is_liked,
                 'media': media_files,  # Pass media files here
-                'video_url': 'https://www.youtube.com/embed/'+str(videoID) if videoID else False,
+                'video_url': 'https://www.youtube.com/embed/' + str(videoID) if videoID else False,
                 'comments': self.get_comments(post)
                 # 'comments': [
                 #     {
@@ -136,31 +141,33 @@ class ForumSection(http.Controller):
                 #     } for comment in comments
                 # ],
             })
-        values = {'post_ids': post_data,'user_type':user_type, 'partner_type':partner_type}
+        values = {'post_ids': post_data, 'user_type': user_type, 'partner_type': partner_type}
         return http.request.render('apg_social_media.fbpostforum_partner', values)
 
-    @http.route('/forumsection-creator', type='http', auth='public', website=True)
+    @http.route('/partner/community/creator', type='http', auth='public', website=True)
     def creator_forumpost(self, **kwargs):
         pattern = r'(?:v=|/v/|youtu\.be/|embed/)([a-zA-Z0-9_-]{11})'
         post_obj = request.env['apg.social.post']
         user_id = request.env.user.id
         user_type = request.env.user.partner_id.user_type
         partner_type = 'creator'
-        posts = post_obj.sudo().search([('partner_type','=', partner_type)], order='create_date desc')
+        posts = post_obj.sudo().search([('partner_type', '=', partner_type)], order='create_date desc')
         user_tz = request.env.user.tz or 'UTC'  # Get the user's timezone, default to UTC
         local_tz = pytz.timezone(user_tz)  # Convert to timezone object
 
         post_data = []
         for post in posts:
             # Fetch like status and comments for each post
-            is_liked = bool(request.env['apg.post.like'].sudo().search([('post_id', '=', post.id), ('create_uid', '=', user_id)], limit=1))
+            is_liked = bool(
+                request.env['apg.post.like'].sudo().search([('post_id', '=', post.id), ('create_uid', '=', user_id)],
+                                                           limit=1))
             comments = request.env['apg.post.comment'].sudo().search([('post_id', '=', post.id)])
-            
+
             # Convert create_date to user's timezone
             create_date_utc = post.create_date.replace(tzinfo=pytz.utc)  # Ensure it's in UTC
             create_date_local = create_date_utc.astimezone(local_tz)  # Convert to local timezone
             create_date = create_date_local.strftime('%B %d, %Y, %I:%M %p')
-            print("create_date",create_date)
+            print("create_date", create_date)
             videoID = False
             media_files = []
             if post.video_url:
@@ -174,7 +181,7 @@ class ForumSection(http.Controller):
                     'type': img.mimetype.split("/")[0],  # 'image' or 'video'
                     'mimetype': img.mimetype,  # Full MIME type (e.g., 'image/png', 'video/mp4')
                 })
-            
+
             # Add post data
             post_data.append({
                 'id': post.id,
@@ -184,7 +191,7 @@ class ForumSection(http.Controller):
                 'create_date': create_date,
                 'is_liked': is_liked,
                 'media': media_files,  # Pass media files here
-                'video_url': 'https://www.youtube.com/embed/'+str(videoID) if videoID else False,
+                'video_url': 'https://www.youtube.com/embed/' + str(videoID) if videoID else False,
                 'comments': self.get_comments(post)
                 # 'comments': [
                 #     {
@@ -195,31 +202,33 @@ class ForumSection(http.Controller):
                 #     } for comment in comments
                 # ],
             })
-        values = {'post_ids': post_data,'user_type':user_type, 'partner_type':partner_type}
+        values = {'post_ids': post_data, 'user_type': user_type, 'partner_type': partner_type}
         return http.request.render('apg_social_media.fbpostforum_partner', values)
 
-    @http.route('/forumsection-company', type='http', auth='public', website=True)
+    @http.route('/partner/community/updates', type='http', auth='public', website=True)
     def company_forumpost(self, **kwargs):
         pattern = r'(?:v=|/v/|youtu\.be/|embed/)([a-zA-Z0-9_-]{11})'
         post_obj = request.env['apg.social.post']
         user_id = request.env.user.id
         user_type = request.env.user.partner_id.user_type
         partner_type = 'company'
-        posts = post_obj.sudo().search([('partner_type','=', partner_type)], order='create_date desc')
+        posts = post_obj.sudo().search([('partner_type', '=', partner_type)], order='create_date desc')
         user_tz = request.env.user.tz or 'UTC'  # Get the user's timezone, default to UTC
         local_tz = pytz.timezone(user_tz)  # Convert to timezone object
 
         post_data = []
         for post in posts:
             # Fetch like status and comments for each post
-            is_liked = bool(request.env['apg.post.like'].sudo().search([('post_id', '=', post.id), ('create_uid', '=', user_id)], limit=1))
+            is_liked = bool(
+                request.env['apg.post.like'].sudo().search([('post_id', '=', post.id), ('create_uid', '=', user_id)],
+                                                           limit=1))
             comments = request.env['apg.post.comment'].sudo().search([('post_id', '=', post.id)])
-            
+
             # Convert create_date to user's timezone
             create_date_utc = post.create_date.replace(tzinfo=pytz.utc)  # Ensure it's in UTC
             create_date_local = create_date_utc.astimezone(local_tz)  # Convert to local timezone
             create_date = create_date_local.strftime('%B %d, %Y, %I:%M %p')
-            print("create_date",create_date)
+            print("create_date", create_date)
             videoID = False
             media_files = []
             if post.video_url:
@@ -233,7 +242,7 @@ class ForumSection(http.Controller):
                     'type': img.mimetype.split("/")[0],  # 'image' or 'video'
                     'mimetype': img.mimetype,  # Full MIME type (e.g., 'image/png', 'video/mp4')
                 })
-            
+
             # Add post data
             post_data.append({
                 'id': post.id,
@@ -243,7 +252,7 @@ class ForumSection(http.Controller):
                 'create_date': create_date,
                 'is_liked': is_liked,
                 'media': media_files,  # Pass media files here
-                'video_url': 'https://www.youtube.com/embed/'+str(videoID) if videoID else False,
+                'video_url': 'https://www.youtube.com/embed/' + str(videoID) if videoID else False,
                 'comments': self.get_comments(post)
                 # 'comments': [
                 #     {
@@ -254,34 +263,36 @@ class ForumSection(http.Controller):
                 #     } for comment in comments
                 # ],
             })
-        values = {'post_ids': post_data,'user_type':user_type, 'partner_type':partner_type}
+        values = {'post_ids': post_data, 'user_type': user_type, 'partner_type': partner_type}
         return http.request.render('apg_social_media.fbpostforum_partner', values)
 
     # Partner Community Menu URLS END
 
     # Customer Community Menu URLS END
-    @http.route('/forumsection-customer', type='http', auth='public', website=True)
+    @http.route('/customer/updates', type='http', auth='public', website=True)
     def customer_forumpost(self, **kwargs):
         pattern = r'(?:v=|/v/|youtu\.be/|embed/)([a-zA-Z0-9_-]{11})'
         post_obj = request.env['apg.social.post']
         user_id = request.env.user.id
         user_type = request.env.user.partner_id.user_type
         partner_type = 'company'
-        posts = post_obj.sudo().search([('partner_type','=', partner_type)], order='create_date desc')
+        posts = post_obj.sudo().search([('partner_type', '=', partner_type)], order='create_date desc')
         user_tz = request.env.user.tz or 'UTC'  # Get the user's timezone, default to UTC
         local_tz = pytz.timezone(user_tz)  # Convert to timezone object
 
         post_data = []
         for post in posts:
             # Fetch like status and comments for each post
-            is_liked = bool(request.env['apg.post.like'].sudo().search([('post_id', '=', post.id), ('create_uid', '=', user_id)], limit=1))
+            is_liked = bool(
+                request.env['apg.post.like'].sudo().search([('post_id', '=', post.id), ('create_uid', '=', user_id)],
+                                                           limit=1))
             comments = request.env['apg.post.comment'].sudo().search([('post_id', '=', post.id)])
-            
+
             # Convert create_date to user's timezone
             create_date_utc = post.create_date.replace(tzinfo=pytz.utc)  # Ensure it's in UTC
             create_date_local = create_date_utc.astimezone(local_tz)  # Convert to local timezone
             create_date = create_date_local.strftime('%B %d, %Y, %I:%M %p')
-            print("create_date",create_date)
+            print("create_date", create_date)
             videoID = False
             media_files = []
             if post.video_url:
@@ -295,7 +306,7 @@ class ForumSection(http.Controller):
                     'type': img.mimetype.split("/")[0],  # 'image' or 'video'
                     'mimetype': img.mimetype,  # Full MIME type (e.g., 'image/png', 'video/mp4')
                 })
-            
+
             # Add post data
             post_data.append({
                 'id': post.id,
@@ -305,7 +316,7 @@ class ForumSection(http.Controller):
                 'create_date': create_date,
                 'is_liked': is_liked,
                 'media': media_files,  # Pass media files here
-                'video_url': 'https://www.youtube.com/embed/'+str(videoID) if videoID else False,
+                'video_url': 'https://www.youtube.com/embed/' + str(videoID) if videoID else False,
                 'comments': self.get_comments(post)
                 # 'comments': [
                 #     {
@@ -317,7 +328,7 @@ class ForumSection(http.Controller):
                 #     } for comment in comments
                 # ],
             })
-        values = {'post_ids': post_data,'user_type':user_type, 'partner_type':partner_type}
+        values = {'post_ids': post_data, 'user_type': user_type, 'partner_type': partner_type}
         return http.request.render('apg_social_media.fbpostforum_customer', values)
 
     @http.route('/post/comment', type='json', auth='public', methods=['POST'])
@@ -328,8 +339,8 @@ class ForumSection(http.Controller):
         if parent_id:
             post_id = request.env['apg.post.comment'].sudo().search([('id', '=', parent_id)]).post_id.id
         if comment and post_id:
-            post_id = post_obj.sudo().search([('id', '=', post_id)],limit=1)
-            
+            post_id = post_obj.sudo().search([('id', '=', post_id)], limit=1)
+
             comment_details = {
                 'post_id': post_id.id,
                 'message': comment,
@@ -337,18 +348,18 @@ class ForumSection(http.Controller):
             }
             comment_id = request.env['apg.post.comment'].sudo().create(comment_details)
             commant_list = []
-            
+
             for comment in comment_id:
                 create_date_utc = comment.create_date.replace(tzinfo=pytz.utc)  # Ensure it's in UTC
                 create_date_local = create_date_utc.astimezone(local_tz)  # Convert to local timezone
                 create_date = create_date_local.strftime('%B %d, %Y, %I:%M %p')
                 commant_list.append({
-                        'id': comment.id,
-                        'user': comment.create_uid.name,
-                        'message': comment.message,
-                        'date': create_date,
-                        'parent_id': comment.parent_id.id if comment.parent_id else None
-                    })
+                    'id': comment.id,
+                    'user': comment.create_uid.name,
+                    'message': comment.message,
+                    'date': create_date,
+                    'parent_id': comment.parent_id.id if comment.parent_id else None
+                })
 
             return {'success': True, 'comments': commant_list, 'message': 'Comment posted successfully'}
         return {'success': False, 'message': 'No comment provided'}
@@ -381,12 +392,11 @@ class ForumSection(http.Controller):
         # v
         # return comments
 
-
     @http.route('/post/like', type='json', auth='public', methods=['POST'])
     def post_like(self, post_id=False, **kwargs):
         post_obj = request.env['apg.social.post']
         if post_id:
-            post_id = post_obj.sudo().search([('id', '=', post_id)],limit=1)
+            post_id = post_obj.sudo().search([('id', '=', post_id)], limit=1)
             like_details = {
                 'post_id': post_id.id,
             }
@@ -398,7 +408,7 @@ class ForumSection(http.Controller):
     def post_unlike(self, post_id=False, **kwargs):
         like_obj = request.env['apg.post.like']
         user_id = request.env.user
-        like_id = like_obj.sudo().search([('post_id', '=', int(post_id)),('create_uid', '=', user_id.id)],limit=1)
+        like_id = like_obj.sudo().search([('post_id', '=', int(post_id)), ('create_uid', '=', user_id.id)], limit=1)
         if like_id:
             like_id.unlink()
             return {'success': True, 'message': 'Comment posted successfully'}
@@ -414,8 +424,8 @@ class ForumSection(http.Controller):
         videoURL = kwargs.get('youtubeUrl')
         partner_type = 'creator'
         message = kwargs.get('message')
-        post_id = self.post_create(post_obj,user_id,imageUploadFile,videoURL,partner_type,message)
-        return request.redirect('/forumsection')
+        post_id = self.post_create(post_obj, user_id, imageUploadFile, videoURL, partner_type, message)
+        return request.redirect('/creator/community')
 
     @http.route('/post-create-partner', type='http', auth='public', website=True)
     def post_create_partner(self, **kwargs):
@@ -427,10 +437,11 @@ class ForumSection(http.Controller):
         videoURL = kwargs.get('youtubeUrl')
         partner_type = 'partner'
         message = kwargs.get('message')
-        post_id = self.post_create(post_obj,user_id,imageUploadFile,videoURL,partner_type,message)
-        return request.redirect('/forumsection-partner')
+        post_id = self.post_create(post_obj, user_id, imageUploadFile, videoURL, partner_type, message)
+        return request.redirect('/partner/community/partner')
 
-    def post_create(self,post_obj=False,user_id=False, imageUploadFile=False, videoURL=False, partner_type=False, message=False, **kwargs):
+    def post_create(self, post_obj=False, user_id=False, imageUploadFile=False, videoURL=False, partner_type=False,
+                    message=False, **kwargs):
         post_id = False
         if imageUploadFile or message or videoURL:
             attachment_ids = []
@@ -450,5 +461,5 @@ class ForumSection(http.Controller):
                 'image_ids': [(6, 0, attachment_ids)] if attachment_ids else False,
                 'video_url': videoURL,
                 'message': message,
-                })
+            })
         return post_id

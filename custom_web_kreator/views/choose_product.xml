@@ -106,7 +106,7 @@
                                 <div
                                         class="p-lg-2 p-1 d-flex flex-column align-items-center"
                                 >
-                                    <a href="/partner-product" class='text-center'>
+                                    <a href="/partner/myproducts" class='text-center'>
                                         <i class="ri-line-chart-fill"></i>
                                         <p>
                                             My Product
@@ -114,7 +114,7 @@
                                     </a>
                                 </div>
                                 <div class="active p-lg-2 p-1 d-flex flex-column align-items-center">
-                                    <a href="/choose-product" class='text-center'>
+                                    <a href="/partner/product" class='text-center'>
                                         <i class="ri-links-fill"></i>
                                         <p>
                                             Choose Product
@@ -134,7 +134,7 @@
                                 <!-- Sidebar Menu -->
                                 <ul class="d-flex flex-column gap-2" style='font-size:16px'>
                                     <li>
-                                        <a href="/partner">
+                                        <a href="/partner/income">
                                             <i class="ri-discount-percent-fill"></i>
                                             Sales
                                         </a>
@@ -142,7 +142,7 @@
                                     <!-- Sales Dropdown -->
                                     <div class="ps-2 d-block d-lg-none">
                                         <li>
-                                            <a href="/partner">
+                                            <a href="/partner/income">
                                                 <i class="ri-subtract-fill"></i>
                                                 Income Data
                                             </a>
@@ -154,7 +154,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/partner-kyc">
+                                            <a href="/partner/kyc">
                                                 <i class="ri-subtract-fill"></i>
                                                 kyc
                                             </a>
@@ -164,7 +164,7 @@
                                             <a href="/partner-links">Lead</a>
                                         </li>
                                         <li>
-                                            <a href="/partner-leaderboard">
+                                            <a href="/partner/leaderboard">
                                                 <i
                                                         class="ri-subtract-fill"></i>
                                                 Leaderboard
@@ -172,25 +172,25 @@
                                         </li>
                                     </div>
                                     <li class="active">
-                                        <a href="/partner-product">
+                                        <a href="/partner/myproducts">
                                             <i class="ri-product-hunt-fill"></i>
                                             Products
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/npromote">
+                                        <a href="/partner/promotional-material">
                                             <i class="ri-user-community-fill"></i>
                                             Promote
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/forumsection-company">
+                                        <a href="/partner/community/updates">
                                             <i class="ri-user-fill"></i>
                                             Community
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/nmy-courses-partner">
+                                        <a href="/partner/mycourses">
                                             <i
                                                     class="ri-user-community-fill"></i>
                                             My Course
@@ -262,7 +262,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-6">
-                                                        <a t-att-href="'/choose-product-detail?course_id=%s' % course.id">
+                                                        <a t-att-href="'/partner/product-detail?course_id=%s' % course.id">
                                                             <button class="btn1 mb-3"
                                                                     style="width: 100%; height: auto; font-size: 12px;">
                                                                 View Details

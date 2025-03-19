@@ -286,19 +286,19 @@ button {
                         <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo" />
                     </div>
                     <div class="menu-links">
-                        <a href="/master_course_detail">
+                        <a href="/creator/course_detail">
                             <i class="fa fa-book-reader"></i> Course Details
 
                         </a>
-                        <a href="/master_course_standard">
+                        <a href="/creator/course_standard">
                             <i class="fa fa-book"></i> Course Standard
 
                         </a>
-                        <a href="/master_term" class="active">
+                        <a href="/creator/terms" class="active">
                             <i class="fa fa-link"></i> T &amp; C
 
                         </a>
-                        <a href="/master_welcome">
+                        <a href="/creator/welcome">
                             <i class="fa fa-trophy"></i> Welcome
 
                         </a>
@@ -315,22 +315,22 @@ button {
                             </a>
                         </li>
                         <li>
-                            <a href="/master_income_data">
+                            <a href="/creator/income">
                                 <i class="fa fa-chart-line"></i> Sales
                             </a>
                         </li>
                         <li>
-                            <a href="/nmy-courses">
+                            <a href="/creator/my-courses">
                                 <i class="fa fa-box"></i> Products
                             </a>
                         </li>
                         <li>
-                            <a href="/forumsection">
+                            <a href="/creator/community">
                                 <i class="fa fa-users"></i> Connect with Partner
                             </a>
                         </li>
                         <li>
-                            <a href="/coming-soon">
+                            <a href="/creator/customer">
                                 <i class="fa fa-address-book"></i> Customer
                             </a>
                         </li>

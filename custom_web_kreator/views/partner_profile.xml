@@ -282,7 +282,7 @@
           <div class="card">
             <div class="card-body border1">
               <h5>Edit Profile</h5>
-              <form method="post" action="/partner-profile">
+              <form method="post" action="/profile">
                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
