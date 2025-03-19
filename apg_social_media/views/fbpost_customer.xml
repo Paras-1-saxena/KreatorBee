@@ -1,5 +1,47 @@
 <odoo>
     <data>
+        <template id="customer_comment_template">
+            <div class="comment-container row" t-att-data-comment-id="comment['id']">
+                <div class="comment-header" style="width: 100%;">
+                    <img src="/custom_web_kreator/static/src/user1.png" class="user-image comment-user-icon"/>
+                     
+                    <div class="user-details comment-user" style="width: 80%;max-width: 80%;">
+                        <span class="user-name"><t t-esc="comment['user']"/></span>
+                        <span class="post-date"><t t-esc="comment['date']"/></span>
+                    </div>
+
+                    <div class="comment-options" style="width: 10%;max-width: 10%;">
+                        <!-- Three Dots Button -->
+                        <span class="three-dots" t-att-data-comment-id="comment['id']">⋮</span>
+                        
+                        <!-- Reply Dropdown Menu -->
+                        <div class="reply-menu dropdown-menu" t-att-id="'reply-menu-' + str(comment['id'])" style="display: none;">
+                            <button class="reply-button dropdown-item reply-btn" t-att-data-comment-id="comment['id']">Reply</button>
+                            <button class="reply-button dropdown-item edit-btn" t-att-data-comment-id="comment['id']">Edit</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comment-details">
+                    <t t-esc="comment['message']"/>
+                </div>
+
+                <!-- Reply Input Box (Initially Hidden) -->
+                <div class="reply-input-container" t-att-id="'reply-container-' + str(comment['id'])" style="display: none;">
+                    <input type="text" class="reply-input comment-input-js" placeholder="Write a reply..." t-att-data-parent-id="comment['id']"/>
+                </div>
+
+                <!-- Nested Replies (Recursive Call) -->
+                <div class="replies" t-if="comment.get('replies', [])" style="margin-left: 30px !important;">
+                    <t t-foreach="comment['replies']" t-as="reply">
+                        <t t-call="apg_social_media.customer_comment_template">
+                            <t t-set="comment" t-value="reply"/>
+                        </t>
+                    </t>
+                </div>
+            </div>
+        </template>
+
        <template id="apg_social_media.fbpostforum_customer" name="Fb Post Partner">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet"/>
@@ -410,6 +452,67 @@
 .cust-main-content{
     margin-top: 70px!important;margin-left: 100px !important;
 }
+.comment-container{
+width:100%;
+max-width:100%;
+}
+.comment-options {
+position: relative;
+display: inline-block;
+<!--max-width:10%;-->
+}
+
+.three-dots {
+cursor: pointer;
+font-size: 20px;
+padding: 5px;
+}
+
+.three-dots:hover {
+color: gray;
+}
+
+/* Dropdown Menu */
+.reply-menu {
+position: absolute;
+right: 0;
+background: white;
+border: 1px solid #ccc;
+padding: 5px;
+box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+border-radius: 5px;
+display: none;
+min-width: 100px;
+z-index: 100;
+font-size: 12px;
+}
+
+.dropdown-item {
+background: none;
+border: none;
+width: 100%;
+text-align: left;
+padding: 8px 12px;
+cursor: pointer;
+}
+
+.dropdown-item:hover {
+background: #f1f1f1;
+}
+
+/* Reply Input Box */
+.reply-input-container {
+margin-top: 5px;
+display: none;
+margin-left: 30px !important;
+}
+
+.reply-input {
+width: 100%;
+padding: 5px;
+border: 1px solid #ccc;
+border-radius: 5px;
+}
 @media (max-width: 769px) {
     /* Style the input field */
     .cust-main-content{
@@ -479,25 +582,51 @@
                                         <button class="btn comment-btn cust-btn" id="custCommentbtn" t-att-data-com-post-id="post['id']">
                                             <i class="fa fa-comment"></i> Comment
                                         </button>
-                                        <button class="btn share-btn cust-btn share-btn-js" id="custSharebtn" t-att-data-share-post-id="post['id']">
-                                            <i class="fa fa-share"></i> Share
-                                        </button>
+<!--                                        <button class="btn share-btn cust-btn share-btn-js" id="custSharebtn" t-att-data-share-post-id="post['id']">-->
+<!--                                            <i class="fa fa-share"></i> Share-->
+<!--                                        </button>-->
                                     </div>
                                     <div class="comment-section">
                                         <input type="text" class="comment-input comment-input-js" placeholder="Write a comment..." id="cust-btn-1" t-att-data-comment-post-id="post['id']"/>
                                         <div class="comment-list" t-att-id="'comment-list-' + str(post['id'])">
                                             <t t-foreach="post['comments']" t-as="comment">
-                                                <div class="comment-header">
-                                                    <img src="/custom_web_kreator/static/src/user1.png" class="user-image comment-user-icon" />
-                                                    <div class="user-details comment-user">
-                                                        <span class="user-name"><t t-esc="comment['user']"/></span>
-                                                        <span class="post-date">
-                                                            <t t-esc="comment['date']"/>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="comment-details">
-                                                    <t t-esc="comment['message']"/>
+                                                <div class="comment-container row" t-att-data-comment-id="comment['id']">
+            <div class="comment-header" style="width: 100%;">
+                <img src="/custom_web_kreator/static/src/user1.png" class="user-image comment-user-icon"/>
+                <div class="user-details comment-user" style="width: 80%;max-width: 80%;">
+                    <span class="user-name"><t t-esc="comment['user']"/></span>
+                    <span class="post-date"><t t-esc="comment['date']"/></span>
+                </div>
+                <div class="comment-options" style="width: 10%;max-width: 10%;">
+                    <!-- Three Dots Button (Trigger for Dropdown) -->
+                    <span class="three-dots" t-att-data-comment-id="comment['id']">⋮</span>
+                    <!--<span class="three-dots">...</span>-->
+                
+                    <!-- Reply Dropdown Menu (Initially Hidden) -->
+                    <div class="reply-menu dropdown-menu" t-att-id="'reply-menu-' + str(comment['id'])" style="display: none;">
+                        <button class="reply-button dropdown-item reply-btn" t-att-data-comment-id="comment['id']">Reply</button>
+                        <button class="reply-button dropdown-item edit-btn" t-att-data-comment-id="comment['id']">Edit</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment-details">
+                <t t-esc="comment['message']"/>
+            </div>
+
+            <!-- Reply Input (Initially Hidden) -->
+            <div class="reply-input-container" t-att-id="'reply-container-' + str(comment['id'])" style="display: none;">
+                <input type="text" class="reply-input comment-input-js" placeholder="Write a reply..." t-att-data-parent-id="comment['id']"/>
+            </div>
+
+            <!-- Nested Replies (Recursive Call) -->
+            <div class="replies" t-if="comment['replies']" style="margin-left: 30px !important;">
+                <t t-foreach="comment['replies']" t-as="reply">
+                    <t t-call="apg_social_media.customer_comment_template">
+                        <t t-set="comment" t-value="reply"/>
+                    </t>
+                </t>
+            </div>
                                                 </div>
                                             </t>
                                         </div>
@@ -507,6 +636,7 @@
                         </div>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        <!-- Like post code-->
         document.querySelectorAll('.like-button-js').forEach(button =&gt; {
             button.addEventListener('click', function () {
                 const post_id = this.getAttribute('data-post-id'); // Get post ID from clicked button
@@ -567,20 +697,93 @@
                 }
             });
         });
-        document.querySelectorAll('.comment-input-js').forEach(input =&gt; {
-            input.addEventListener('keypress', function (event) {
-                if (event.key === "Enter") {
-                    event.preventDefault(); // Prevent form submission
-                    
-                    const commentText = this.value.trim();
-                    const postId = this.getAttribute('data-comment-post-id'); // Get post ID
-                    
+        
+        // Function to create comment and reply elements
+        function createCommentElement(comment) {
+            console.log("Creating comment element...",comment);
+
+            const commentContainer = document.createElement("div");
+            commentContainer.classList.add("comment-container", "row");
+            commentContainer.dataset.commentId = comment.id;
+            console.log("=======0======",commentContainer);
+            // Comment Header
+            const commentHeader = document.createElement("div");
+            commentHeader.classList.add("comment-header");
+            commentHeader.innerHTML = `
+                <div class="col-md-1">
+                    <img src="/custom_web_kreator/static/src/user1.png" class="user-image comment-user-icon"/>
+                </div>
+                <div class="user-details comment-user col-md-9">
+                    <span class="user-name">${comment.user}</span>
+                    <span class="post-date">${comment.date}</span>
+                </div>
+                <div class="comment-options col-md-2">
+                    <span class="three-dots" data-comment-id="${comment.id}">⋮</span>
+                    <div class="reply-menu dropdown-menu" id="reply-menu-${comment.id}" style="display: none;">
+                        <button class="reply-button dropdown-item" data-comment-id="${comment.id}">Reply</button>
+                        <button class="edit-button dropdown-item" data-comment-id="${comment.id}">Edit</button>
+                    </div>
+                </div>
+            `;
+            console.log("=======1======",commentHeader);
+            // Comment Details
+            const commentDetails = document.createElement("div");
+            commentDetails.classList.add("comment-details");
+            commentDetails.textContent = comment.message;
+            console.log("=======2======",commentDetails);
+            // Reply Input Box (Initially Hidden)
+            const replyInputContainer = document.createElement("div");
+            replyInputContainer.classList.add("reply-input-container");
+            replyInputContainer.id = `reply-container-${comment.id}`;
+            replyInputContainer.style.display = "none";
+            console.log("=======3======",replyInputContainer);
+            replyInputContainer.innerHTML = `
+                <input type="text" class="reply-input comment-input-js" placeholder="Write a reply..." data-parent-id="${comment.id}"/>
+            `;
+
+            // Replies Container
+            const repliesContainer = document.createElement("div");
+            repliesContainer.classList.add("replies");
+            repliesContainer.style.marginLeft = "30px";
+            console.log("=======4======",repliesContainer);
+            if (comment.replies) {
+                console.log("=======4.1======",comment.replies);
+                if (comment.replies.length > 0) {
+                    console.log("=======4.2======");
+                    comment.replies.forEach(reply => {
+                        const replyElement = createCommentElement(reply);
+                        repliesContainer.appendChild(replyElement);
+                        console.log("=======4.3======",replyElement);
+                    });
+                }
+            }
+
+            // Append elements to comment container
+            commentContainer.appendChild(commentHeader);
+            commentContainer.appendChild(commentDetails);
+            commentContainer.appendChild(replyInputContainer);
+            commentContainer.appendChild(repliesContainer);
+            console.log("=======commentContainer======",commentContainer);
+            return commentContainer; // Return the created element
+        }
+
+        // Global Event Listener for Comment Submission (New and Reply Comments)
+        document.addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                const input = event.target;
+                if (input.classList.contains("comment-input-js")) {
+                    event.preventDefault();
+
+                    const commentText = input.value.trim();
+                    const postId = input.getAttribute("data-comment-post-id"); // Post ID for new comments
+                    const parentId = input.getAttribute("data-parent-id"); // Parent ID for replies
+
                     if (!commentText) {
                         alert("Comment cannot be empty!");
                         return;
                     }
 
-                    fetch('/post/comment', {  // Adjust this endpoint based on your controller route
+                    fetch('/post/comment', {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -588,48 +791,91 @@
                         body: JSON.stringify({
                             params: {
                                 post_id: postId,
-                                comment: commentText
+                                comment: commentText,
+                                parent_id: parentId
                             }
                         })
                     })
-                    .then(response =&gt; response.json())
-                    .then(data =&gt; {
-                        if (data['result'].success == true) {
-                            
-                            // Clear input field after successful submission
-                            input.value = "";
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.result.success) {
+                            input.value = ""; // Clear input after posting
 
-                            // Append new comment to the comment list
-                            const commentList = document.getElementById('comment-list-' + postId);
-                            if (commentList) {
-                                const newComment = document.createElement("div");
-                                const newComment1 = document.createElement("div");
-                                newComment.classList.add("comment-header");
-                                newComment1.classList.add("comment-details");
-                                newComment.innerHTML = `
-                                    <img src="/custom_web_kreator/static/src/user1.png" class="user-image comment-user-icon"/>
-                                    <div class="user-details comment-user">
-                                        <span class="user-name">${data['result']['comments'][0]['user']}</span>
-                                        <span class="post-date">${data['result']['comments'][0]['date']}</span>
-                                    </div>
-                                `;
-                                 newComment1.innerHTML = `
-                                    ${commentText}
-                                `;
-                                commentList.appendChild(newComment);
-                                commentList.appendChild(newComment1);
+                            // Create new comment element
+                            console.log("=======data.result.comments======",data.result.comments);
+                            const newComment = createCommentElement(data.result.comments[0]); 
+                            console.log("=======newComment======",newComment);
+                            console.log("=======5======",parentId);
+                            if (parentId) {
+                                // Append reply inside the parent comment's reply section
+                                const parentComment = document.querySelector(`[data-comment-id="${parentId}"]`);
+                                console.log("=======6======",parentComment);
+                                if (parentComment) {
+                                    const repliesContainer = parentComment.querySelector(".replies");
+                                    console.log("=======7======",repliesContainer);
+                                    console.log("=======8======",newComment);
+                                    repliesContainer.appendChild(newComment);
+                                }
+                            } else {
+                                // Append new comment to main comment list
+                                const commentList = document.getElementById(`comment-list-${postId}`);
+                                if (commentList) {
+                                    commentList.appendChild(newComment);
+                                }
                             }
                         } else {
                             alert("Failed to post comment.");
                         }
                     })
-                    .catch(error =&gt; {
+                    .catch(error => {
                         console.error('Error:', error);
                         alert("Error posting comment.");
                     });
                 }
-            });
+            }
         });
+
+        // Event Delegation for Three-Dots Menu and Reply Button
+        document.addEventListener("click", function (event) {
+            const target = event.target;
+
+            // Handle Three-Dots Click
+            if (target.classList.contains("three-dots")) {
+                event.stopPropagation();
+                const commentId = target.getAttribute("data-comment-id");
+                const replyMenu = document.getElementById(`reply-menu-${commentId}`);
+
+                if (replyMenu) {
+                    // Hide other menus before showing the selected one
+                    document.querySelectorAll(".reply-menu").forEach(menu => {
+                        if (menu !== replyMenu) {
+                            menu.style.display = "none";
+                        }
+                    });
+
+                    replyMenu.style.display = replyMenu.style.display === "none" ? "block" : "none";
+                }
+            }
+
+            // Handle Reply Button Click
+            if (target.classList.contains("reply-button")) {
+                const commentId = target.getAttribute("data-comment-id");
+                const replyContainer = document.getElementById(`reply-container-${commentId}`);
+
+                if (replyContainer) {
+                    replyContainer.style.display = "block";
+                    replyContainer.querySelector(".reply-input").focus(); // Focus input for convenience
+                }
+
+                // Hide the dropdown menu
+                const replyMenu = document.getElementById(`reply-menu-${commentId}`);
+                if (replyMenu) {
+                    replyMenu.style.display = "none";
+                }
+            }
+        });
+
+        <!-- Share post code-->
         document.querySelectorAll('.share-btn-js').forEach(button =&gt; {
             button.addEventListener('click', function () {
                 alert("Share feature is disabled");

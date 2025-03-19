@@ -107,10 +107,16 @@ class SlideChannel(models.Model):
 
 
     def action_submit_for_review(self):
+        """Submit course for review and send an email notification"""
         self.state = 'course_preview'
+        print("self.create_uid",self.create_uid)
+        template = self.env.ref('apg_elearning.email_template_course_under_review', raise_if_not_found=False)
+        if template and self.create_uid.email:
+            template.sudo().send_mail(self.id, force_send=True)
 
     def action_approve(self):
         product_obj = self.env['product.product']
+        template = self.env.ref('apg_elearning.email_template_course_published', raise_if_not_found=False)
         for rec in self:
             vals = {
                 'name': rec.name,
@@ -127,6 +133,9 @@ class SlideChannel(models.Model):
                 'state': 'published',
                 'enroll': 'payment',
                 })
+            # Send email after publishing the course
+            if template and rec.create_uid.email:
+                template.sudo().send_mail(rec.id, force_send=True)
 
     @api.depends('sales_price')
     def _compute_sales_price(self):

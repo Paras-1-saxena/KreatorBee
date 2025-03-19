@@ -6,13 +6,14 @@
     'author': 'Apagen solutions',
     'website': 'https://www.apagen.com',
     'category': 'website',
-    'depends': ['base','product','website_slides','website_sale_slides','sale','documents'],  # List of dependent modules
+    'depends': ['base','product','website_slides','website_sale_slides','sale','documents','mail'],  # List of dependent modules
     'data': [
         'data/documents_document_data.xml',
         'security/ir.model.access.csv',
         'views/configuration_view.xml',
         'views/slide_channel.xml',
         'views/menu.xml',
+        'data/email_template.xml'
     ],
     'demo': [
         # Demo data (optional)

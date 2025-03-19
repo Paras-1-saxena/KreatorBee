@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="blog_post_tree_inherit_editable" model="ir.ui.view">
+        <field name="name">blog.post.tree.inherit.editable</field>
+        <field name="model">blog.post</field>
+        <field name="inherit_id" ref="website_blog.view_blog_post_list"/>
+        <field name="arch" type="xml">
+            <!-- Ensure the list is editable -->
+            <xpath expr="//list" position="attributes">
+                <attribute name="editable">top</attribute>
+            </xpath>
+            <!-- Make website_url field editable -->
+            <xpath expr="//field[@name='website_url']" position="attributes">
+                <attribute name="readonly">False</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

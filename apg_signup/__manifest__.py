@@ -8,7 +8,7 @@ his module allow your employees/users to do the customisations.
     'author': 'Apagen solutions',
     'website': 'https://www.apagen.com',
     'category': 'website',
-    'depends': ['custom_web_kreator', 'auth_signup','website', 'contacts', 'payment', 'web', 'website_sale', 'website_sale_slides', 'website_slides', 'payment_demo'],  # List of dependent modules
+    'depends': ['custom_web_kreator', 'auth_signup','website', 'contacts', 'payment', 'web', 'website_sale', 'website_sale_slides', 'website_slides', 'payment_demo','mail'],  # List of dependent modules
     'data': [
         'security/ir.model.access.csv',
         'views/asset_template.xml',
@@ -22,6 +22,7 @@ his module allow your employees/users to do the customisations.
         'views/login_template_inherit.xml',
         'views/menu.xml',
         'views/partner_signup_second_page.xml',
+        'data/email_template.xml',
     ],
     'demo': [
         # Demo data (optional)

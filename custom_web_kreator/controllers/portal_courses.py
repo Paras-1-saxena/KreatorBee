@@ -9,6 +9,8 @@ import json
 from werkzeug.exceptions import NotFound
 from odoo.addons.website.controllers.main import QueryURL
 from odoo.http import content_disposition
+from werkzeug.utils import redirect
+
 
 
 class PortalMyCourses(http.Controller):
@@ -138,32 +140,39 @@ class PortalMyCourses(http.Controller):
     # def leaderboard(self, **kwargs):
     #     return http.request.render('custom_web_kreator.leaderboard_page')
 
-    @http.route('/nleaderboard', type='http', auth='public', website=True)
+    @http.route('/creator/leaderboard', type='http', auth='public', website=True)
     def nleaderboard(self, **kwargs):
-        orders_lines = request.env['sale.order.line'].sudo().search(
-            [('is_commission', '=', True), ('state', '=', 'sale'), ('partner_commission_partner_id', '!=', False)])
-        order_lines = sorted(orders_lines, key=attrgetter('partner_commission_partner_id'))
-        # Group by commission partner ID
-        grouped_data = {}
-        leaderboard = []
-        for partner, lines in groupby(order_lines, key=attrgetter('partner_commission_partner_id')):
-            grouped_data[partner] = {
-                'total_commission': sum(line.partner_commission_amount for line in lines),
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
+
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'creator']:
+            orders_lines = request.env['sale.order.line'].sudo().search([('is_commission','=', True),('state', '=', 'sale'),('partner_commission_partner_id', '!=', False)])
+            order_lines = sorted(orders_lines, key=attrgetter('partner_commission_partner_id'))
+            # Group by commission partner ID
+            grouped_data = {}
+            leaderboard = []
+            for partner, lines in groupby(order_lines, key=attrgetter('partner_commission_partner_id')):
+                grouped_data[partner] = {
+                    'total_commission': sum(line.partner_commission_amount for line in lines),
+                }
+            for data in grouped_data:
+                lines = orders_lines.search([('partner_commission_partner_id','=',data.id)])
+                leaderboard.append({
+                    'partner_name':data.name,
+                    'total_commission': sum(line.partner_commission_amount for line in lines),
+                })
+            leaderboard = sorted(leaderboard, key=lambda x: x['total_commission'], reverse=True)
+            values = {
+                'leaderboard':leaderboard,
+                'currency_id': request.env.company.currency_id
             }
-        for data in grouped_data:
-            lines = orders_lines.search([('partner_commission_partner_id', '=', data.id)])
-            leaderboard.append({
-                'partner_name': data.name,
-                'total_commission': sum(line.partner_commission_amount for line in lines),
-            })
-        leaderboard = sorted(leaderboard, key=lambda x: x['total_commission'], reverse=True)
-        values = {
-            'leaderboard': leaderboard,
-            'currency_id': request.env.company.currency_id
-        }
 
-        return http.request.render('custom_web_kreator.nleaderboard_page', values)
 
+            return http.request.render('custom_web_kreator.nleaderboard_page',values)
+        else:
+            raise NotFound()
+    
     # Not in Use Bharat/Roystan
     # @http.route('/sales', type='http', auth='public', website=True)
     # def sales_page(self, **kwargs):
@@ -185,485 +194,414 @@ class PortalMyCourses(http.Controller):
     #     # Render the data page template
     #     return http.request.render('custom_web_kreator.kyc_page_template')
 
-    @http.route('/nkyc', type='http', auth='public', website=True, methods=['GET', 'POST'])
+    @http.route('/creator/kyc', type='http', auth='public', website=True, methods=['GET', 'POST'])
     def nkyc_page(self, **kwargs):
         # Fetch the current user and their partner record
         user = request.env.user
-        partner = user.partner_id
-        bank_id = False
+        partner = user.partner_id  # Get related partner
 
-        # Check if the user_type of the partner is 'creator'
-        if partner.user_type != 'creator':
-            print("You do not have permission to update this information. Only 'creator' users can update.")
-            # return request.render('custom_web_kreator.error_page_template', {
-            #     'error': "You do not have permission to update this information. Only 'creator' users can update."
-            # })
-        # Basic Details and document
-        bank_id = request.env['res.partner.bank'].sudo().search([])
-        if request.httprequest.method == 'POST':
-            user = request.env.user
-            partner = user.partner_id
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'creator']:
+            bank_id = False
 
-            # Fetch the form data from the POST request
-            full_name = kwargs.get('full_name')
-            email = kwargs.get('email')
-            mobile = kwargs.get('phone')
-            document = kwargs.get('document') if kwargs.get('document') != '- Select -' else False
-            state_selection = kwargs.get('state_selection', 'under_review')
-            partner.write({'state_selection': state_selection})
-            # Initialize a dictionary to update partner details
-            partner_values = {}
+            # Check if the user_type of the partner is 'creator'
+            if partner.user_type != 'creator':
+                print("You do not have permission to update this information. Only 'creator' users can update.")
+                # return request.render('custom_web_kreator.error_page_template', {
+                #     'error': "You do not have permission to update this information. Only 'creator' users can update."
+                # })
+            # Basic Details and document
+            bank_id = request.env['res.partner.bank'].sudo().search([])
+            if request.httprequest.method == 'POST':
+                user = request.env.user
+                partner = user.partner_id
 
-            if full_name:
-                partner_values['name'] = full_name
-            if email:
-                partner_values['email'] = email
-            if mobile:
-                partner_values['phone'] = mobile
-            if document:
-                partner_values['select_document'] = document
+                # Fetch the form data from the POST request
+                full_name = kwargs.get('full_name')
+                email = kwargs.get('email')
+                mobile = kwargs.get('phone')
+                document = kwargs.get('document') if kwargs.get('document') != '- Select -' else False
+                state_selection = kwargs.get('state_selection', 'under_review')
+                partner.write({'state_selection': state_selection})
+                # Initialize a dictionary to update partner details
+                partner_values = {}
 
-            # Common fields for document-specific details
-            document_number = kwargs.get('document_number')
-            document_name = kwargs.get('document_name')  # Dynamic field for document name
-            document_front = kwargs.get('file_upload_front')  # Front side upload
-            document_back = kwargs.get('file_upload_back')  # Back side upload
+                if full_name:
+                    partner_values['name'] = full_name
+                if email:
+                    partner_values['email'] = email
+                if mobile:
+                    partner_values['phone'] = mobile
+                if document:
+                    partner_values['select_document'] = document
 
-            # Map document types to field names
-            document_mapping = {
-                'passport': {
-                    'number_field': 'passport_number',
-                    'name_field': 'passport_name',
-                    'front_file_field': 'passport_front',
-                    'back_file_field': 'passport_back',
-                },
-                'aadhaar': {
-                    'number_field': 'aadhaar_number',
-                    'name_field': 'aadhaar_name',
-                    'front_file_field': 'aadhaar_front',
-                    'back_file_field': 'aadhaar_back',
-                },
-                'driving_license': {
-                    'number_field': 'driving_license_number',
-                    'name_field': 'driving_license_name',
-                    'front_file_field': 'driving_license_front',
-                    'back_file_field': 'driving_license_back',
-                },
-                'voter_identity_card': {
-                    'number_field': 'voter_identity_number',
-                    'name_field': 'voter_identity_name',
-                    'front_file_field': 'voter_identity_front',
-                    'back_file_field': 'voter_identity_back',
-                },
-            }
+                # Common fields for document-specific details
+                document_number = kwargs.get('document_number')
+                document_name = kwargs.get('document_name')  # Dynamic field for document name
+                document_front = kwargs.get('file_upload_front')  # Front side upload
+                document_back = kwargs.get('file_upload_back')  # Back side upload
 
-            # Handle document-specific updates dynamically
-            if document and document in document_mapping:
-                doc_fields = document_mapping[document]
-                # Update document number and name
-                if document_number:
-                    partner_values[doc_fields['number_field']] = document_number
-                if document_name:
-                    partner_values[doc_fields['name_field']] = document_name
+                # Map document types to field names
+                document_mapping = {
+                    'passport': {
+                        'number_field': 'passport_number',
+                        'name_field': 'passport_name',
+                        'front_file_field': 'passport_front',
+                        'back_file_field': 'passport_back',
+                    },
+                    'aadhaar': {
+                        'number_field': 'aadhaar_number',
+                        'name_field': 'aadhaar_name',
+                        'front_file_field': 'aadhaar_front',
+                        'back_file_field': 'aadhaar_back',
+                    },
+                    'driving_license': {
+                        'number_field': 'driving_license_number',
+                        'name_field': 'driving_license_name',
+                        'front_file_field': 'driving_license_front',
+                        'back_file_field': 'driving_license_back',
+                    },
+                    'voter_identity_card': {
+                        'number_field': 'voter_identity_number',
+                        'name_field': 'voter_identity_name',
+                        'front_file_field': 'voter_identity_front',
+                        'back_file_field': 'voter_identity_back',
+                    },
+                }
 
-                # Upload front side of the document
-                if document_front:
+                # Handle document-specific updates dynamically
+                if document and document in document_mapping:
+                    doc_fields = document_mapping[document]
+                    # Update document number and name
+                    if document_number:
+                        partner_values[doc_fields['number_field']] = document_number
+                    if document_name:
+                        partner_values[doc_fields['name_field']] = document_name
+
+                    # Upload front side of the document
+                    if document_front:
+                        try:
+                            front_data = document_front.read()
+                            partner_values[doc_fields['front_file_field']] = base64.b64encode(front_data).decode('utf-8')
+                        except Exception as e:
+                            print("Front file upload failed",e)
+                            # return request.render('custom_web_kreator.error_page_template', {
+                            #     'error': f"Front file upload failed: {e}"
+                            # })
+
+                    # Upload back side of the document
+                    if document_back:
+                        try:
+                            back_data = document_back.read()
+                            partner_values[doc_fields['back_file_field']] = base64.b64encode(back_data).decode('utf-8')
+                        except Exception as e:
+                            print("Back file upload failed",e)
+                            # return request.render('custom_web_kreator.error_page_template', {
+                            #     'error': f"Back file upload failed: {e}"
+                            # })
+
+                    # Reset other document-related fields
+                    for doc_type, fields in document_mapping.items():
+                        if doc_type != document:  # Reset other document fields
+                            partner_values[fields['number_field']] = False
+                            partner_values[fields['name_field']] = False
+                            partner_values[fields['front_file_field']] = False
+                            partner_values[fields['back_file_field']] = False
+
+                # Update pan details
+                pan_card_number = kwargs.get('pan_number')
+                pan_card_name = kwargs.get('pan_name')
+                if pan_card_number:
+                    partner_values['pan_card_number'] = pan_card_number
+                if pan_card_name:
+                    partner_values['pan_card_name'] = pan_card_name
+
+                pan_card_file = kwargs.get('pan_file')
+                if pan_card_file:
                     try:
-                        front_data = document_front.read()
-                        partner_values[doc_fields['front_file_field']] = base64.b64encode(front_data).decode('utf-8')
+                        file_data = pan_card_file.read()
+                        file_content = base64.b64encode(file_data).decode('utf-8')
+                        partner_values['pan_card_file'] = file_content
                     except Exception as e:
-                        print("Front file upload failed", e)
+                        print("PAN card file upload failed",e)
                         # return request.render('custom_web_kreator.error_page_template', {
-                        #     'error': f"Front file upload failed: {e}"
+                        #     'error': f"PAN card file upload failed: {e}"
                         # })
 
-                # Upload back side of the document
-                if document_back:
-                    try:
-                        back_data = document_back.read()
-                        partner_values[doc_fields['back_file_field']] = base64.b64encode(back_data).decode('utf-8')
-                    except Exception as e:
-                        print("Back file upload failed", e)
+                # Update bank details
+                account_holder_name = kwargs.get('account_holder_name')
+                account_holder_number = kwargs.get('account_number')
+                ifsc_code = kwargs.get('ifsc_code')
+                bank_id = kwargs.get('bank_id')
+                print("bank_id",bank_id)
+
+                # Search for the bank record using the bank_name
+                if bank_id:
+                    bank = request.env['res.partner.bank'].sudo().search([('id', '=', bank_id)], limit=1)
+                    if bank:
+                        partner_values['bank_id'] = bank.id  # Assign the bank_id to the partner record
+                    else:
+                        # Handle case where bank with the provided name is not found
+                        print("Bank with name not found.")
                         # return request.render('custom_web_kreator.error_page_template', {
-                        #     'error': f"Back file upload failed: {e}"
+                        #     'error': f"Bank with name {bank_name} not found."
+                        # })
+                upi_mobile_number = kwargs.get('upi_mobile_number')
+                if account_holder_name:
+                    partner_values['Account_holder_name'] = account_holder_name
+                if account_holder_number:
+                    partner_values['Account_holder_number'] = account_holder_number
+                if ifsc_code:
+                    partner_values['ifsc_code'] = ifsc_code
+                if upi_mobile_number:
+                    partner_values['upi_mobile_number'] = upi_mobile_number
+
+                upload_file = kwargs.get('upload_file')
+                if upload_file:
+                    try:
+                        file_data = upload_file.read()
+                        file_content = base64.b64encode(file_data).decode('utf-8')
+                        partner_values['upload_file'] = file_content
+                    except Exception as e:
+                        print("File upload failed",e)
+                        # return request.render('custom_web_kreator.error_page_template', {
+                        #     'error': f"File upload failed: {e}"
                         # })
 
-                # Reset other document-related fields
-                for doc_type, fields in document_mapping.items():
-                    if doc_type != document:  # Reset other document fields
-                        partner_values[fields['number_field']] = False
-                        partner_values[fields['name_field']] = False
-                        partner_values[fields['front_file_field']] = False
-                        partner_values[fields['back_file_field']] = False
+                # Write all updates to the partner record
+                if partner_values:
+                    partner.write(partner_values)
 
-            # Update pan details
-            pan_card_number = kwargs.get('pan_number')
-            pan_card_name = kwargs.get('pan_name')
-            if pan_card_number:
-                partner_values['pan_card_number'] = pan_card_number
-            if pan_card_name:
-                partner_values['pan_card_name'] = pan_card_name
+                return request.redirect('/creator/kyc')
 
-            pan_card_file = kwargs.get('pan_file')
-            if pan_card_file:
-                try:
-                    file_data = pan_card_file.read()
-                    file_content = base64.b64encode(file_data).decode('utf-8')
-                    partner_values['pan_card_file'] = file_content
-                except Exception as e:
-                    print("PAN card file upload failed", e)
-                    # return request.render('custom_web_kreator.error_page_template', {
-                    #     'error': f"PAN card file upload failed: {e}"
-                    # })
+            # If the request is a GET request (loading the form), fetch partner details to pre-populate
+            selected_document = partner.select_document
 
-            # Update bank details
-            account_holder_name = kwargs.get('account_holder_name')
-            account_holder_number = kwargs.get('account_number')
-            ifsc_code = kwargs.get('ifsc_code')
-            bank_id = kwargs.get('bank_id')
-            print("bank_id", bank_id)
-
-            # Search for the bank record using the bank_name
-            if bank_id:
-                bank = request.env['res.partner.bank'].sudo().search([('id', '=', bank_id)], limit=1)
-                if bank:
-                    partner_values['bank_id'] = bank.id  # Assign the bank_id to the partner record
+            document_number = ''
+            document_name = ''
+            file_upload_front = ''
+            file_upload_back = ''
+            bank_file = ''
+            pan_file = ''
+            if selected_document:
+                # Dynamically fetch the number and name fields
+                if selected_document == 'voter_identity_card':
+                    document_number = getattr(partner, f"voter_identity_number", '')
+                    document_name = getattr(partner, f"voter_identity_name", '')
+                    file_upload_front = getattr(partner, f"voter_identity_front", '')
+                    file_upload_back = getattr(partner, f"voter_identity_back", '')
                 else:
-                    # Handle case where bank with the provided name is not found
-                    print("Bank with name not found.")
-                    # return request.render('custom_web_kreator.error_page_template', {
-                    #     'error': f"Bank with name {bank_name} not found."
-                    # })
-            upi_mobile_number = kwargs.get('upi_mobile_number')
-            if account_holder_name:
-                partner_values['Account_holder_name'] = account_holder_name
-            if account_holder_number:
-                partner_values['Account_holder_number'] = account_holder_number
-            if ifsc_code:
-                partner_values['ifsc_code'] = ifsc_code
-            if upi_mobile_number:
-                partner_values['upi_mobile_number'] = upi_mobile_number
+                    document_number = getattr(partner, f"{selected_document}_number", '')
+                    document_name = getattr(partner, f"{selected_document}_name", '')
+                    file_upload_front = getattr(partner, f"{selected_document}_front", '')
+                    file_upload_back = getattr(partner, f"{selected_document}_back", '')
 
-            upload_file = kwargs.get('upload_file')
-            if upload_file:
-                try:
-                    file_data = upload_file.read()
-                    file_content = base64.b64encode(file_data).decode('utf-8')
-                    partner_values['upload_file'] = file_content
-                except Exception as e:
-                    print("File upload failed", e)
-                    # return request.render('custom_web_kreator.error_page_template', {
-                    #     'error': f"File upload failed: {e}"
-                    # })
+                # Convert binary fields to base64 strings for use in templates
+                if file_upload_front:
+                    file_upload_front = base64.b64encode(file_upload_front).decode('utf-8')
+                if file_upload_back:
+                    file_upload_back = base64.b64encode(file_upload_back).decode('utf-8')
 
-            # Write all updates to the partner record
-            if partner_values:
-                partner.write(partner_values)
-                partner.state_selection = 'under_review'
+            if partner.upload_file:
+                bank_file = base64.b64encode(partner.upload_file).decode('utf-8')
+            if partner.pan_card_file:
+                pan_file = base64.b64encode(partner.pan_card_file).decode('utf-8')
 
-            return request.redirect('/partner-kyc')
+            values = {
+                'partner_id': partner,
+                'partner_name': partner.name,
+                'partner_email': partner.email,
+                'partner_phone': partner.phone,
+                'document': partner.select_document,
+                'document_number': document_number,
+                'document_name': document_name,
+                'file_upload_front': file_upload_front,
+                'file_upload_back': file_upload_back,
+                'account_holder_name': partner.Account_holder_name,
+                'account_number': partner.Account_holder_number,
+                'bank_id': bank_id if bank_id else '',# This will render the bank's name in the template
+                'ifsc_code': partner.ifsc_code,
+                'upi_mobile_number': partner.upi_mobile_number,
+                'bank_file': bank_file,
+                'pan_number': partner.pan_card_number,
+                'pan_name': partner.pan_card_name,
+                'pan_file': pan_file,
+                'state_selection' : partner.state_selection,
 
-        # If the request is a GET request (loading the form), fetch partner details to pre-populate
-        selected_document = partner.select_document
+            }
+            return request.render('custom_web_kreator.nkyc_page_template', values)
+        else:
+            raise NotFound()
 
-        document_number = ''
-        document_name = ''
-        file_upload_front = ''
-        file_upload_back = ''
-        bank_file = ''
-        pan_file = ''
-        if selected_document:
-            # Dynamically fetch the number and name fields
-            if selected_document == 'voter_identity_card':
-                document_number = getattr(partner, f"voter_identity_number", '')
-                document_name = getattr(partner, f"voter_identity_name", '')
-                file_upload_front = getattr(partner, f"voter_identity_front", '')
-                file_upload_back = getattr(partner, f"voter_identity_back", '')
-            else:
-                document_number = getattr(partner, f"{selected_document}_number", '')
-                document_name = getattr(partner, f"{selected_document}_name", '')
-                file_upload_front = getattr(partner, f"{selected_document}_front", '')
-                file_upload_back = getattr(partner, f"{selected_document}_back", '')
-
-            # Convert binary fields to base64 strings for use in templates
-            if file_upload_front:
-                file_upload_front = base64.b64encode(file_upload_front).decode('utf-8')
-            if file_upload_back:
-                file_upload_back = base64.b64encode(file_upload_back).decode('utf-8')
-
-        if partner.upload_file:
-            bank_file = base64.b64encode(partner.upload_file).decode('utf-8')
-        if partner.pan_card_file:
-            pan_file = base64.b64encode(partner.pan_card_file).decode('utf-8')
-
-        values = {
-            'partner_id': partner,
-            'partner_name': partner.name,
-            'partner_email': partner.email,
-            'partner_phone': partner.phone,
-            'document': partner.select_document,
-            'document_number': document_number,
-            'document_name': document_name,
-            'file_upload_front': file_upload_front,
-            'file_upload_back': file_upload_back,
-            'account_holder_name': partner.Account_holder_name,
-            'account_number': partner.Account_holder_number,
-            'bank_id': bank_id if bank_id else '',  # This will render the bank's name in the template
-            'ifsc_code': partner.ifsc_code,
-            'upi_mobile_number': partner.upi_mobile_number,
-            'bank_file': bank_file,
-            'pan_number': partner.pan_card_number,
-            'pan_name': partner.pan_card_name,
-            'pan_file': pan_file,
-            'state_selection': partner.state_selection,
-
-        }
-        return request.render('custom_web_kreator.nkyc_page_template', values)
-
-    # @http.route('/referral', type='http', auth='public', website=True)
-    # def referral_page(self, **kwargs):
-    #     # Render the data page template
-    #     return http.request.render('custom_web_kreator.referral_link_page')
-
-    @http.route('/nreferral', type='http', auth='public', website=True)
+    @http.route('/creator/referral', type='http', auth='public', website=True)
     def nreferral_page(self, **kwargs):
         # Render the data page template
-        return http.request.render('custom_web_kreator.nreferral_links_page')
+        return http.request.render('custom_web_kreator.nreferral_link_page')
 
     # @http.route('/partner-home', type='http', auth='public', website=True)
     # def partner_page(self, **kwargs):
     #     # Render the data page template
     #     return http.request.render('custom_web_kreator.get_started_partner')
 
-    @http.route('/partner', type='http', auth='public', website=True)
+    @http.route('/partner/income', type='http', auth='public', website=True)
     def partner(self, **kwargs):
-        current_user = request.env.user
-        partner = current_user.partner_id
-        # Define date ranges
-        today = datetime.today().date()
-        last_7_days = today - timedelta(days=7)
-        last_30_days = today - timedelta(days=30)
-        orders_obj = request.env['sale.order.line']
-        # Initialize commission data
-        partner_total_commission = 0.0
-        partner_commission_today = 0.0
-        partner_commission_last_7_days = 0.0
-        partner_commission_last_30_days = 0.0
-        order_lines = orders_obj.sudo().search([
-            ('is_commission', '=', True),
-            ('state', '=', 'sale'),
-            ('partner_commission_partner_id', '=', partner.id)
-        ])
-        for line in order_lines:
-            order_date = line.create_date.date()
-            partner_total_commission += line.partner_commission_amount
-            if order_date == today:
-                partner_commission_today += line.partner_commission_amount
-            if last_7_days <= order_date <= today:
-                partner_commission_last_7_days += line.partner_commission_amount
-            if last_30_days <= order_date <= today:
-                partner_commission_last_30_days += line.partner_commission_amount
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-        # Prepare data for rendering or JSON response
-        commission_data = {
-            'commission': {
-                'total': partner_total_commission,
-                'today': partner_commission_today,
-                'last_7_days': partner_commission_last_7_days,
-                'last_30_days': partner_commission_last_30_days,
-                'graph': """
-                <script type="text/javascript">
-                document.addEventListener('DOMContentLoaded', function () {
-                    // Get the context of the canvas elements for the doughnut charts
-                    const ctx1 = document.getElementById('doughnutChart-four').getContext('2d');
-                    const ctx2 = document.getElementById('doughnutChart-five').getContext('2d');
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'partner']:
+            current_user = request.env.user
+            partner = current_user.partner_id
+            # Define date ranges
+            today = datetime.today().date()
+            last_7_days = today - timedelta(days=7)
+            last_30_days = today - timedelta(days=30)
+            orders_obj = request.env['sale.order.line']
+            # Initialize commission data
+            partner_total_commission = 0.0
+            partner_commission_today = 0.0
+            partner_commission_last_7_days = 0.0
+            partner_commission_last_30_days = 0.0
+            order_lines = orders_obj.sudo().search([
+                ('is_commission', '=', True),
+                ('state', '=', 'sale'),
+                ('partner_commission_partner_id', '=', partner.id)
+            ])
+            for line in order_lines:
+                order_date = line.create_date.date()
+                partner_total_commission += line.partner_commission_amount
+                if order_date == today:
+                    partner_commission_today += line.partner_commission_amount
+                if last_7_days <= order_date <= today:
+                    partner_commission_last_7_days += line.partner_commission_amount
+                if last_30_days <= order_date <= today:
+                    partner_commission_last_30_days += line.partner_commission_amount
 
-                    // Doughnut Chart for 'doughnutChart-four'
-                    new Chart(ctx1, {
-                        type: 'doughnut',
-                        data: {
-                            labels: ['Electronics', 'Clothing', 'Food', 'Books', 'Other'],
-                            datasets: [{
-                                label: 'Sales Distribution',
-                                data: [322, 2576, 2087, 15787, 5787],
-                                backgroundColor: [
-                                    'rgba(255, 205, 0, 1)',
-                                    'rgba(255, 255, 255, 1)',
-                                    'rgba(8, 0, 102, 1)',
-                                    'rgba(255, 119, 0, 1)',
-                                    'rgba(255, 245, 198, 1)'
-                                ],
-                                borderColor: [
-                                    'rgba(255, 205, 0, 0.7)',
-                                    'rgba(255, 255, 255, 0.7)',
-                                    'rgba(8, 0, 102, 0.7)',
-                                    'rgba(255, 119, 0, 0.7)',
-                                    'rgba(255, 245, 198, 0.7)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            cutout: '65%',
-                            animation: {
-                                animateScale: true,
-                                animateRotate: true,
-                                duration: 2000
-                            },
-                            plugins: {
-                                legend: {
-                                    display: false // This hides the labels in the legend
-                                }
-                            },
-                        }
-                    });
-
-                    // Doughnut Chart for 'doughnutChart-five'
-                    new Chart(ctx2, {
-                        type: 'doughnut',
-                        data: {
-                            labels: ['Electronics', 'Clothing', 'Food', 'Books', 'Other'],
-                            datasets: [{
-                                label: 'Sales Distribution',
-                                data: [30, 30, 10, 20, 10],
-                                backgroundColor: [
-                                    'rgba(255, 205, 0, 1)',
-                                    'rgba(255, 255, 255, 1)',
-                                    'rgba(8, 0, 102, 1)',
-                                    'rgba(255, 119, 0, 1)',
-                                    'rgba(255, 245, 198, 1)'
-                                ],
-                                borderColor: [
-                                    'rgba(255, 205, 0, 0.7)',
-                                    'rgba(255, 255, 255, 0.7)',
-                                    'rgba(8, 0, 102, 0.7)',
-                                    'rgba(255, 119, 0, 0.7)',
-                                    'rgba(255, 245, 198, 0.7)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            cutout: '65%',
-                            animation: {
-                                animateScale: true,
-                                animateRotate: true,
-                                duration: 2000
-                            },
-                            plugins: {
-                                legend: {
-                                    display: false // This hides the labels in the legend
-                                }
-                            },
-                        }
-                    });
-                });
-            </script>
-                """
+            # Prepare data for rendering or JSON response
+            commission_data = {
+                'commission': {
+                    'total': partner_total_commission,
+                    'today': partner_commission_today,
+                    'last_7_days': partner_commission_last_7_days,
+                    'last_30_days': partner_commission_last_30_days
+                }
             }
-        }
-        # Render the data page template
-        return http.request.render('custom_web_kreator.Npartner', commission_data)
+            # Render the data page template
+            return http.request.render('custom_web_kreator.Npartner', commission_data)
+        else:
+            raise NotFound()
 
     # @http.route('/my-courses', type='http', auth='public', website=True)
     # def mycourses_page(self, **kwargs):
     #     # Render the data page template
     #     return http.request.render('custom_web_kreator.my_courses_template')
 
-    @http.route('/nmy-courses', type='http', auth='user', website=True)
+    @http.route('/creator/my-courses', type='http', auth='user', website=True)
     def nmycourses_page(self, **kwargs):
-        # Get the logged-in user
+        # Get the current logged-in user
         current_user = request.env.user
-        # Get the partner record associated with the current user
-        partner = current_user.partner_id
+        partner = current_user.partner_id  # Get related partner
 
-        print("-------------currnt user", current_user)
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'creator']:
+            # Initialize course lists
+            published_courses = []
+            draft_review_courses = []
+            approved_courses = []
+            under_review_courses = []
+            all_courses = []
 
-        # Initialize course lists
-        published_courses = []
-        draft_review_courses = []
+            # Check if the user is of type 'creator'
+            if partner.user_type in ['creator','internal_user']:
+                # Fetch published courses created by the user
+                approved_courses = request.env['slide.channel'].sudo().search([
+                    ('create_uid', '=', current_user.id),
+                    ('state', '=', 'course_preview')
+                ])
 
-        # Check if the user is of type 'creator'
-        if partner.user_type in ['creator', 'internal_user']:
-            # Fetch published courses created by the user
-            approved_courses = request.env['slide.channel'].sudo().search([
-                ('create_uid', '=', current_user.id),
-                ('state', '=', 'course_preview')
-            ])
+                # Fetch draft and under review courses created by the user
+                published_courses = request.env['slide.channel'].sudo().search([
+                    ('create_uid', '=', current_user.id),
+                    ('state', '=', 'published')  # Filter for draft and under review
+                ])
 
-            # Fetch draft and under review courses created by the user
-            published_courses = request.env['slide.channel'].sudo().search([
-                ('create_uid', '=', current_user.id),
-                ('state', '=', 'published')  # Filter for draft and under review
-            ])
+                under_review_courses = request.env['slide.channel'].sudo().search([
+                    ('create_uid', '=', current_user.id),
+                    ('state', '=', 'draft')  # Filter for draft and under review
+                ])
 
-            under_review_courses = request.env['slide.channel'].sudo().search([
-                ('create_uid', '=', current_user.id),
-                ('state', '=', 'draft')  # Filter for draft and under review
-            ])
+                all_courses = request.env['slide.channel'].sudo().search([
+                    ('create_uid', '=', current_user.id),
+                ])
 
-            all_courses = request.env['slide.channel'].sudo().search([
-                ('create_uid', '=', current_user.id),
-            ])
 
-        course_count = request.env['slide.channel'].sudo().search([
-            ('create_uid', '=', current_user.id),
-            ('state', 'in', ['draft', 'course_preview', 'published'])  # Filter for draft and under review
-        ])
-        approve_course_count = True if published_courses else False
-        course_count = True if course_count else False
+            course_count = request.env['slide.channel'].sudo().search([
+                    ('create_uid', '=', current_user.id),
+                    ('state', 'in', ['draft', 'course_preview','published'])  # Filter for draft and under review
+                ])
+            approve_course_count = True if published_courses else False
+            course_count = True if course_count else False
 
-        # Render the template and pass the course lists
-        return request.render('custom_web_kreator.nmy_courses_template', {
-            'approved_courses': approved_courses,
-            'published_courses': published_courses,
-            'under_review_courses': under_review_courses,
-            'approve_course_count': approve_course_count,
-            'course_count': course_count,
-            'all_courses': all_courses,
-        })
 
-    @http.route('/nmy-courses-partner', type='http', auth='public', website=True)
+
+            # Render the template and pass the course lists
+            return request.render('custom_web_kreator.nmy_courses_template', {
+                'approved_courses': approved_courses,
+                'published_courses': published_courses,
+                'under_review_courses': under_review_courses,
+                'approve_course_count':approve_course_count,
+                'course_count':course_count,
+                'all_courses':all_courses,
+            })
+        else:
+            raise NotFound()
+
+    @http.route('/partner/mycourses', type='http', auth='public', website=True)
     def nmycourses_partner(self, **kwargs):
-        # Get the logged-in user
-        current_user = request.env.user
-        partner = current_user.partner_id
+        # Get the current logged-in user
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-        courses = []
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'partner']:
 
-        # Check if the user is of type 'customer'
-        if partner.user_type in ['partner', 'internal_user']:
-            # Fetch sale orders linked to the customer
-            sale_orders = request.env['sale.order'].sudo().search(
-                [('partner_id', '=', partner.id), ('state', 'in', ['sale'])])
-            print("Sale Orders:", sale_orders)
+            # Get the logged-in user
+            current_user = request.env.user
+            partner = current_user.partner_id
 
-            # Extract product template IDs from sale order lines
-            product_template_ids = sale_orders.mapped('order_line.product_template_id')
-            product_names = product_template_ids.mapped('name')
-            print("Product Template IDs:", product_template_ids)
+            courses = []
 
-            if product_template_ids:
-                # Fetch courses where the product_template_ids match
-                courses = request.env['slide.channel'].sudo().search(
-                    [('name', 'in', product_names)]
-                )
-                print("Courses:", courses)
+            # Check if the user is of type 'customer'
+            if partner.user_type in ['partner','internal_user']:
+                # Fetch sale orders linked to the customer
+                sale_orders = request.env['sale.order'].sudo().search(
+                    [('partner_id', '=', partner.id), ('state', 'in', ['sale'])])
+                print("Sale Orders:", sale_orders)
 
-        # Render the data page template
-        return request.render('custom_web_kreator.nmy_courses_partner', {
-            'courses': courses
-        })
+                # Extract product template IDs from sale order lines
+                product_template_ids = sale_orders.mapped('order_line.product_template_id')
+                product_names = product_template_ids.mapped('name')
+                print("Product Template IDs:", product_template_ids)
+
+                if product_template_ids:
+                    # Fetch courses where the product_template_ids match
+                    courses = request.env['slide.channel'].sudo().search(
+                        [('name', 'in', product_names)]
+                    )
+                    print("Courses:", courses)
+
+            # Render the data page template
+            return request.render('custom_web_kreator.nmy_courses_partner', {
+                'courses': courses
+            })
+        else:
+            raise NotFound()
 
     # Consume course
     @http.route(['/consume/course/<int:course_id>'], type='http', auth="public", website=True)
     def consume_to_course(self, course_id, **kwargs):
         # You can add custom logic here before redirecting
-        course = request.env['slide.channel'].sudo().search([('id', '=', course_id)], limit=1)
+        course = request.env['slide.channel'].sudo().search([('id', '=', course_id)],limit=1)
         if not course.exists():
             return request.redirect('/404')  # Redirect if the course does not exist
         # Redirect to the target URL
@@ -671,56 +609,69 @@ class PortalMyCourses(http.Controller):
         url = website_url['context']['params']['path']
         return request.redirect(url)
 
-    @http.route('/target', type='http', auth='public', website=True)
+    @http.route('/partner/target', type='http', auth='public', website=True)
     def target(self, **kwargs):
-        # Get the current logged-in user (res.partner)
-        partner = request.env.user.partner_id
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-        # Fetch all sales targets
-        targets = request.env['sale.target'].sudo().search([])
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'partner']:
+            # Get the current logged-in user (res.partner)
+            partner = request.env.user.partner_id
 
-        # Prepare data to pass to the template
-        target_data = []
-        for target in targets:
-            # Filter achievements for the logged-in partner only
-            achievement_amount = sum(
-                target.achievement_ids.filtered(lambda a: a.partner_id == partner).mapped('amount')
+            # Fetch all sales targets
+            targets = request.env['sale.target'].sudo().search([])
+
+            # Prepare data to pass to the template
+            target_data = []
+            for target in targets:
+                # Filter achievements for the logged-in partner only
+                achievement_amount = sum(
+                    target.achievement_ids.filtered(lambda a: a.partner_id == partner).mapped('amount')
+                )
+
+                # Append data to the list
+                target_data.append({
+                    'name': target.name,  # Target name
+                    'achievement_amount': achievement_amount,  # Achieved amount for this partner
+                    'target_amount': target.target_amount,  # Total target amount
+                })
+
+            values = {
+                'targets': target_data,
+                'currency_id': request.env.company.currency_id
+            }
+
+            # Render the template with prepared data
+            return request.render('custom_web_kreator.target_page_template', values)
+        else:
+            raise NotFound()
+
+    @http.route('/partner/promotional-material', type='http', auth='public', website=True)
+    def promote(self, **kwargs):
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
+
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'partner']:
+            # Fetch courses where is_training_course is True and sort them alphabetically by name
+            promotional_courses = request.env['slide.channel'].sudo().search(
+                [('state', '=', 'published')],
+                order='name asc'
             )
 
-            # Append data to the list
-            target_data.append({
-                'name': target.name,  # Target name
-                'achievement_amount': achievement_amount,  # Achieved amount for this partner
-                'target_amount': target.target_amount,  # Total target amount
+            # Fetch only courses that have at least one record in promotional_material_ids
+            promotional_courses = request.env['slide.channel'].sudo().search([
+                ('state', '=', 'published'),
+                ('promotional_material_ids', '!=', False)  # Filters only those courses with promotional materials
+            ], order='name asc')
+
+            # Render the template and pass the filtered courses
+            return request.render('custom_web_kreator.npromote', {
+                'promotional_courses': promotional_courses
             })
-
-        values = {
-            'targets': target_data,
-            'currency_id': request.env.company.currency_id
-        }
-
-        # Render the template with prepared data
-        return request.render('custom_web_kreator.target_page_template', values)
-
-    @http.route('/npromote', type='http', auth='public', website=True)
-    def promote(self, **kwargs):
-        print("coming here")
-        # Fetch courses where is_training_course is True and sort them alphabetically by name
-        promotional_courses = request.env['slide.channel'].sudo().search(
-            [('state', '=', 'published')],
-            order='name asc'
-        )
-
-        # Fetch only courses that have at least one record in promotional_material_ids
-        promotional_courses = request.env['slide.channel'].sudo().search([
-            ('state', '=', 'published'),
-            ('promotional_material_ids', '!=', False)  # Filters only those courses with promotional materials
-        ], order='name asc')
-
-        # Render the template and pass the filtered courses
-        return request.render('custom_web_kreator.npromote', {
-            'promotional_courses': promotional_courses
-        })
+        else:
+            raise NotFound()
 
     # @http.route('/forumsection', type='http', auth='public', website=True)
     # def forumpost(self, **kwargs):
@@ -732,26 +683,33 @@ class PortalMyCourses(http.Controller):
     #     # Render the data page template
     #     return http.request.render('custom_web_kreator.offers_page')
 
-    @http.route('/offers', type='http', auth='public', website=True, methods=['GET', 'POST'])
+    @http.route('/creator/offers', type='http', auth='public', website=True, methods=['GET', 'POST'])
     def offers(self, **kwargs):
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-        user_id = request.env.user  # Get the current logged-in user
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'creator']:
 
-        # Fetch only courses created by the current user
-        product_ids = request.env['slide.channel'].sudo().search([
-            ('product_id', '!=', False),
-            ('create_uid', '=', user_id.id)  # Filter courses by the logged-in user
-        ]).product_id
-        discount_ids = request.env['discount.discount'].sudo().search([])
-        loyalty_ids = request.env['loyalty.program'].sudo().search([], order='create_date desc')
-        values = {
-            'loyalty_ids': loyalty_ids,
-            'product_ids': product_ids,
-            'discount_ids': discount_ids,
-            'currency_id': request.env.company.currency_id
-        }
+            user_id = request.env.user  # Get the current logged-in user
 
-        return request.render('custom_web_kreator.offers_page', values)
+            # Fetch only courses created by the current user
+            product_ids = request.env['slide.channel'].sudo().search([
+                ('product_id', '!=', False),
+                ('create_uid', '=', user_id.id)  # Filter courses by the logged-in user
+            ]).product_id
+            discount_ids = request.env['discount.discount'].sudo().search([])
+            loyalty_ids = request.env['loyalty.program'].sudo().search([], order='create_date desc')
+            values = {
+                'loyalty_ids': loyalty_ids,
+                'product_ids': product_ids,
+                'discount_ids': discount_ids,
+                'currency_id': request.env.company.currency_id
+            }
+
+            return request.render('custom_web_kreator.offers_page',values)
+        else:
+            raise NotFound()
 
     @http.route('/offers-create', type='http', auth='public', website=True, methods=['GET', 'POST'])
     def offers_create(self, **kwargs):
@@ -803,48 +761,55 @@ class PortalMyCourses(http.Controller):
             'date_from': date_from,
             'date_to': date_to,
         })
-        return request.redirect('/offers')
+        return request.redirect('/creator/offers')
 
-    @http.route('/partner-lead', type='http', auth="user", website=True)
+
+    @http.route('/partner/lead', type='http', auth="user", website=True)
     def partner_lead(self, **kwargs):
         # Get the current logged-in user
         user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-        # Get the start and end date from the URL parameters, if provided
-        start_date = kwargs.get('start_date')
-        end_date = kwargs.get('end_date')
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'partner']:
 
-        # Convert date strings into datetime objects (if they exist)
-        if start_date:
-            start_date = datetime.strptime(start_date, '%Y-%m-%d')
-        if end_date:
-            end_date = datetime.strptime(end_date, '%Y-%m-%d')
+            # Get the start and end date from the URL parameters, if provided
+            start_date = kwargs.get('start_date')
+            end_date = kwargs.get('end_date')
 
-        # Prepare the domain for filtering sales orders
-        domain = [('state', '!=', 'sale')]  # Only fetch orders that are not confirmed (state != 'sale')
+            # Convert date strings into datetime objects (if they exist)
+            if start_date:
+                start_date = datetime.strptime(start_date, '%Y-%m-%d')
+            if end_date:
+                end_date = datetime.strptime(end_date, '%Y-%m-%d')
 
-        if start_date and end_date:
-            domain.extend([
-                ('date_order', '>=', start_date),
-                ('date_order', '<=', end_date)
-            ])
+            # Prepare the domain for filtering sales orders
+            domain = [('state', '!=', 'sale')]  # Only fetch orders that are not confirmed (state != 'sale')
 
-        # Fetch the sale orders based on the domain
-        sale_orders = request.env['sale.order'].sudo().search(domain)
+            if start_date and end_date:
+                domain.extend([
+                    ('date_order', '>=', start_date),
+                    ('date_order', '<=', end_date)
+                ])
 
-        # Fetch visitor data, no date filters for visitors
-        visitors = request.env['website.visitor'].sudo().search([])
+            # Fetch the sale orders based on the domain
+            sale_orders = request.env['sale.order'].sudo().search(domain)
 
-        # Prepare the context to pass to the template
-        context = {
-            'user_name': user.name,  # Pass the current user's name
-            'sale_orders': sale_orders,  # Pass the filtered sale orders
-            'start_date': start_date,  # Pass the start date
-            'end_date': end_date,  # Pass the end date
-            # 'visitors': visitors,  # Pass the visitor data
-        }
+            # Fetch visitor data, no date filters for visitors
+            visitors = request.env['website.visitor'].sudo().search([])
 
-        return request.render('custom_web_kreator.partner_lead', context)
+            # Prepare the context to pass to the template
+            context = {
+                'user_name': user.name,  # Pass the current user's name
+                'sale_orders': sale_orders,  # Pass the filtered sale orders
+                'start_date': start_date,  # Pass the start date
+                'end_date': end_date,  # Pass the end date
+                # 'visitors': visitors,  # Pass the visitor data
+            }
+
+            return request.render('custom_web_kreator.partner_lead', context)
+        else:
+            raise NotFound()
 
     # @http.route('/maintemp', type='http', auth='public', website=True)
     # def maintemp(self, **kwargs):
@@ -855,289 +820,354 @@ class PortalMyCourses(http.Controller):
     def master(self, **kwargs):
         # Render the data page template
         user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-        # Count the number of courses created by the user
-        course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id)])
-        approve_course_count = request.env['slide.channel'].sudo().search_count(
-            [('create_uid', '=', user.id), ('state', '=', 'published')]) > 0
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'creator']:
+            print("cominggggg",partner.user_type)
+        
+            # Count the number of courses created by the user
+            course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id)])
+            approve_course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id),('state', '=', 'published')]) > 0
 
-        # if course_count:
-        #     return http.request.redirect('/nmy-courses')
-        # else:
-        return http.request.render('custom_web_kreator.master', {'course_count': course_count})
-
-    @http.route('/master_course_detail', type='http', auth='public', website=True)
+            if course_count:
+                return http.request.redirect('/creator/my-courses')
+            else:
+                return http.request.render('custom_web_kreator.master',{'course_count': course_count})
+        else:
+            raise NotFound()  # Return 404 if not allowed
+    @http.route('/creator/course_detail', type='http', auth='public', website=True)
     def master_course_detail(self, **kwargs):
-        partner_commission_rate = (request.env['partner.commission'].sudo().search([], order='create_date desc',
-                                                                                   # Order by creation date, latest first
-                                                                                   limit=1).rate) / 100
-        direct_commission_rate = (request.env['direct.commission'].sudo().search([], order='create_date desc',
-                                                                                 # Order by creation date, latest first
-                                                                                 limit=1).rate) / 100
-        values = {
-            'partner_commission_rate': partner_commission_rate,
-            'direct_commission_rate': direct_commission_rate,
-            'currency_id': request.env.company.currency_id
-        }
-        user = request.env.user
-        course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id)]) > 0
-        approve_course_count = request.env['slide.channel'].sudo().search_count(
-            [('create_uid', '=', user.id), ('state', '=', 'published')]) > 0
-        values['course_count'] = course_count
-        values['approve_course_count'] = approve_course_count
         # Render the data page template
-        return http.request.render('custom_web_kreator.master_course_detail', values)
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-    @http.route('/master_course_standard', type='http', auth='public', website=True)
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'creator']:
+            partner_commission_rate = (request.env['partner.commission'].sudo().search([],order='create_date desc',  # Order by creation date, latest first
+                        limit=1).rate)/100
+            direct_commission_rate = (request.env['direct.commission'].sudo().search([],order='create_date desc',  # Order by creation date, latest first
+                        limit=1).rate)/100
+            values = {
+                'partner_commission_rate':partner_commission_rate,
+                'direct_commission_rate':direct_commission_rate,
+                'currency_id': request.env.company.currency_id
+            }
+            user = request.env.user
+            course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id)]) > 0
+            approve_course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id),('state', '=', 'published')]) > 0
+            values['course_count'] = course_count
+            values['approve_course_count'] = approve_course_count
+            # Render the data page template
+            return http.request.render('custom_web_kreator.master_course_detail', values)
+        else:
+            raise NotFound()
+    @http.route('/creator/course_standard', type='http', auth='public', website=True)
     def master_course_standard(self, **kwargs):
-        course_data = {
-            'course_name': kwargs.get('course_name'),
-            'course_description': kwargs.get('course_description'),
-            'regular_price': kwargs.get('regular_price'),
-            'sales_price': kwargs.get('sales_price'),
-        }
-        http.request.session['course_data'] = course_data
-
-        user = request.env.user
-        course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id)]) > 0
-        approve_course_count = request.env['slide.channel'].sudo().search_count(
-            [('create_uid', '=', user.id), ('state', '=', 'published')]) > 0
         # Render the data page template
-        return http.request.render('custom_web_kreator.master_course_standard', {'course_data': course_data,
-                                                                                 'course_count': course_count,
-                                                                                 'approve_course_count': approve_course_count})
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-    @http.route('/master_term', type='http', auth='public', website=True, methods=['POST'])
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'creator']:
+            course_data = {
+                'course_name': kwargs.get('course_name'),
+                'course_description': kwargs.get('course_description'),
+                'regular_price': kwargs.get('regular_price'),
+                'sales_price': kwargs.get('sales_price'),
+            }
+            http.request.session['course_data'] = course_data
+
+            user = request.env.user
+            course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id)]) > 0
+            approve_course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id),('state', '=', 'published')]) > 0
+            # Render the data page template
+            return http.request.render('custom_web_kreator.master_course_standard', {'course_data': course_data,
+                'course_count':course_count,'approve_course_count':approve_course_count})
+        else:
+            raise NotFound()
+
+    @http.route('/creator/terms', type='http', auth='public', website=True, methods=['POST'])
     def master_term(self, **kwargs):
         import json
+        # Render the data page template
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-        # Retrieve existing course_data from the session and ensure it's a dictionary
-        course_data = http.request.session.get('course_data', '{}')
-        print("course_data before update:", course_data)
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'creator']:
 
-        if isinstance(course_data, str):
+            # Retrieve existing course_data from the session and ensure it's a dictionary
+            course_data = http.request.session.get('course_data', '{}')
+
+            if isinstance(course_data, str):
+                try:
+                    course_data = json.loads(course_data)  # Convert string to dictionary
+                except json.JSONDecodeError:
+                    course_data = {}
+
+            # Extract Google Drive links from the form
+            google_drive_links = request.httprequest.form.getlist('google_drive_link[]')
+            if isinstance(google_drive_links, str):  # If only one link is provided, convert to list
+                google_drive_links = [google_drive_links]
+
+            # Update course_data with the new links
+            course_data['new_google_drive_links'] = google_drive_links
+
+            # Store updated course_data back in the session
+            http.request.session['course_data'] = json.dumps(course_data)  # Store as JSON string
+
+            # Debugging
+            print("Updated Course Data:", course_data)
+
+            user = request.env.user
+            course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id)]) > 0
+            approve_course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id),('state', '=', 'published')]) > 0
+            print('-----------apporve',approve_course_count)
+            print('-----------course_count',course_count)
+            # Render the data page template
+            return http.request.render('custom_web_kreator.master_term', {'course_data': course_data,'course_count':course_count,'approve_course_count':approve_course_count})
+
+        else:
+            raise NotFound()
+    @http.route('/creator/welcome', type='http', auth='public', website=True)
+    def master_welcome(self, **kwargs):
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
+
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'creator']:
+            # Fetch course_data from session
+            course_data = request.session.get('course_data', '{}')
+            # If it's a string, try to fix single quotes to double quotes to make it valid JSON
+            if isinstance(course_data, str):
+                course_data = course_data.replace("'", '"')
+
+            # Now try to load the data as JSON
             try:
-                course_data = json.loads(course_data)  # Convert string to dictionary
+                course_data = json.loads(course_data)
             except json.JSONDecodeError:
                 course_data = {}
 
-        # Extract Google Drive links from the form
-        google_drive_links = request.httprequest.form.getlist('google_drive_link[]')
-        print("google_drive_links", google_drive_links)
-        if isinstance(google_drive_links, str):  # If only one link is provided, convert to list
-            google_drive_links = [google_drive_links]
+            # Check the agreement value
+            agreement = kwargs.get('agreement')
 
-        # Update course_data with the new links
-        course_data['new_google_drive_links'] = google_drive_links
+            if agreement == 'agree':
+                # Create a record in slide.channel
+                SlideChannel = request.env['slide.channel']
+                slide_channel = SlideChannel.sudo().create({
+                    'name': course_data.get('course_name'),
+                    'description': course_data.get('course_description'),
+                    'regular_price': course_data.get('regular_price'),
+                    'sales_price': course_data.get('sales_price'),
+                    # Add other fields as required from course_data
+                })
 
-        # Store updated course_data back in the session
-        http.request.session['course_data'] = json.dumps(course_data)  # Store as JSON string
+                # ✅ Add Google Drive links to google_drive_links1
+                google_drive_links = course_data.get('new_google_drive_links', [])  # Extract links from session data
+                if google_drive_links:
+                    google_drive_link_records = [(0, 0, {'link': link}) for link in google_drive_links]
+                    slide_channel.sudo().write({'google_drive_links1': google_drive_link_records})
 
-        # Debugging
-        print("Updated Course Data:", course_data)
+                # ✅ Send email when user agrees
+                template = request.env.ref('custom_web_kreator.email_template_course_agree').sudo()
+                if template:
+                    ctx = {
+                        'user_email': user.email,
+                        'company_email': user.company_id.email or 'info@example.com',
+                        'partner_name': user.partner_id.name,  # User's name
+                        'course_name': course_data.get('course_name')  # Fetch course name dynamically
+                    }
+                    email_body = template.body_html
+                    template.sudo().with_context(ctx).send_mail(user.id, force_send=True)
 
-        user = request.env.user
-        course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id)]) > 0
-        approve_course_count = request.env['slide.channel'].sudo().search_count(
-            [('create_uid', '=', user.id), ('state', '=', 'published')]) > 0
-        print('-----------apporve', approve_course_count)
-        print('-----------course_count', course_count)
-        # Render the data page template
-        return http.request.render('custom_web_kreator.master_term',
-                                   {'course_data': course_data, 'course_count': course_count,
-                                    'approve_course_count': approve_course_count})
+                    # ✅ Log email details in chatter
+                    email_log_message = f"An email was sent to {user.email} regarding course agreement.\n\n{email_body}"
+                    slide_channel.message_post(
+                        body=email_log_message,
+                        subtype_xmlid="mail.mt_comment"
+                    )
 
-    @http.route('/master_welcome', type='http', auth='public', website=True)
-    def master_welcome(self, **kwargs):
-        # Fetch course_data from session
-        course_data = request.session.get('course_data', '{}')
-        # If it's a string, try to fix single quotes to double quotes to make it valid JSON
-        if isinstance(course_data, str):
-            course_data = course_data.replace("'", '"')
+                return request.render('custom_web_kreator.master_welcome', {'course_data': course_data,'agreement':agreement})
+            elif agreement == 'disagree':
+                # Create a record in crm.lead
+                CrmLead = request.env['crm.lead']
+                crm_lead = CrmLead.sudo().create({
+                    'name': course_data.get('course_name'),
+                    'type' : 'lead',
+                    # Add other fields as required from course_data
+                })
+                #Send email when user disagrees
+                template = request.env.ref('custom_web_kreator.email_template_course_disagree')
+                if template:
+                    ctx = {
+                        'user_email': user.email,
+                        'company_email': user.company_id.email or 'info@example.com',
+                        'partner_name': user.partner_id.name,  # User's name
+                        'course_name': course_data.get('course_name')  # Fetch course name dynamically
+                    }
+                    template.sudo().with_context(ctx=ctx).send_mail(user.id, force_send=True)  # Pass context as ctx
 
-        # Now try to load the data as JSON
-        try:
-            course_data = json.loads(course_data)
-        except json.JSONDecodeError:
-            course_data = {}
+                return request.render('custom_web_kreator.master_welcome', {'course_data': course_data, 'agreement': agreement})
 
-        # Check the agreement value
-        agreement = kwargs.get('agreement')
 
-        if agreement == 'agree':
-            # Create a record in slide.channel
-            SlideChannel = request.env['slide.channel']
-            slide_channel = SlideChannel.sudo().create({
-                'name': course_data.get('course_name'),
-                'description': course_data.get('course_description'),
-                'regular_price': course_data.get('regular_price'),
-                'sales_price': course_data.get('sales_price'),
-                # Add other fields as required from course_data
-            })
-            # ✅ Add Google Drive links to google_drive_links1
-            google_drive_links = course_data.get('new_google_drive_links', [])  # Extract links from session data
-            if google_drive_links:
-                google_drive_link_records = [(0, 0, {'link': link}) for link in google_drive_links]
-                slide_channel.sudo().write({'google_drive_links1': google_drive_link_records})
-            return request.render('custom_web_kreator.master_welcome',
-                                  {'course_data': course_data, 'agreement': agreement})
-        elif agreement == 'disagree':
-            print(course_data.get('course_name'))
-            # Create a record in crm.lead
-            CrmLead = request.env['crm.lead']
-            crm_lead = CrmLead.sudo().create({
-                'name': course_data.get('course_name'),
-                'type': 'lead',
-                # Add other fields as required from course_data
-            })
+            # Get the logged-in user
+            current_user = request.env.user
+            # Get the partner record associated with the current user
+            partner = current_user.partner_id
 
-            return request.render('custom_web_kreator.master_welcome',
-                                  {'course_data': course_data, 'agreement': agreement})
 
-        # Get the logged-in user
-        current_user = request.env.user
-        # Get the partner record associated with the current user
-        partner = current_user.partner_id
+            published_courses = request.env['slide.channel'].sudo().search([
+                    ('create_uid', '=', current_user.id),
+                    ('state', '=', 'published')
+                ])
+            course_count = request.env['slide.channel'].sudo().search([
+                    ('create_uid', '=', current_user.id),
+                    ('state', 'in', ['draft', 'course_preview','published'])  # Filter for draft and under review
+                ])
+            approve_course_count = True if published_courses else False
+            course_count = True if course_count else False
 
-        published_courses = request.env['slide.channel'].sudo().search([
-            ('create_uid', '=', current_user.id),
-            ('state', '=', 'published')
-        ])
-        course_count = request.env['slide.channel'].sudo().search([
-            ('create_uid', '=', current_user.id),
-            ('state', 'in', ['draft', 'course_preview', 'published'])  # Filter for draft and under review
-        ])
-        approve_course_count = True if published_courses else False
-        course_count = True if course_count else False
+            # If the user disagrees, just return the page without creating anything
+            return request.render('custom_web_kreator.master_welcome', {'course_data': course_data,'agreement':agreement,'approve_course_count':approve_course_count,
+                'course_count':course_count,})
+        else:
+            raise NotFound()
 
-        print("||||approve_course_count||||||", approve_course_count)
-        print("||||course_count||||||", course_count)
-
-        # If the user disagrees, just return the page without creating anything
-        return request.render('custom_web_kreator.master_welcome', {'course_data': course_data, 'agreement': agreement,
-                                                                    'approve_course_count': approve_course_count,
-                                                                    'course_count': course_count, })
-
-    @http.route('/master_income_data', type='http', auth='public', website=True)
+    @http.route('/creator/income', type='http', auth='public', website=True)
     def master_income(self, **kwargs):
-        current_user = request.env.user
-        partner = current_user.partner_id
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-        # Define date ranges
-        today = datetime.today().date()
-        # today = fields.Date.today()
-        last_7_days = today - timedelta(days=7)
-        last_30_days = today - timedelta(days=30)
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'creator']:
+            current_user = request.env.user
+            partner = current_user.partner_id
 
-        # Fetch product IDs linked to the user's courses
-        courses_obj = request.env['slide.channel']
-        orders_obj = request.env['sale.order.line']
-        product_ids = courses_obj.sudo().search([('create_uid', '=', current_user.id)]).product_id.ids
+            # Define date ranges
+            today = datetime.today().date()
+            # today = fields.Date.today()
+            last_7_days = today - timedelta(days=7)
+            last_30_days = today - timedelta(days=30)
 
-        # Initialize commission data
-        direct_total_commission = partner_total_commission = total_commission = 0.0
-        direct_commission_today = partner_commission_today = commission_today = 0.0
-        direct_commission_last_7_days = partner_commission_last_7_days = commission_last_7_days = 0.0
-        direct_commission_last_30_days = partner_commission_last_30_days = commission_last_30_days = 0.0
+            # Fetch product IDs linked to the user's courses
+            courses_obj = request.env['slide.channel']
+            orders_obj = request.env['sale.order.line']
+            product_ids = courses_obj.sudo().search([('create_uid', '=', current_user.id)]).product_id.ids
 
-        if product_ids:
-            # Fetch order lines with commissions
-            order_lines = orders_obj.sudo().search([
-                ('is_commission', '=', True),
-                ('state', '=', 'sale'),
-                ('product_id', 'in', product_ids)
-            ])
+            # Initialize commission data
+            direct_total_commission = partner_total_commission = total_commission = 0.0
+            direct_commission_today = partner_commission_today = commission_today = 0.0
+            direct_commission_last_7_days = partner_commission_last_7_days = commission_last_7_days = 0.0
+            direct_commission_last_30_days = partner_commission_last_30_days = commission_last_30_days = 0.0
 
-            # Separate and calculate commissions by date range
-            for line in order_lines:
-                order_date = line.create_date.date()
-                total_commission += line.direct_commission_amount + line.partner_commission_amount
-                direct_total_commission += line.direct_commission_amount
-                partner_total_commission += line.partner_commission_amount
-                if order_date == today:
-                    commission_today += line.direct_commission_amount + line.partner_commission_amount
-                    direct_commission_today += line.direct_commission_amount
-                    partner_commission_today += line.partner_commission_amount
-                if last_7_days <= order_date <= today:
-                    commission_last_7_days += line.direct_commission_amount + line.partner_commission_amount
-                    direct_commission_last_7_days += line.direct_commission_amount
-                    partner_commission_last_7_days += line.partner_commission_amount
-                if last_30_days <= order_date <= today:
-                    commission_last_30_days += line.direct_commission_amount + line.partner_commission_amount
-                    direct_commission_last_30_days += line.direct_commission_amount
-                    partner_commission_last_30_days += line.partner_commission_amount
+            if product_ids:
+                # Fetch order lines with commissions
+                order_lines = orders_obj.sudo().search([
+                    ('is_commission', '=', True),
+                    ('state', '=', 'sale'),
+                    ('product_id', 'in', product_ids)
+                ])
 
-        # Prepare data for rendering or JSON response
-        commission_data = {
-            'commission': {
-                'total': total_commission,
-                'today': commission_today,
-                'last_7_days': commission_last_7_days,
-                'last_30_days': commission_last_30_days
-            },
-            'direct_commission': {
-                'total': direct_total_commission,
-                'today': direct_commission_today,
-                'last_7_days': direct_commission_last_7_days,
-                'last_30_days': direct_commission_last_30_days
-            },
-            'partner_commission': {
-                'total': partner_total_commission,
-                'today': partner_commission_today,
-                'last_7_days': partner_commission_last_7_days,
-                'last_30_days': partner_commission_last_30_days
+                # Separate and calculate commissions by date range
+                for line in order_lines:
+                    order_date = line.create_date.date()
+                    total_commission += line.direct_commission_amount + line.partner_commission_amount
+                    direct_total_commission += line.direct_commission_amount
+                    partner_total_commission += line.partner_commission_amount
+                    if order_date == today:
+                        commission_today += line.direct_commission_amount + line.partner_commission_amount
+                        direct_commission_today += line.direct_commission_amount
+                        partner_commission_today += line.partner_commission_amount
+                    if last_7_days <= order_date <= today:
+                        commission_last_7_days += line.direct_commission_amount + line.partner_commission_amount
+                        direct_commission_last_7_days += line.direct_commission_amount
+                        partner_commission_last_7_days += line.partner_commission_amount
+                    if last_30_days <= order_date <= today:
+                        commission_last_30_days += line.direct_commission_amount + line.partner_commission_amount
+                        direct_commission_last_30_days += line.direct_commission_amount
+                        partner_commission_last_30_days += line.partner_commission_amount
+
+            # Prepare data for rendering or JSON response
+            commission_data = {
+                'commission': {
+                    'total': total_commission,
+                    'today': commission_today,
+                    'last_7_days': commission_last_7_days,
+                    'last_30_days': commission_last_30_days
+                },
+                'direct_commission': {
+                    'total': direct_total_commission,
+                    'today': direct_commission_today,
+                    'last_7_days': direct_commission_last_7_days,
+                    'last_30_days': direct_commission_last_30_days
+                },
+                'partner_commission': {
+                    'total': partner_total_commission,
+                    'today': partner_commission_today,
+                    'last_7_days': partner_commission_last_7_days,
+                    'last_30_days': partner_commission_last_30_days
+                }
             }
-        }
-        # Render the data page template
-        return http.request.render('custom_web_kreator.master_income_data', commission_data)
+            # Render the data page template
+            return http.request.render('custom_web_kreator.master_income_data', commission_data)
+        else:
+            raise NotFound()
 
-    # @http.route('/customer', type='http', auth='public', website=True)
-    # def customer_courses(self, **kwargs):
-    #     print("coming")
-    #     # Render the data page template
-    #     return http.request.render('custom_web_kreator.customer_courses')
-
-    @http.route('/customer', type='http', auth='public', website=True)
+    @http.route('/customer/mycourses', type='http', auth='public', website=True)
     def customer_courses(self, **kwargs):
-        # Get the logged-in user
-        current_user = request.env.user
-        partner = current_user.partner_id
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-        courses = []
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'customer']:
+            # Get the logged-in user
+            current_user = request.env.user
+            partner = current_user.partner_id
 
-        # Check if the user is of type 'customer'
-        if partner.user_type == 'customer':
-            # Fetch sale orders linked to the customer
-            sale_orders = request.env['sale.order'].sudo().search(
-                [('partner_id', '=', partner.id), ('state', 'in', ['sale'])])
+            courses = []
 
-            # Extract product template IDs from sale order lines
-            product_template_ids = sale_orders.mapped('order_line.product_template_id')
-            product_names = product_template_ids.mapped('name')
+            # Check if the user is of type 'customer'
+            if partner.user_type == 'customer':
+                # Fetch sale orders linked to the customer
+                sale_orders = request.env['sale.order'].sudo().search([('partner_id', '=', partner.id),('state', 'in', ['sale'])])
 
-            if product_template_ids:
-                # Fetch courses where the product_template_ids match
-                courses = request.env['slide.channel'].sudo().search(
-                    [('name', 'in', product_names)]
-                )
+                # Extract product template IDs from sale order lines
+                product_template_ids = sale_orders.mapped('order_line.product_template_id')
+                product_names = product_template_ids.mapped('name')
 
-        # Render the data page template
-        return request.render('custom_web_kreator.customer_courses', {
-            'courses': courses
-        })
+                if product_template_ids:
+                    # Fetch courses where the product_template_ids match
+                    courses = request.env['slide.channel'].sudo().search(
+                        [('name', 'in', product_names)]
+                    )
 
-    @http.route('/customer_courses_recommend', type='http', auth='public', website=True)
+            # Render the data page template
+            return request.render('custom_web_kreator.customer_courses', {
+                'courses': courses
+            })
+        else:
+            raise NotFound()
+
+    @http.route('/customer/courses_recommend', type='http', auth='public', website=True)
     def customer_courses_recommend(self, **kwargs):
-        # Fetch courses where is_training_course is True and sort them alphabetically by name
-        recommended_courses = request.env['slide.channel'].sudo().search(
-            [('state', '=', 'published')],
-            order='name asc'
-        )
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-        # Render the template and pass the courses
-        return request.render('custom_web_kreator.customer_courses_recommend', {
-            'recommended_courses': recommended_courses
-        })
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'customer']:
+            # Fetch courses where is_training_course is True and sort them alphabetically by name
+            recommended_courses = request.env['slide.channel'].sudo().search(
+                [('state', '=', 'published')],
+                order='name asc'
+            )
+
+            # Render the template and pass the courses
+            return request.render('custom_web_kreator.customer_courses_recommend', {
+                'recommended_courses': recommended_courses
+            })
+        else:
+            raise NotFound()
 
     # @http.route('/custom-page222', type='http', auth="public", website=True)
     # def custom_page(self, **kwargs):
@@ -1145,7 +1175,7 @@ class PortalMyCourses(http.Controller):
 
     # @http.route('/creator-dashboard', type='http', auth="public", website=True)
     # def creator_layout(self, **kwargs):
-    # return http.request.render('custom_web_kreator.creator_dashboard', {})
+        # return http.request.render('custom_web_kreator.creator_dashboard', {})
 
     # @http.route('/partner-dashboard', type='http', auth="public", website=True)
     # def partner_layout(self, **kwargs):
@@ -1164,40 +1194,47 @@ class PortalMyCourses(http.Controller):
         result = [{'id': course.id, 'name': course.name} for course in courses]
         return result
 
-    @http.route('/choose-product', type='http', auth="public", website=True)
+    @http.route('/partner/product', type='http', auth="public", website=True)
     def choose_product(self, **kwargs):
-        current_user = request.env.user
-        partner = current_user.partner_id
-        search_query = kwargs.get('name', '').strip()  # Get search query from URL
-        selected_course_id = kwargs.get('course_id')  # Get selected course ID from reques
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-        added_course_ids = request.env['my.product.cart'].sudo().search([
-            ('partner_id', '=', partner.id)
-        ]).course_id.ids
-        domain = [('state', '=', 'published')]  # Base domain to filter published courses
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'partner']:
+            current_user = request.env.user
+            partner = current_user.partner_id
+            search_query = kwargs.get('name', '').strip()  # Get search query from URL
+            selected_course_id = kwargs.get('course_id')  # Get selected course ID from reques
 
-        # If a specific course is selected, show only that course
-        if selected_course_id:
-            domain.append(('id', '=', int(selected_course_id)))
+            added_course_ids = request.env['my.product.cart'].sudo().search([
+                ('partner_id', '=', partner.id)
+            ]).course_id.ids
+            domain = [('state', '=', 'published')]  # Base domain to filter published courses
 
-        elif search_query:
-            domain.append(('name', 'ilike', search_query))  # Filter by course name
+            # If a specific course is selected, show only that course
+            if selected_course_id:
+                domain.append(('id', '=', int(selected_course_id)))
 
-        # if course_ids:
-        #     domain.append(('id', 'not in', course_ids))
-        # domain = '[('state', ' = ', 'published'),('course_id', ' in ', course_ids)]'
-        courses = request.env['slide.channel'].sudo().search(domain)
-        total_courses = len(courses)  # Get total count after filtering
-        # for course in courses:
+            elif search_query:
+                domain.append(('name', 'ilike', search_query))  # Filter by course name
 
-        return request.render('custom_web_kreator.choose_product', {
-            'courses': courses,
-            'total_courses': total_courses,
-            'search_query': search_query,  # Pass search query to maintain input value
-            'added_course_ids': added_course_ids,
-        })
+            # if course_ids:
+            #     domain.append(('id', 'not in', course_ids))
+            # domain = '[('state', ' = ', 'published'),('course_id', ' in ', course_ids)]'
+            courses = request.env['slide.channel'].sudo().search(domain)
+            total_courses = len(courses)  # Get total count after filtering
+            # for course in courses:
 
-    @http.route('/choose-product/autocomplete', type='json', auth='public', website=True)
+            return request.render('custom_web_kreator.choose_product', {
+                'courses': courses,
+                'total_courses': total_courses,
+                'search_query': search_query,  # Pass search query to maintain input value
+                'added_course_ids': added_course_ids,
+            })
+        else:
+            raise NotFound()
+
+    @http.route('/partner/product/autocomplete', type='json', auth='public', website=True)
     def choose_product_autocomplete(self, **kwargs):
         # Parse the JSON payload from the raw HTTP request body
         try:
@@ -1232,37 +1269,39 @@ class PortalMyCourses(http.Controller):
         my_cart_id = request.env['my.product.cart'].sudo().create({
             'course_id': course_id,
             'partner_id': partner.id,
-        })
-        return request.redirect('/choose-product')
+            })
+        return request.redirect('/partner/product')
 
-    @http.route('/partner-product', type='http', auth="public", website=True)
+
+    @http.route('/partner/myproducts', type='http', auth="public", website=True)
     def partner_product(self, **kwargs):
         user = request.env.user
-        partner = user.partner_id
-        product_cart_ids = request.env['my.product.cart'].sudo().search([('partner_id', '=', partner.id)],
-                                                                        order='create_date desc')
-        total_product_cart = request.env['my.product.cart'].sudo().search_count([('partner_id', '=', partner.id)])
-        values = {
-            'total_product_cart': total_product_cart,
-            'product_cart': product_cart_ids,
-            'currency_id': request.env.company.currency_id
-        }
-        return http.request.render('custom_web_kreator.partner_product', values)
+        partner = user.partner_id  # Get related partner
 
-    @http.route('/remove/partner-product', type='http', auth="public", website=True)
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'partner']:
+            product_cart_ids = request.env['my.product.cart'].sudo().search([('partner_id', '=', partner.id)], order='create_date desc')
+            values = {
+                'product_cart': product_cart_ids,
+                'currency_id': request.env.company.currency_id
+            }
+            return http.request.render('custom_web_kreator.partner_product', values)
+        else:
+            raise NotFound()
+
+    @http.route('/remove/partner/myproducts', type='http', auth="public", website=True)
     def remove_partner_product(self, **kwargs):
         course_id = kwargs.get('cartCourseID')
         partner_id = kwargs.get('cartPartnerID')
-        try:
-            product_cart_id = request.env['my.product.cart'].sudo().search([
-                ('course_id', '=', int(course_id)),
-                ('partner_id', '=', int(partner_id))], limit=1)
-            if product_cart_id:
-                product_cart_id.sudo().unlink()
-                print("Product Removed Successfully")
-        except Exception:
-            return request.redirect('/partner-product')
-        return request.redirect('/partner-product')
+        product_cart_id = request.env['my.product.cart'].sudo().search([
+            ('course_id', '=', int(course_id)),
+            ('partner_id', '=', int(partner_id))],limit=1)
+        if product_cart_id:
+            product_cart_id.sudo().unlink()
+            print("Product Removed Successfully")
+        return request.redirect('/partner/myproducts')
+
+
 
     @http.route('/my-product', type='http', auth="public", website=True)
     def myproduct_new(self, **kwargs):
@@ -1272,230 +1311,235 @@ class PortalMyCourses(http.Controller):
     def promotional(self, **kwargs):
         return http.request.render('custom_web_kreator.promotional', {})
 
-    @http.route('/partner-kyc', type='http', auth="public", website=True)
+    @http.route('/partner/kyc', type='http', auth="public", website=True)
     def partner_kyc(self, **kwargs):
         user = request.env.user
-        partner = user.partner_id
-        bank_id = request.env['res.partner.bank'].sudo().search([])
-        # Check if the user_type of the partner is 'creator'
-        if partner.user_type != 'partner':
-            print("You do not have permission to update this information. Only 'Partner' users can update.")
-            # return request.render('custom_web_kreator.nkyc_partner_template', {
-            #     'error': "You do not have permission to update this information. Only 'partner' users can update."
-            # })
+        partner = user.partner_id  # Get related partner
 
-        if request.httprequest.method == 'POST':
-            # Fetch the form data from the POST request
-            full_name = kwargs.get('full_name')
-            email = kwargs.get('email')
-            mobile = kwargs.get('phone')
-            document = kwargs.get('document') if kwargs.get('document') != '- Select -' else False
-            state_selection = kwargs.get('state_selection', 'under_review')
-            partner.write({'state_selection': state_selection})
-            # Initialize a dictionary to update partner details
-            partner_values = {}
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'partner']:
+            bank_id = request.env['res.partner.bank'].sudo().search([])
+            # Check if the user_type of the partner is 'creator'
+            if partner.user_type != 'partner':
+                print("You do not have permission to update this information. Only 'Partner' users can update.")
+                # return request.render('custom_web_kreator.nkyc_partner_template', {
+                #     'error': "You do not have permission to update this information. Only 'partner' users can update."
+                # })
 
-            if full_name:
-                partner_values['name'] = full_name
-            if email:
-                partner_values['email'] = email
-            if mobile:
-                partner_values['phone'] = mobile
-            if document:
-                partner_values['select_document'] = document
+            if request.httprequest.method == 'POST':
+                # Fetch the form data from the POST request
+                full_name = kwargs.get('full_name')
+                email = kwargs.get('email')
+                mobile = kwargs.get('phone')
+                document = kwargs.get('document') if kwargs.get('document') != '- Select -' else False
+                state_selection = kwargs.get('state_selection', 'under_review')
+                partner.write({'state_selection': state_selection})
+                # Initialize a dictionary to update partner details
+                partner_values = {}
 
-            # Common fields for document-specific details
-            document_number = kwargs.get('document_number')
-            document_name = kwargs.get('document_name')  # Dynamic field for document name
-            document_front = kwargs.get('file_upload_front')  # Front side upload
-            document_back = kwargs.get('file_upload_back')  # Back side upload
+                if full_name:
+                    partner_values['name'] = full_name
+                if email:
+                    partner_values['email'] = email
+                if mobile:
+                    partner_values['phone'] = mobile
+                if document:
+                    partner_values['select_document'] = document
 
-            # Map document types to field names
-            document_mapping = {
-                'passport': {
-                    'number_field': 'passport_number',
-                    'name_field': 'passport_name',
-                    'front_file_field': 'passport_front',
-                    'back_file_field': 'passport_back',
-                },
-                'aadhaar': {
-                    'number_field': 'aadhaar_number',
-                    'name_field': 'aadhaar_name',
-                    'front_file_field': 'aadhaar_front',
-                    'back_file_field': 'aadhaar_back',
-                },
-                'driving_license': {
-                    'number_field': 'driving_license_number',
-                    'name_field': 'driving_license_name',
-                    'front_file_field': 'driving_license_front',
-                    'back_file_field': 'driving_license_back',
-                },
-                'voter_identity_card': {
-                    'number_field': 'voter_identity_number',
-                    'name_field': 'voter_identity_name',
-                    'front_file_field': 'voter_identity_front',
-                    'back_file_field': 'voter_identity_back',
-                },
-            }
+                # Common fields for document-specific details
+                document_number = kwargs.get('document_number')
+                document_name = kwargs.get('document_name')  # Dynamic field for document name
+                document_front = kwargs.get('file_upload_front')  # Front side upload
+                document_back = kwargs.get('file_upload_back')  # Back side upload
 
-            # Handle document-specific updates dynamically
-            if document and document in document_mapping:
-                doc_fields = document_mapping[document]
-                # Update document number and name
-                if document_number:
-                    partner_values[doc_fields['number_field']] = document_number
-                if document_name:
-                    partner_values[doc_fields['name_field']] = document_name
+                # Map document types to field names
+                document_mapping = {
+                    'passport': {
+                        'number_field': 'passport_number',
+                        'name_field': 'passport_name',
+                        'front_file_field': 'passport_front',
+                        'back_file_field': 'passport_back',
+                    },
+                    'aadhaar': {
+                        'number_field': 'aadhaar_number',
+                        'name_field': 'aadhaar_name',
+                        'front_file_field': 'aadhaar_front',
+                        'back_file_field': 'aadhaar_back',
+                    },
+                    'driving_license': {
+                        'number_field': 'driving_license_number',
+                        'name_field': 'driving_license_name',
+                        'front_file_field': 'driving_license_front',
+                        'back_file_field': 'driving_license_back',
+                    },
+                    'voter_identity_card': {
+                        'number_field': 'voter_identity_number',
+                        'name_field': 'voter_identity_name',
+                        'front_file_field': 'voter_identity_front',
+                        'back_file_field': 'voter_identity_back',
+                    },
+                }
 
-                # Upload front side of the document
-                if document_front:
+                # Handle document-specific updates dynamically
+                if document and document in document_mapping:
+                    doc_fields = document_mapping[document]
+                    # Update document number and name
+                    if document_number:
+                        partner_values[doc_fields['number_field']] = document_number
+                    if document_name:
+                        partner_values[doc_fields['name_field']] = document_name
+
+                    # Upload front side of the document
+                    if document_front:
+                        try:
+                            front_data = document_front.read()
+                            partner_values[doc_fields['front_file_field']] = base64.b64encode(front_data).decode('utf-8')
+                        except Exception as e:
+                            print("Front file upload failed",e)
+                            # return request.render('custom_web_kreator.error_page_template', {
+                            #     'error': f"Front file upload failed: {e}"
+                            # })
+
+                    # Upload back side of the document
+                    if document_back:
+                        try:
+                            back_data = document_back.read()
+                            partner_values[doc_fields['back_file_field']] = base64.b64encode(back_data).decode('utf-8')
+                        except Exception as e:
+                            print("Back file upload failed",e)
+                            # return request.render('custom_web_kreator.error_page_template', {
+                            #     'error': f"Back file upload failed: {e}"
+                            # })
+
+                    # Reset other document-related fields
+                    for doc_type, fields in document_mapping.items():
+                        if doc_type != document:  # Reset other document fields
+                            partner_values[fields['number_field']] = False
+                            partner_values[fields['name_field']] = False
+                            partner_values[fields['front_file_field']] = False
+                            partner_values[fields['back_file_field']] = False
+
+                # Update pan details
+                pan_card_number = kwargs.get('pan_number')
+                pan_card_name = kwargs.get('pan_name')
+                if pan_card_number:
+                    partner_values['pan_card_number'] = pan_card_number
+                if pan_card_name:
+                    partner_values['pan_card_name'] = pan_card_name
+
+                pan_card_file = kwargs.get('pan_file')
+                if pan_card_file:
                     try:
-                        front_data = document_front.read()
-                        partner_values[doc_fields['front_file_field']] = base64.b64encode(front_data).decode('utf-8')
+                        file_data = pan_card_file.read()
+                        file_content = base64.b64encode(file_data).decode('utf-8')
+                        partner_values['pan_card_file'] = file_content
                     except Exception as e:
-                        print("Front file upload failed", e)
+                        print("PAN card file upload failed",e)
                         # return request.render('custom_web_kreator.error_page_template', {
-                        #     'error': f"Front file upload failed: {e}"
+                        #     'error': f"PAN card file upload failed: {e}"
                         # })
 
-                # Upload back side of the document
-                if document_back:
-                    try:
-                        back_data = document_back.read()
-                        partner_values[doc_fields['back_file_field']] = base64.b64encode(back_data).decode('utf-8')
-                    except Exception as e:
-                        print("Back file upload failed", e)
+                # Update bank details
+                account_holder_name = kwargs.get('account_holder_name')
+                account_holder_number = kwargs.get('account_number')
+                ifsc_code = kwargs.get('ifsc_code')
+                upi_mobile_number = kwargs.get('upi_mobile_number')
+                bank_id = kwargs.get('bank_id')
+                print("bank_name",bank_id)
+                if bank_id:
+                    bank = request.env['res.partner.bank'].sudo().search([('id', '=', bank_id)], limit=1)
+                    if bank:
+                        partner_values['bank_id'] = bank.id  # Assign the bank_id to the partner record
+                    else:
+                        # Handle case where bank with the provided name is not found
+                        print("Bank with name not found.")
                         # return request.render('custom_web_kreator.error_page_template', {
-                        #     'error': f"Back file upload failed: {e}"
+                        #     'error': f"Bank with name {bank_name} not found."
+                        # })
+                if account_holder_name:
+                    partner_values['Account_holder_name'] = account_holder_name
+                if account_holder_number:
+                    partner_values['Account_holder_number'] = account_holder_number
+                if ifsc_code:
+                    partner_values['ifsc_code'] = ifsc_code
+                if upi_mobile_number:
+                    partner_values['upi_mobile_number'] = upi_mobile_number
+
+                upload_file = kwargs.get('upload_file')
+                if upload_file:
+                    try:
+                        file_data = upload_file.read()
+                        file_content = base64.b64encode(file_data).decode('utf-8')
+                        partner_values['upload_file'] = file_content
+                    except Exception as e:
+                        print("File upload failed",e)
+                        # return request.render('custom_web_kreator.error_page_template', {
+                        #     'error': f"File upload failed: {e}"
                         # })
 
-                # Reset other document-related fields
-                for doc_type, fields in document_mapping.items():
-                    if doc_type != document:  # Reset other document fields
-                        partner_values[fields['number_field']] = False
-                        partner_values[fields['name_field']] = False
-                        partner_values[fields['front_file_field']] = False
-                        partner_values[fields['back_file_field']] = False
+                # Write all updates to the partner record
+                if partner_values:
+                    partner.write(partner_values)
 
-            # Update pan details
-            pan_card_number = kwargs.get('pan_number')
-            pan_card_name = kwargs.get('pan_name')
-            if pan_card_number:
-                partner_values['pan_card_number'] = pan_card_number
-            if pan_card_name:
-                partner_values['pan_card_name'] = pan_card_name
+                return request.redirect('/partner/kyc')
 
-            pan_card_file = kwargs.get('pan_file')
-            if pan_card_file:
-                try:
-                    file_data = pan_card_file.read()
-                    file_content = base64.b64encode(file_data).decode('utf-8')
-                    partner_values['pan_card_file'] = file_content
-                except Exception as e:
-                    print("PAN card file upload failed", e)
-                    # return request.render('custom_web_kreator.error_page_template', {
-                    #     'error': f"PAN card file upload failed: {e}"
-                    # })
+            # If the request is a GET request (loading the form), fetch partner details to pre-populate
+            selected_document = partner.select_document
 
-            # Update bank details
-            account_holder_name = kwargs.get('account_holder_name')
-            account_holder_number = kwargs.get('account_number')
-            ifsc_code = kwargs.get('ifsc_code')
-            upi_mobile_number = kwargs.get('upi_mobile_number')
-            bank_id = kwargs.get('bank_id')
-            print("bank_name", bank_id)
-            if bank_id:
-                bank = request.env['res.partner.bank'].sudo().search([('id', '=', bank_id)], limit=1)
-                if bank:
-                    partner_values['bank_id'] = bank.id  # Assign the bank_id to the partner record
+            document_number = ''
+            document_name = ''
+            file_upload_front = ''
+            file_upload_back = ''
+            bank_file = ''
+            pan_file = ''
+            if selected_document:
+                # Dynamically fetch the number and name fields
+                document_number = getattr(partner, f"{selected_document}_number", '')
+                document_name = getattr(partner, f"{selected_document}_name", '')
+                file_upload_front = getattr(partner, f"{selected_document}_front", None)
+                file_upload_back = getattr(partner, f"{selected_document}_back", None)
+
+                if file_upload_front:
+                    file_upload_front = base64.b64encode(file_upload_front).decode('utf-8')
                 else:
-                    # Handle case where bank with the provided name is not found
-                    print("Bank with name not found.")
-                    # return request.render('custom_web_kreator.error_page_template', {
-                    #     'error': f"Bank with name {bank_name} not found."
-                    # })
-            if account_holder_name:
-                partner_values['Account_holder_name'] = account_holder_name
-            if account_holder_number:
-                partner_values['Account_holder_number'] = account_holder_number
-            if ifsc_code:
-                partner_values['ifsc_code'] = ifsc_code
-            if upi_mobile_number:
-                partner_values['upi_mobile_number'] = upi_mobile_number
+                    print("No data for file_upload_front")
+                    file_upload_front = ''
 
-            upload_file = kwargs.get('upload_file')
-            if upload_file:
-                try:
-                    file_data = upload_file.read()
-                    file_content = base64.b64encode(file_data).decode('utf-8')
-                    partner_values['upload_file'] = file_content
-                except Exception as e:
-                    print("File upload failed", e)
-                    # return request.render('custom_web_kreator.error_page_template', {
-                    #     'error': f"File upload failed: {e}"
-                    # })
+                if file_upload_back:
+                    file_upload_back = base64.b64encode(file_upload_back).decode('utf-8')
+                else:
+                    print("No data for file_upload_back")
+                    file_upload_back = ''
 
-            # Write all updates to the partner record
-            if partner_values:
-                partner.write(partner_values)
+            if partner.upload_file:
+                bank_file = base64.b64encode(partner.upload_file).decode('utf-8')
+            if partner.pan_card_file:
+                pan_file = base64.b64encode(partner.pan_card_file).decode('utf-8')
 
-            return request.redirect('/partner-kyc')
-
-        # If the request is a GET request (loading the form), fetch partner details to pre-populate
-        selected_document = partner.select_document
-
-        document_number = ''
-        document_name = ''
-        file_upload_front = ''
-        file_upload_back = ''
-        bank_file = ''
-        pan_file = ''
-        if selected_document:
-            # Dynamically fetch the number and name fields
-            document_number = getattr(partner, f"{selected_document}_number", '')
-            document_name = getattr(partner, f"{selected_document}_name", '')
-            file_upload_front = getattr(partner, f"{selected_document}_front", None)
-            file_upload_back = getattr(partner, f"{selected_document}_back", None)
-
-            if file_upload_front:
-                file_upload_front = base64.b64encode(file_upload_front).decode('utf-8')
-            else:
-                print("No data for file_upload_front")
-                file_upload_front = ''
-
-            if file_upload_back:
-                file_upload_back = base64.b64encode(file_upload_back).decode('utf-8')
-            else:
-                print("No data for file_upload_back")
-                file_upload_back = ''
-
-        if partner.upload_file:
-            bank_file = base64.b64encode(partner.upload_file).decode('utf-8')
-        if partner.pan_card_file:
-            pan_file = base64.b64encode(partner.pan_card_file).decode('utf-8')
-
-        values = {
-            'partner_id': partner,
-            'partner_name': partner.name,
-            'partner_email': partner.email,
-            'partner_phone': partner.phone,
-            'document': partner.select_document,
-            'document_number': document_number,
-            'document_name': document_name,
-            "file_upload_front": file_upload_front,
-            "file_upload_back": file_upload_back,
-            'account_holder_name': partner.Account_holder_name,
-            'account_number': partner.Account_holder_number,
-            'bank_id': bank_id if bank_id else '',  # This will render the bank's name in the template
-            'ifsc_code': partner.ifsc_code,
-            'upi_mobile_number': partner.upi_mobile_number,
-            'bank_file': bank_file,
-            'pan_number': partner.pan_card_number,
-            'pan_name': partner.pan_card_name,
-            'pan_file': pan_file,
-            'state_selection': partner.state_selection,
-        }
-        return http.request.render('custom_web_kreator.nkyc_partner_template', values)
+            values = {
+                'partner_id': partner,
+                'partner_name': partner.name,
+                'partner_email': partner.email,
+                'partner_phone': partner.phone,
+                'document': partner.select_document,
+                'document_number': document_number,
+                'document_name': document_name,
+                "file_upload_front": file_upload_front,
+                "file_upload_back": file_upload_back,
+                'account_holder_name': partner.Account_holder_name,
+                'account_number': partner.Account_holder_number,
+                'bank_id': bank_id if bank_id else '',# This will render the bank's name in the template
+                'ifsc_code': partner.ifsc_code,
+                'upi_mobile_number': partner.upi_mobile_number,
+                'bank_file': bank_file,
+                'pan_number': partner.pan_card_number,
+                'pan_name': partner.pan_card_name,
+                'pan_file': pan_file,
+                'state_selection' : partner.state_selection,
+            }
+            return http.request.render('custom_web_kreator.nkyc_partner_template', values)
+        else:
+            raise NotFound()
 
     # @http.route('/boot5', type='http', auth="public", website=True)
     # def boot5(self, **kwargs):
@@ -1515,86 +1559,107 @@ class PortalMyCourses(http.Controller):
         result = [{'id': coupon.id, 'name': coupon.name} for coupon in coupons]
         return result
 
-    @http.route('/offers-coupon', type='http', auth="public", website=True)
+    @http.route('/partner/offers', type='http', auth="public", website=True)
     def offers_coupon(self, **kwargs):
-        search_query = kwargs.get('name', '').strip()  # Get search query from URL
-        domain = [('program_type', '=', 'promo_code')]  # Base domain to filter Discount coupons
-        selected_coupon_id = kwargs.get('coupon_id')  # Get selected coupon ID from reques
-        # If a specific course is selected, show only that course
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-        if selected_coupon_id:
-            domain.append(('id', '=', int(selected_coupon_id)))
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'partner']:
+            search_query = kwargs.get('name', '').strip()  # Get search query from URL
+            domain = [('program_type', '=', 'promo_code')]  # Base domain to filter Discount coupons
+            selected_coupon_id = kwargs.get('coupon_id')  # Get selected coupon ID from reques
+            # If a specific course is selected, show only that course
 
-        elif search_query:
-            domain.append(('name', 'ilike', search_query))  # Filter by course name
+            if selected_coupon_id:
+                domain.append(('id', '=', int(selected_coupon_id)))
 
-        loyalty_ids = request.env['loyalty.program'].sudo().search(domain, order='create_date desc')
-        values = {
-            'loyalty_ids': loyalty_ids,
-            'currency_id': request.env.company.currency_id,
-            'search_query': search_query  # Pass search query to maintain input value
-        }
-        return http.request.render('custom_web_kreator.coupon_offers_page', values)
+            elif search_query:
+                domain.append(('name', 'ilike', search_query))  # Filter by course name
 
-    @http.route('/choose-product-detail', type='http', auth="public", website=True)
+            loyalty_ids = request.env['loyalty.program'].sudo().search(domain, order='create_date desc')
+            values = {
+                'loyalty_ids': loyalty_ids,
+                'currency_id': request.env.company.currency_id,
+                'search_query': search_query  # Pass search query to maintain input value
+            }
+            return http.request.render('custom_web_kreator.coupon_offers_page', values)
+        else:
+            raise NotFound()
+
+    @http.route('/partner/product-detail', type='http', auth="public", website=True)
     def choose_product_detail(self, **kwargs):
-        course_id = kwargs.get('course_id')  # Get course ID from URL
-        if course_id:
-            course = request.env['slide.channel'].sudo().browse(int(course_id))  # Fetch course details
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-            current_user = request.env.user
-            partner = current_user.partner_id
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'partner']:
+            course_id = kwargs.get('course_id')  # Get course ID from URL
+            if course_id:
+                course = request.env['slide.channel'].sudo().browse(int(course_id))  # Fetch course details
 
-            added_course_ids = request.env['my.product.cart'].sudo().search([
-                ('partner_id', '=', partner.id)
-            ]).course_id.ids
+                current_user = request.env.user
+                partner = current_user.partner_id
 
-        currency = course.currency_id
-        return request.render('custom_web_kreator.choose_product_detail', {
-            'course': course,  # Pass course details to template
-            'currency_name': currency.name if currency else 'INR',
-            'added_course_ids': added_course_ids,
-        })
+                added_course_ids = request.env['my.product.cart'].sudo().search([
+                    ('partner_id', '=', partner.id)
+                ]).course_id.ids
 
-    @http.route('/creator-lead', type='http', auth="public", website=True)
+            currency = course.currency_id
+            return request.render('custom_web_kreator.choose_product_detail', {
+                'course': course,  # Pass course details to template
+                'currency_name': currency.name if currency else 'INR',
+                'added_course_ids': added_course_ids,
+            })
+        else:
+            raise NotFound()
+
+    @http.route('/creator/lead', type='http', auth="public", website=True)
     def creator_lead(self, **kwargs):
+        print("coming here")
         # Get the current logged-in user
         user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-        # Get the start and end date from the URL parameters, if provided
-        start_date = kwargs.get('start_date')
-        end_date = kwargs.get('end_date')
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'creator']:
 
-        # Convert date strings into datetime objects (if they exist)
-        if start_date:
-            start_date = datetime.strptime(start_date, '%Y-%m-%d')
-        if end_date:
-            end_date = datetime.strptime(end_date, '%Y-%m-%d')
+            # Get the start and end date from the URL parameters, if provided
+            start_date = kwargs.get('start_date')
+            end_date = kwargs.get('end_date')
 
-        # Prepare the domain for filtering sales orders
-        domain = [('state', '!=', 'sale')]  # Only fetch orders that are not confirmed (state != 'sale')
+            # Convert date strings into datetime objects (if they exist)
+            if start_date:
+                start_date = datetime.strptime(start_date, '%Y-%m-%d')
+            if end_date:
+                end_date = datetime.strptime(end_date, '%Y-%m-%d')
 
-        if start_date:
-            domain.append(('date_order', '>=', start_date))  # Filter based on start date
-        if end_date:
-            domain.append(('date_order', '<=', end_date))  # Filter based on end date
+            # Prepare the domain for filtering sales orders
+            domain = [('state', '!=', 'sale')]  # Only fetch orders that are not confirmed (state != 'sale')
 
-        # Fetch the sale orders based on the domain
-        sale_orders = request.env['sale.order'].sudo().search(domain)
+            if start_date:
+                domain.append(('date_order', '>=', start_date))  # Filter based on start date
+            if end_date:
+                domain.append(('date_order', '<=', end_date))  # Filter based on end date
 
-        # Fetch visitor data, no date filters for visitors
-        visitors = request.env['website.visitor'].sudo().search([])
+            # Fetch the sale orders based on the domain
+            sale_orders = request.env['sale.order'].sudo().search(domain)
 
-        # Prepare the context to pass to the template
-        context = {
-            'user_name': user.name,  # Pass the current user's name
-            'sale_orders': sale_orders,  # Pass the filtered sale orders
-            'start_date': start_date,  # Pass the start date
-            'end_date': end_date,  # Pass the end date
-            # 'visitors': visitors,  # Pass the visitor data
-        }
+            # Fetch visitor data, no date filters for visitors
+            visitors = request.env['website.visitor'].sudo().search([])
 
-        return request.render('custom_web_kreator.creator_lead', context)
+            # Prepare the context to pass to the template
+            context = {
+                'user_name': user.name,  # Pass the current user's name
+                'sale_orders': sale_orders,  # Pass the filtered sale orders
+                'start_date': start_date,  # Pass the start date
+                'end_date': end_date,  # Pass the end date
+                # 'visitors': visitors,  # Pass the visitor data
+            }
+
+            return request.render('custom_web_kreator.creator_lead', context)
+        else:
+            raise NotFound()
 
     # @http.route('/partner_income_data', type='http', auth='public', website=True)
     # def partner_income(self, **kwargs):
@@ -1606,18 +1671,19 @@ class PortalMyCourses(http.Controller):
     #     # Render the data page template
     #     return http.request.render('custom_web_kreator.creator_landing_page')
 
-    # Pass Data through JS
-    @http.route('/creator-landing-page-js', type='http', auth='public', methods=['POST'], csrf=False)
+
+    #Pass Data through JS
+    @http.route('/creator/landing-page-js', type='http', auth='public', methods=['POST'], csrf=False)
     def handle_form_data(self, **kwargs):
         # Get the list from the form_data field
         # Banner Information
         if kwargs.get('form_data'):
             try:
-                print("\n\n\n=========1==============", kwargs.get('form_data'))
+                print("\n\n\n=========1==============",kwargs.get('form_data'))
                 form_data_json = kwargs.get('form_data')
                 form_data_list = json.loads(form_data_json) if form_data_json else []
                 # Unpack the list values
-                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[1])], limit=1)
+                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[1])],limit=1)
                 upload_file = kwargs.get('upload_file')
                 file_content = False
                 if upload_file:
@@ -1625,10 +1691,10 @@ class PortalMyCourses(http.Controller):
                     file_name = upload_file.filename
                 if course_id:
                     course_id.sudo().write({
-                        'creator_name': form_data_list[0],
-                        'main_heading': course_id.name,
-                        'p2': form_data_list[2],
-                        'combination_id': int(form_data_list[3]),
+                        'creator_name':form_data_list[0],
+                        'main_heading':course_id.name,
+                        'p2':form_data_list[2],
+                        'combination_id':int(form_data_list[3]),
                         'image_icon': base64.b64encode(file_content),
                     })
                     return request.make_response(
@@ -1677,7 +1743,7 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-
+        
         # About Course Data Updating
         elif kwargs.get('aboutCourse_data'):
             try:
@@ -1691,7 +1757,7 @@ class PortalMyCourses(http.Controller):
                 para_lines = []
                 for para in form_data_list[1:]:
                     vals = {
-                        'p1': para,
+                        'p1':para,
                     }
                     para_lines.append((0, 0, vals))
                 if course_id:
@@ -1724,7 +1790,7 @@ class PortalMyCourses(http.Controller):
                 para_lines = []
                 for para in form_data_list[1:]:
                     vals = {
-                        'c1': para,
+                        'c1':para,
                     }
                     para_lines.append((0, 0, vals))
                 if course_id:
@@ -1743,7 +1809,7 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-
+        
         # Course Curriculum Data Updating
         elif kwargs.get('curriculum_data'):
             try:
@@ -1752,13 +1818,12 @@ class PortalMyCourses(http.Controller):
                 form_data_json = kwargs.get('curriculum_data')
                 form_data_list = json.loads(form_data_json) if form_data_json else []
                 # Search for the course
-                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])],
-                                                                       limit=1)
+                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])], limit=1)
                 para_lines = []
                 for para in form_data_list[1:]:
                     vals = {
-                        'h1': para['title'],
-                        'c1': para['content'],
+                        'h1':para['title'],
+                        'c1':para['content'],
                     }
                     para_lines.append((0, 0, vals))
                 if course_id:
@@ -1777,7 +1842,7 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-
+        
         # About Me Data Updating
         elif kwargs.get('aboutMe_data'):
             try:
@@ -1787,8 +1852,7 @@ class PortalMyCourses(http.Controller):
                 form_data_list = json.loads(form_data_json) if form_data_json else []
 
                 # Search for the course
-                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])],
-                                                                       limit=1)
+                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])], limit=1)
                 para_lines = []
                 upload_file = kwargs.get('aboutme_upload_file')
                 file_content = False
@@ -1796,7 +1860,7 @@ class PortalMyCourses(http.Controller):
                     file_content = upload_file.read()
                 for para in form_data_list[1:]:
                     vals = {
-                        'p1': para['content'],
+                        'p1':para['content'],
                     }
                     para_lines.append((0, 0, vals))
                 if course_id:
@@ -1824,7 +1888,7 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-
+        
         # Who Should Take This Course? Data Updating
         elif kwargs.get('audience_data'):
             try:
@@ -1834,8 +1898,7 @@ class PortalMyCourses(http.Controller):
                 form_data_list = json.loads(form_data_json) if form_data_json else []
 
                 # Search for the course
-                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])],
-                                                                       limit=1)
+                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])], limit=1)
                 para_lines = []
                 for para in form_data_list[1:]:
                     para_lines.append(para)
@@ -1857,7 +1920,7 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-
+        
         # Our Students - Testimonials Data Updating
         elif kwargs.get('testimonials_data'):
             try:
@@ -1867,31 +1930,30 @@ class PortalMyCourses(http.Controller):
                 form_data_list = json.loads(form_data_json) if form_data_json else []
 
                 # Search for the course
-                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])],
-                                                                       limit=1)
+                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])], limit=1)
                 para_lines = []
                 file_content = False
                 i = 0
                 for para in form_data_list[1:]:
-                    upload_file = kwargs.get('upload_file_' + str(i))
+                    upload_file = kwargs.get('upload_file_'+str(i))
                     file_content = upload_file.read()
                     if para['testimonial_type'] == 'text':
                         vals = {
-                            'name': para['name'],
-                            'content_type': para['testimonial_type'],
-                            'p1': para['text'],
-                            'rating': para['rating'],
+                            'name':para['name'],
+                            'content_type':para['testimonial_type'],
+                            'p1':para['text'],
+                            'rating':para['rating'],
                             'image': base64.b64encode(file_content),
                         }
                     else:
                         vals = {
-                            'name': para['name'],
-                            'content_type': para['testimonial_type'],
-                            'p1': para['content'],
-                            'rating': para['rating'],
+                            'name':para['name'],
+                            'content_type':para['testimonial_type'],
+                            'p1':para['content'],
+                            'rating':para['rating'],
                             'image': base64.b64encode(file_content),
                         }
-                    i += 1
+                    i +=1
                     para_lines.append((0, 0, vals))
                 if course_id:
                     course_id.sudo().write({
@@ -1911,7 +1973,7 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-
+        
         # FAQs Data Updating
         elif kwargs.get('faq_data'):
             try:
@@ -1921,13 +1983,12 @@ class PortalMyCourses(http.Controller):
                 form_data_list = json.loads(form_data_json) if form_data_json else []
 
                 # Search for the course
-                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])],
-                                                                       limit=1)
+                course_id = request.env['slide.channel'].sudo().search([('id', '=', form_data_list[0]['courseID'])], limit=1)
                 para_lines = []
                 for para in form_data_list[1:]:
                     vals = {
-                        'q1': para['question'],
-                        'a1': para['answer'],
+                        'q1':para['question'],
+                        'a1':para['answer'],
                     }
                     para_lines.append((0, 0, vals))
                 if course_id:
@@ -1967,7 +2028,7 @@ class PortalMyCourses(http.Controller):
                 if course_id:
                     course_id.sudo().write({
                         'c11': form_data_list[1],
-                        'image1': base64.b64encode(file_content),
+                        'image1':base64.b64encode(file_content),
                     })
                     return request.make_response(
                         json.dumps({'result': {'success': True, 'message': 'Data received successfully!'}}),
@@ -1983,7 +2044,7 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-
+        
         # Certificate Data Updating
         elif kwargs.get('certificate_data'):
             try:
@@ -2005,11 +2066,11 @@ class PortalMyCourses(http.Controller):
                             'is_this_certificate_course': 'yes',
                             'issued_by': form_data_list[2],
                             'upload_signature': base64.b64encode(file_content),
-                        })
+                            })
                     else:
                         course_id.sudo().write({
                             'is_this_certificate_course': 'no',
-                        })
+                            })
                     return request.make_response(
                         json.dumps({'result': {'success': True, 'message': 'Data received successfully!'}}),
                         headers=[('Content-Type', 'application/json')]
@@ -2024,7 +2085,7 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-
+        
         # Course Thumbnail Data Updating
         elif kwargs.get('courseThumbnail_data'):
             try:
@@ -2042,7 +2103,7 @@ class PortalMyCourses(http.Controller):
                 if course_id:
                     course_id.sudo().write({
                         'image_1920': base64.b64encode(file_content),
-                    })
+                        })
                     return request.make_response(
                         json.dumps({'result': {'success': True, 'message': 'Data received successfully!'}}),
                         headers=[('Content-Type', 'application/json')]
@@ -2057,15 +2118,16 @@ class PortalMyCourses(http.Controller):
                     json.dumps({'result': {'success': False, 'message': f'An unexpected error occurred: {str(e)}'}}),
                     headers=[('Content-Type', 'application/json')]
                 )
-
+        
 
         else:
             return request.make_response(
                 json.dumps({'result': {'success': False, 'message': 'No data provided!'}}),
                 headers=[('Content-Type', 'application/json')]
             )
+        
 
-    @http.route('/creator-landing-page', type='http', auth='public', website=True, csrf=True, methods=['GET', 'POST'])
+    @http.route('/creator/landing-page', type='http', auth='public', website=True, csrf=True, methods=['GET', 'POST'])
     def creator_landing_page(self, **post):
         # Fetch the current logged-in user
         user = http.request.env.user
@@ -2075,6 +2137,24 @@ class PortalMyCourses(http.Controller):
         # Fetch the course ID from query parameters
         course_id = post.get('course_id')
         selected_course = request.env['slide.channel'].sudo().browse(int(course_id)) if course_id else None
+        approved_courses = request.env['slide.channel'].sudo().search([('create_uid', '=', user.id),('state', '=', 'course_preview')])
+
+        # Fetch draft and under review courses created by the user
+        published_courses = request.env['slide.channel'].sudo().search([
+            ('create_uid', '=', user.id),
+            ('state', '=', 'published')  # Filter for draft and under review
+        ])
+        under_review_courses = request.env['slide.channel'].sudo().search([
+            ('create_uid', '=', user.id),
+            ('state', '=', 'draft')  # Filter for draft and under review
+        ])
+
+        all_courses = request.env['slide.channel'].sudo().search([
+            ('create_uid', '=', user.id),
+        ])
+        # selected_course = request.env['slide.channel'].sudo().browse(int(course_id))
+        if not selected_course.exists() or selected_course.create_uid.id != user.id:
+            raise NotFound("You are not authorized to edit this course.")
 
         # Fetch the course based on the provided ID or fall back to the default course
         course = request.env['slide.channel'].sudo().browse(int(course_id)) if course_id else request.env[
@@ -2250,16 +2330,27 @@ class PortalMyCourses(http.Controller):
                 })
         # Render the page for GET request
         print("course", course.name)
+        course_count = request.env['slide.channel'].sudo().search([
+            ('create_uid', '=', user.id),
+            ('state', 'in', ['draft', 'course_preview', 'published'])  # Filter for draft and under review
+        ])
+        approve_course_count = True if published_courses else False
+        course_count = True if course_count else False
         return http.request.render('custom_web_kreator.creator_landing_page_js', {
             'user_name': user.name,
             'courses': courses,
-            'combinations': combination_id,
+            'combinations':combination_id,
             'selected_course': selected_course,
             'description': course.p2,
-            'target_audience_options': target_audience_options
+            'target_audience_options': target_audience_options,'approved_courses': approved_courses,
+            'published_courses': published_courses,
+            'under_review_courses': under_review_courses,
+            'approve_course_count':approve_course_count,
+            'course_count':course_count,
+            'all_courses':all_courses,
         })
 
-    @http.route('/edit-landing-page', type='http', auth='public', website=True, csrf=True, methods=['GET', 'POST'])
+    @http.route('/creator/edit-landing-page', type='http', auth='public', website=True, csrf=True, methods=['GET', 'POST'])
     def edit_landing_page(self, course_id=False, **post):
         # Fetch the current logged-in user
         if not course_id:
@@ -2270,6 +2361,9 @@ class PortalMyCourses(http.Controller):
         # Fetch the course ID from query parameters
         # course_id = post.get('course_id')
         selected_course = request.env['slide.channel'].sudo().browse(int(course_id)) if course_id else None
+        # selected_course = request.env['slide.channel'].sudo().browse(int(course_id))
+        if not selected_course.exists() or selected_course.create_uid.id != user.id:
+            raise NotFound("You are not authorized to edit this course.")
         course_lines_p1 = selected_course.course_line_ids.mapped('p1') if selected_course else []
         course_lines_p1 = [
             {"index": idx, "value": paragraph}
@@ -2481,7 +2575,16 @@ class PortalMyCourses(http.Controller):
     def landing_page(self, course_id=False, **post):
         if not course_id:
             raise NotFound("Course ID is missing.")
+        user = request.env.user
+        partner = user.partner_id
         landing_id = request.env['slide.channel'].sudo().search([('id', '=', int(course_id))], limit=1)
+        is_creator = True
+        if partner.user_type == 'creator':
+            is_creator = landing_id.create_uid == user
+        # Validate Access: Ensure user is either the creator or enrolled in the course
+        # is_enrolled = landing_id.student_line_ids.filtered(lambda s: s.partner_id == partner)
+        if not is_creator:
+            raise NotFound("Access Denied.")  # Show 404 if the user is not authorized
         student = []  # List to hold the pairs
         first_record = None  # Store the first record for reuse
         data = {}  # Temporary dictionary for a single pair
@@ -2540,25 +2643,22 @@ class PortalMyCourses(http.Controller):
             'text_color': text_color,
             'background_color': background_color,
         }
-        print("values", values)
-
+        print("values",values)
+        
         if landing_id:
             product_id = landing_id.product_id.id
-            if not product_id:
-                raise UserError("No product found for this course")
+            # if not product_id:
+            #     raise UserError("No product found for this course")
             product_template_id = landing_id.product_id.id
             values['product_id'] = product_id
             values['product_template_id'] = product_template_id
-
+            
         # Check if session has referral access
         session_data = request.session.get('course_access', {})
         partner_id = session_data.get('partner_id')
 
-        user = request.env.user
-        partner = user.partner_id
-
-        if not partner_id and partner.user_type == 'customer':
-            return request.redirect('/404')
+        # if not partner_id and partner.user_type == 'customer':
+        #     return request.redirect('/404')
 
         return request.render('custom_web_kreator.landing_page', values)
 
@@ -2567,47 +2667,59 @@ class PortalMyCourses(http.Controller):
     #     # Render the data page template
     #     return http.request.render('custom_web_kreator.partner_referral_link_page')
 
-    @http.route('/partner-leaderboard', type='http', auth='public', website=True)
+    @http.route('/partner/leaderboard', type='http', auth='public', website=True)
     def partner_leaderboard(self, **kwargs):
-        orders_lines = request.env['sale.order.line'].sudo().search(
-            [('is_commission', '=', True), ('state', '=', 'sale'), ('partner_commission_partner_id', '!=', False)])
-        order_lines = sorted(orders_lines, key=attrgetter('partner_commission_partner_id'))
-        # Group by commission partner ID
-        grouped_data = {}
-        leaderboard = []
-        for partner, lines in groupby(order_lines, key=attrgetter('partner_commission_partner_id')):
-            grouped_data[partner] = {
-                'total_commission': sum(line.partner_commission_amount for line in lines),
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
+
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'partner']:
+            orders_lines = request.env['sale.order.line'].sudo().search([('is_commission','=', True),('state', '=', 'sale'),('partner_commission_partner_id', '!=', False)])
+            order_lines = sorted(orders_lines, key=attrgetter('partner_commission_partner_id'))
+            # Group by commission partner ID
+            grouped_data = {}
+            leaderboard = []
+            for partner, lines in groupby(order_lines, key=attrgetter('partner_commission_partner_id')):
+                grouped_data[partner] = {
+                    'total_commission': sum(line.partner_commission_amount for line in lines),
+                }
+            for data in grouped_data:
+                lines = orders_lines.search([('partner_commission_partner_id','=',data.id)])
+                leaderboard.append({
+                    'partner_name':data.name,
+                    'total_commission': sum(line.partner_commission_amount for line in lines),
+                })
+            leaderboard = sorted(leaderboard, key=lambda x: x['total_commission'], reverse=True)
+            values = {
+                'leaderboard':leaderboard,
+                'currency_id': request.env.company.currency_id
             }
-        for data in grouped_data:
-            lines = orders_lines.search([('partner_commission_partner_id', '=', data.id)])
-            leaderboard.append({
-                'partner_name': data.name,
-                'total_commission': sum(line.partner_commission_amount for line in lines),
-            })
-        leaderboard = sorted(leaderboard, key=lambda x: x['total_commission'], reverse=True)
-        values = {
-            'leaderboard': leaderboard,
-            'currency_id': request.env.company.currency_id
-        }
-        # Render the data page template
-        return http.request.render('custom_web_kreator.partner_leaderboard_page', values)
+            # Render the data page template
+            return http.request.render('custom_web_kreator.partner_leaderboard_page',values)
+        else:
+            raise NotFound()
 
-    @http.route('/partner-training', type='http', auth='public', website=True)
+    @http.route('/partner/training', type='http', auth='public', website=True)
     def partner_training(self, **kwargs):
-        print("comingggggg")
-        # Fetch courses where is_training_course is True and sort them alphabetically by name
-        training_courses = request.env['slide.channel'].sudo().search(
-            [('is_training_course', '=', True), ('state', '=', 'published')],
-            order='name asc'
-        )
-        print("training_courses", training_courses)
-        # Render the template and pass the courses
-        return request.render('custom_web_kreator.partner_training', {
-            'training_courses': training_courses
-        })
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-    @http.route('/promotional-detail', type='http', auth='public', website=True)
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'partner']:
+            # Fetch courses where is_training_course is True and sort them alphabetically by name
+            training_courses = request.env['slide.channel'].sudo().search(
+                [('is_training_course', '=', True),('state', '=', 'published')],
+                order='name asc'
+            )
+            print("training_courses",training_courses)
+            # Render the template and pass the courses
+            return request.render('custom_web_kreator.partner_training', {
+                'training_courses': training_courses
+            })
+        else:
+            raise NotFound()
+
+    @http.route('/partner/promotional-material/details', type='http', auth='public', website=True)
     def promotional_details(self, **kwargs):
         # Render the data page template
         course_id = kwargs.get('course_id')
@@ -2625,6 +2737,7 @@ class PortalMyCourses(http.Controller):
             'promotional_materials': course.promotional_material_ids
         })
 
+
     @http.route('/download_attachment/<int:material_id>', type='http', auth='public')
     def download_attachment(self, material_id, **kwargs):
         material = request.env['slide.channel.promotional.material'].sudo().browse(material_id)
@@ -2638,64 +2751,78 @@ class PortalMyCourses(http.Controller):
             ])
         return request.not_found()
 
-    @http.route('/coming-soon', type='http', auth='public', website=True)
+    @http.route('/creator/customer', type='http', auth='public', website=True)
     def coming_soon(self, **kwargs):
-        # Render the data page template
-        return http.request.render('custom_web_kreator.coming_soon')
-
-    @http.route('/creator-profile', type='http', auth='user', website=True, methods=['GET', 'POST'], csrf=False)
-    def creator_profile(self, **post):
         user = request.env.user
-        partner = user.partner_id  # Get the linked partner record
-        image_file = request.httprequest.files.get('image')
-        print("image_file", image_file)
-        # Map input fields to social media types
-        social_media_map = {
-            'facebook': 'facebook',
-            'twitter': 'twitter',
-            'instagram': 'instagram',
-            'youtube': 'youtube',
-            'linkedin': 'linkedin'
-        }
-        if request.httprequest.method == 'POST':
-            social_data = []  # List to store updates
-            if image_file:
-                image_data = image_file.read()
-                user.image_1920 = base64.b64encode(image_data)
-                print("user.image_1920", user.image_1920)
-            # Get existing social media records
-            existing_socials = {line.social_media: line for line in partner.social_section_line}
+        partner = user.partner_id  # Get related partner
 
-            for field_name, social_label in social_media_map.items():
-                social_link = post.get(field_name)  # Get user input
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'creator']:
+            # Render the data page template
+            return http.request.render('custom_web_kreator.coming_soon')
+        else:
+            raise NotFound()
 
-                if social_link:  # Only update if value is provided
-                    if social_label in existing_socials:  # Update existing record
-                        existing_socials[social_label].social_media_link = social_link
-                    else:  # Create new record if it doesn't exist
-                        social_data.append((0, 0, {
-                            'social_media': social_label,
-                            'social_media_link': social_link
-                        }))
+    @http.route('/creator-profile', type='http', auth='user', website=True, methods=['GET', 'POST'],csrf=False)
+    def creator_profile(self, **post):
+        print("comin here")
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
 
-            # Update the res.partner model with new values
-            if social_data:
-                partner.write({'social_section_line': social_data})
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'creator']:
+            image_file = request.httprequest.files.get('image')
+            # Map input fields to social media types
+            social_media_map = {
+                'facebook': 'facebook',
+                'twitter': 'twitter',
+                'instagram': 'instagram',
+                'youtube': 'youtube',
+                'linkedin': 'linkedin'
+            }
+            if request.httprequest.method == 'POST':
+                social_data = []  # List to store updates
+                if image_file:
+                    image_data = image_file.read()
+                    user.image_1920 = base64.b64encode(image_data)
+                    print("user.image_1920",user.image_1920)
+                # Get existing social media records
+                existing_socials = {line.social_media: line for line in partner.social_section_line}
 
-        user_image = user.image_1920 and f"data:image/png;base64,{user.image_1920.decode('utf-8')}" or "/web/image/res.users/%s/image_1920" % user.id
-        print("user_image", user_image)
-        # Pass existing values to the template
-        values = {
-            'name': user.name,
-            'email': user.email,
-            'phone': user.phone,
-            'user_image': user_image
-        }
+                for field_name, social_label in social_media_map.items():
+                    social_link = post.get(field_name)  # Get user input
 
-        return request.render('custom_web_kreator.creator_profile', values)
+                    if social_link:  # Only update if value is provided
+                        if social_label in existing_socials:  # Update existing record
+                            existing_socials[social_label].social_media_link = social_link
+                        else:  # Create new record if it doesn't exist
+                            social_data.append((0, 0, {
+                                'social_media': social_label,
+                                'social_media_link': social_link
+                            }))
 
-    @http.route('/partner-profile', type='http', auth='user', website=True, methods=['GET', 'POST'])
+                # Update the res.partner model with new values
+                if social_data:
+                    partner.write({'social_section_line': social_data})
+
+
+            user_image = user.image_1920 and f"data:image/png;base64,{user.image_1920.decode('utf-8')}" or "/web/image/res.users/%s/image_1920" % user.id
+
+            # Pass existing values to the template
+            values = {
+                'name': user.name,
+                'email': user.email,
+                'phone': user.phone,
+                'user_image': user_image
+            }
+
+            return request.render('custom_web_kreator.creator_profile', values)
+        else:
+            raise NotFound()
+
+    @http.route('/profile', type='http', auth='user', website=True, methods=['GET', 'POST'])
     def partner_profile(self, **kwargs):
+        print("<<<<<<<<<<<<>>>>>>>>>>>>>>>>>")
         user = request.env.user  # Get the logged-in user
         partner = user.partner_id  # Get related partner
 
@@ -2727,6 +2854,15 @@ class PortalMyCourses(http.Controller):
                     image_data = file_storage.read()
                     user.image_1920 = base64.b64encode(image_data)  # Save image in res.users
 
+            # Redirect based on user type
+            user_type = user.user_type
+            if user_type == 'creator':
+                return redirect('/creator/my-courses')
+            elif user_type == 'customer':
+                return redirect('/customer/mycourses')
+            elif user_type == 'partner':
+                return redirect('/partner/income')
+
         # Fetch updated details
         phone = partner.phone if partner and partner.phone else ''
         profile_image = user.image_1920 and f"data:image/png;base64,{user.image_1920.decode()}" or "/custom_web_kreator/static/src/user1.png"
@@ -2753,57 +2889,61 @@ class PortalMyCourses(http.Controller):
         else:
             return request.redirect('/custom_web_kreator/static/src/user1.png')  # Default image fallback
 
-    @http.route('/customer-support', type='http', auth='public', website=True, methods=['GET', 'POST'])
+    @http.route('/customer/support', type='http', auth='public', website=True, methods=['GET', 'POST'])
     def customer_support(self, **kwargs):
-        print("comingggg11111")
-        user = request.env.user  # Get the logged-in user
+        user = request.env.user
         partner = user.partner_id  # Get related partner
 
-        # If form is submitted (POST request)
-        if request.httprequest.method == 'POST':
-            print("cominggg22222")
-            new_name = kwargs.get('name')
-            new_email = kwargs.get('email')
-            new_mobile = kwargs.get('mobile')
-            new_subject = kwargs.get('subject')  # Extract subject
-            new_question = kwargs.get('question')  # Extract question
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'customer']:
+            user = request.env.user  # Get the logged-in user
+            partner = user.partner_id  # Get related partner
 
-            # Update user and partner details if changed
-            if new_name and new_name != user.name:
-                user.name = new_name  # Update user name
+            # If form is submitted (POST request)
+            if request.httprequest.method == 'POST':
+                new_name = kwargs.get('name')
+                new_email = kwargs.get('email')
+                new_mobile = kwargs.get('mobile')
+                new_subject = kwargs.get('subject')  # Extract subject
+                new_question = kwargs.get('question')  # Extract question
 
-            if new_email and new_email != user.email:
-                user.login = new_email  # Update user email
+                # Update user and partner details if changed
+                if new_name and new_name != user.name:
+                    user.name = new_name  # Update user name
 
-            if new_mobile:
-                if not new_mobile.startswith('+91'):
-                    new_mobile = f'+91 {new_mobile}'
+                if new_email and new_email != user.email:
+                    user.login = new_email  # Update user email
 
-                if partner and new_mobile != partner.phone:
-                    partner.phone = new_mobile  # Update partner's phone
+                if new_mobile:
+                    if not new_mobile.startswith('+91'):
+                        new_mobile = f'+91 {new_mobile}'
 
-            # Save the form submission to helpdesk.ticket
-            if new_subject and new_question:
-                print("comingg3333")
-                request.env['helpdesk.ticket'].sudo().create({
-                    'name': new_subject,  # Set subject in name field
-                    'description': new_question,  # Set question in description field
-                    'partner_id': partner.id if partner else False,  # Link to the user
-                })
+                    if partner and new_mobile != partner.phone:
+                        partner.phone = new_mobile  # Update partner's phone
 
-        # Fetch updated details
-        phone = partner.phone if partner and partner.phone else ''
-        profile_image = user.image_1920 and f"data:image/png;base64,{user.image_1920.decode()}" or "/custom_web_kreator/static/src/user1.png"
-        if phone and not phone.startswith('+91'):
-            phone = f'+91 {phone}'
+                # Save the form submission to helpdesk.ticket
+                if new_subject and new_question:
+                    request.env['helpdesk.ticket'].sudo().create({
+                        'name': new_subject,  # Set subject in name field
+                        'description': new_question,  # Set question in description field
+                        'partner_id': partner.id if partner else False,  # Link to the user
+                    })
 
-        values = {
-            'name': user.name,
-            'email': user.login,
-            'mobile': phone,
-            'profile_image': profile_image
-        }
-        return request.render('custom_web_kreator.customer_support', values)
+            # Fetch updated details
+            phone = partner.phone if partner and partner.phone else ''
+            profile_image = user.image_1920 and f"data:image/png;base64,{user.image_1920.decode()}" or "/custom_web_kreator/static/src/user1.png"
+            if phone and not phone.startswith('+91'):
+                phone = f'+91 {phone}'
+
+            values = {
+                'name': user.name,
+                'email': user.login,
+                'mobile': phone,
+                'profile_image': profile_image
+            }
+            return request.render('custom_web_kreator.customer_support', values)
+        else:
+            raise NotFound()
 
     @http.route('/customer-profile', type='http', auth='public', website=True)
     def customer_profile(self, **kwargs):
@@ -2825,6 +2965,7 @@ class PortalMyCourses(http.Controller):
         # Render the data page template
         return http.request.render('custom_web_kreator.partner_video2')
 
+
     @http.route('/partner-video3', type='http', auth='public', website=True)
     def partner_video_three(self, **kwargs):
         # Render the data page template
@@ -2833,7 +2974,7 @@ class PortalMyCourses(http.Controller):
     @http.route('/partner-term', type='http', auth='public', website=True)
     def partner_term(self, **kwargs):
         # Render the data page template
-        return http.request.render('custom_web_kreator.partner_term', )
+        return http.request.render('custom_web_kreator.partner_term',)
 
     @http.route('/submit-terms', type='http', auth='public', website=True, methods=['POST'])
     def submit_terms(self, **post):
@@ -2855,9 +2996,22 @@ class PortalMyCourses(http.Controller):
 
         return request.redirect('/partner-welcome')
 
+
     @http.route('/partner-welcome', type='http', auth='public', website=True)
     def partner_welcome(self, **kwargs):
         # Render the data page template
-
+        
         agreement = request.session.get('agreement', 'No Selection')
-        return http.request.render('custom_web_kreator.partner_welcome', {'agreement': agreement})
+        return http.request.render('custom_web_kreator.partner_welcome',{'agreement':agreement})
+
+
+    @http.route('/get_video_url', type='json', auth="public", website=True)
+    def get_video_url(self):
+        video = request.env['slide.video.config'].sudo().search([('page_key', '=', 'nmy_courses')], limit=1)
+        print("video",video.video_url)
+        return {'video_url': video.video_url if video else ''}
+
+
+
+
+

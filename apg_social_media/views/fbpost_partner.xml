@@ -1,32 +1,23 @@
 <odoo>
     <data>
         <template id="partner_comment_template">
-            <div class="comment-container">
+            <div class="comment-container row" t-att-data-comment-id="comment['id']">
                 <div class="comment-header" style="width: 100%;">
                     <img src="/custom_web_kreator/static/src/user1.png" class="user-image comment-user-icon"/>
-
+                     
                     <div class="user-details comment-user" style="width: 80%;max-width: 80%;">
-                        <span class="user-name">
-                            <t t-esc="comment['user']"/>
-                        </span>
-                        <span class="post-date">
-                            <t t-esc="comment['date']"/>
-                        </span>
+                        <span class="user-name"><t t-esc="comment['user']"/></span>
+                        <span class="post-date"><t t-esc="comment['date']"/></span>
                     </div>
 
                     <div class="comment-options" style="width: 10%;max-width: 10%;">
                         <!-- Three Dots Button -->
                         <span class="three-dots" t-att-data-comment-id="comment['id']">⋮</span>
-
+                        
                         <!-- Reply Dropdown Menu -->
-                        <div class="reply-menu dropdown-menu" t-att-id="'reply-menu-' + str(comment['id'])"
-                             style="display: none;">
-                            <button class="reply-button dropdown-item reply-btn" t-att-data-comment-id="comment['id']">
-                                Reply
-                            </button>
-                            <button class="reply-button dropdown-item edit-btn" t-att-data-comment-id="comment['id']">
-                                Edit
-                            </button>
+                        <div class="reply-menu dropdown-menu" t-att-id="'reply-menu-' + str(comment['id'])" style="display: none;">
+                            <button class="reply-button dropdown-item reply-btn" t-att-data-comment-id="comment['id']">Reply</button>
+                            <button class="reply-button dropdown-item edit-btn" t-att-data-comment-id="comment['id']">Edit</button>
                         </div>
                     </div>
                 </div>
@@ -36,10 +27,8 @@
                 </div>
 
                 <!-- Reply Input Box (Initially Hidden) -->
-                <div class="reply-input-container" t-att-id="'reply-container-' + str(comment['id'])"
-                     style="display: none;">
-                    <input type="text" class="reply-input comment-input-js" placeholder="Write a reply..."
-                           t-att-data-parent-id="comment['id']"/>
+                <div class="reply-input-container" t-att-id="'reply-container-' + str(comment['id'])" style="display: none;">
+                    <input type="text" class="reply-input comment-input-js" placeholder="Write a reply..." t-att-data-parent-id="comment['id']"/>
                 </div>
 
                 <!-- Nested Replies (Recursive Call) -->
@@ -53,1240 +42,994 @@
             </div>
         </template>
         <template id="apg_social_media.fbpostforum_partner" name="Fb Post Partner">
-            <head>
-                <!-- meta tags -->
-                <meta charset="UTF-8"/>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-                <!-- title -->
-                <title>Kreator Bee | Sales</title>
-                <!-- external css -->
-                <link rel="stylesheet" href="/custom_web_kreator/static/src/css/custom_styl.css"/>
-                <link rel="stylesheet"
-                      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-                <!-- bootstrap css -->
-                <link
-                        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-                        rel="stylesheet"
-                        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-                        crossorigin="anonymous"
-                />
-                <!-- remix icon -->
-                <link
-                        href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
-                        rel="stylesheet"
-                />
-                <style>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet"/>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+                <!-- Customize JS and CSS -->
+                <body>
+                    
+                    <!-- Page-Specific Styles -->
+                    <style>
+                    body {
+                        display: flex;
+                        margin: 0;
+                        font-family: 'Poppins', sans-serif;
+                        background-color: #f8f9fa;
+                    }
+
                     /* Top Menu */
                     .top-menu {
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    padding: 10px 20px;
-                    background-color: #fff;
-                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                    position: fixed;
-                    top: 0;
-                    z-index: 100;
-                    height: 60px; /* Adjust height for new layout */
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 10px 20px;
+                        background-color: #fff;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        top: 0;
+                        z-index: 100;
+                        height: 60px; /* Adjust height for new layout */
                     }
 
                     .top-menu .logo img {
-                    height: 60px;
-                    width: auto;
+                        height: 60px;
+                        width: auto;
                     }
 
                     .top-menu .menu-links {
-                    display: flex;
-                    gap: 40px; /* Space between menu items */
-                    align-items: center;
-                    justify-content: center;
-                    flex: 1;
+                        display: flex;
+                        gap: 40px; /* Space between menu items */
+                        align-items: center;
+                        justify-content: center;
+                        flex: 1;
                     }
 
                     .top-menu .menu-links a {
-                    text-decoration: none;
-                    color: #333;
-                    font-size: 14px;
-                    font-weight: 500;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 8px;
-                    padding: 15px;
-                    border-radius: 5px;
-                    transition: background-color 0.3s ease;
-                    height: 100%;
-                    justify-content: center;
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 14px;
+                        font-weight: 500;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 15px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
+                        height: 100%;
+                        justify-content: center;
                     }
 
                     .top-menu .menu-links a.active {
-                    background-color: #fef5c5;
-                    color: #000;
+                        background-color: #fef5c5;
+                        color: #000;
                     }
 
                     .top-menu .menu-links a:hover {
-                    background-color: #fef5c5;
-                    color: #000;
+                        background-color: #fef5c5;
+                        color: #000;
                     }
 
                     .top-menu .menu-links i {
-                    font-size: 24px; /* Icon size */
+                        font-size: 24px; /* Icon size */
                     }
                     .top-menu .user-icon {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50%;
-                    object-fit: cover;
-                    cursor: pointer;
-                    margin-right: 30px; /* Adds space from the edge */
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        cursor: pointer;
+                        margin-right: 30px; /* Adds space from the edge */
                     }
 
                     /* Side Menu */
                     .side-menu {
-                    width: 250px;
-                    background-color: #fff;
-                    padding: 20px 10px;
-                    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-                    position: fixed;
-                    left: 0;
-                    top: 60px; /* Adjust for top menu */
-                    height: calc(100vh - 60px);
-                    overflow-y: auto;
+                        width: 250px;
+                        background-color: #fff;
+                        padding: 20px 10px;
+                        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                        position: fixed;
+                        left: 0;
+                        top: 60px; /* Adjust for top menu */
+                        height: calc(100vh - 60px);
+                        overflow-y: auto;
                     }
 
                     .side-menu ul {
-                    list-style: none;
-                    padding: 2;
+                        list-style: none;
+                        padding: 2;
                     }
 
                     .side-menu ul li {
-                    margin: 15px 0;
+                        margin: 15px 0;
                     }
 
                     .side-menu ul li a {
-                    text-decoration: none;
-                    color: #333;
-                    font-size: 15px;
-                    font-weight: 500;
-                    display: flex;
-                    align-items: center;
-                    gap: 12px;
-                    padding: 12px;
-                    border-radius: 5px;
-                    transition: background-color 0.3s ease;
+                        text-decoration: none;
+                        color: #333;
+                        font-size: 15px;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px;
+                        border-radius: 5px;
+                        transition: background-color 0.3s ease;
                     }
 
                     .side-menu ul li a.active {
-                    background-color: #fef5c5;
-                    color: #000;
+                        background-color: #fef5c5;
+                        color: #000;
                     }
 
                     .side-menu ul li a:hover {
-                    background-color: #fef5c5;
-                    color: #000;
+                        background-color: #fef5c5;
+                        color: #000;
                     }
 
                     .main-content {
-                    margin-left: 270px; /* Adjust to create space from the side menu */
-                    padding: 20px; /* Maintain consistent padding inside the main content */
-                    margin-top: 60px; /* Adjust for the top menu */
-                    flex-grow: 1;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 100vh;
-                    margin-top:20px;
+                        margin-left: 270px; /* Adjust to create space from the side menu */
+                        padding: 20px;      /* Maintain consistent padding inside the main content */
+                        margin-top: 60px;   /* Adjust for the top menu */
+                        flex-grow: 1;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        margin-top:20px;
                     }
 
 
                     .leaderboard-container {
-                    display: flex;
-                    gap: 30px;
+                        display: flex;
+                        gap: 30px;
                     }
 
                     .leaderboard-list,
                     .user-stats {
-                    background-color: #fff;
-                    border-radius: 10px;
-                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                    padding: 20px;
+                        background-color: #fff;
+                        border-radius: 10px;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        padding: 20px;
                     }
 
                     .leaderboard-list {
-                    flex: 2;
+                        flex: 2;
                     }
 
                     .leaderboard-list h3 {
-                    font-size: 16px;
-                    font-weight: bold;
-                    margin-bottom: 15px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        margin-bottom: 15px;
                     }
 
                     .leaderboard-list .entry {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    padding: 10px;
-                    border-bottom: 1px solid #f1f1f1;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 10px;
+                        border-bottom: 1px solid #f1f1f1;
                     }
 
                     .leaderboard-list .entry:last-child {
-                    border-bottom: none;
+                        border-bottom: none;
                     }
 
                     .leaderboard-list .entry img {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50%;
-                    margin-right: 10px;
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        margin-right: 10px;
                     }
 
                     .leaderboard-list .entry .rank {
-                    font-weight: bold;
-                    color: #555;
+                        font-weight: bold;
+                        color: #555;
                     }
 
                     .user-stats {
-                    flex: 1;
-                    text-align: center;
+                        flex: 1;
+                        text-align: center;
                     }
 
                     .user-stats img {
-                    width: 80px;
-                    height: 80px;
-                    border-radius: 50%;
-                    margin-bottom: 10px;
+                        width: 80px;
+                        height: 80px;
+                        border-radius: 50%;
+                        margin-bottom: 10px;
                     }
 
                     .user-stats .earnings,
                     .user-stats .ranking {
-                    font-size: 16px;
-                    font-weight: bold;
-                    color: #555;
+                        font-size: 16px;
+                        font-weight: bold;
+                        color: #555;
                     }
 
                     .user-stats .earnings span,
                     .user-stats .ranking span {
-                    color: #ffd001;
+                        color: #ffd001;
                     }
 
                     /* User Info */
-                    .user-info {
-                    display: flex;
-                    align-items: center;
-                    margin-bottom: 10px;
-                    }
+                        .user-info {
+                            display: flex;
+                            align-items: center;
+                            margin-bottom: 10px;
+                        }
 
-                    .user-info img {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50%;
-                    margin-right: 10px;
-                    }
+                        .user-info img {
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 50%;
+                            margin-right: 10px;
+                        }
 
-                    .user-info .user-details {
-                    display: flex;
-                    flex-direction: column;
-                    }
+                        .user-info .user-details {
+                            display: flex;
+                            flex-direction: column;
+                        }
 
-                    .user-info .user-details .user-name {
-                    font-weight: bold;
-                    font-size: 14px;
-                    color: #333;
-                    }
+                        .user-info .user-details .user-name {
+                            font-weight: bold;
+                            font-size: 14px;
+                            color: #333;
+                        }
 
-                    .user-info .user-details .post-date {
-                    font-size: 12px;
-                    color: #777;
+                        .user-info .user-details .post-date {
+                            font-size: 12px;
+                            color: #777;
+                        }
+
+                        .post-wrapper {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+                        align-items: center;
+                        width: 100%;
+                        max-width: 400px;
+                        height: 90vh;
+                        overflow-y: auto;
+                        padding: 10px;
+                        background: #fff;
+                        border-radius: 10px;
+                        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
                     }
 
                     .post-wrapper::-webkit-scrollbar {
-                    width: 8px;
+                        width: 8px;
                     }
 
                     .post-wrapper::-webkit-scrollbar-thumb {
-                    background: #ccc;
-                    border-radius: 10px;
+                        background: #ccc;
+                        border-radius: 10px;
                     }
 
                     .post-container {
-                    width: 100%;
-                    border: 1px solid #ddd;
-                    border-radius: 10px;
-                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                    padding: 15px;
-                    margin-top:30px;
+                        width: 100%;
+                        border: 1px solid #ddd;
+                        border-radius: 10px;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        padding: 15px;
+                        margin-top:30px;
                     }
 
                     .post-header {
-                    display: flex;
-                    align-items: center;
-                    margin-bottom: 15px;
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 15px;
                     }
 
                     .user-image {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50%;
-                    margin-right: 10px;
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        margin-right: 10px;
                     }
 
                     .user-details {
-                    font-size: 14px;
-                    color: #333;
+                        font-size: 14px;
+                        color: #333;
                     }
 
                     .user-details .user-name {
-                    font-weight: bold;
-                    margin-right: 5px;
+                        font-weight: bold;
+                        margin-right: 5px;
                     }
 
                     .user-details .post-date {
-                    font-size: 12px;
-                    color: #888;
+                        font-size: 12px;
+                        color: #888;
                     }
 
                     .post-image {
-                    width: 100%;
-                    border-radius: 5px;
-                    margin-bottom: 10px;
+                        width: 100%;
+                        border-radius: 5px;
+                        margin-bottom: 10px;
                     }
 
                     .post-actions {
-                    display: flex;
-                    justify-content: space-around;
-                    margin-top: 10px;
-                    border-top: 1px solid #ddd;
-                    padding-top: 10px;
+                        display: flex;
+                        justify-content: space-around;
+                        margin-top: 10px;
+                        border-top: 1px solid #ddd;
+                        padding-top: 10px;
                     }
 
                     .btn {
-                    border: none;
-                    background: none;
-                    font-size: 14px;
-                    font-weight: bold;
-                    color: #65676b;
-                    cursor: pointer;
-                    display: flex;
-                    align-items: center;
+                        border: none;
+                        background: none;
+                        font-size: 14px;
+                        font-weight: bold;
+                        color: #65676b;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
                     }
 
                     .btn i {
-                    margin-right: 5px;
-                    font-size: 16px;
+                        margin-right: 5px;
+                        font-size: 16px;
                     }
 
                     .btn:hover {
-                    text-decoration: underline;
+                        text-decoration: underline;
                     }
 
                     .comment-section {
-                    margin-top: 10px;
-                    padding-top: 10px;
-                    border-top: 1px solid #ddd;
+                        margin-top: 10px;
+                        padding-top: 10px;
+                        border-top: 1px solid #ddd;
                     }
 
                     .comment-input {
-                    width: 100%;
-                    padding: 8px;
-                    border: 1px solid #ddd;
-                    border-radius: 5px;
-                    font-size: 14px;
+                        width: 100%;
+                        padding: 8px;
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                        font-size: 14px;
                     }
                     .post-input {
-                    width: 100%;
-                    padding: 8px;
-                    border: 1px solid #ddd;
-                    border-radius: 5px;
-                    font-size: 14px;
+                        width: 100%;
+                        padding: 8px;
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                        font-size: 14px;
                     }
 
                     .comment-list {
-                    margin-top: 10px;
+                        margin-top: 10px;
                     }
 
                     .comment {
-                    font-size: 12px;
-                    color: #555;
-                    margin-bottom: 5px;
+                        font-size: 12px;
+                        color: #555;
+                        margin-bottom: 5px;
                     }
                     .dashboard-header {
-                    text-align: center;
-                    font-size: 24px;
-                    font-weight: bold;
-                    color: #333;
-                    margin-bottom: 20px;
-                    }
-                    .post-btn {
-                    background-color: #ffd000;
-                    color: #212529;
-                    font-family: 'Poppins', sans-serif;
-                    padding: 10px 15px;
-                    border: none;
-                    border-radius: 5px;
-                    cursor: pointer;
-                    transition: background-color 0.3s ease;
-                    padding:10px 20px;
-                    letter-spacing: 1px;
-                    }
+                            text-align: center;
+                            font-size: 24px;
+                            font-weight: bold;
+                            color: #333;
+                            margin-bottom: 20px;
+                        }
+                        .post-btn {
+                            background-color: #ffd000;
+                            color: #212529;
+                            font-family: 'Poppins', sans-serif;
+                            padding: 10px 15px;
+                            border: none;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            transition: background-color 0.3s ease;
+                            padding:10px 20px;
+                            letter-spacing: 1px;
+                        }
 
-                    .post-btn:hover {
-                    background-color: #e0a800;
-                    }
-                    .like-btn i {
-                    color: #65676B; /* Blue for Like */
-                    }
+                        .post-btn:hover {
+                            background-color: #e0a800;
+                        }
+.like-btn i {
+    color: #65676B; /* Blue for Like */
+}
 
-                    .comment-btn i {
-                    color: #28a745; /* Green for Comment */
-                    }
+.comment-btn i {
+    color: #28a745; /* Green for Comment */
+}
 
-                    .share-btn i {
-                    color: #ffc107; /* Yellow for Share */
-                    }
-                    .update-actions {
-                    display: flex;
-                    justify-content: space-around;
-                    }
-                    .cust-main-content{
-                    margin-top: 70px!important;margin-left: 100px !important;
-                    }
-                    .comment-options {
-                    position: relative;
-                    display: inline-block;
-                    }
+.share-btn i {
+    color: #ffc107; /* Yellow for Share */
+}
+.update-actions {
+    display: flex;
+    justify-content: space-around;
+}
+.cust-main-content{
+    margin-top: 70px!important;margin-left: 100px !important;
+}
+.comment-container{
+width:100%;
+max-width:100%;
+}
+.comment-options {
+position: relative;
+display: inline-block;
+<!--max-width:10%;-->
+}
 
-                    .three-dots {
-                    cursor: pointer;
-                    font-size: 20px;
-                    padding: 5px;
-                    }
+.three-dots {
+cursor: pointer;
+font-size: 20px;
+padding: 5px;
+}
 
-                    .three-dots:hover {
-                    color: gray;
-                    }
+.three-dots:hover {
+color: gray;
+}
 
-                    /* Dropdown Menu */
-                    .reply-menu {
-                    position: absolute;
-                    right: 0;
-                    background: white;
-                    border: 1px solid #ccc;
-                    padding: 5px;
-                    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-                    border-radius: 5px;
-                    display: none;
-                    min-width: 100px;
-                    z-index: 100;
-                    font-size: 12px;
-                    }
+/* Dropdown Menu */
+.reply-menu {
+position: absolute;
+right: 0;
+background: white;
+border: 1px solid #ccc;
+padding: 5px;
+box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+border-radius: 5px;
+display: none;
+min-width: 100px;
+z-index: 100;
+font-size: 12px;
+}
 
-                    .dropdown-item {
-                    background: none;
-                    border: none;
-                    width: 100%;
-                    text-align: left;
-                    padding: 8px 12px;
-                    cursor: pointer;
-                    }
+.dropdown-item {
+background: none;
+border: none;
+width: 100%;
+text-align: left;
+padding: 8px 12px;
+cursor: pointer;
+}
 
-                    .dropdown-item:hover {
-                    background: #f1f1f1;
-                    }
+.dropdown-item:hover {
+background: #f1f1f1;
+}
 
-                    /* Reply Input Box */
-                    .reply-input-container {
-                    margin-top: 5px;
-                    display: none;
-                    margin-left: 30px !important;
-                    }
+/* Reply Input Box */
+.reply-input-container {
+margin-top: 5px;
+display: none;
+margin-left: 30px !important;
+}
 
-                    .reply-input {
-                    width: 100%;
-                    padding: 5px;
-                    border: 1px solid #ccc;
-                    border-radius: 5px;
-                    }
-                    @media (max-width: 769px) {
-                    /* Style the input field */
-                    .cust-main-content{
-                    margin-top: 50px !important;margin-left: 0px !important;
-                    }
-                    }
+.reply-input {
+width: 100%;
+padding: 5px;
+border: 1px solid #ccc;
+border-radius: 5px;
+}
+@media (max-width: 769px) {
+    /* Style the input field */
+    .cust-main-content{
+        margin-top: 50px !important;margin-left: 0px !important;
+    }
+}
+                        
 
-
+                    
                 </style>
-            </head>
 
-            <body>
-                <div class="layout">
-                    <!-- Header -->
-                    <header class="container-fluid">
-                        <div
-                                class="d-flex justify-content-between align-items-center border-bottom"
-                        >
-                            <!-- Menu Icon visible on mobile-->
-                            <img
-                                    class="pe-2 d-block d-lg-none hamburger"
-                                    src="/custom_web_kreator/static/src/nev-icon.svg"
-                            />
-                            <!-- Logo -->
-                            <img src="/custom_web_kreator/static/src/logo.png"/>
-                            <!-- Menu-->
-                            <div class="d-lg-flex d-none gap-4">
-                                <t t-if="partner_type == 'company'">
-                                    <div class="active p-lg-2 p-1 d-flex flex-column align-items-center">
-                                        <a href="/forumsection-company" class='text-center'>
-                                            <i class="fa fa-users"></i>
-                                            <p>
-                                                Update
-                                            </p>
-                                        </a>
-                                    </div>
-                                </t>
-                                <t t-if="partner_type != 'company'">
-                                    <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
-                                        <a href="/forumsection-company" class='text-center'>
-                                            <i class="fa fa-users"></i>
-                                            <p>
-                                                Update
-                                            </p>
-                                        </a>
-                                    </div>
-                                </t>
-                                <t t-if="partner_type == 'creator'">
-                                    <div
-                                            class="active p-lg-2 p-1 d-flex flex-column align-items-center"
-                                    >
-                                        <a href="/forumsection-creator" class='text-center'>
-                                            <i class="fa fa-users"></i>
-                                            <p>
-                                                Creator
-                                            </p>
-                                        </a>
-                                    </div>
-                                </t>
-                                <t t-if="partner_type != 'creator'">
-                                    <div
-                                            class="p-lg-2 p-1 d-flex flex-column align-items-center"
-                                    >
-                                        <a href="/forumsection-creator" class='text-center'>
-                                            <i class="fa fa-users"></i>
-                                            <p>
-                                                Creator
-                                            </p>
-                                        </a>
-                                    </div>
-                                </t>
+                    <!-- Top Menu -->
+                    <div class="top-menu">
+                    <button class="navbar-toggler d-lg-none" type="button" id="burgerMenu" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"><i class="fa fa-solid fa-bars"/></span>
+                    </button>
+                    <div class="logo">
+                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
+                    </div>
+                    <div class="menu-links">
+                        <a href="/partner/community/updates">
+                            <i class="fa fa-users"/> Updates
+                        </a>
+                        <a href="/partner/community/creator">
+                            <i class="fa fa-users"/> Creator
+                        </a>
+                        <a href="/partner/community/partner">
+                            <i class="fa fa-users"/> Partner
+                        </a>
+                    </div>
+                    <!-- Use <img> tag for user icon -->
+                    <t t-call="custom_web_kreator.partner_profile_dropdown"/>
+                </div>
+                <!-- Side Menu -->
+                <t t-call="custom_web_kreator.side_menu"/>
 
-                                <t t-if="partner_type == 'partner'">
-                                    <div class="active p-lg-2 p-1 d-flex flex-column align-items-center">
-                                        <a href="/forumsection-partner" class='text-center'>
-                                            <i class="fa fa-users"></i>
-                                            <p>
-                                                Partner
-                                            </p>
-                                        </a>
+                    <!-- Main Content -->
+                    <div class="main-content cust-main-content">
+                        <!-- Post Wrapper for Multiple Posts -->
+                        <input type="hidden" name="partner_type" id="partner_type" t-att-value="partner_type"/>
+                        <div class="post-wrapper">
+                            <t t-if="partner_type == 'partner'">
+                                <div class="post-container o-cust-post">
+                                <form action="/post-create-partner" method="post" enctype="multipart/form-data">
+                                    <!-- CSRF Token -->
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <div class="mb-2" style="display:none;">
                                     </div>
-                                </t>
-                                <t t-if="partner_type != 'partner'">
-                                    <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
-                                        <a href="/forumsection-partner" class='text-center'>
-                                            <i class="fa fa-users"></i>
-                                            <p>
-                                                Partner
-                                            </p>
-                                        </a>
+                                    <div class="post-header">
+                                        <img src="/custom_web_kreator/static/src/user1.png" class="user-image" alt="User Image"/>
+                                        <input type="text" name="message" class="post-input" placeholder="Write's on your mind..." style="border-radius: 20px !important;" widget="text_emojis"/>
                                     </div>
-                                </t>
+                                    <div id="uploadedPreview" style="display: none; margin-top: 10px; display: flex; gap: 10px;">
 
+                                        <!-- YouTube Thumbnail Wrapper -->
+                                        <div class="preview-container" style="position: relative; display: inline-block;">
+                                            <img id="yt-thumbnail-img" src="" alt="YouTube Thumbnail" style="width: 100px; border-radius: 8px; display: none;"/>
+                                            <a id="remove-thumbnail" style="position: absolute; top: -5px; right: -5px; background: red; color: white; border: none; border-radius: 50%; padding: 2px 6px; cursor: pointer; text-decoration: none;display:none;">×</a>
+                                        </div>
+                                        <!-- Image Preview Wrapper -->
+                                        <div class="preview-container" style="position: relative; display: inline-block;">
+                                            <img id="imagePreview" src="#" alt="Preview" style="width: 100px; border-radius: 8px; display: none;height: 75px;"/>
+                                            <a id="remove-preview" style="position: absolute; top: -5px; right: -5px; background: red; color: white; border: none; border-radius: 50%; padding: 2px 6px; cursor: pointer; display: none; text-decoration: none;">×</a>
+                                        </div>
+
+                                    </div>
+                                    <div class="post-actions">
+                                        <!-- Video Upload Button -->
+                                        <a type="button" id="video-upload" class="btn like-btn cust-btn"><i class="fa fa-video-camera" style="color:red; margin-right: 5px;"/> Video</a>
+                                        <input type="text" id="youtube-url" name="youtubeUrl" class="o-cust-form-control post-input" placeholder="Paste YouTube URL..." style="border-radius: 20px !important;width: 40%;display:none;"/>
+                                        
+                                    
+                                        <!-- Photo Upload Button -->
+                                        <label for="photo-upload" class="btn share-btn cust-btn">
+                                            <i class="fas fa-images" style="color:green; margin-right: 5px;"/> Photo
+                                        </label>
+                                        <input type="file" id="photo-upload" name="imageUploadFile" accept="image/*" onchange="previewFile(event)" style="display: none;"/>
+                                        <!--    Post Button -->
+                                        <button type="submit" class="post-btn">Post</button>
+                                    </div>
+                                </form>
                             </div>
-                            <!-- Profile -->
-                            <t t-call="custom_web_kreator.partner_profile_dropdown"/>
-                        </div>
-                    </header>
-                    <div class="d-flex w-100">
-                        <!-- Sidebar -->
-                        <div class="sidebar border-end d-none d-lg-block">
-                            <nav class="py-3 px-2">
-                                <!-- Sidebar Menu -->
-                                <ul class="d-flex flex-column gap-2">
-                                    <a href="/partner">
-                                        <li>
-                                            <i class="ri-discount-percent-fill"></i>
-                                            Sales
-                                        </li>
-                                    </a>
-                                    <!-- Sales Dropdown -->
-                                    <div class="ps-2 d-block d-lg-none">
-                                        <li>
-                                            <a href="/master_income_data">
-                                                <i
-                                                        class="ri-subtract-fill"></i>
-                                                Income Data
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/nreferral">
-                                                <i class="ri-subtract-fill"></i>
-                                                Links
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/nkyc">
-                                                <i class="ri-subtract-fill"></i>
-                                                kyc
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <i class="ri-subtract-fill"></i>
-                                            <a href="/creator-lead">Lead</a>
-                                        </li>
-                                        <li>
-                                            <a href="/nleaderboard">
-                                                <i
-                                                        class="ri-subtract-fill"></i>
-                                                Leaderboard
-                                            </a>
-                                        </li>
-                                    </div>
-                                    <a href="/partner-product">
-                                        <li>
-                                            <i class="ri-product-hunt-fill"></i>
-                                            Products
-                                        </li>
-                                    </a>
-                                    <a href="/npromote">
-                                        <li>
-                                            <i class="ri-user-community-fill"></i>
-                                            Promote
-                                        </li>
-                                    </a>
-                                    <a href="/forumsection-company">
-                                        <li class="active">
-                                            <i class="ri-user-fill"></i>
-                                            Community
-                                        </li>
-                                    </a>
-                                    <a href="/nmy-courses-partner">
-                                        <li>
-                                            <i class="ri-user-community-fill"></i>
-                                            My Courses
-                                        </li>
-                                    </a>
-                                </ul>
-                            </nav>
-                        </div>
-                        <!-- Sidebar Backdrop on mobile -->
-                        <div class="backdrop d-none d-lg-none"></div>
-                        <!-- Main Content -->
-                        <main class="flex-grow-1 p-4 overflow-auto">
-                            <!-- Welcome Section -->
-                            <section class="welcome">
-                                <div
-                                        class="d-flex gap-2 flex-column flex-lg-row align-items-lg-center justify-content-between"
-                                >
-                                    <h1 class="d-flex align-items-center gap-1">
-                                        <img class="play"
-                                             src="/custom_web_kreator/static/src/user_icon.svg"/>
-                                        Welcome,
-                                        <t
-                                                t-esc="request.env.user.name"/>
-                                    </h1>
-                                    <div class="d-flex gap-3 align-items-center">
-                                        <a href="#"
-                                        >Tutorial
-                                            <img class="ms-1"
-                                                 src="/custom_web_kreator/static/src/play.png"
-                                            />
-                                        </a>
-                                        <a href="#"
-                                        >
-                                            <img
-                                                    src="/custom_web_kreator/static/src/Whatsapp.png"/>
-                                            +1234567890
-                                        </a>
-                                    </div>
-                                </div>
-                            </section>
-                            <!-- Lead Details -->
-                            <input type="hidden" name="partner_type" id="partner_type" t-att-value="partner_type"/>
-                            <div class="post-wrapper">
-                                <div class="row justify-content-around">
-                                    <div class="col-lg-8 col-md-8 col-sm-12">
-                                        <t t-if="partner_type == 'partner'">
-                                            <div class="post-container o-cust-post">
-                                                <form action="/post-create-partner" method="post"
-                                                      enctype="multipart/form-data">
-                                                    <!-- CSRF Token -->
-                                                    <input type="hidden" name="csrf_token"
-                                                           t-att-value="request.csrf_token()"/>
-                                                    <div class="mb-2" style="display:none;">
-                                                    </div>
-                                                    <div class="post-header">
-                                                        <img src="/custom_web_kreator/static/src/user1.png"
-                                                             class="user-image"
-                                                             alt="User Image"/>
-                                                        <input type="text" name="message" class="post-input"
-                                                               placeholder="Write's on your mind..."
-                                                               style="border-radius: 20px !important;"
-                                                               widget="text_emojis"/>
-                                                    </div>
-                                                    <div id="uploadedPreview"
-                                                         style="display: none; margin-top: 10px; display: flex; gap: 10px;">
-
-                                                        <!-- YouTube Thumbnail Wrapper -->
-                                                        <div class="preview-container"
-                                                             style="position: relative; display: inline-block;">
-                                                            <img id="yt-thumbnail-img" src="" alt="YouTube Thumbnail"
-                                                                 style="width: 100px; border-radius: 8px; display: none;"/>
-                                                            <a id="remove-thumbnail"
-                                                               style="position: absolute; top: -5px; right: -5px; background: red; color: white; border: none; border-radius: 50%; padding: 2px 6px; cursor: pointer; text-decoration: none;display:none;">
-                                                                ×
-                                                            </a>
-                                                        </div>
-                                                        <!-- Image Preview Wrapper -->
-                                                        <div class="preview-container"
-                                                             style="position: relative; display: inline-block;">
-                                                            <img id="imagePreview" src="#" alt="Preview"
-                                                                 style="width: 100px; border-radius: 8px; display: none;height: 75px;"/>
-                                                            <a id="remove-preview"
-                                                               style="position: absolute; top: -5px; right: -5px; background: red; color: white; border: none; border-radius: 50%; padding: 2px 6px; cursor: pointer; display: none; text-decoration: none;">
-                                                                ×
-                                                            </a>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="post-actions">
-                                                        <!-- Video Upload Button -->
-                                                        <a type="button" id="video-upload"
-                                                           class="btn like-btn cust-btn">
-                                                            <i class="fa fa-video-camera"
-                                                               style="color:red; margin-right: 5px;"></i>
-                                                            Video
-                                                        </a>
-                                                        <input type="text" id="youtube-url" name="youtubeUrl"
-                                                               class="o-cust-form-control post-input"
-                                                               placeholder="Paste YouTube URL..."
-                                                               style="border-radius: 20px !important;width: 40%;display:none;"/>
-
-
-                                                        <!-- Photo Upload Button -->
-                                                        <label for="photo-upload" class="btn share-btn cust-btn">
-                                                            <i class="fas fa-images"
-                                                               style="color:green; margin-right: 5px;"/>
-                                                            Photo
-                                                        </label>
-                                                        <input type="file" id="photo-upload" name="imageUploadFile"
-                                                               accept="image/*"
-                                                               onchange="previewFile(event)" style="display: none;"/>
-                                                        <!--    Post Button -->
-                                                        <button type="submit" class="post-btn">Post</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </t>
-                                        <t t-foreach="post_ids" t-as="post">
-                                            <div class="post-container o-cust-post">
-                                                <div class="post-header">
-                                                    <img src="/custom_web_kreator/static/src/user1.png"
-                                                         class="user-image"
-                                                         alt="User Image"/>
-                                                    <div class="user-details">
-                                                        <span class="user-name">
-                                                            <t t-esc="post['create_uid']"/>
-                                                        </span>
-                                                        <span class="post-date">
-                                                            <t t-if="post['create_date']">
-                                                                <span t-esc="post['create_date']"/>
-                                                            </t>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <p>
-                                                    <t t-esc="post['message']"/>
-                                                </p>
-                                                <t t-if="post['video_url']">
-                                                    <div class="media_iframe_video_container o-cust-1"
-                                                         style="text-align: center;">
-                                                        <iframe class="w-100 rounded post-image" loading="lazy"
-                                                                frameborder="0"
-                                                                allowfullscreen="allowfullscreen"
-                                                                t-att-src="post['video_url']"
-                                                                style="border-radius: 1.1rem !important;"></iframe>
-                                                    </div>
+                            </t>
+                            <t t-foreach="post_ids" t-as="post">
+                                <div class="post-container o-cust-post">
+                                    <div class="post-header">
+                                        <img src="/custom_web_kreator/static/src/user1.png" class="user-image" alt="User Image"/>
+                                        <div class="user-details">
+                                            <span class="user-name"><t t-esc="post['create_uid']"/></span>
+                                            <span class="post-date">
+                                                <t t-if="post['create_date']">
+                                                    <span t-esc="post['create_date']"/>
                                                 </t>
-                                                <t t-foreach="post['media']" t-as="media">
-                                                    <t t-if="media['type'] == 'image'">
-                                                        <!-- Render Image -->
-                                                        <img t-att-src="image_data_uri(media['image'].datas) if media['image'].datas else '/custom_web_kreator/static/src/course1.png'"
-                                                             class="post-image" alt="Post Image"
-                                                             style="height: auto !important;"/>
-                                                    </t>
-                                                </t>
-                                                <input type="hidden" name="post_id" class="cust-post-id"
-                                                       t-att-value="post['id']"/>
-                                                <div class="post-actions">
-                                                    <button class="btn like-btn cust-btn like-button-js"
-                                                            id="custLikebtn"
-                                                            t-att-data-post-id="post['id']">
-                                                        <i class="fa fa-thumbs-up like-btn-grey"
-                                                           t-att-class="'fa fa-thumbs-up liked' if post['is_liked'] else 'fa fa-thumbs-up like-btn-grey'"
-                                                           id="likeIcon"></i>
-                                                        Like
-                                                    </button>
-                                                    <!-- <button class="btn like-btn cust-btn" id="custLikebtn" t-att-data-post-id="post['id']">
-                                                        <i class="fa fa-thumbs-up like-btn-grey" id="likeIcon"></i> Like
-                                                    </button> -->
-                                                    <button class="btn comment-btn cust-btn" id="custCommentbtn"
-                                                            t-att-data-com-post-id="post['id']">
-                                                        <i class="fa fa-comment"></i>
-                                                        Comment
-                                                    </button>
-                                                    <button class="btn share-btn cust-btn share-btn-js"
-                                                            id="custSharebtn"
-                                                            t-att-data-share-post-id="post['id']">
-                                                        <i class="fa fa-share"></i>
-                                                        Share
-                                                    </button>
-                                                </div>
-                                                <div class="comment-section">
-                                                    <input type="text" class="comment-input comment-input-js"
-                                                           placeholder="Write a comment..."
-                                                           id="cust-btn-1" t-att-data-comment-post-id="post['id']"/>
-                                                    <div class="comment-list"
-                                                         t-att-id="'comment-list-' + str(post['id'])">
-                                                        <t t-foreach="post['comments']" t-as="comment">
-                                                            <div class="comment-container">
-                                                                <div class="comment-header" style="width: 100%;">
-                                                                    <img src="/custom_web_kreator/static/src/user1.png"
-                                                                         class="user-image comment-user-icon"/>
-                                                                    <div class="user-details comment-user"
-                                                                         style="width: 80%;max-width: 80%;">
-                                                                        <span class="user-name">
-                                                                            <t t-esc="comment['user']"/>
-                                                                        </span>
-                                                                        <span class="post-date">
-                                                                            <t t-esc="comment['date']"/>
-                                                                        </span>
-                                                                    </div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <p><t t-esc="post['message']"/></p>
+                                    <t t-if="post['video_url']">
+                                        <div class="media_iframe_video_container o-cust-1" style="text-align: center;">
+                                            <iframe class="w-100 rounded post-image" loading="lazy" frameborder="0" allowfullscreen="allowfullscreen" t-att-src="post['video_url']" style="border-radius: 1.1rem !important;"/>
+                                        </div>
+                                    </t>
+<t t-foreach="post['media']" t-as="media">
+    <t t-if="media['type'] == 'image'">
+        <!-- Render Image -->
+        <img t-att-src="image_data_uri(media['image'].datas) if media['image'].datas else '/custom_web_kreator/static/src/course1.png'" class="post-image" alt="Post Image" style="height: auto !important;"/>
+    </t>
+</t>
+                                    <input type="hidden" name="post_id" class="cust-post-id" t-att-value="post['id']"/>
+                                    <div class="post-actions">
+                                        <button class="btn like-btn cust-btn like-button-js" id="custLikebtn" t-att-data-post-id="post['id']">
+                                            <i class="fa fa-thumbs-up like-btn-grey" t-att-class="'fa fa-thumbs-up liked' if post['is_liked'] else 'fa fa-thumbs-up like-btn-grey'" id="likeIcon"/> Like
+                                        </button>
+                                        <!-- <button class="btn like-btn cust-btn" id="custLikebtn" t-att-data-post-id="post['id']">
+                                            <i class="fa fa-thumbs-up like-btn-grey" id="likeIcon"></i> Like
+                                        </button> -->
+                                        <button class="btn comment-btn cust-btn" id="custCommentbtn" t-att-data-com-post-id="post['id']">
+                                            <i class="fa fa-comment"/> Comment
+                                        </button>
+<!--                                        <button class="btn share-btn cust-btn share-btn-js" id="custSharebtn" t-att-data-share-post-id="post['id']">-->
+<!--                                            <i class="fa fa-share"/> Share-->
+<!--                                        </button>-->
+                                    </div>
+                                    <div class="comment-section">
+                                        <input type="text" class="comment-input comment-input-js" placeholder="Write a comment..." id="cust-btn-1" t-att-data-comment-post-id="post['id']"/>
+                                        <div class="comment-list" t-att-id="'comment-list-' + str(post['id'])">
+                                            <t t-foreach="post['comments']" t-as="comment">
+                                                <div class="comment-container row" t-att-data-comment-id="comment['id']">
+            <div class="comment-header" style="width: 100%;">
+                <img src="/custom_web_kreator/static/src/user1.png" class="user-image comment-user-icon"/>
+                <div class="user-details comment-user" style="width: 80%;max-width: 80%;">
+                    <span class="user-name"><t t-esc="comment['user']"/></span>
+                    <span class="post-date"><t t-esc="comment['date']"/></span>
+                </div>
 
-                                                                    <div class="comment-options"
-                                                                         style="width: 10%;max-width: 10%;">
-                                                                        <!-- Three Dots Button (Trigger for Dropdown) -->
-                                                                        <span class="three-dots"
-                                                                              t-att-data-comment-id="comment['id']">⋮
-                                                                        </span>
-                                                                        <!--<span class="three-dots">...</span>-->
+                <div class="comment-options" style="width: 10%;max-width: 10%;">
+                    <!-- Three Dots Button (Trigger for Dropdown) -->
+                    <span class="three-dots" t-att-data-comment-id="comment['id']">⋮</span>
+                    <!--<span class="three-dots">...</span>-->
+                
+                    <!-- Reply Dropdown Menu (Initially Hidden) -->
+                    <div class="reply-menu dropdown-menu" t-att-id="'reply-menu-' + str(comment['id'])" style="display: none;">
+                        <button class="reply-button dropdown-item reply-btn" t-att-data-comment-id="comment['id']">Reply</button>
+                        <button class="reply-button dropdown-item edit-btn" t-att-data-comment-id="comment['id']">Edit</button>
+                    </div>
+                </div>
+            </div>
 
-                                                                        <!-- Reply Dropdown Menu (Initially Hidden) -->
-                                                                        <div class="reply-menu dropdown-menu"
-                                                                             t-att-id="'reply-menu-' + str(comment['id'])"
-                                                                             style="display: none;">
-                                                                            <button class="reply-button dropdown-item reply-btn"
-                                                                                    t-att-data-comment-id="comment['id']">
-                                                                                Reply
-                                                                            </button>
-                                                                            <button class="reply-button dropdown-item edit-btn"
-                                                                                    t-att-data-comment-id="comment['id']">
-                                                                                Edit
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+            <div class="comment-details">
+                <t t-esc="comment['message']"/>
+            </div>
 
-                                                                <div class="comment-details">
-                                                                    <t t-esc="comment['message']"/>
-                                                                </div>
+            <!-- Reply Input (Initially Hidden) -->
+            <div class="reply-input-container" t-att-id="'reply-container-' + str(comment['id'])" style="display: none;">
+                <input type="text" class="reply-input comment-input-js" placeholder="Write a reply..." t-att-data-parent-id="comment['id']"/>
+            </div>
 
-                                                                <!-- Reply Input (Initially Hidden) -->
-                                                                <div class="reply-input-container"
-                                                                     t-att-id="'reply-container-' + str(comment['id'])"
-                                                                     style="display: none;">
-                                                                    <input type="text"
-                                                                           class="reply-input comment-input-js"
-                                                                           placeholder="Write a reply..."
-                                                                           t-att-data-parent-id="comment['id']"/>
-                                                                </div>
-
-                                                                <!-- Nested Replies (Recursive Call) -->
-                                                                <div class="replies" t-if="comment['replies']"
-                                                                     style="margin-left: 30px !important;">
-                                                                    <t t-foreach="comment['replies']" t-as="reply">
-                                                                        <t t-call="apg_social_media.partner_comment_template">
-                                                                            <t t-set="comment" t-value="reply"/>
-                                                                        </t>
-                                                                    </t>
-                                                                </div>
-                                                            </div>
-                                                        </t>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </t>
+            <!-- Nested Replies (Recursive Call) -->
+            <div class="replies" t-if="comment['replies']" style="margin-left: 30px !important;">
+                <t t-foreach="comment['replies']" t-as="reply">
+                    <t t-call="apg_social_media.partner_comment_template">
+                        <t t-set="comment" t-value="reply"/>
+                    </t>
+                </t>
+            </div>
+            </div>
+                                            </t>
+                                        </div>
                                     </div>
                                 </div>
+                            </t>
+                        </div>
+<script>
+    const userInput = document.getElementById('partner_type');
+    var userType = userInput.value
+    if(userType == 'partner'){
+        // Show the YouTube URL input when clicking the Video button
+        document.getElementById("video-upload").addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent form submission when clicking the button
+            const youtubeUrlInput = document.getElementById("youtube-url");
+            const videoUpload = document.getElementById("video-upload");
+        
+            // Toggle display of YouTube URL input
+            if (youtubeUrlInput.style.display === "none" || youtubeUrlInput.style.display === "") {
+                youtubeUrlInput.style.display = "block";
+                videoUpload.style.display = "none";
+                youtubeUrlInput.focus(); // Auto-focus for better UX
+            } else {
+                youtubeUrlInput.style.display = "none";
+            }
+        });
+        // Remove YouTube Thumbnail
+        document.getElementById("remove-thumbnail").addEventListener("click", function () {
+            const imagePreview = document.getElementById('imagePreview');
+            if (!imagePreview){
+                document.getElementById("uploadedPreview").style.display = "none";
+            }
+            this.style.display = "none";
+            document.getElementById("yt-thumbnail-img").src = "";
+            document.getElementById("yt-thumbnail-img").style.display = "none";
+            document.getElementById("youtube-url").value = ""; // Clear URL input
+        });
+    
+        document.getElementById("youtube-url").addEventListener("input", function () {
+            let url = this.value;
+            let videoId = "";
+    
+            // Extract YouTube Video ID
+            var match = url.match(/(?:v=|\/v\/|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+    
+            if (match) {  // Ensure match is not null
+                if (match.length &gt; 1) {  // Ensure it has the correct value
+                    videoId = match[1];
+                    var thumbnailUrl = "https://img.youtube.com/vi/" + videoId + "/hqdefault.jpg";
+                    // Show Thumbnail
+                    document.getElementById("yt-thumbnail-img").src = thumbnailUrl;
+                    document.getElementById("uploadedPreview").style.display = "flex";
+                    document.getElementById("yt-thumbnail-img").style.display = "block";
+                    document.getElementById("remove-thumbnail").style.display = "block";
+                }
+            } else {
+                document.getElementById("uploadedPreview").style.display = "none";
+            }
+        });
+        // Show uploaded image 
+        function previewFile(event) {
+            const file = event.target.files[0];
+            const previewContainer = document.getElementById('uploadedPreview');
+            const imagePreview = document.getElementById('imagePreview');
+            const docLink = document.getElementById('docLink');
+            const removePreview = document.getElementById("remove-preview");
 
-                            </div>
-                            <script>
-                                const userInput = document.getElementById('partner_type');
-                                var userType = userInput.value
-                                if(userType == 'partner'){
-                                // Show the YouTube URL input when clicking the Video button
-                                document.getElementById("video-upload").addEventListener("click", function (event) {
-                                event.preventDefault(); // Prevent form submission when clicking the button
-                                const youtubeUrlInput = document.getElementById("youtube-url");
-                                const videoUpload = document.getElementById("video-upload");
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const fileType = file.type;
 
-                                // Toggle display of YouTube URL input
-                                if (youtubeUrlInput.style.display === "none" || youtubeUrlInput.style.display === "") {
-                                youtubeUrlInput.style.display = "block";
-                                videoUpload.style.display = "none";
-                                youtubeUrlInput.focus(); // Auto-focus for better UX
-                                } else {
-                                youtubeUrlInput.style.display = "none";
-                                }
-                                });
-                                // Remove YouTube Thumbnail
-                                document.getElementById("remove-thumbnail").addEventListener("click", function () {
-                                const imagePreview = document.getElementById('imagePreview');
-                                if (!imagePreview){
-                                document.getElementById("uploadedPreview").style.display = "none";
-                                }
-                                this.style.display = "none";
-                                document.getElementById("yt-thumbnail-img").src = "";
-                                document.getElementById("yt-thumbnail-img").style.display = "none";
-                                document.getElementById("youtube-url").value = ""; // Clear URL input
-                                });
+                    // If it's an image, show it
+                    if (fileType.startsWith("image/")) {
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.display = "block";
+                        removePreview.style.display = "block";
+                    }    
+                };
+                reader.readAsDataURL(file);
+                previewContainer.style.display = "flex";
+            }
+        }
+        // Remove Image Preview
+        document.getElementById("remove-preview").addEventListener("click", function () {
+            const ytThumbnailImg = document.getElementById('yt-thumbnail-img');
+            if (!ytThumbnailImg){
+                document.getElementById("uploadedPreview").style.display = "none";
+            }
+            this.style.display = "none";
+            document.getElementById("imagePreview").src = "";
+            document.getElementById("imagePreview").style.display = "none";
+            document.getElementById("photo-upload").value = ""; // Clear URL input
+        });
+    }
 
-                                document.getElementById("youtube-url").addEventListener("input", function () {
-                                let url = this.value;
-                                let videoId = "";
+    document.addEventListener('DOMContentLoaded', function () {
+        <!-- Like post code-->
+        document.querySelectorAll('.like-button-js').forEach(button =&gt; {
+            button.addEventListener('click', function () {
+                const post_id = this.getAttribute('data-post-id'); // Get post ID from clicked button
+                const icon = this.querySelector('#likeIcon'); // Get icon within button
 
-                                // Extract YouTube Video ID
-                                var match = url.match(/(?:v=|\/v\/|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+                if (!icon) {
+                    console.error("Like icon not found!");
+                    return;
+                }
 
-                                if (match) { // Ensure match is not null
-                                if (match.length &gt; 1) { // Ensure it has the correct value
-                                videoId = match[1];
-                                var thumbnailUrl = "https://img.youtube.com/vi/" + videoId + "/hqdefault.jpg";
-                                // Show Thumbnail
-                                document.getElementById("yt-thumbnail-img").src = thumbnailUrl;
-                                document.getElementById("uploadedPreview").style.display = "flex";
-                                document.getElementById("yt-thumbnail-img").style.display = "block";
-                                document.getElementById("remove-thumbnail").style.display = "block";
-                                }
-                                } else {
-                                document.getElementById("uploadedPreview").style.display = "none";
-                                }
-                                });
-                                // Show uploaded image
-                                function previewFile(event) {
-                                const file = event.target.files[0];
-                                const previewContainer = document.getElementById('uploadedPreview');
-                                const imagePreview = document.getElementById('imagePreview');
-                                const docLink = document.getElementById('docLink');
-                                const removePreview = document.getElementById("remove-preview");
-
-                                if (file) {
-                                const reader = new FileReader();
-                                reader.onload = function (e) {
-                                const fileType = file.type;
-
-                                // If it's an image, show it
-                                if (fileType.startsWith("image/")) {
-                                imagePreview.src = e.target.result;
-                                imagePreview.style.display = "block";
-                                removePreview.style.display = "block";
-                                }
-                                };
-                                reader.readAsDataURL(file);
-                                previewContainer.style.display = "flex";
-                                }
-                                }
-                                // Remove Image Preview
-                                document.getElementById("remove-preview").addEventListener("click", function () {
-                                const ytThumbnailImg = document.getElementById('yt-thumbnail-img');
-                                if (!ytThumbnailImg){
-                                document.getElementById("uploadedPreview").style.display = "none";
-                                }
-                                this.style.display = "none";
-                                document.getElementById("imagePreview").src = "";
-                                document.getElementById("imagePreview").style.display = "none";
-                                document.getElementById("photo-upload").value = ""; // Clear URL input
-                                });
-                                }
-
-                                <!-- Create comment and Reply view -->
-                                function createCommentElement(comment) {
-                                const commentContainer = document.createElement("div");
-                                commentContainer.classList.add("comment-container");
-                                // Create comment header
-                                const commentHeader = document.createElement("div");
-                                commentHeader.classList.add("comment-header");
-                                commentHeader.innerHTML = `
-                                <div class="col-md-1">
-                                    <img src="/custom_web_kreator/static/src/user1.png"
-                                         class="user-image comment-user-icon"/>
-                                </div>
-                                <div class="user-details comment-user col-md-9">
-                                    <span class="user-name">${comment.user}</span>
-                                    <span class="post-date">${comment.date}</span>
-                                </div>
-                                <div class="comment-options col-md-2">
-                                    <span class="three-dots" data-comment-id="${comment.id}">⋮</span>
-                                    <div class="reply-menu dropdown-menu" id="reply-menu-${comment.id}"
-                                         style="display: none;">
-                                        <button class="reply-button dropdown-item reply-btn"
-                                                data-comment-id="${comment.id}">Reply
-                                        </button>
-                                        <button class="reply-button dropdown-item edit-btn"
-                                                data-comment-id="${comment.id}">Edit
-                                        </button>
-                                    </div>
-                                </div>
-                                `;
-
-                                // Create comment details
-                                const commentDetails = document.createElement("div");
-                                commentDetails.classList.add("comment-details");
-                                commentDetails.textContent = comment.message;
-
-                                // Append header and details to container
-                                commentContainer.appendChild(commentHeader);
-                                commentContainer.appendChild(commentDetails);
-
-                                // Create reply input field
-                                const replyInputContainer = document.createElement("div");
-                                replyInputContainer.classList.add("reply-input-container");
-                                replyInputContainer.id = `reply-container-${comment.id}`;
-                                replyInputContainer.style.display = "none"; // Hide initially
-                                replyInputContainer.innerHTML = `
-                                <input type="text" class="reply-input comment-input-js" placeholder="Write a reply..."
-                                       data-parent-id="${comment.id}"/>
-                                `;
-                                commentContainer.appendChild(replyInputContainer);
-
-                                // If the comment has replies, process them recursively
-                                if (comment.replies){
-                                if (comment.replies.length &gt; 0) {
-                                const repliesContainer = document.createElement("div");
-                                repliesContainer.classList.add("replies");
-                                repliesContainer.style.marginLeft = "30px";
-
-                                comment.replies.forEach(reply =&gt; {
-                                const replyElement = createCommentElement(reply); // Recursive call
-                                repliesContainer.appendChild(replyElement);
-                                });
-
-                                commentContainer.appendChild(repliesContainer);
-                                }
-                                }
-
-                                // Attach event listener to three-dots menu dynamically
-                                attachThreeDotsListener(commentContainer);
-                                return commentContainer;
-                                }
-
-                                /**
-                                * Attach event listeners to three-dot menu dynamically
-                                */
-                                function attachThreeDotsListener(commentElement) {
-                                const threeDots = commentElement.querySelector('.three-dots');
-                                if (threeDots) {
-                                threeDots.addEventListener('click', function () {
-                                const commentId = this.getAttribute('data-comment-id');
-                                const menu = document.getElementById(`reply-menu-${commentId}`);
-                                if (menu) {
-                                menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
-                                console.log("Updated Display Style:", menu.style.display);
-                                }
-                                });
-                                }
-                                }
-
-
-                                document.addEventListener('DOMContentLoaded', function () {
-                                document.querySelectorAll('.like-button-js').forEach(button =&gt; {
-                                button.addEventListener('click', function () {
-                                const post_id = this.getAttribute('data-post-id'); // Get post ID from clicked button
-                                const icon = this.querySelector('#likeIcon'); // Get icon within button
-
-                                if (!icon) {
-                                console.error("Like icon not found!");
-                                return;
-                                }
-
-                                if (icon.classList.contains('liked')) {
-                                try {
-                                fetch('/post/unlike', {
-                                method: "POST",
-                                headers: {
+                if (icon.classList.contains('liked')) {
+                    try {
+                        fetch('/post/unlike', {
+                            method: "POST",
+                            headers: {
                                 "Content-Type": "application/json",
-                                },
-                                'body': JSON.stringify({'params': {'post_id': post_id}})
-                                })
-                                .then(response =&gt; response.json())
-                                .then(data =&gt; {
-
-                                if (data['result'].success == true) {
-
+                            },
+                            'body': JSON.stringify({'params': {'post_id': post_id}})
+                        })
+                        .then(response =&gt; response.json())
+                        .then(data =&gt; {
+                            
+                            if (data['result'].success == true) {
+                                
                                 icon.classList.remove('liked');
-                                } else {
+                            } else {
                                 alert('Error processing Like action.');
-                                }
-                                })
-                                } catch (error) {
-                                console.error('Error:', error);
-                                alert('Failed to Unlike post.');
-                                }
-
-                                } else {
-                                try {
-                                fetch('/post/like', {
-                                method: "POST",
-                                headers: {
+                            }
+                        })
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('Failed to Unlike post.');
+                    }
+                    
+                } else {
+                    try {
+                        fetch('/post/like', {
+                            method: "POST",
+                            headers: {
                                 "Content-Type": "application/json",
-                                },
-                                'body': JSON.stringify({'params': {'post_id': post_id}})
-                                })
-                                .then(response =&gt; response.json())
-                                .then(data =&gt; {
-
-                                if (data['result'].success == true) {
-
+                            },
+                            'body': JSON.stringify({'params': {'post_id': post_id}})
+                        })
+                        .then(response =&gt; response.json())
+                        .then(data =&gt; {
+                            
+                            if (data['result'].success == true) {
+                                
                                 icon.classList.add('liked');
-                                } else {
+                            } else {
                                 alert('Error processing Like action.');
-                                }
-                                })
-                                } catch (error) {
-                                console.error('Error:', error);
-                                alert('Failed to Like post.');
-                                }
-                                }
-                                });
-                                });
-                                document.querySelectorAll('.comment-input-js').forEach(input =&gt; {
-                                input.addEventListener('keypress', function (event) {
-                                if (event.key === "Enter") {
-                                event.preventDefault(); // Prevent form submission
+                            }
+                        })
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('Failed to Like post.');
+                    }
+                }
+            });
+        });
 
-                                const commentText = this.value.trim();
-                                const postId = this.getAttribute('data-comment-post-id'); // Get post ID
-                                const parentId = this.getAttribute('data-parent-id'); // Get Parent ID
+        // Function to create comment and reply elements
+        function createCommentElement(comment) {
+            console.log("Creating comment element...",comment);
 
-                                if (!commentText) {
-                                alert("Comment cannot be empty!");
-                                return;
-                                }
+            const commentContainer = document.createElement("div");
+            commentContainer.classList.add("comment-container", "row");
+            commentContainer.dataset.commentId = comment.id;
+            console.log("=======0======",commentContainer);
+            // Comment Header
+            const commentHeader = document.createElement("div");
+            commentHeader.classList.add("comment-header");
+            commentHeader.innerHTML = `
+                <div class="col-md-1">
+                    <img src="/custom_web_kreator/static/src/user1.png" class="user-image comment-user-icon"/>
+                </div>
+                <div class="user-details comment-user col-md-9">
+                    <span class="user-name">${comment.user}</span>
+                    <span class="post-date">${comment.date}</span>
+                </div>
+                <div class="comment-options col-md-2">
+                    <span class="three-dots" data-comment-id="${comment.id}">⋮</span>
+                    <div class="reply-menu dropdown-menu" id="reply-menu-${comment.id}" style="display: none;">
+                        <button class="reply-button dropdown-item" data-comment-id="${comment.id}">Reply</button>
+                        <button class="edit-button dropdown-item" data-comment-id="${comment.id}">Edit</button>
+                    </div>
+                </div>
+            `;
+            console.log("=======1======",commentHeader);
+            // Comment Details
+            const commentDetails = document.createElement("div");
+            commentDetails.classList.add("comment-details");
+            commentDetails.textContent = comment.message;
+            console.log("=======2======",commentDetails);
+            // Reply Input Box (Initially Hidden)
+            const replyInputContainer = document.createElement("div");
+            replyInputContainer.classList.add("reply-input-container");
+            replyInputContainer.id = `reply-container-${comment.id}`;
+            replyInputContainer.style.display = "none";
+            console.log("=======3======",replyInputContainer);
+            replyInputContainer.innerHTML = `
+                <input type="text" class="reply-input comment-input-js" placeholder="Write a reply..." data-parent-id="${comment.id}"/>
+            `;
 
-                                fetch('/post/comment', { // Adjust this endpoint based on your controller route
-                                method: "POST",
-                                headers: {
-                                "Content-Type": "application/json",
-                                },
-                                body: JSON.stringify({
-                                params: {
+            // Replies Container
+            const repliesContainer = document.createElement("div");
+            repliesContainer.classList.add("replies");
+            repliesContainer.style.marginLeft = "30px";
+            console.log("=======4======",repliesContainer);
+            if (comment.replies) {
+                console.log("=======4.1======",comment.replies);
+                if (comment.replies.length > 0) {
+                    console.log("=======4.2======");
+                    comment.replies.forEach(reply => {
+                        const replyElement = createCommentElement(reply);
+                        repliesContainer.appendChild(replyElement);
+                        console.log("=======4.3======",replyElement);
+                    });
+                }
+            }
+
+            // Append elements to comment container
+            commentContainer.appendChild(commentHeader);
+            commentContainer.appendChild(commentDetails);
+            commentContainer.appendChild(replyInputContainer);
+            commentContainer.appendChild(repliesContainer);
+            console.log("=======commentContainer======",commentContainer);
+            return commentContainer; // Return the created element
+        }
+
+        // Global Event Listener for Comment Submission (New and Reply Comments)
+        document.addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                const input = event.target;
+                if (input.classList.contains("comment-input-js")) {
+                    event.preventDefault();
+
+                    const commentText = input.value.trim();
+                    const postId = input.getAttribute("data-comment-post-id"); // Post ID for new comments
+                    const parentId = input.getAttribute("data-parent-id"); // Parent ID for replies
+
+                    if (!commentText) {
+                        alert("Comment cannot be empty!");
+                        return;
+                    }
+
+                    fetch('/post/comment', {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            params: {
                                 post_id: postId,
                                 comment: commentText,
                                 parent_id: parentId
+                            }
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.result.success) {
+                            input.value = ""; // Clear input after posting
+
+                            // Create new comment element
+                            console.log("=======data.result.comments======",data.result.comments);
+                            const newComment = createCommentElement(data.result.comments[0]); 
+                            console.log("=======newComment======",newComment);
+                            console.log("=======5======",parentId);
+                            if (parentId) {
+                                // Append reply inside the parent comment's reply section
+                                const parentComment = document.querySelector(`[data-comment-id="${parentId}"]`);
+                                console.log("=======6======",parentComment);
+                                if (parentComment) {
+                                    const repliesContainer = parentComment.querySelector(".replies");
+                                    console.log("=======7======",repliesContainer);
+                                    console.log("=======8======",newComment);
+                                    repliesContainer.appendChild(newComment);
                                 }
-                                })
-                                })
-                                .then(response =&gt; response.json())
-                                .then(data =&gt; {
-                                if (data['result'].success) {
-                                input.value = ""; // Clear input after posting
-                                const newComment = createCommentElement(data['result']['comments'][0]); // Create new
-                                comment
-                                if (parentId) {
-                                // If it's a reply, append it inside the parent's reply section
-                                const parentReplyContainer = document.getElementById(`reply-container-${parentId}`);
-                                if (parentReplyContainer) {
-                                parentReplyContainer.style.display = "block"; // Show replies section
-                                parentReplyContainer.appendChild(newComment);
-                                }
-                                } else {
-                                // If it's a new comment, append it to the main comment list
+                            } else {
+                                // Append new comment to main comment list
                                 const commentList = document.getElementById(`comment-list-${postId}`);
                                 if (commentList) {
-                                commentList.appendChild(newComment);
+                                    commentList.appendChild(newComment);
                                 }
-                                }
-                                } else {
-                                alert("Failed to post comment.");
-                                }
-                                })
-                                .catch(error =&gt; {
-                                console.error('Error:', error);
-                                alert("Error posting comment.");
-                                });
-                                }
-                                });
-                                });
-                                document.querySelectorAll('.share-btn-js').forEach(button =&gt; {
-                                button.addEventListener('click', function () {
-                                alert("Share feature is disabled");
-                                });
-                                });
+                            }
+                        } else {
+                            alert("Failed to post comment.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert("Error posting comment.");
+                    });
+                }
+            }
+        });
 
-                                // Toggle reply dropdown menu
-                                document.querySelectorAll(".three-dots").forEach(dots =&gt; {
-                                dots.addEventListener("click", function (event) {
-                                event.stopPropagation(); // Prevent body click from closing immediately
-                                const commentId = this.getAttribute("data-comment-id");
-                                const replyMenu = document.getElementById("reply-menu-" + commentId);
+        // Event Delegation for Three-Dots Menu and Reply Button
+        document.addEventListener("click", function (event) {
+            const target = event.target;
 
-                                // Hide all other open dropdowns
-                                document.querySelectorAll(".reply-menu").forEach(menu =&gt; {
-                                if (menu !== replyMenu) {
-                                menu.style.display = "none";
-                                }
-                                });
+            // Handle Three-Dots Click
+            if (target.classList.contains("three-dots")) {
+                event.stopPropagation();
+                const commentId = target.getAttribute("data-comment-id");
+                const replyMenu = document.getElementById(`reply-menu-${commentId}`);
 
-                                // Toggle current reply menu
-                                replyMenu.style.display = (replyMenu.style.display === "none" || replyMenu.style.display
-                                === "") ? "block" :
-                                "none";
-                                });
-                                });
+                if (replyMenu) {
+                    // Hide other menus before showing the selected one
+                    document.querySelectorAll(".reply-menu").forEach(menu => {
+                        if (menu !== replyMenu) {
+                            menu.style.display = "none";
+                        }
+                    });
 
-                                // Show reply input box when clicking "Reply"
-                                document.querySelectorAll(".reply-button").forEach(button =&gt; {
-                                button.addEventListener("click", function (event) {
-                                event.stopPropagation(); // Prevent body click from closing dropdown
-                                const commentId = this.getAttribute("data-comment-id");
-                                const replyInput = document.getElementById("reply-container-" + commentId);
-                                replyInput.style.display = "block"; // Show the reply input box
+                    replyMenu.style.display = replyMenu.style.display === "none" ? "block" : "none";
+                }
+            }
 
-                                // Hide the dropdown menu
-                                this.closest(".reply-menu").style.display = "none";
-                                });
-                                });
+            // Handle Reply Button Click
+            if (target.classList.contains("reply-button")) {
+                const commentId = target.getAttribute("data-comment-id");
+                const replyContainer = document.getElementById(`reply-container-${commentId}`);
 
-                                // Hide dropdown menu when clicking outside
-                                document.addEventListener("click", function () {
-                                document.querySelectorAll(".reply-menu").forEach(menu =&gt; {
-                                menu.style.display = "none";
-                                });
-                                });
-                                });
-                            </script>
-                        </main>
+                if (replyContainer) {
+                    replyContainer.style.display = "block";
+                    replyContainer.querySelector(".reply-input").focus(); // Focus input for convenience
+                }
+
+                // Hide the dropdown menu
+                const replyMenu = document.getElementById(`reply-menu-${commentId}`);
+                if (replyMenu) {
+                    replyMenu.style.display = "none";
+                }
+            }
+        });
+    
+        <!-- Share post code-->
+        document.querySelectorAll('.share-btn-js').forEach(button =&gt; {
+            button.addEventListener('click', function () {
+                alert("Share feature is disabled");
+            });
+        });
+    });
+</script>
                     </div>
-
-                    <!-- External Script -->
-                    <script src="/custom_web_kreator/static/src/js/script.js"></script>
-                    <!-- bootstrap script -->
-                    <script
-                            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-                            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-                            crossorigin="anonymous"
-                    ></script>
-                </div>
-            </body>
+                </body>
+                <xpath expr="." position="inside">
+                    <!-- Include jQuery -->
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"/>
+                    <script type="text/javascript" src="/apg_js/static/src/js/menu.js"/>
+                    <link rel="stylesheet" href="/apg_js/static/src/scss/menu.css"/> 
+                    <link rel="stylesheet" href="/apg_social_media/static/src/scss/social.css"/>
+                </xpath>
         </template>
     </data>
 </odoo>

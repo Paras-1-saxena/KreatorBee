@@ -18,7 +18,7 @@ from odoo.service import security
 from odoo.tools.translate import _
 
 class ReferralController(http.Controller):
-    @http.route('/nreferral', type='http', auth='public', website=True)
+    @http.route('/creator/referral', type='http', auth='public', website=True)
     def nreferral_page(self, **kwargs):
         user_id = request.env.user
         partner_id = user_id.partner_id
@@ -58,7 +58,7 @@ class ReferralController(http.Controller):
         # Render the data page template
         return http.request.render('apg_course_referral.nreferral_link_page', values)
 
-    @http.route('/partner-referral', type='http', auth='public', website=True)
+    @http.route('/partner/referral', type='http', auth='public', website=True)
     def partner_referral(self, **kwargs):
         user_id = request.env.user
         partner_id = user_id.partner_id
@@ -165,7 +165,7 @@ class ReferralController(http.Controller):
                 'partner_id': partner.id,
                 'referral_id': referral_id.id,
                 })
-        return request.redirect('/choose-product')
+        return request.redirect('/partner/product')
 
 class WebsiteSale(payment_portal.PaymentPortal):
     @route(['/shop/cart'], type='http', auth="public", website=True, sitemap=False)

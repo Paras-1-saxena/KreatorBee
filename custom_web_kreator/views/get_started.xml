@@ -185,10 +185,10 @@
                     </div>
                     <ul class="sidebar-menu">
                         <li><a href="/" class="active"><i class="fa fa-square-poll-vertical"></i> Get Started</a></li>
-                        <li><a href="/master_income_data"><i class="fa fa-chart-bar"></i> Sales</a></li>
-                        <li><a href="/nmy-courses"><i class="fa fa-layer-group"></i> Products</a></li>
+                        <li><a href="/creator/income"><i class="fa fa-chart-bar"></i> Sales</a></li>
+                        <li><a href="/creator/my-courses"><i class="fa fa-layer-group"></i> Products</a></li>
                         <li><a href="/connect-partner"><i class="fa fa-arrows-turn-to-dots"></i> Connect with Partner</a></li>
-                        <li><a href="/customer"><i class="fa fa-users"></i> Customer</a></li>
+                        <li><a href="/customer/mycourses"><i class="fa fa-users"></i> Customer</a></li>
                         <li><a href="/bee-partner"><i class="fa fa-rocket"></i> Become A Bee Partner</a></li>
                     </ul>
                 </div>

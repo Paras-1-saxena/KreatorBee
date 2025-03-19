@@ -8,3 +8,4 @@ access_partner_commission_line_user,access.partner.commission.line.user,model_pa
 access_direct_commission_line_user,access.direct.commission.line.user,model_direct_commission_line,base.group_user,1,1,1,1
 access_promotional_material_user,access.promotional.material.user,model_slide_channel_promotional_material,base.group_user,1,1,1,1
 access_google_drive_link_user,access.google.drive.link.user,model_slide_channel_google_drive_link,base.group_user,1,1,1,1
+access_slide_video_config_user,slide.video.config.user,model_slide_video_config,base.group_user,1,1,1,1

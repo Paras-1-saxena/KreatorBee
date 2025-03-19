@@ -105,7 +105,6 @@ class SlideChannel(models.Model):
     ], string="Is This Certificate Course?")
     issued_by = fields.Char(string="Certificate Issued By?")
     upload_signature = fields.Binary(string="Upload Signature")
-    landing_page_id = fields.Selection(selection=[('1', 'Page 1'), ('2', 'page 2'), ('3', 'page 3'), ('4', 'page 4'), ('5', 'page 5')])
 
     #Course Thumbnail
     # browse_file = fields.Binary(string="Course Thumbnail")

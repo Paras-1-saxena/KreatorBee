@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_blog_post_form_inherit" model="ir.ui.view">
+        <field name="name">blog.post.form.inherit.destination_url</field>
+        <field name="model">blog.post</field>
+        <field name="inherit_id" ref="website_blog.view_blog_post_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='website_meta_keywords']" position="after">
+                <field name="website_url" readonly="1"/>  <!-- Add website URL field (readonly) -->
+                <field name="destination_url"/>
+            </xpath>
+        </field>
+    </record>
+
+<!--    seo_url_redirect_views-->
+
+    <!-- Tree View -->
+    <record id="view_blog_post_tree_redirect" model="ir.ui.view">
+        <field name="name">blog.post.tree.redirect</field>
+        <field name="model">blog.post</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="website_url"/>
+                <field name="destination_url"/>
+            </list>
+        </field>
+    </record>
+
+
+<!--    &lt;!&ndash; Form View &ndash;&gt;-->
+<!--    <record id="view_blog_post_form_redirect" model="ir.ui.view">-->
+<!--        <field name="name">blog.post.form.redirect</field>-->
+<!--        <field name="model">blog.post</field>-->
+<!--        <field name="inherit_id" ref="website_blog.view_blog_post_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='website_meta_keywords']" position="after">-->
+<!--                <field name="website_url" readonly="1"/>  &lt;!&ndash; Add website URL field (readonly) &ndash;&gt;-->
+<!--                <field name="destination_url"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+</odoo>

@@ -10,7 +10,7 @@ const signInDiv = document.querySelector('#o_signin_div');
 const otpVerifiedDiv = document.querySelector('#div_otp_verified');
 // const confirmButton = document.querySelector('#confirm_otp');
 const mobileNo = document.querySelector('#phone');
-// const emailField = document.querySelector('#login');
+const emailField = document.querySelector('#login');
 // const submitButton = document.querySelector('#submit_button');
 
 // if (otpField) otpField.style.display = 'none';
@@ -28,6 +28,7 @@ publicWidget.registry.custSignup = publicWidget.Widget.extend({
      */
     generate_otp: async function () {
         const mobileValue = mobileNo.value;
+        const emailValue = emailField.value;
         const phonePattern = /^\d{10}$/;
 
         if (!phonePattern.test(mobileValue)) {
@@ -40,6 +41,7 @@ publicWidget.registry.custSignup = publicWidget.Widget.extend({
             const url = `/generate/otp`;
             const params = {
                 'mobile' : mobileValue,
+                'email' : emailValue,
             };
             const response = await rpc(url, params);
             if (response['true'] == true) {
@@ -48,7 +50,7 @@ publicWidget.registry.custSignup = publicWidget.Widget.extend({
                 signInDiv.classList.add("o-cust-hide")
                 signUpDiv.classList.add("o-cust-hide")
                 otpDiv.style.display = 'block';
-                mobileNo.readOnly = true;
+                mobileNo.readOnly = false;
                 // alert('OTP sent to your phone. Please check.');
 
                 // Show OTP input and confirm button
@@ -67,15 +69,16 @@ publicWidget.registry.custSignup = publicWidget.Widget.extend({
             alert('An error occurred while generating OTP. Please try again later.');
         }
     },
-
+ 
     confirm_otp: async function () {
         let otpCode = '';
         const phoneValue = mobileNo.value;
-        allOtpInputs.forEach(input => {
-            if (input.value.trim() === '') {
-                alert('Please enter the OTP.');
-            }
-        });
+        const isEmpty = Array.from(allOtpInputs).some(input => input.value.trim() === '');
+        if (isEmpty) {
+            alert('Please enter the OTP.');
+            return;
+        }
+
         allOtpInputs.forEach(input => {
             otpCode += input.value.trim(); // Trim to remove any accidental whitespace
         });

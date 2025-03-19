@@ -20,7 +20,7 @@ import pytz
 import re
 
 class ForumSection(http.Controller):
-    @http.route('/forumsection', type='http', auth='public', website=True)
+    @http.route('/creator/community', type='http', auth='public', website=True)
     def forumpost(self, **kwargs):
         pattern = r'(?:v=|/v/|youtu\.be/|embed/)([a-zA-Z0-9_-]{11})'
         post_obj = request.env['apg.social.post']
@@ -80,7 +80,7 @@ class ForumSection(http.Controller):
         return http.request.render('apg_social_media.fbpostforum', values)
 
     # Partner Community Menu URLS START
-    @http.route('/forumsection-partner', type='http', auth='public', website=True)
+    @http.route('/partner/community/partner', type='http', auth='public', website=True)
     def partner_forumpost(self, **kwargs):
         pattern = r'(?:v=|/v/|youtu\.be/|embed/)([a-zA-Z0-9_-]{11})'
         post_obj = request.env['apg.social.post']
@@ -139,7 +139,7 @@ class ForumSection(http.Controller):
         values = {'post_ids': post_data,'user_type':user_type, 'partner_type':partner_type}
         return http.request.render('apg_social_media.fbpostforum_partner', values)
 
-    @http.route('/forumsection-creator', type='http', auth='public', website=True)
+    @http.route('/partner/community/creator', type='http', auth='public', website=True)
     def creator_forumpost(self, **kwargs):
         pattern = r'(?:v=|/v/|youtu\.be/|embed/)([a-zA-Z0-9_-]{11})'
         post_obj = request.env['apg.social.post']
@@ -198,7 +198,7 @@ class ForumSection(http.Controller):
         values = {'post_ids': post_data,'user_type':user_type, 'partner_type':partner_type}
         return http.request.render('apg_social_media.fbpostforum_partner', values)
 
-    @http.route('/forumsection-company', type='http', auth='public', website=True)
+    @http.route('/partner/community/updates', type='http', auth='public', website=True)
     def company_forumpost(self, **kwargs):
         pattern = r'(?:v=|/v/|youtu\.be/|embed/)([a-zA-Z0-9_-]{11})'
         post_obj = request.env['apg.social.post']
@@ -260,7 +260,7 @@ class ForumSection(http.Controller):
     # Partner Community Menu URLS END
 
     # Customer Community Menu URLS END
-    @http.route('/forumsection-customer', type='http', auth='public', website=True)
+    @http.route('/customer/updates', type='http', auth='public', website=True)
     def customer_forumpost(self, **kwargs):
         pattern = r'(?:v=|/v/|youtu\.be/|embed/)([a-zA-Z0-9_-]{11})'
         post_obj = request.env['apg.social.post']
@@ -415,7 +415,7 @@ class ForumSection(http.Controller):
         partner_type = 'creator'
         message = kwargs.get('message')
         post_id = self.post_create(post_obj,user_id,imageUploadFile,videoURL,partner_type,message)
-        return request.redirect('/forumsection')
+        return request.redirect('/creator/community')
 
     @http.route('/post-create-partner', type='http', auth='public', website=True)
     def post_create_partner(self, **kwargs):
@@ -428,7 +428,7 @@ class ForumSection(http.Controller):
         partner_type = 'partner'
         message = kwargs.get('message')
         post_id = self.post_create(post_obj,user_id,imageUploadFile,videoURL,partner_type,message)
-        return request.redirect('/forumsection-partner')
+        return request.redirect('/partner/community/partner')
 
     def post_create(self,post_obj=False,user_id=False, imageUploadFile=False, videoURL=False, partner_type=False, message=False, **kwargs):
         post_id = False

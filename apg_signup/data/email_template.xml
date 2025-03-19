@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+<!--        Template for "Under Review" State-->
+        <record id="email_template_kyc_under_review" model="mail.template">
+            <field name="name">KYC Under Review Notification</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="email_from">info@kreatorbee.in</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="subject">KYC Submission Under Review</field>
+            <field name="body_html"><![CDATA[
+                <p>Dear <t t-out="object.name"/>,</p>
+                <p>Your KYC form has been submitted and is now under review. Our team will contact you soon.</p>
+                <p>Thank you.</p>
+            ]]></field>
+        </record>
+
+<!--        Template for "Approved" State-->
+        <record id="email_template_kyc_approved" model="mail.template">
+            <field name="name">KYC Approved Notification</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="email_from">info@kreatorbee.in</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="subject">KYC Approved</field>
+            <field name="body_html"><![CDATA[
+                <p>Dear <t t-out="object.name"/>,</p>
+                <p>We are happy to inform you that your KYC details have been approved.</p>
+                <p>Thank you.</p>
+            ]]></field>
+        </record>
+
+<!--        Template for "Rejected" State-->
+        <record id="email_template_kyc_rejected" model="mail.template">
+            <field name="name">KYC Rejected Notification</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="email_from">info@kreatorbee.in</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="subject">KYC Rejected</field>
+            <field name="body_html"><![CDATA[
+                <p>Dear <t t-out="object.name"/>,</p>
+                <p>We are sorry to inform you that your KYC details have been rejected.</p>
+                <p>Thank you.</p>
+            ]]></field>
+        </record>
+    </data>
+</odoo>

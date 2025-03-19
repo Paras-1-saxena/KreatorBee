@@ -5,10 +5,10 @@
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet" />
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-                    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-                    crossorigin="anonymous"></script>
+<!--            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />-->
+<!--            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"-->
+<!--                    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"-->
+<!--                    crossorigin="anonymous"></script>-->
             <body>
                 <!-- Page-Specific Styles -->
                 <style>
@@ -308,16 +308,16 @@ button {
                     </div>
                     <div class="menu-links">
                        
-                        <a href="/partner-training" >
+                        <a href="/partner/training" >
                             <i class="fa fa-chalkboard-teacher"></i> Training
                         </a>
-                        <a href="/target">
+                        <a href="/partner/target">
                             <i class="fa fa-bullseye"></i> Targets
                         </a>
-                        <a href="offers-coupon" >
+                        <a href="/partner/offers" >
                             <i class="fa fa-cubes"></i> Offers
                         </a>
-                        <a href="/npromote" class="active">
+                        <a href="/partner/promotional-material" class="active">
                             <i class="fa fa-layer-group"></i> Promotional  Material
                         </a>
                        
@@ -329,18 +329,8 @@ button {
                 <t t-call="custom_web_kreator.side_menu"/>
                 <!-- Main Content -->
                 <div class="main-content">
-            
                     <!-- Top Block -->
-                    <div class="row align-items-center bg-white mb-4 border1">
-                        <div class="col-md-10 d-flex align-items-center">
-                            <img src="/custom_web_kreator/static/src/user1.png" alt="User Image" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 15px;" />
-                            <h5 class="p-3">Welcome, <t t-esc="request.env.user.name"/></h5>
-                            <!-- <h6>Let&#39;s get started with your journey</h6> -->
-                        </div>
-                        <div class="col-md-2  float-end text-end">
-                            <h6>Watch Tutorial</h6>
-                        </div>
-                    </div>
+                    <t t-call="custom_web_kreator.user_block" />
 
                     <!-- Tab and Date Picker Section -->
                     

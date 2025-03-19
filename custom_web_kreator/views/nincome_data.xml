@@ -202,19 +202,19 @@
                         <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
                     </div>
                     <div class="menu-links">
-                        <a href="/master_income_data" class="active">
+                        <a href="/creator/income" class="active">
                             <i class="fa fa-chart-bar"></i> Income
                         </a>
                         <a href="#">
                             <i class="fa fa-bullhorn"></i> Leads
                         </a>
-                        <a href="/nkyc">
+                        <a href="/creator/kyc">
                             <i class="fa fa-id-card"></i> KYC
                         </a>
-                        <a href="/nreferral">
+                        <a href="/creator/referral">
                             <i class="fa fa-link"></i> Links
                         </a>
-                        <a href="/nleaderboard">
+                        <a href="/creator/leaderboard">
                             <i class="fa fa-medal"></i> Leaderboard
                         </a>
                     </div>
@@ -226,9 +226,9 @@
                 <div class="side-menu">
                     <ul>
                         <li><a href="/master"><i class="fa fa-home"></i> Get Started</a></li>
-                        <li><a href="/master_income_data" class="active"><i class="fa fa-chart-line"></i> Sales</a></li>
-                        <li><a href="/nmy-courses"><i class="fa fa-box"></i> Products</a></li>
-                        <li><a href="/offers"><i class="fa fa-users"></i> Connect with Partner</a></li>
+                        <li><a href="/creator/income" class="active"><i class="fa fa-chart-line"></i> Sales</a></li>
+                        <li><a href="/creator/my-courses"><i class="fa fa-box"></i> Products</a></li>
+                        <li><a href="/creator/offers"><i class="fa fa-users"></i> Connect with Partner</a></li>
                         <li><a href="#"><i class="fa fa-address-book"></i> Customer</a></li>
                         <li><a href="#"><i class="fa fa-rocket"></i> Become A Bee Partner</a></li>
                     </ul>
@@ -236,7 +236,7 @@
 
                 <!-- Main Content -->
                 <div class="main-content">
-                        <!-- <div class="dashboard-header">Financial Report</div> -->
+                        <div class="dashboard-header">Financial Report</div>
 
                         <!-- Statistics Section -->
                         <div class="stats-container">
