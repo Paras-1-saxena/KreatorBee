@@ -86,7 +86,6 @@ class AuthSignupHome(Home):
 
                 if len(otp_code) == 6 and kw.get('phone'): 
                     # Check if the OTP exists for the mobile number
-                    # otp_record = otp_obj.sudo().search([], order='create_date desc', limit=1)
                     otp_record = otp_obj.sudo().search([
                         ("mobile", "=", kw.get('phone')), 
                         ('otp','=',otp_code), 
@@ -111,7 +110,6 @@ class AuthSignupHome(Home):
                         if user_sudo.partner_id.user_type == 'creator':
                             return request.redirect("sign-up/about?partner=%d" % user_sudo.partner_id)
                         elif user_sudo.partner_id.user_type == 'partner':
-                            print("cominggg111111111")
                             return request.redirect("sign-up/about?partner=%d" % user_sudo.partner_id)
                         elif user_sudo.partner_id.user_type == 'customer':
                             if redirect_url:
@@ -141,7 +139,7 @@ class AuthSignupHome(Home):
                     return request.redirect("sign-up/about?partner=%d" % user.partner_id)
                 elif user.partner_id.user_type == 'partner':
                     return request.redirect("sign-up/about?partner=%d" % user.partner_id)
-                elif user.partner_id.user_type == 'customer':
+                elif partner_id.user_type == 'customer':
                     return request.redirect('/customer/mycourses')
                 else:
                     return request.redirect('/web/login?%s' % url_encode({'login': user.login, 'redirect': '/web'}))
@@ -153,10 +151,9 @@ class AuthSignupHome(Home):
  
     # Generate OTP
     @http.route(['/generate/otp'], type='json', auth="public", website=True)
-    def generate_otp(self, mobile=False, email=False, **post):
+    def generate_otp(self, mobile=False, email=False, name=False, **post):
         values = {}
         language = request.context.get('lang')
-        # base_url = "https://mobicomm.dove-sms.com//generateOtp.jsp?userid=SACHIN&key=6e637e20bfXX&mobileno=+918354887130&timetoalive=200&message=Dear%20Customer%20Do%20Not%20Share%20OTP%20%7Botp%7D%20OMKARENT&senderid=OMENTO&accusage=1&entityid=1401487200000053882&tempid=1407167569369094246"
         if email:
             if request.env["res.partner"].sudo().search([("email", "=", email)]):
                 values['error'] = 'Another user is already registered using this email'
@@ -165,9 +162,7 @@ class AuthSignupHome(Home):
             if request.env["res.partner"].sudo().search([("mobile", "=", mobile)]):
                 values['error'] = 'Another user is already registered using this mobile No'
                 return values
-            # values['true'] = True
-            # return values
-            base_url = "https://mobicomm.dove-sms.com//generateOtp.jsp?userid=SACHIN&key=6e637e20bfXX&mobileno=+918354887130&timetoalive=200&message=Dear%20Customer%20Do%20Not%20Share%20OTP%20%7Botp%7D%20OMKARENT&senderid=OMENTO&accusage=1&entityid=1401487200000053882&tempid=1407167569369094246"
+            base_url = "https://mobicomm.dove-sms.com//generateOtp.jsp?userid=Kreato&key=124eb1ddc9XX&mobileno=+91"+mobile+"&timetoalive=200&message=Dear%20"+name+"%2C%20%7Botp%7D%20is%20your%20OTP%20for%20login%20on%20KreatorBee%20platform.%20Keep%20it%20safe%20and%20don%E2%80%99t%20share%20it%20with%20anyone.&senderid=KRTRBE&accusage=1&entityid=1701174048407680291&tempid=1707174229615615392"
             # # Construct the URL with parameters
             
             try:
@@ -192,11 +187,7 @@ class AuthSignupHome(Home):
         values = {}
         otp_obj = request.env['otp.otp']
         if mobile and otp:
-            # Check if the OTP exists for the mobile number
-            # otp_id = otp_obj.sudo().create({'otp':otp,'mobile':mobile,'is_verify':True})
-            # values['true'] = True
-            # return values
-            base_url = "https://mobicomm.dove-sms.com//validateOtpApi.jsp?otp="+otp+"&mobileno=+918354887130"
+            base_url = "https://mobicomm.dove-sms.com//validateOtpApi.jsp?otp="+otp+"&mobileno=+91"+mobile+""
             response = requests.get(base_url)
             data = response.json()
             print("Response",data)
@@ -206,7 +197,7 @@ class AuthSignupHome(Home):
                 return values
             else:
                 # return f"Failed to send OTP: {data['reason']}"
-                values['error'] = f"Failed to send OTP: {data['result']}"
+                values['error'] = f"Invalid OTP. Please try again: {data['result']}"
                 return values
         else:
             values['error'] = 'Missing mobile number or OTP. Please try again.'

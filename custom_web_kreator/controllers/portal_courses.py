@@ -2844,7 +2844,7 @@ class PortalMyCourses(http.Controller):
         else:
             raise NotFound()
 
-    @http.route('/profile', type='http', auth='user', website=True, methods=['GET', 'POST'])
+    @http.route('/profile', type='http', auth='user', website=True, methods=['GET', 'POST'], csrf=False)
     def partner_profile(self, **kwargs):
         print("<<<<<<<<<<<<>>>>>>>>>>>>>>>>>")
         user = request.env.user  # Get the logged-in user
@@ -2855,7 +2855,10 @@ class PortalMyCourses(http.Controller):
             new_name = kwargs.get('name')
             new_email = kwargs.get('email')
             new_mobile = kwargs.get('mobile')
-            new_image = kwargs.get('profile_image')
+            print("new_mobile", new_mobile)
+            # new_image = kwargs.get('profile_image')
+            new_image = request.httprequest.files.get('image')
+            print("new_image", new_image)
 
             # Update user and partner details if changed
             if new_name and new_name != user.name:
@@ -2873,7 +2876,7 @@ class PortalMyCourses(http.Controller):
                     partner.phone = new_mobile  # Update partner's phone
             # Update profile image if uploaded
             if new_image:
-                file_storage = request.httprequest.files.get('profile_image')
+                file_storage = request.httprequest.files.get('image')
                 if file_storage:
                     image_data = file_storage.read()
                     user.image_1920 = base64.b64encode(image_data)  # Save image in res.users

@@ -260,7 +260,7 @@
             var formData = new FormData();
             formData.append('image', fileInput.files[0]); // Append image file
 
-            fetch('/creator-profile', {
+            fetch('/profile', {
             method: 'POST',
             body: formData
             })

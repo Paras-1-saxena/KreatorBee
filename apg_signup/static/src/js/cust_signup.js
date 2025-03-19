@@ -11,6 +11,7 @@ const otpVerifiedDiv = document.querySelector('#div_otp_verified');
 // const confirmButton = document.querySelector('#confirm_otp');
 const mobileNo = document.querySelector('#phone');
 const emailField = document.querySelector('#login');
+const nameField = document.querySelector('#name');
 // const submitButton = document.querySelector('#submit_button');
 
 // if (otpField) otpField.style.display = 'none';
@@ -29,6 +30,7 @@ publicWidget.registry.custSignup = publicWidget.Widget.extend({
     generate_otp: async function () {
         const mobileValue = mobileNo.value;
         const emailValue = emailField.value;
+        const nameValue = nameField.value;
         const phonePattern = /^\d{10}$/;
 
         if (!phonePattern.test(mobileValue)) {
@@ -42,6 +44,7 @@ publicWidget.registry.custSignup = publicWidget.Widget.extend({
             const params = {
                 'mobile' : mobileValue,
                 'email' : emailValue,
+                'name' : nameValue,
             };
             const response = await rpc(url, params);
             if (response['true'] == true) {
