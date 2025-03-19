@@ -258,7 +258,19 @@
                 <t t-call="custom_web_kreator.side_menu"/>
                 <!-- Main Content -->
                 <div class="main-content">
-                    <t t-call="custom_web_kreator.user_block" />
+                    <div class="row align-items-center bg-white mb-4 mt-4 border1">
+                        <div class="col-md-10 d-flex align-items-center">
+                            <img src="/custom_web_kreator/static/src/user1.png" alt="User Image" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 15px;" />
+                            <h5 class="p-3">Welcome, <t t-esc="request.env.user.name"/></h5>
+                            <!-- <h6>Let&#39;s get started with your journey</h6> -->
+                        </div>
+                        <div class="col-md-2  float-end text-end">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#videoModal" 
+                                data-video-url="https://www.youtube.com/embed/GYsHQ3L2aG0?si=PxeJgCHMW-mu_sgP">
+                            <h6 style="cursor: pointer;" >Watch Tutorial</h6>
+                        </a>
+                        </div>
+                    </div>
                     <!-- Video Modal -->
                 <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -336,7 +348,7 @@
                 // Listen for the popstate event (which is triggered when the user navigates in the history)
                 window.addEventListener("popstate", function(event) {
                     // Redirect to /my-courses when the user tries to go back
-                    window.location.href = "/creator/my-courses";
+                    window.location.href = "/nmy-courses";
                 });
 
                 // Push a new state to the browser's history so that the back action can be intercepted

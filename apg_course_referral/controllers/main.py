@@ -58,7 +58,7 @@ class ReferralController(http.Controller):
         # Render the data page template
         return http.request.render('apg_course_referral.nreferral_link_page', values)
 
-    @http.route('/partner/referral', type='http', auth='public', website=True)
+    @http.route('/partner-referral', type='http', auth='public', website=True)
     def partner_referral(self, **kwargs):
         user_id = request.env.user
         partner_id = user_id.partner_id

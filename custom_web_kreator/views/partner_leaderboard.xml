@@ -1,449 +1,614 @@
 <odoo>
     <data>
-       <template id="partner_leaderboard_page" name="Partner Leaderboard">
-            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;display=swap" rel="stylesheet" />
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
-            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet"/>
-            <meta name="viewport" content="width=device-width, initial-scale=1"/>
-            <body>
-                
-                <!-- Page-Specific Styles -->
+        <template id="partner_leaderboard_page" name="Partner Leaderboard">
+            <head>
+                <!-- meta tags -->
+                <meta charset="UTF-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <!-- title -->
+                <title>Kreator Bee | Sales</title>
+                <!-- external css -->
+                <link rel="stylesheet" href="/custom_web_kreator/static/src/css/custom_styl.css"/>
+                <!-- bootstrap css -->
+                <link
+                        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+                        rel="stylesheet"
+                        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+                        crossorigin="anonymous"
+                />
+                <!-- remix icon -->
+                <link
+                        href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+                        rel="stylesheet"
+                />
                 <style>
-                    body {
-                        display: flex;
-                        margin: 0;
-                        font-family: 'Poppins', sans-serif;
-                        background-color: #f8f9fa;
-                    }
 
                     /* Top Menu */
                     .top-menu {
-                        width: 100%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        padding: 10px 20px;
-                        background-color: #fff;
-                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                        position: fixed;
-                        top: 0;
-                        z-index: 100;
-                        height: 60px; /* Adjust height for new layout */
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 10px 20px;
+                    background-color: #fff;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    position: fixed;
+                    top: 0;
+                    z-index: 100;
+                    height: 60px; /* Adjust height for new layout */
                     }
 
                     .top-menu .logo img {
-                        height: 60px;
-                        width: auto;
+                    height: 60px;
+                    width: auto;
                     }
 
                     .top-menu .menu-links {
-                        display: flex;
-                        gap: 40px; /* Space between menu items */
-                        align-items: center;
-                        justify-content: center;
-                        flex: 1;
+                    display: flex;
+                    gap: 40px; /* Space between menu items */
+                    align-items: center;
+                    justify-content: center;
+                    flex: 1;
                     }
 
                     .top-menu .menu-links a {
-                        text-decoration: none;
-                        color: #333;
-                        font-size: 14px;
-                        font-weight: 500;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        gap: 8px;
-                        padding: 15px;
-                        border-radius: 5px;
-                        transition: background-color 0.3s ease;
-                        height: 100%;
-                        justify-content: center;
+                    text-decoration: none;
+                    color: #333;
+                    font-size: 14px;
+                    font-weight: 500;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 15px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
+                    height: 100%;
+                    justify-content: center;
                     }
 
                     .top-menu .menu-links a.active {
-                        background-color: #fef5c5;
-                        color: #000;
+                    background-color: #fef5c5;
+                    color: #000;
                     }
 
                     .top-menu .menu-links a:hover {
-                        background-color: #fef5c5;
-                        color: #000;
+                    background-color: #fef5c5;
+                    color: #000;
                     }
 
                     .top-menu .menu-links i {
-                        font-size: 24px; /* Icon size */
+                    font-size: 24px; /* Icon size */
                     }
                     .top-menu .user-icon {
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 50%;
-                        object-fit: cover;
-                        cursor: pointer;
-                        margin-right: 30px; /* Adds space from the edge */
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    cursor: pointer;
+                    margin-right: 30px; /* Adds space from the edge */
                     }
 
                     /* Side Menu */
                     .side-menu {
-                        width: 250px;
-                        background-color: #fff;
-                        padding: 20px 10px;
-                        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-                        position: fixed;
-                        left: 0;
-                        top: 60px; /* Adjust for top menu */
-                        height: calc(100vh - 60px);
-                        overflow-y: auto;
+                    width: 250px;
+                    background-color: #fff;
+                    padding: 20px 10px;
+                    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                    position: fixed;
+                    left: 0;
+                    top: 60px; /* Adjust for top menu */
+                    height: calc(100vh - 60px);
+                    overflow-y: auto;
                     }
 
                     .side-menu ul {
-                        list-style: none;
-                        padding: 2;
-                        line-height: 1.5rem;
+                    list-style: none;
+                    padding: 2;
+                    line-height: 1.5rem;
                     }
 
                     .side-menu ul li {
-                        margin: 15px 0;
+                    margin: 15px 0;
                     }
 
                     .side-menu ul li a {
-                        text-decoration: none;
-                        color: #333;
-                        font-size: 15px;
-                        font-weight: 500;
-                        display: flex;
-                        align-items: center;
-                        gap: 12px;
-                        padding: 12px;
-                        border-radius: 5px;
-                        transition: background-color 0.3s ease;
+                    text-decoration: none;
+                    color: #333;
+                    font-size: 15px;
+                    font-weight: 500;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    padding: 12px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
                     }
 
                     .side-menu ul li a.active {
-                        background-color: #fef5c5;
-                        color: #000;
+                    background-color: #fef5c5;
+                    color: #000;
                     }
 
                     .side-menu ul li a:hover {
-                        background-color: #fef5c5;
-                        color: #000;
+                    background-color: #fef5c5;
+                    color: #000;
                     }
 
                     .main-content {
-                        margin-left: 270px; /* Adjust to create space from the side menu */
-                        padding: 20px;      /* Maintain consistent padding inside the main content */
-                        margin-top: 60px;   /* Adjust for the top menu */
-                        flex-grow: 1;
+                    margin-left: 270px; /* Adjust to create space from the side menu */
+                    padding: 20px; /* Maintain consistent padding inside the main content */
+                    margin-top: 60px; /* Adjust for the top menu */
+                    flex-grow: 1;
                     }
 
                     .leaderboard-list,
                     .user-stats {
-                        background-color: #fff;
-                        border-radius: 10px;
-                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                        padding: 20px;
+                    background-color: #fff;
+                    border-radius: 10px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    padding: 20px;
                     }
 
                     .leaderboard-list {
-                        flex: 2;
+                    flex: 2;
                     }
 
                     .leaderboard-list h3 {
-                        font-size: 18px;
-                        font-weight: 500;
-                        margin-bottom: 15px;
+                    font-size: 18px;
+                    font-weight: 500;
+                    margin-bottom: 15px;
                     }
 
                     .leaderboard-list .entry {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center; /* Ensures vertical alignment */
-                        padding: 10px 15px; /* Add consistent padding */
-                        border-bottom: 1px solid #f1f1f1;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center; /* Ensures vertical alignment */
+                    padding: 10px 15px; /* Add consistent padding */
+                    border-bottom: 1px solid #f1f1f1;
                     }
 
 
                     .leaderboard-list .entry:last-child {
-                        border-bottom: none;
+                    border-bottom: none;
                     }
 
                     .leaderboard-list .entry .name {
-                        display: flex;
-                        align-items: center; /* Ensures the image and text are vertically aligned */
-                        flex: 1; /* Allow the name section to grow */
-                        gap: 10px; /* Space between the image and the name */
+                    display: flex;
+                    align-items: center; /* Ensures the image and text are vertically aligned */
+                    flex: 1; /* Allow the name section to grow */
+                    gap: 10px; /* Space between the image and the name */
                     }
 
                     .leaderboard-list .entry img {
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 50%;
-                        display: block; /* Ensure proper alignment */
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    display: block; /* Ensure proper alignment */
                     }
 
                     .leaderboard-list .entry .name span {
-                        font-size: 18px;
-                        font-weight: normal;
-                        color: #333;
-                        white-space: nowrap; /* Prevent text wrapping */
+                    font-size: 18px;
+                    font-weight: normal;
+                    color: #333;
+                    white-space: nowrap; /* Prevent text wrapping */
                     }
 
                     .leaderboard-list .entry .rank {
-                        flex: 0 0 50px; /* Fix width for the rank column */
-                        text-align: left;
-                        font-weight: 500;
-                        color: #555;
+                    flex: 0 0 50px; /* Fix width for the rank column */
+                    text-align: left;
+                    font-weight: 500;
+                    color: #555;
                     }
 
                     .user-stats {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 300px;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        font-family: Arial, sans-serif;
-    }
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    width: 300px;
+                    background-color: #fff;
+                    padding: 20px;
+                    border-radius: 12px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    text-align: center;
+                    font-family: Arial, sans-serif;
+                    }
 
-    .user-stats img {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        margin-bottom: 10px;
-        border: 2px solid #ddd;
-    }
+                    .user-stats img {
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 50%;
+                    margin-bottom: 10px;
+                    border: 2px solid #ddd;
+                    }
 
-    .user-stats .username {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 10px;
-        color: #333;
-    }
+                    .user-stats .username {
+                    font-size: 18px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                    color: #333;
+                    }
 
-    .stats-row {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        margin-top: 10px;
-        border-top: 1px solid #ddd;
-        padding-top: 10px;
-    }
+                    .stats-row {
+                    display: flex;
+                    width: 100%;
+                    justify-content: space-between;
+                    margin-top: 10px;
+                    border-top: 1px solid #ddd;
+                    padding-top: 10px;
+                    }
 
-    .stat-item {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
+                    .stat-item {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    }
 
-    .stat-item p {
-        font-size: 14px;
-        color: #999;
-        margin: 0;
-        margin-bottom: 5px;
-    }
+                    .stat-item p {
+                    font-size: 14px;
+                    color: #999;
+                    margin: 0;
+                    margin-bottom: 5px;
+                    }
 
-    .stat-item span {
-        font-size: 18px;
-        font-weight: bold;
-        color: #ff6600;
-    }
+                    .stat-item span {
+                    font-size: 18px;
+                    font-weight: bold;
+                    color: #ff6600;
+                    }
 
-    .stat-item:last-child span {
-        color: #333;
-    }
+                    .stat-item:last-child span {
+                    color: #333;
+                    }
 
-    .row {
-    display: flex;
-    flex-wrap: wrap;
-    
-  }
+                    .row {
+                    display: flex;
+                    flex-wrap: wrap;
 
-  .col-md-10, .col-md-2 {
-    flex: 0 0 auto;
-    padding-right: 15px;
-    padding-left: 15px;
-  }
+                    }
 
-  .align-items-center {
-    align-items: center;
-    display: flex;
-  }
+                    .col-md-10, .col-md-2 {
+                    flex: 0 0 auto;
+                    padding-right: 15px;
+                    padding-left: 15px;
+                    }
 
-  .d-flex {
-    display: flex;
-  }
+                    .align-items-center {
+                    align-items: center;
+                    display: flex;
+                    }
 
-  .text-end {
-    text-align: end;
-  }
+                    .d-flex {
+                    display: flex;
+                    }
 
-  .bg-white {
-    background-color: #ffffff;
-  }
+                    .text-end {
+                    text-align: end;
+                    }
 
-
-
-  .border1 {
-    border: 1px solid #ffd000;
-    border-radius: 5px;
-        margin-top: 20px;
-  }
-
-  .rounded-circle {
-    border-radius: 50%;
-  }
-
-  .float-end {
-    margin-left: auto;
-  }
-  h5{
-  font-size:20px;
-  font-weight:500;
-  margin:20px;
-  }
-    h6{
-  font-size:16px;
-  font-weight:500;
-  margin:20px;
-  }
+                    .bg-white {
+                    background-color: #ffffff;
+                    }
 
 
-    @media (max-width: 768px) {
-        .user-stats {
-            width: 100%;
-            padding: 15px;
-        }
-    }
-    .leaderboard-list{margin-bottom:10px;}
+                    .border1 {
+                    border: 1px solid #ffd000;
+                    border-radius: 5px;
+                    margin-top: 20px;
+                    }
+
+                    .rounded-circle {
+                    border-radius: 50%;
+                    }
+
+                    .float-end {
+                    margin-left: auto;
+                    }
+                    h5{
+                    font-size:20px;
+                    font-weight:500;
+                    margin:20px;
+                    }
+                    h6{
+                    font-size:16px;
+                    font-weight:500;
+                    margin:20px;
+                    }
+
+
+                    @media (max-width: 768px) {
+                    .user-stats {
+                    width: 100%;
+                    padding: 15px;
+                    }
+                    }
+                    .leaderboard-list{margin-bottom:10px;}
 
                     .tab-menu {
-                        display: flex;
-                        justify-content: left;
-                        margin-bottom: 20px;
-                        margin-top: 20px;
-                        gap: 2px;
+                    display: flex;
+                    justify-content: left;
+                    margin-bottom: 20px;
+                    margin-top: 20px;
+                    gap: 2px;
                     }
 
                     .tab-menu button {
-                        background-color: #fff;
-                        border: 1px solid #ddd;
-                        padding: 10px 10px;
-                        border-radius: 5px;
-                        font-size: 16px;
-                        <!-- cursor: pointer; -->
-                        transition: background-color 0.3s ease, color 0.3s ease;
-                        font-weight:500;
+                    background-color: #fff;
+                    border: 1px solid #ddd;
+                    padding: 10px 10px;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    <!-- cursor: pointer; -->
+                    transition: background-color 0.3s ease, color 0.3s ease;
+                    font-weight:500;
                     }
 
                     .tab-menu button.active {
-                        background-color: #ffd001;
-                        color: #000;
+                    background-color: #ffd001;
+                    color: #000;
                     }
 
                     .tab-menu button:hover {
-                        background-color: #ffd000;
-                        color: #000;
+                    background-color: #ffd000;
+                    color: #000;
                     }
 
-                    
+
                 </style>
+            </head>
 
-                <!-- Top Menu -->
-                <div class="top-menu">
-                    <button class="navbar-toggler d-lg-none" type="button" id="burgerMenu" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                      <span class="navbar-toggler-icon"><i class="fa fa-solid fa-bars"></i></span>
-                    </button>
-                    <div class="logo">
-                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
-                    </div>
-                    <div class="menu-links">
-                        <a href="/partner/income" >
-                            <i class="fa fa-chart-bar"></i> Income
-                        </a>
-                        <a href="/partner/lead">
-                            <i class="fa fa-bullhorn"></i> Leads
-                        </a>
-                        <a href="/partner/kyc">
-                            <i class="fa fa-id-card"></i> KYC
-                        </a>
-                        <a href="/partner/referral">
-                            <i class="fa fa-link"></i> Links
-                        </a>
-                        <a href="/partner/leaderboard" class="active">
-                            <i class="fa fa-medal"></i> Leaderboard
-                        </a>
-                    </div>
-                    <!-- Use <img> tag for user icon -->
-                    <t t-call="custom_web_kreator.partner_profile_dropdown"/>
-                </div>
-
-                <!-- Side Menu -->
-                <t t-call="custom_web_kreator.side_menu"/>
-
-                <!-- Main Content -->
-                <div class="main-content">
-                    <!-- Top Block -->
-                    <t t-call="custom_web_kreator.user_block" />
-                        <!-- Tab Menu -->
-                    <div class="tab-menu">
-                        <button class="active">All Time</button>
-                        <button>Yearly</button>
-                        <button>Monthly</button>
-                        <button>This Week</button>
-                    </div>
-
-                    <!-- Leaderboard Content -->
-                    <div class="leaderboard-container">
-                        <!-- Leaderboard List -->
-                        <div class="leaderboard-list">
-                            <h3>(March to February)</h3>
-                            <t t-if="leaderboard">
-                                <t t-foreach="leaderboard" t-as="data">
-                                    <div class="entry">
-                                        <span class="rank"><img src="/custom_web_kreator/static/src/price1.png" alt="User 1" /></span>
-                                        <div class="name">
-                                            <img src="/custom_web_kreator/static/src/user1.png" alt="User 1" />
-                                            <t t-esc="data['partner_name']"/>
-                                        </div>
-                                        <span><span t-field="currency_id.symbol" /><t t-esc="'%.2f'% data['total_commission']"/></span>
-                                    </div>
-                                </t>
-                            </t>
+            <body>
+                <div class="layout">
+                    <!-- Header -->
+                    <header class="container-fluid">
+                        <div
+                                class="d-flex justify-content-between align-items-center border-bottom"
+                        >
+                            <!-- Menu Icon visible on mobile-->
+                            <img
+                                    class="pe-2 d-block d-lg-none hamburger"
+                                    src="/custom_web_kreator/static/src/nev-icon.svg"
+                            />
+                            <!-- Logo -->
+                            <img src="/custom_web_kreator/static/src/logo.png"/>
+                            <!-- Menu-->
+                            <div class="d-lg-flex d-none gap-4">
+                                <div
+                                        class="p-lg-2 p-1 d-flex flex-column align-items-center"
+                                >
+                                    <a href="/partner" class='text-center'>
+                                        <i class="ri-line-chart-fill"></i>
+                                        <p>
+                                            Income Data
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
+                                    <a href="/partner-referral" class='text-center'>
+                                        <i class="ri-links-fill"></i>
+                                        <p>
+                                            Links
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
+                                    <a href="/partner-kyc" class='text-center'>
+                                        <i class="ri-profile-fill"></i>
+                                        <p>
+                                            KYC
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
+                                    <a href="/partner-lead" class='text-center'>
+                                        <i class="ri-megaphone-fill"></i>
+                                        <p>
+                                            Lead
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="active p-lg-2 p-1 d-flex flex-column align-items-center">
+                                    <a href="/partner-leaderboard" class='text-center'>
+                                        <i class="ri-award-fill"></i>
+                                        <p>
+                                            Leaderboard
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Profile -->
+                            <t t-call="custom_web_kreator.partner_profile_dropdown"/>
                         </div>
-
-                        <!-- User Stats -->
-                        <div class="user-stats">
-                            <t t-foreach="leaderboard[:3]" t-as="data">
-                                <img src="/custom_web_kreator/static/src/user2.png" alt="User" />
-                                <p class="username"><t t-esc="data['partner_name']"/></p>
-                                <div class="stats-row">
-                                    <div class="stat-item">
-                                        <p>EARNINGS</p>
-                                        <span><span t-esc="currency_id.symbol" /><t t-esc="'%.2f' % data['total_commission']"/></span>
+                    </header>
+                    <div class="d-flex w-100">
+                        <!-- Sidebar -->
+                        <div class="sidebar border-end d-none d-lg-block">
+                            <nav class="py-3 px-2">
+                                <!-- Sidebar Menu -->
+                                <ul class="d-flex flex-column gap-2">
+                                    <a href="/partner">
+                                        <li class="active">
+                                            <i class="ri-discount-percent-fill"></i>
+                                            Sales
+                                        </li>
+                                    </a>
+                                    <!-- Sales Dropdown -->
+                                    <div class="ps-2 d-block d-lg-none">
+                                        <li>
+                                            <a href="/master_income_data">
+                                                <i
+                                                        class="ri-subtract-fill"></i>
+                                                Income Data
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/nreferral">
+                                                <i class="ri-subtract-fill"></i>
+                                                Links
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/nkyc">
+                                                <i class="ri-subtract-fill"></i>
+                                                kyc
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <i class="ri-subtract-fill"></i>
+                                            <a href="/creator-lead">Lead</a>
+                                        </li>
+                                        <li>
+                                            <a href="/nleaderboard">
+                                                <i
+                                                        class="ri-subtract-fill"></i>
+                                                Leaderboard
+                                            </a>
+                                        </li>
                                     </div>
-                                    <div class="stat-item">
-                                        <p>RANKING</p>
-                                        <span>#<t t-esc="data_index + 1"/></span>
+                                    <a href="/partner-product">
+                                        <li>
+                                            <i class="ri-product-hunt-fill"></i>
+                                            Products
+                                        </li>
+                                    </a>
+                                    <a href="/npromote">
+                                        <li>
+                                            <i class="ri-user-community-fill"></i>
+                                            Promote
+                                        </li>
+                                    </a>
+                                    <a href="/forumsection-company">
+                                        <li>
+                                            <i class="ri-user-fill"></i>
+                                            Community
+                                        </li>
+                                    </a>
+                                    <a href="/nmy-courses-partner">
+                                        <li>
+                                            <i class="ri-user-community-fill"></i>
+                                            My Courses
+                                        </li>
+                                    </a>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- Sidebar Backdrop on mobile -->
+                        <div class="backdrop d-none d-lg-none"></div>
+                        <!-- Main Content -->
+                        <main class="flex-grow-1 p-4 overflow-auto">
+                            <!-- Welcome Section -->
+                            <section class="welcome">
+                                <div
+                                        class="d-flex gap-2 flex-column flex-lg-row align-items-lg-center justify-content-between"
+                                >
+                                    <h1 class="d-flex align-items-center gap-1">
+                                        <img class="play"
+                                             src="/custom_web_kreator/static/src/user_icon.svg"/>
+                                        Welcome,
+                                        <t
+                                                t-esc="request.env.user.name"/>
+                                    </h1>
+                                    <div class="d-flex gap-3 align-items-center">
+                                        <a href="#"
+                                        >Tutorial
+                                            <img class="ms-1"
+                                                 src="/custom_web_kreator/static/src/play.png"
+                                            />
+                                        </a>
+                                        <a href="#"
+                                        >
+                                            <img
+                                                    src="/custom_web_kreator/static/src/Whatsapp.png"/>
+                                            +1234567890
+                                        </a>
                                     </div>
                                 </div>
-                            </t>
-                        </div>
+                            </section>
+                            <!-- Lead Details -->
+<!--                            <div class="row justify-content-end">-->
+<!--                                <div class="col-4">-->
+<!--                                    <div class="tab-menu">-->
+<!--                                        <button class="active">All Time</button>-->
+<!--                                        <button>Yearly</button>-->
+<!--                                        <button>Monthly</button>-->
+<!--                                        <button>This Week</button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
+
+                            <!-- Leaderboard Content -->
+                            <div class="leaderboard-container my-4">
+                                <!-- Leaderboard List -->
+                                <div class="row">
+                                    <div class="col-8">
+                                        <div class="leaderboard-list">
+                                            <h3>(March to February)</h3>
+                                            <t t-if="leaderboard">
+                                                <t t-foreach="leaderboard" t-as="data">
+                                                    <div class="entry">
+                                                        <span class="rank">
+                                                            <img src="/custom_web_kreator/static/src/price1.png"
+                                                                 alt="User 1"/>
+                                                        </span>
+                                                        <div class="name">
+                                                            <img src="/custom_web_kreator/static/src/user1.png"
+                                                                 alt="User 1"/>
+                                                            <t t-esc="data['partner_name']"/>
+                                                        </div>
+                                                        <span>
+                                                            <span t-field="currency_id.symbol"/>
+                                                            <t t-esc="'%.2f'% data['total_commission']"/>
+                                                        </span>
+                                                    </div>
+                                                </t>
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="user-stats">
+                                            <t t-foreach="leaderboard[:3]" t-as="data">
+                                                <img src="/custom_web_kreator/static/src/user2.png" alt="User"/>
+                                                <p class="username">
+                                                    <t t-esc="data['partner_name']"/>
+                                                </p>
+                                                <div class="stats-row">
+                                                    <div class="stat-item">
+                                                        <p>EARNINGS</p>
+                                                        <span>
+                                                            <span t-esc="currency_id.symbol"/>
+                                                            <t t-esc="'%.2f' % data['total_commission']"/>
+                                                        </span>
+                                                    </div>
+                                                    <div class="stat-item">
+                                                        <p>RANKING</p>
+                                                        <span>#
+                                                            <t t-esc="data_index + 1"/>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- User Stats -->
+                            </div>
+                        </main>
                     </div>
+
+                    <!-- External Script -->
+                    <script src="/custom_web_kreator/static/src/js/script.js"></script>
+                    <!-- bootstrap script -->
+                    <script
+                            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                            crossorigin="anonymous"
+                    ></script>
                 </div>
             </body>
-            <xpath expr="." position="inside">
-                <!-- Include jQuery -->
-                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                <script type="text/javascript" src="/apg_js/static/src/js/menu.js"></script>
-                <link rel="stylesheet" href="/apg_js/static/src/scss/menu.css" />
-            </xpath>
         </template>
     </data>
 </odoo>

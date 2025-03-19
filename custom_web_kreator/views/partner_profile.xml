@@ -282,7 +282,7 @@
           <div class="card">
             <div class="card-body border1">
               <h5>Edit Profile</h5>
-              <form method="post" action="/profile">
+              <form method="post" action="/partner-profile">
                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
@@ -298,7 +298,6 @@
                     </div>
 
                     <div class="text-end mt-2">
-<!--                        <button class="btn bg-light" id="back-button">Back</button>-->
                         <button class="btn bg-light">Discard</button>
                         <button type="submit" class="btn btn-warning">Save</button>
                     </div>

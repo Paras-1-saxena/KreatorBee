@@ -1,6 +1,6 @@
 <odoo>
     <data>
-       <template id="partner_referral_link_page" name=" Partner Referral Link Page">
+       <template id="partner_referral_link_page_cust" name=" Partner Referral Link Page">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
                 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet"/>
             <body>
@@ -198,14 +198,14 @@
                         border-right: 1px solid #ddd; /* Add a divider between buttons */
                     }
 
-                    
+
                     button{
                     margin-right:10px;
                     }
                     .row {
     display: flex;
     flex-wrap: wrap;
-    
+
   }
 
   .col-md-10, .col-md-2 {
@@ -265,7 +265,7 @@
   margin:20px;
   }
 
-                    
+
                 </style>
 
                 <!-- Top Menu -->
@@ -274,19 +274,19 @@
                         <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
                     </div>
                     <div class="menu-links">
-                        <a href="/partner/income" >
+                        <a href="/partner" >
                             <i class="fa fa-chart-bar"></i> Income
                         </a>
-                        <a href="/partner/lead" >
+                        <a href="/partner-lead" >
                             <i class="fa fa-bullhorn"></i> Leads
                         </a>
-                        <a href="/partner/kyc">
+                        <a href="/partner-kyc">
                             <i class="fa fa-id-card"></i> KYC
                         </a>
-                        <a href="/partner/referral" class="active">
+                        <a href="/partner-referral" class="active">
                             <i class="fa fa-link"></i> Links
                         </a>
-                        <a href="/partner/leaderboard">
+                        <a href="/partner-leaderboard">
                             <i class="fa fa-medal"></i> Leaderboard
                         </a>
                     </div>
@@ -297,11 +297,11 @@
                 <!-- Side Menu -->
                 <div class="side-menu">
                     <ul>
-                        <li><a href="/partner/income" class="active" ><i class="fa fa-chart-line"></i> Sales</a></li>
-                        <li><a href="/partner/myproducts" ><i class="fa fa-box"></i> Products</a></li>
-                        <li><a href="/partner/promotional-material"><i class="fa fa-ad"></i> Promote</a></li>
+                        <li><a href="/partner" class="active" ><i class="fa fa-chart-line"></i> Sales</a></li>
+                        <li><a href="/partner-product" ><i class="fa fa-box"></i> Products</a></li>
+                        <li><a href="/npromote"><i class="fa fa-ad"></i> Promote</a></li>
                         <li><a href="/#"><i class="fa fa-users"></i> Community</a></li>
-                        <li><a href="/partner/training"><i class="fa fa-book-reader"></i> My Courses</a></li>
+                        <li><a href="/partner-training"><i class="fa fa-book-reader"></i> My Courses</a></li>
                     </ul>
                 </div>
 
@@ -311,12 +311,12 @@
                     <t t-call="custom_web_kreator.user_block" />
                         <!-- Tab Navigation -->
                     <!-- <div class="tab-container">
-                        
+
                     </div> -->
 
                     <!-- Referral Links Section -->
                     <div class="link-section">
-                       
+
                         <!-- Referral Link -->
                         <div class="link-box">
                             <label>Referral Link</label>
@@ -361,8 +361,8 @@
                             <button class="mr-5">Generate Link</button><i class="fa fa-copy"></i>
                         </div>
                         <!-- Referral Links Section -->
-                        
-                       
+
+
                     </div>
                 </div>
 

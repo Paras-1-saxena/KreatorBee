@@ -286,19 +286,19 @@ button {
                         <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo" />
                     </div>
                     <div class="menu-links">
-                        <a href="/creator/course_detail">
+                        <a href="/master_course_detail">
                             <i class="fa fa-book-reader"></i> Course Details
 
                         </a>
-                        <a href="/creator/course_standard">
+                        <a href="/master_course_standard">
                             <i class="fa fa-book"></i> Course Standard
 
                         </a>
-                        <a href="/creator/terms" class="active">
+                        <a href="/master_term" class="active">
                             <i class="fa fa-link"></i> T &amp; C
 
                         </a>
-                        <a href="/creator/welcome">
+                        <a href="/master_welcome">
                             <i class="fa fa-trophy"></i> Welcome
 
                         </a>
@@ -315,22 +315,22 @@ button {
                             </a>
                         </li>
                         <li>
-                            <a href="/creator/income">
+                            <a href="/master_income_data">
                                 <i class="fa fa-chart-line"></i> Sales
                             </a>
                         </li>
                         <li>
-                            <a href="/creator/my-courses">
+                            <a href="/nmy-courses">
                                 <i class="fa fa-box"></i> Products
                             </a>
                         </li>
                         <li>
-                            <a href="/creator/community">
+                            <a href="/forumsection">
                                 <i class="fa fa-users"></i> Connect with Partner
                             </a>
                         </li>
                         <li>
-                            <a href="/creator/customer">
+                            <a href="/coming-soon">
                                 <i class="fa fa-address-book"></i> Customer
                             </a>
                         </li>
@@ -344,7 +344,16 @@ button {
                 <div class="main-content">
             
                     <!-- Top Block -->
-                    <t t-call="custom_web_kreator.user_block"/>
+                    <div class="row align-items-center bg-white mb-4 border1">
+                        <div class="col-md-10 d-flex align-items-center">
+                            <img src="/custom_web_kreator/static/src/user1.png" alt="User Image" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 15px;" />
+                            <h5>Welcome, <t t-esc="request.env.user.name"/></h5>
+                            <!-- <h6>Let&#39;s get started with your journey</h6> -->
+                        </div>
+                        <div class="col-md-1 text-right">
+                            <p>Watch Tutorial</p>
+                        </div>
+                    </div>
 
                     <div class="row">
     <!-- Block 1 -->

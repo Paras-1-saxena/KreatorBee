@@ -1,6 +1,6 @@
 <odoo>
     <data>
-        <template id="/partner/income" name="Partner income data Template">
+        <template id="/partner" name="Partner income data Template">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;&amp;display=swap" rel="stylesheet"/>
             <body>
@@ -240,17 +240,17 @@
                     </div>
                     <div class="menu-links">
                         <a href="/partner_income_data" class="active"><i class="fa fa-database"></i> Income</a>
-                        <a href="/partner/lead">
+                        <a href="/partner-lead">
                             <i class="fa fa-bullhorn"></i> Leads
                         </a>
                 
-                        <a href="/creator/kyc">
+                        <a href="/nkyc">
                             <i class="fa fa-id-card"></i> KYC
                         </a>
-                        <a href="/creator/referral">
+                        <a href="/nreferral">
                             <i class="fa fa-link"></i> Links
                         </a>
-                        <a href="/creator/leaderboard">
+                        <a href="/nleaderboard">
                             <i class="fa fa-medal"></i> Leaderboard
                         </a>
                     </div>
@@ -260,11 +260,11 @@
                 <!-- Side Menu -->
                 <div class="side-menu">
                     <ul>
-                        <li><a href="/partner/income" class="active"><i class="fa fa-chart-line"></i> Sales</a></li>
-                        <li><a href="/partner/myproducts"><i class="fa fa-box"></i> Products</a></li>
-                        <li><a href="/partner/promotional-material"><i class="fa fa-ad"></i> Promote</a></li>
+                        <li><a href="/partner" class="active"><i class="fa fa-chart-line"></i> Sales</a></li>
+                        <li><a href="/partner-product"><i class="fa fa-box"></i> Products</a></li>
+                        <li><a href="/npromote"><i class="fa fa-ad"></i> Promote</a></li>
                         <li><a href="/#"><i class="fa fa-users"></i> Community</a></li>
-                        <li><a href="/partner/training"><i class="fa fa-book-reader"></i> My Courses</a></li>
+                        <li><a href="/partner-training"><i class="fa fa-book-reader"></i> My Courses</a></li>
                     </ul>
                 </div>
                 <!-- Main Content -->

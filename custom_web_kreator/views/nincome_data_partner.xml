@@ -202,19 +202,19 @@
                         <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
                     </div>
                     <div class="menu-links">
-                        <a href="/creator/income" class="active">
+                        <a href="/master_income_data" class="active">
                             <i class="fa fa-chart-bar"></i> Income
                         </a>
                         <a href="#">
                             <i class="fa fa-bullhorn"></i> Leads
                         </a>
-                        <a href="/creator/kyc">
+                        <a href="/nkyc">
                             <i class="fa fa-id-card"></i> KYC
                         </a>
-                        <a href="/creator/referral">
+                        <a href="/nreferral">
                             <i class="fa fa-link"></i> Links
                         </a>
-                        <a href="/creator/leaderboard">
+                        <a href="/nleaderboard">
                             <i class="fa fa-medal"></i> Leaderboard
                         </a>
                     </div>
@@ -225,8 +225,8 @@
                 <!-- Side Menu -->
                 <div class="side-menu">
                     <ul>
-                        <li><a href="/creator/income" class="active"><i class="fa fa-chart-line"></i> Sales</a></li>
-                        <li><a href="/creator/my-courses"><i class="fa fa-box"></i> Products</a></li>
+                        <li><a href="/master_income_data" class="active"><i class="fa fa-chart-line"></i> Sales</a></li>
+                        <li><a href="/nmy-courses"><i class="fa fa-box"></i> Products</a></li>
                         <li><a href="/connect"><i class="fa fa-ad"></i> Promote</a></li>
                         <li><a href="/#"><i class="fa fa-users"></i> Community</a></li>
                         <li><a href="#"><i class="fa fa-book-reader"></i> My Courses</a></li>

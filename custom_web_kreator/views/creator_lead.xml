@@ -1,570 +1,329 @@
 <odoo>
     <data>
         <template id="creator_lead" name="Creator Lead Template">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;display=swap" rel="stylesheet" />
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
-            <link rel="stylesheet" href="https://static.eu1.mindsphere.io/mdsp-css/v2.7.0/css/mdsp-css.min.css" />
-            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <head>
+                <!-- meta tags -->
+                <meta charset="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <!-- title -->
+                <title>Kreator Bee | Sales</title>
+                <!-- external css -->
+                <link rel="stylesheet" href="/custom_web_kreator/static/src/css/custom_styl.css" />
+                <!-- bootstrap css -->
+                <link
+                    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+                    rel="stylesheet"
+                    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+                    crossorigin="anonymous"
+                />
+                <!-- remix icon -->
+                <link
+                    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+                    rel="stylesheet"
+                />
+                <style>
+                    .sidebar ul li,header a {
+                    font-size:17px;
+                    }
+                    .sidebar {
+                    width:auto;
+                    }
+                    #unverifiedOrdersTableForCreator,
+                    #visitorsTableForCreator {
+                    transition: opacity 0.3s ease-in-out;
+                    }
+
+                </style>
+            </head>
 
             <body>
-                <!-- Page-Specific Styles -->
-                <style>
-                    @media (max-width: 769px) {
-                        /* Style the input field */
-                        #fromDate,#toDate {
-                            position: relative;
-                            padding-right: 30px;  /* Space for the calendar icon */
-                        }
-
-                        /* Add the calendar icon using the ::after pseudo-element */
-                        #fromDate::after,#toDate::after {
-                            content: "📅"; /* Unicode calendar icon */
-                            position: absolute;
-                            right: 10px;
-                            top: 50%;
-                            transform: translateY(-50%);
-                            pointer-events: none;  /* Make sure the icon does not interfere with clicking the input */
-                            font-size: 18px; /* Adjust the size of the calendar icon */
-                        }
-                    }
-                    body,textarea {
-                        display: flex;
-                        margin: 0;
-                        font-family: 'Poppins', sans-serif;
-                        background-color: #f8f9fa;
-                         margin: 0;
-                        padding: 0;
-                        line-height: 1.6;
-                    }
-
-                    /* Top Menu */
-                    .top-menu {
-                        width: 100%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        padding: 10px 20px;
-                        background-color: #fff;
-                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                        position: fixed;
-                        top: 0;
-                        z-index: 100;
-                        height: 80px; /* Adjust height for new layout */
-                    }
-
-                    .top-menu .logo img {
-                        height: 60px;
-                        width: auto;
-                    }
-
-                    .top-menu .menu-links {
-                        display: flex;
-                        gap: 40px; /* Space between menu items */
-                        align-items: center;
-                        justify-content: center;
-                        flex: 1;
-                    }
-
-                    .top-menu .menu-links a {
-                        text-decoration: none;
-                        color: #333;
-                        font-size: 14px;
-                        font-weight: 500;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        gap: 8px;
-                        padding: 15px;
-                        border-radius: 5px;
-                        transition: background-color 0.3s ease;
-                        height: 100%;
-                        justify-content: center;
-                    }
-
-                    .top-menu .menu-links a.active {
-                        background-color: #fef5c5;
-                        color: #000;
-                    }
-
-                    .top-menu .menu-links a:hover {
-                        background-color: #fef5c5;
-                        color: #000;
-                    }
-
-                    .top-menu .menu-links i {
-                        font-size: 24px; /* Icon size */
-                    }
-                    .top-menu .user-icon {
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 50%;
-                        object-fit: cover;
-                        cursor: pointer;
-                        margin-right: 30px; /* Adds space from the edge */
-                    }
-
-                    /* Side Menu */
-                    .side-menu {
-                        width: 270px;
-                        background-color: #fff;
-                        padding: 20px 10px;
-                        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-                        position: fixed;
-                        left: 0;
-                        top: 76px; /* Adjust for top menu */
-                        height: calc(100vh - 60px);
-                        overflow-y: auto;
-                    }
-
-                    .side-menu ul {
-                        list-style: none;
-                        padding: 2;
-                    }
-
-                    .side-menu ul li {
-                        margin: 15px 0;
-                    }
-
-                    .side-menu ul li a {
-                        text-decoration: none;
-                        color: #333;
-                        font-size: 15px;
-                        font-weight: 500;
-                        display: flex;
-                        align-items: center;
-                        gap: 12px;
-                        padding: 12px;
-                        border-radius: 5px;
-                        transition: background-color 0.3s ease;
-                    }
-
-                    .side-menu ul li a.active {
-                        background-color: #fef5c5;
-                        color: #000;
-                    }
-
-                    .side-menu ul li a:hover {
-                        background-color: #fef5c5;
-                        color: #000;
-                    }
-
-                    .main-content {
-                        margin-left: 270px; /* Adjust to create space from the side menu */
-                        padding: 20px;      /* Maintain consistent padding inside the main content */
-                        margin-top: 80px;   /* Adjust for the top menu */
-                        flex-grow: 1;
-                        background-color:#f8f9fa;
-                    }
-
-                    /* Progress Bar */
-                    .progress-bar-container {
-                        width: 100%;
-                        height:10px;
-                        background-color: fef5c5;
-                        margin-bottom: 20px;
-                        position: relative;
-                    }
-
-                    .progress-bar {
-                        height: 10px;
-                        background-color: #ffd001;
-                        width: 75%; /* Adjust for progress percentage */
-                        transition: width 0.3s ease;
-                    }
-
-                    .content-containter {
-    background-color: white;
-    height: 560px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-   
-    
-    overflow: hidden;
-
-
-                        
-                        
-               
-}
-
-
-.form-container {
-    display: flex;
-    justify-content: space-between;
-    flex: 1;
-    overflow-y: auto;
-    padding-bottom: 20px;
-}
-
-.form-content {
-    flex: 1;
-    padding: 0px 20px;
-    background-color: #fff;
-    overflow-y: auto;
-    margin-right: 10px;
-}
-
-.form-content h3 {
-    margin-top: 0;
-    margin-bottom: 5px; /* Reduce the space between the title and paragraph */
-    font-size: 16px;
-    color: #333;
-    font-weight: bold;
-}
-
-.form-content p {
-    margin-top: 0; /* Remove any additional top margin */
-    font-size: 14px;
-    color: #333;
-    line-height: 1.6;
-    margin-bottom: 15px; /* Keep some space below the paragraph */
-}
-
-.image-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    
-}
-
-.image-container img {
-    max-width: 100%;
-    height: auto;
-}
-
-.bottom-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: auto; /* Push to the bottom */
-}
-
-.radio-group {
-    display: flex;
-    justify-content: left;
-    gap: 10px;
-    margin-bottom: 10px;
-
-}
-
-.radio-group label {
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    margin:10px;
-}
-
-.form-actions {
-    display: flex;
-    justify-content: left;
-    width: 100%;
-}
-
-button {
-    background-color: #ffd000;
-                        color: #212529;
-                        font-family: 'Poppins', sans-serif;
-                        border: none;
-                        border-radius: 5px;
-                        cursor: pointer;
-                        transition: background-color 0.3s ease;
-                        font-size: 16px;
-                        padding:5px 10px;
-                        letter-spacing: 1px;
-                       
-
-}
-
-.card {
-    border: 1px solid #fdf000;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  .pagination .page-item .page-link {
-    color: #333;
-  }
-  .pagination  .page-link {
-    background-color: #fff;
-    
-  }
-
-  .page-item.active .page-link {
-    z-index: 3;
-    color: #fff;
-    background-color: #ffd000;
-    border-color:#fff;
-}
-  .border1{
-  border: 1px solid #fdf000;
-  }
-  .table th,
-  .table td {
-    vertical-align: middle;
-  }
-  .table{
-  border:1px solid ffd000;
-  }
-  .table tr{
-  line-height: 24px;
-  }
-  .text-center{
-  border:2px solid #ffd000;
-  }
-  .table>:not(:last-child)>:last-child>* {
-    
-}
-  .nav-tabs .nav-link.active {
-    background-color: #ffc107;
-    border-color: #ffc107;
-    color: #000;
-  }
-  .nav-tabs{
-    background-color: #fff;
-    border-color: #ffc107;
-    color: #000;
-  }
-  .bg-warning {
-    background-color: #fff3cd !important;
-  }
-
-
-  /* Tab Container */
-                    .tab-container {
-                        display: flex;
-                        align-items: left;
-                        border: 1px solid #ddd; /* Add a border around the tab container */
-                        border-radius: 5px; /* Rounded corners */
-                        overflow: hidden; /* Ensure rounded corners work with border */
-                        
-                        
-                    }
-
-                    /* Tab Buttons */
-                    .tab-button {
-                        flex: 1; /* Equal width for both tabs */
-                        
-                        border: 1px solid #ffd000;
-                        font-size: 16px;
-                        font-weight: 600;
-                        text-align: center;
-                        cursor: pointer;
-                        background-color: #fff; /* Default background color */
-                        color: #333; /* Default text color */
-                        transition: background-color 0.3s ease, color 0.3s ease;
-                    }
-
-                    /* Active Tab Button */
-                    .tab-button.active {
-                        background-color: #ffd001; /* Highlighted tab background */
-                        color: #000; /* Highlighted tab text color */
-                    }
-
-                    /* Hover Effect */
-                    .tab-button:hover {
-                        background-color: #f0f0f0;
-                    }
-
-                    /* No Border Between Tabs */
-                    .tab-button:first-child {
-                        border-right: 1px solid #ddd; /* Add a divider between buttons */
-                    }
-                   
-
-
-
-
-             </style>
-                <!-- Top Menu -->
-                <div class="top-menu">
-                    <div class="logo">
-                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo" />
-                    </div>
-                    <div class="menu-links">
-                        <a href="/creator/income" >
-                            <i class="fa fa-chart-bar"></i> Income
-                        </a>
-                        <a href="/creator/lead" class="active">
-                            <i class="fa fa-bullhorn"></i> Leads
-                        </a>
-                        <a href="/creator/kyc">
-                            <i class="fa fa-id-card"></i> KYC
-                        </a>
-                        <a href="/creator/referral">
-                            <i class="fa fa-link"></i> Links
-                        </a>
-                        <a href="/creator/leaderboard">
-                            <i class="fa fa-medal"></i> Leaderboard
-                        </a>
-                    </div>
-                    <!-- Use <img> tag for user icon -->
-                    <t t-call="custom_web_kreator.partner_profile_dropdown"/>
-                </div>
-                <!-- Side Menu -->
-                <div class="side-menu">
-                    <ul>
-                         <li><a href="/master" class="d-none"><i class="fa fa-home"></i> Get Started</a></li>
-                        
-                        <li><a href="/creator/my-courses"><i class="fa fa-box"></i> Products</a></li>
-                        <li><a href="/creator/income" class="active"><i class="fa fa-chart-line"></i> Sales</a></li>
-                        <li><a href="/creator/offers"><i class="fa fa-users"></i> Connect with Partner</a></li>
-                        <li><a href="#"><i class="fa fa-address-book"></i> Customer</a></li>
-                        <li>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                                <i class="fa fa-rocket"></i> Become A Bee Partner
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- Logout Confirmation Modal -->
-                <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="layout">
+                    <!-- Header -->
+                    <header class="container-fluid">
+                        <div
+                            class="d-flex justify-content-between align-items-center border-bottom"
+                        >
+                            <!-- Menu Icon visible on mobile-->
+                            <img
+                                class="pe-2 d-block d-lg-none hamburger"
+                                src="/custom_web_kreator/static/src/nev-icon.svg"
+                            />
+                            <!-- Logo -->
+                            <img src="/custom_web_kreator/static/src/logo.png" />
+                            <!-- Menu-->
+                            <div class="d-lg-flex d-none gap-4">
+                                <div
+                                    class="p-lg-2 p-1 d-flex flex-column align-items-center"
+                                >
+                                    <a href="/master_income_data" class='text-center'>
+                                        <i class="ri-line-chart-fill"></i>
+                                        <p>
+                                            Income Data
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
+                                    <a href="/nreferral" class='text-center'>
+                                        <i class="ri-links-fill"></i>
+                                        <p>
+                                            Links
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
+                                    <a href="/nkyc" class='text-center' >
+                                        <i class="ri-profile-fill"></i>
+                                        <p>
+                                            KYC
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="active p-lg-2 p-1 d-flex flex-column align-items-center">
+                                    <a href="/creator-lead" class='text-center'>
+                                        <i class="ri-megaphone-fill"></i>
+                                        <p>
+                                            Lead
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
+                                    <a href="/nleaderboard" class='text-center'>
+                                        <i class="ri-award-fill"></i>
+                                        <p>
+                                            Leaderboard
+                                        </p>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="modal-body">
-                                You will be logged out of your account and redirected to create Bee Partner account. Are you sure you want to continue?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Not Now</button>
-                                <button id="confirmLogout" class="btn btn-warning">Yes, Logout</button>
-                            </div>
+                            <!-- Profile -->
+                            <t t-call="custom_web_kreator.partner_profile_dropdown" />
                         </div>
+                    </header>
+                    <div class="d-flex w-100">
+                        <!-- Sidebar -->
+                        <div class="sidebar border-end d-none d-lg-block">
+                            <nav class="py-3 px-2">
+                                <!-- Sidebar Menu -->
+                                <ul class="d-flex flex-column gap-2">
+                                    <a href="/master">
+                                        <li>
+                                            <i class="ri-dashboard-fill"></i> Get Started </li>
+                                    </a>
+                                    <a href="/master_income_data">
+                                        <li class="active">
+                                            <i class="ri-discount-percent-fill"></i> Sales </li>
+                                    </a>
+                                    <!-- Sales Dropdown -->
+                                    <div class="ps-2 d-block d-lg-none">
+                                        <li>
+                                            <a href="/master_income_data"><i
+                                                    class="ri-subtract-fill"></i> Income Data</a>
+                                        </li>
+                                        <li>
+                                            <a href="/nreferral"><i class="ri-subtract-fill"></i>
+                                                Links</a>
+                                        </li>
+                                        <li>
+                                            <a href="/nkyc"><i class="ri-subtract-fill"></i> kyc</a>
+                                        </li>
+                                        <li>
+                                            <i class="ri-subtract-fill"></i>
+                                            <a href="/creator-lead">Lead</a>
+                                        </li>
+                                        <li>
+                                            <a href="/nleaderboard"><i
+                                                    class="ri-subtract-fill"></i> Leaderboard</a>
+                                        </li>
+                                    </div>
+                                    <a href="/nmy-courses">
+                                        <li>
+                                            <i class="ri-product-hunt-fill"></i> Products </li>
+                                    </a>
+                                    <a href="/forumsection">
+                                        <li>
+                                            <i class="ri-user-community-fill"></i> Connect with
+                                            Partner </li>
+                                    </a>
+                                    <a href="/coming-soon">
+                                        <li>
+                                            <i class="ri-user-fill"></i> Customer </li>
+                                    </a>
+                                    <a href="#">
+                                        <li>
+                                            <i class="ri-user-community-fill"></i> Become a Bee
+                                            Partner </li>
+                                    </a>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- Sidebar Backdrop on mobile -->
+                        <div class="backdrop d-none d-lg-none"></div>
+                        <!-- Main Content -->
+                        <main class="flex-grow-1 p-4 overflow-auto">
+                            <!-- Welcome Section -->
+                            <section class="welcome">
+                                <div
+                                    class="d-flex gap-2 flex-column flex-lg-row align-items-lg-center justify-content-between"
+                                >
+                                    <h1 class="d-flex align-items-center gap-1">
+                                        <img class="play"
+                                            src="/custom_web_kreator/static/src/user_icon.svg" />
+                                        Welcome,<t
+                                            t-esc="request.env.user.name" /></h1>
+                                    <div class="d-flex gap-3 align-items-center">
+                                        <a href="#"
+                                        >Tutorial <img class="ms-1"
+                                                src="/custom_web_kreator/static/src/play.png"
+                                            /></a>
+                                        <a href="#"
+                                        ><img
+                                                src="/custom_web_kreator/static/src/Whatsapp.png" />
+                                            +1234567890</a>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- Lead Details -->
+                            <section class="my-4">
+                                <div class="lead-type mb-5">
+                                    <span class="active" id='unverifiedOrdersBtnForCreator'>
+                                        Unverified Orders
+                                    </span>
+                                    <span id='visitorsBtnForCreator'>
+                                        Visitors
+                                    </span>
+                                </div>
+                                <!-- Lead Table -->
+                                <div id="unverifiedOrdersTableForCreator">
+                                    <div class="row">
+                                        <div class="col-lg-8 col-12 lead-table p-3">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>NAME</th>
+                                                        <th>EMAIL</th>
+                                                        <th>NUMBER</th>
+                                                        <th>STATUS</th>
+                                                        <th>DATE</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <t t-foreach="sale_orders" t-as="order">
+                                                        <tr>
+                                                            <td>
+                                                                <t t-esc="order.partner_id.name" />
+                                                            </td>
+                                                            <td>
+                                                                <t t-if="order.partner_id.email">
+                                                                    <a
+                                                                        t-att-href="'mailto:' + order.partner_id.email">
+                                                                        <t
+                                                                            t-esc="order.partner_id.email" />
+                                                                    </a>
+                                                                </t>
+                                                                <t t-else="">No Email</t>
+                                                            </td>
+                                                            <td>
+                                                                <t t-esc="order.partner_id.phone" />
+                                                            </td>
+                                                            <td>
+                                                                <t t-esc="order.state" />
+                                                            </td>
+                                                            <td>
+                                                                <t
+                                                                    t-esc="order.date_order.strftime('%Y-%m-%d %H:%M:%S')" />
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-lg-4 d-none d-lg-block col-12">
+                                            <img class="write"
+                                                src="/custom_web_kreator/static/src/write.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Lead Table -->
+                                <div id="visitorsTableForCreator">
+                                    <div class="row">
+                                        <div class="col-lg-8 col-12 lead-table p-3">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>NAME</th>
+                                                        <th>FIRST CONNECTION</th>
+                                                        <th>LAST CONNECTION</th>
+                                                        <th>VISITS</th>
+                                                        <th>PAGES</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <t t-foreach="sale_orders" t-as="order">
+                                                        <tr>
+                                                            <td>
+                                                                <t t-esc="order.partner_id.name" />
+                                                            </td>
+                                                            <td>
+                                                                <t t-if="order.partner_id.email">
+                                                                    <a
+                                                                        t-att-href="'mailto:' + order.partner_id.email">
+                                                                        <t
+                                                                            t-esc="order.partner_id.email" />
+                                                                    </a>
+                                                                </t>
+                                                                <t t-else="">No Email</t>
+                                                            </td>
+                                                            <td>
+                                                                <t t-esc="order.partner_id.phone" />
+                                                            </td>
+                                                            <td>
+                                                                <t t-esc="order.state" />
+                                                            </td>
+                                                            <td>
+                                                                <t
+                                                                    t-esc="order.date_order.strftime('%Y-%m-%d %H:%M:%S')" />
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-lg-4 d-none d-lg-block col-12">
+                                            <img class="write"
+                                                src="/custom_web_kreator/static/src/write.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </main>
                     </div>
-                </div>
-                <script>
-                    document.getElementById("confirmLogout").addEventListener("click", function() {
-                        // Perform the logout by navigating to the logout URL
-                        window.location.href = "/web/session/logout?redirect=/web/signup?user_type=partner";
-                    });
-                </script>
 
-                <div class="main-content">
-                    <!-- Top Block -->
-                    <t t-call="custom_web_kreator.user_block" />
-
-                    <!-- Tab and Date Picker Section -->
-                    <form method="get" action="/creator/lead" id="date-filter-form1">
-                        <div class="row">
-                            <div class="col-md-4">
-                              <div class="tab-container">
-                                <button type="button" class="tab-button active" id="unverifiedOrdersBtnForCreator">Unverified Orders</button>
-                                <button type="button" class="tab-button" id="visitorsBtnForCreator">Visitors</button>
-                            </div>
-
-
-                            </div>
-                            <div class="col-md-3"></div>
-                            <div class="col-md-5 d-flex justify-content-end">
-                              <span class="date-range">From 
-                                <input type="date" name="start_date" t-att-value="start_date and start_date.strftime('%Y-%m-%d')" onchange="document.getElementById('date-filter-form1').submit();" style="text-transform: uppercase;font-size: 0.75rem;"/>
-                                To 
-                                <input type="date" name="end_date" t-att-value="end_date and end_date.strftime('%Y-%m-%d')" onchange="document.getElementById('date-filter-form1').submit();" style="text-transform: uppercase;font-size: 0.75rem;"/></span>
-                            </div>
-                        </div>
-                    </form>
-                        
-                    <!-- Table Section -->
-                    <div class="row bg-white border1">
-                        <div class="col-md-12" id="unverifiedOrdersTableForCreator">
-                            <table class="table table--alternate">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Contact Number</th>
-                                            <th>State</th>
-                                            <th>Date &amp; Time</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <t t-foreach="sale_orders" t-as="order">
-                                        <tr>
-                                            <td>
-                                                <t t-esc="order.partner_id.name"/>
-                                            </td>
-                                            <td>
-                                                <t t-if="order.partner_id.email">
-                                                    <a t-att-href="'mailto:' + order.partner_id.email">
-                                                        <t t-esc="order.partner_id.email"/>
-                                                    </a>
-                                                </t>
-                                                <t t-else="">No Email</t>
-                                            </td>
-                                            <td>
-                                                <t t-esc="order.partner_id.phone"/>
-                                            </td>
-                                            <td>
-                                                <t t-esc="order.state"/>
-                                            </td>
-                                            <td>
-                                                <t t-esc="order.date_order.strftime('%Y-%m-%d %H:%M:%S')"/>
-                                            </td>
-                                        </tr>
-                                    </t>
-                                    
-                                </tbody>
-                                <tfoot>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <!-- Visitors Table -->
-                        <div class="col-md-12" id="visitorsTableForCreator" style="display: none;">
-                            <table class="table table--alternate">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Contact Number</th>
-                                            <th>State</th>
-                                            <th>Date &amp; Time</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <t t-foreach="sale_orders" t-as="order">
-                                        <tr>
-                                            <td>
-                                                <t t-esc="order.partner_id.name"/>
-                                            </td>
-                                            <td>
-                                                <t t-if="order.partner_id.email">
-                                                    <a t-att-href="'mailto:' + order.partner_id.email">
-                                                        <t t-esc="order.partner_id.email"/>
-                                                    </a>
-                                                </t>
-                                                <t t-else="">No Email</t>
-                                            </td>
-                                            <td>
-                                                <t t-esc="order.partner_id.phone"/>
-                                            </td>
-                                            <td>
-                                                <t t-esc="order.state"/>
-                                            </td>
-                                            <td>
-                                                <t t-esc="order.date_order.strftime('%Y-%m-%d %H:%M:%S')"/>
-                                            </td>
-                                        </tr>
-                                    </t>
-
-                                </tbody>
-                                <tfoot>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
+                    <!-- External Script -->
+                    <script src="/custom_web_kreator/static/src/js/script.js"></script>
+                    <!-- bootstrap script -->
+                    <script
+                        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                        crossorigin="anonymous"
+                    ></script>
                     <script>
+                        document.addEventListener("DOMContentLoaded", function () {
                         // Select the buttons
-                        const unverifiedOrdersBtnForCreator = document.getElementById('unverifiedOrdersBtnForCreator');
-                        const visitorsBtnForCreator = document.getElementById('visitorsBtnForCreator');
+                        const unverifiedOrdersBtnForCreator =
+                        document.getElementById('unverifiedOrdersBtnForCreator');
+                        const visitorsBtnForCreator =
+                        document.getElementById('visitorsBtnForCreator');
 
                         // Select the content containers (tables)
-                        const unverifiedOrdersTableForCreator = document.getElementById('unverifiedOrdersTableForCreator');
-                        const visitorsTableForCreator = document.getElementById('visitorsTableForCreator');
+                        const unverifiedOrdersTableForCreator =
+                        document.getElementById('unverifiedOrdersTableForCreator');
+                        const visitorsTableForCreator =
+                        document.getElementById('visitorsTableForCreator');
 
-
+                        // Ensure the default view is set (Unverified Orders visible, Visitors hidden)
+                        unverifiedOrdersTableForCreator.style.display = "block"; 
+                        visitorsTableForCreator.style.display = "none"; 
+                        unverifiedOrdersBtnForCreator.classList.add('active'); 
                         // Function to toggle the active class and table visibility
                         function switchActive(buttonToActivate) {
                         // Remove 'active' class from both buttons
@@ -576,34 +335,30 @@ button {
 
                         // Show/Hide the respective tables
                         if (buttonToActivate === unverifiedOrdersBtnForCreator) {
-                        unverifiedOrdersTableForCreator.style.display = 'block';
-                        visitorsTableForCreator.style.display = 'none';
-                        } else if (buttonToActivate === visitorsBtnForCreator) {
-                        unverifiedOrdersTableForCreator.style.display = 'none';
-                        visitorsTableForCreator.style.display = 'block';
+                        unverifiedOrdersTableForCreator.style.display = "block";
+                        visitorsTableForCreator.style.display = "none";
+                        console.log('Unverified Orders Table Shown');
+                        } else {
+                        unverifiedOrdersTableForCreator.style.display = "none";
+                        visitorsTableForCreator.style.display = "block";
+                        console.log('Visitors Table Shown');
                         }
                         }
 
                         // Add event listeners to the buttons
-                        unverifiedOrdersBtnForCreator.addEventListener('click', () => {
+                        unverifiedOrdersBtnForCreator.addEventListener('click', function () {
                         switchActive(unverifiedOrdersBtnForCreator);
                         });
 
-                        visitorsBtnForCreator.addEventListener('click', () => {
+                        visitorsBtnForCreator.addEventListener('click', function () {
                         switchActive(visitorsBtnForCreator);
                         });
+                        })
 
-                        // Initialize by displaying unverifiedOrdersTableForCreator and hiding visitorsTableForCreator
-                        unverifiedOrdersTableForCreator.style.display = 'block';
-                        visitorsTableForCreator.style.display = 'none';
+
                     </script>
-                    <!-- Main content end -->
                 </div>
             </body>
-            <xpath expr="." position="inside">
-                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                 <script type="text/javascript" src="/apg_js/static/src/js/hide.js"></script>
-            </xpath>
         </template>
     </data>
 </odoo>

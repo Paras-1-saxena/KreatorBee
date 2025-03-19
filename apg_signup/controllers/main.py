@@ -46,7 +46,7 @@ class AuthSignupHome(Home):
             if partner_id.user_type == 'creator':
                 return request.redirect('/master')
             elif partner_id.user_type == 'partner':
-                return request.redirect('/partner/income')
+                return request.redirect('/partner')
             elif partner_id.user_type == 'customer':
                 if redirect_url:
                     del request.session['redirect_after_signup']  # Clear session value after use

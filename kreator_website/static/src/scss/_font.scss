@@ -1,0 +1,64 @@
+@font-face {
+  font-family: "Futura";
+  src: url("../fonts/Futura Book.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Jost-Bold";
+  src: url("../fonts/Jost-Bold.ttf") format("truetype");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("../fonts/Futura Medium.ttf") format("truetype");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fonts/IBMPlexMono-Medium.ttf") format("truetype");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../fonts/SpaceGrotesk-Regular.ttf") format("truetype");
+  font-weight: 600;
+}
+.fs-45 {
+    font-size: 44px;
+    line-height: 117%; /* 53.447px */
+}
+.fs-64 {
+    font-size: 64px;
+    line-height: 117%; /* 53.447px */
+}
+.fs-60 {
+    font-size: 60px;
+}
+.fs-54 {
+    font-size: 54px;
+}
+.fs-40 {
+    font-size: 40px;
+    line-height: 117%; /* 53.447px */
+}
+.fs-48 {
+    font-size: 48px;
+    line-height: 117%; /* 53.447px */
+}
+.fs-34{
+    font-size:  34px;
+}
+.space_gro {
+    font-family: "Space Grotesk";
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.ibm_plex {
+    font-family: "IBM Plex Mono";
+}
