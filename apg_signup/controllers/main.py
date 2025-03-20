@@ -321,7 +321,7 @@ class AuthSignupHome(Home):
             
             partner_id.sudo().write(partner_vals)
             if partner_id.user_type == 'creator':
-                return request.redirect('/master')
+                return request.redirect('/creator/course_detail')
             elif partner_id.user_type == 'partner':
                 return request.redirect('/master-partner')
             elif partner_id.user_type == 'customer':

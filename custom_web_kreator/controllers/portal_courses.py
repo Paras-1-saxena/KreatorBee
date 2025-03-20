@@ -832,10 +832,10 @@ class PortalMyCourses(http.Controller):
             approve_course_count = request.env['slide.channel'].sudo().search_count(
                 [('create_uid', '=', user.id), ('state', '=', 'published')]) > 0
 
-            if course_count:
-                return http.request.redirect('/creator/my-courses')
+            if course_count and not approve_course_count:
+                return http.request.redirect('/creator/welcome')
             else:
-                return http.request.render('custom_web_kreator.master', {'course_count': course_count})
+                return http.request.redirect('/creator/income')
         else:
             raise NotFound()
 

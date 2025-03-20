@@ -348,12 +348,12 @@
                                         </a>
                                     </li>
                                 </div>
-                                <a t-att-href="course_count and '/nmy-courses' or '#'"
-                                   t-att-class="('disabled-link' if not course_count else 'active')">
+                                <a t-att-href="(course_count and approve_course_count) and '/forumsection' or '#'"
+                                   t-att-class="('disabled-link' if not course_count or (course_count and not approve_course_count) else '')">
                                     <li>
                                         <i class="ri-product-hunt-fill"></i>
                                         Products
-                                        <t t-if="not course_count">
+                                        <t t-if="not course_count or (course_count and not approve_course_count)">
                                             <i class="fa fa-lock" style="margin-left: 5px;"></i>
                                         </t>
                                     </li>
