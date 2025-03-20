@@ -3,6 +3,19 @@
 <!-- See LICENSE file for full copyright and licensing details. -->
 
 <odoo>
+
+<record id="payment_method_instamojo_transfer" model="payment.method">
+        <field name="name">Instamojo</field>
+        <field name="code">instamojo_checkout</field>
+        <field name="sequence">1000</field>
+        <field name="image" type="base64" file="payment_instamojo_checkout/static/src/img/instamojo_icon.png"/>
+        <field name="support_tokenization">False</field>
+        <field name="support_express_checkout">False</field>
+        <field name="support_refund">none</field>
+    </record>
+
+
+
     <record id="payment_instamojo_checkout" model="payment.provider">
         <field name="name">Instamojo</field>
         <field name="code">instamojo_checkout</field>
@@ -11,6 +24,8 @@
         <field name="redirect_form_view_id" ref="payment_instamojo_checkout.instamojo_checkout_form"/>
         <field name="company_id" ref="base.main_company"/>
         <field name="allow_tokenization">True</field>
+        <field name= "instamojo_client_id">demo</field>
+        <field name = "instamojo_client_secret">demo</field>
         <field name="payment_method_ids"
                 eval="[Command.set([
                     ref('payment.payment_method_card'),

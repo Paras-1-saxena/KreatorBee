@@ -26,32 +26,17 @@ class PaymentTransactionInstamojoCheckout(models.Model):
         txValues = self.provider_id.instamojo_checkout_form_generate_values(processing_values)
         return txValues
 
-    def _get_tx_from_notification_data(self, provider_code, notification_data):
-        tx = super()._get_tx_from_notification_data(provider_code, notification_data)
-        if provider_code != 'instamojo_checkout' or len(tx) == 1:
-            return tx
-        reference = notification_data['payment_request']['purpose']
-        if not reference:
-            raise ValidationError("Instamojo Payment: " + _("Received data with missing reference."))
-
-        tx = self.search([('reference', '=', reference), ('provider_code', '=', 'instamojo_checkout')])
-        if not tx:
-            raise ValidationError(
-                "Instamojo Payment: " + _("No transaction found matching reference %s.", reference)
-            )
-        return tx
-
     def _process_notification_data(self, data):
         res = super()._process_notification_data(data)
         if self.provider_code != 'instamojo_checkout':
             return res
-        status = data['payment_request']['payment']['status']
+        status = data.get('status')
         result = self.write({
-            'provider_reference': data['payment_request']['payment']['payment_id'],
+            'provider_reference': data.get('id')
         })
-        if status == 'Credit':
+        if status :
             self._set_done()
-        if status == 'Failed':
+        if status == False:
             self._set_cancel()
         else:
             self._set_pending()

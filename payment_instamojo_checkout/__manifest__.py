@@ -17,7 +17,7 @@
   "name"                 :  "Website Instamojo Payment Acquirer",
   "summary"              :  """Payment Acquirer: Instamojo Implementation""",
   "category"             :  "Website",
-  "version"              :  "1.0.0",
+  "version"              :  "1.0.1",
   "author"               :  "Webkul Software Pvt. Ltd.",
   "license"              :  "Other proprietary",
   "website"              :  "https://store.webkul.com/Odoo-Website-Instamojo-Payment-Acquirer.html",

@@ -91,6 +91,7 @@ class PaymentProviderInstamojoCheckout(models.Model):
         if values['currency'].name != 'INR':
             raise ValidationError('%s currency is not supported by instamojo payment gateway. Instamojo processes payments only in Indian Rupees (₹).'% (values['currency'].name))
         elif values.get('amount') > 200000:
+            # https://docs.instamojo.com/reference/create-a-payment-request-1
             raise ValidationError('With Instamojo payment gateway you can pay a maximum of ₹2,00,000 in one transaction.')
         if values.get('amount') < 9:
             raise ValidationError('With Instamojo payment gateway you can pay a minimum of ₹9 in one transaction but your cart value is ₹{:.2f}, please choose another payment gateway or buy some more products.'.format(values.get('amount')))
@@ -102,20 +103,20 @@ class PaymentProviderInstamojoCheckout(models.Model):
 
     def _get_payment_status(self, data):
         headers = { "Authorization": "Bearer " + self._get_access_token()}
-        print("\n\n\n===========data===========",data)
-        payment_id = data.get('id',False)
-        api_end = "https://api.instamojo.com/v2/payments/" + payment_id if self.state == 'enabled' else \
-                    "https://api.test.instamojo.com/v2/payments/" + payment_id
-        try:
-            result = requests.post(api_end,headers=headers)
-            print("\n\n\n===========result===========",result)
-            print("\n\n\n===========json.loads(result)===========",json.loads(result))
-            result_content = json.loads(result.content)
-            _logger.info(f'\n Instamojo Payment Status {pprint.pformat(result_content)} \n')
-            if not result_content.get('status'):
-                raise UserError(result_content.get('message'))
-            else:
-                return result_content
-        except Exception as e:
-            _logger.warning("#WKDEBUG---Instamojo Payment Status----Exception-----%r---------" % (e))
-            raise UserError(e)
+        payment_id = data.get('payment_id',False)
+        if payment_id:
+            api_end = "https://api.instamojo.com/v2/payments/" + payment_id if self.state == 'enabled' else \
+                        "https://api.test.instamojo.com/v2/payments/" + payment_id
+            try:
+                result = requests.get(api_end,headers=headers)
+                result_content = json.loads(result.content)
+                _logger.info(f'\n Instamojo Payment Status {pprint.pformat(result_content)} \n')
+                if not result_content.get('status'):
+                    raise UserError(result_content.get('message'))
+                else:
+                    return result_content
+            except Exception as e:
+                _logger.warning("#WKDEBUG---Instamojo Payment Status----Exception-----%r---------" % (e))
+                raise UserError(e)
+        else:
+            raise ValidationError(_("Issue in finding instamojo payment id"))    
