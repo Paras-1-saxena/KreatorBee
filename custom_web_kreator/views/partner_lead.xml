@@ -170,30 +170,30 @@
                                     <!-- Sales Dropdown -->
                                     <div class="ps-2 d-block d-lg-none">
                                         <li>
-                                            <a href="/creator/income">
+                                            <a href="/partner/income">
                                                 <i
                                                         class="ri-subtract-fill"></i>
                                                 Income Data
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/creator/referral">
+                                            <a href="/partner-referral">
                                                 <i class="ri-subtract-fill"></i>
                                                 Links
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/creator/kyc">
+                                            <a href="/partner/kyc">
                                                 <i class="ri-subtract-fill"></i>
                                                 kyc
                                             </a>
                                         </li>
-                                        <li>
+                                        <li class="active">
                                             <i class="ri-subtract-fill"></i>
-                                            <a href="/creator/lead">Lead</a>
+                                            <a href="/partner/lead">Lead</a>
                                         </li>
                                         <li>
-                                            <a href="/creator/leaderboard">
+                                            <a href="/partner/leaderboard">
                                                 <i
                                                         class="ri-subtract-fill"></i>
                                                 Leaderboard

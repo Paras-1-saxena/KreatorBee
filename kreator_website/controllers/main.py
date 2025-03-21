@@ -6,6 +6,11 @@ from odoo.http import request
 
 class KreatorWebsite(http.Controller):
 
+    @http.route('/gquh2blrsego3n2x0f629e1ks3uc5x.html', auth='public', website=True)
+    def main_test(self, **kwargs):
+        test='a'
+        return request.redirect('/kreator_website/static/src/html/gquh2blrsego3n2x0f629e1ks3uc5x.html')
+
     @http.route('/landing/page/1', auth='public', website=True)
     def landing_page_1(self, **kwargs):
         course = request.env['slide.channel'].sudo().search([('id', '=', kwargs.get('course_id'))])
@@ -45,7 +50,7 @@ class KreatorWebsite(http.Controller):
             'cc': course.line_ids, 'm1': course.m1, 'm2': course.m2, 'm3': course.m3, 'm4': course.m4, 'm5': course.m5,
             'm6': course.m6, 'my_image_icon': course.my_image_icon, 'about_me_line_ids': course.about_me_line_ids,
             'course_ids': course.course_ids, 'student_line_ids': course.student_line_ids, 'faq_ids': course.faq_ids,
-            'h4': course.h4, 'c11': course.c11, 'image1': course.image1, 'course_id': course.id,
+            'h4': course.h4, 'c11': course.c11, 'image1': course.image1, 'course_id': course.id, 'course': course,
             'product_template_id': course.product_id.product_tmpl_id.id, 'product_id': course.product_id.id,
             'price1': course.price1, 'price2': course.price2, 'num_to_word': {1: 'One', 2: 'Two', 3: 'Three',
                                                                               4: 'Four', 5: 'Five', 6: 'Six',

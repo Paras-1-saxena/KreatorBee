@@ -78,6 +78,7 @@
         'views/partner_term.xml',
         'views/partner_welcome.xml',
         'views/payment_page_cart.xml',
+        'views/partner_promotional_consume.xml',
         # 'views/blog_post_views.xml',
         'data/email_templates.xml'
     ],

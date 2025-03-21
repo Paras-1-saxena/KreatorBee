@@ -1,6 +1,6 @@
 <odoo>
     <data>
-        <template id="promotional_detail" name="Promotional Detail">
+        <template id="promotional_consume" name="Promotional Detail">
             <head>
                 <!-- meta tags -->
                 <meta charset="UTF-8"/>
@@ -449,56 +449,27 @@
                             <!-- Lead Details -->
                             <div class="row my-4">
                                 <div class="col-1 text-center">
-                                    <a href="/partner/promotional-material" class="border1 rounded p-2" style="background-color:#ffc107;">
+                                    <a t-att-href="f'/partner/promotional-material/details?course_id={course_id}'" class="border1 rounded p-2" style="background-color:#ffc107;">
                                         Back
                                         <i class="ri-arrow-left-fill"></i>
                                     </a>
                                 </div>
-                            </div>
-                            <div class="row bg-white border1 my-4 p-4 rounded">
-                                <!-- Promotional Materials Table -->
-                                <div class="col-md-12">
-                                    <h4>Promotional Materials for
-                                        <t t-esc="course.name"/>
+                                <div class="col-6">
+                                    <h4>
+                                        <t t-esc="course_name"/>
                                     </h4>
-                                    <table class="table table--alternate">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>File Name</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <t t-foreach="promotional_materials" t-as="material">
-                                                <tr>
-                                                    <td>
-                                                        <t t-esc="course.name"/>
-                                                    </td>
-                                                    <td>
-                                                        <t t-esc="material.promotional_attachment_name or 'N/A'"/>
-                                                    </td>
-                                                    <td>
-                                                        <t t-if="material.document_type == 'doc'">
-                                                            <a t-att-href="'/download_attachment/%s' % material.id"
-                                                               class="btn btn-warning mt-3 mb-1">
-                                                                Download
-                                                            </a>
-                                                        </t>
-                                                        <t t-if="material.document_type == 'url'">
-                                                            <a t-att-href="f'/partner/promotional-material/consume?course_id={course.id}&amp;material_id={material.id}'"
-                                                               class="btn btn-warning mt-3 mb-1">
-                                                                Open Link
-                                                            </a>
-                                                        </t>
-                                                    </td>
-                                                </tr>
-                                            </t>
-                                        </tbody>
-                                    </table>
                                 </div>
-
-
+                            </div>
+                            <div class="row bg-white my-4 p-4 rounded justify-content-around">
+                                <!-- Promotional Materials Table -->
+                                <div class="col-8" style="padding:56.25% 0 0 0;position:relative; height:80vh;">
+                                    <iframe t-att-src="f'https://player.vimeo.com/video/{promote_url}?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479'"
+                                            frameborder="0"
+                                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                            style="position:absolute;top:0;left:0;width:100%;height:80%;"
+                                            title="outcome"></iframe>
+                                </div>
+                                <script src="https://player.vimeo.com/api/player.js"></script>
                             </div>
 
                         </main>

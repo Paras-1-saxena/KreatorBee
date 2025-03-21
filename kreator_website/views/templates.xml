@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 <div class="col-7 p-5">
-                    <img t-att-src="'/web/image/slide.channel/%s/image_icon' % course_id" alt="section_1"
+                    <img t-att-src="image_data_uri(course.image_1920)" alt="section_1"
                          class="img-fluid rounded-50 w-100"/>
                 </div>
             </div>
@@ -315,7 +315,7 @@
                         <div class="fs-45 p-5 jost-bold">About
                             <span class="text-kreator-yellow-900">Me</span>
                         </div>
-                        <img t-att-src="'/web/image/slide.channel/%s/my_image_icon' % course_id" alt="About Me"
+                        <img t-att-src="image_data_uri(course.my_image_icon)" alt="About Me"
                              class="img-fluid object-fit-cover rounded-30"/>
                     </div>
                 </div>
@@ -463,7 +463,7 @@
                         <div class="review w-50 bg-black">
                             <div class="d-flex flex-column justify-content-center align-items-center">
                                 <img width="94" height="94"
-                                     t-att-src="'/web/image/our.student.line/%s/image' % student_line_ids[0].id"
+                                     t-att-src="image_data_uri(student_line_ids[0].image)"
                                      alt="Quote" class="img-fluid object-fit-cover"/>
                                 <div class="d-flex gap-5 justify-content-center align-items-center flex-start">
                                     <span class="text-kreator-yellow-900 fs-4">
@@ -541,7 +541,7 @@
                         </div>
                     </div>
                 </div>
-                <img t-att-src="'/web/image/slide.channel/%s/image1' % course_id" alt="section9" class="img-fluid" width="482"/>
+                <img t-att-src="image_data_uri(course.image1)" alt="section9" class="img-fluid" width="482"/>
             </div>
         </div>
     </template>
@@ -581,7 +581,7 @@
                         </div>
                     </div>
                     <div class="col-4">
-                        <img t-att-src="'/web/image/slide.channel/%s/image1' % course_id" alt="section_10"
+                        <img t-att-src="image_data_uri(course.image1)" alt="section_10"
                              class="img-fluid w-100"/>
                     </div>
                 </div>
@@ -801,7 +801,7 @@
                     </div>
                     <div class="col"/>
                     <div class="col-5">
-                        <img t-att-src="'/web/image/slide.channel/%s/image_icon' % course_id" alt="section14"
+                        <img t-att-src="image_data_uri(course.image_icon)" alt="section14"
                              class="img-fluid"/>
                     </div>
                 </div>
@@ -1277,7 +1277,7 @@
                         <div class="d-flex justify-content-between flex-column align-items-center gap-2"
                              style="height:550px;">
                             <div class="border-kreator-yellow-900 rounded-30" style="border: 4px solid; height:100%;">
-                                <img t-att-src="'/web/image/slide.channel/%s/my_image_icon' % course_id"
+                                <img t-att-src="image_data_uri(course.my_image_icon)"
                                      alt="Online Course Illustration"
                                      class="img-fluid rounded-30 position-relative" style="height: 100%"/>
                             </div>
@@ -1365,7 +1365,7 @@
                     <div class="col"/>
                     <div class="align-items-center bg-kreator-yellow-900 col-5 d-flex h-75 justify-content-center rounded-50"
                          style="border: 5px solid black; box-shadow: 15px 15px black;">
-                        <img t-att-src="'/web/image/slide.channel/%s/image_icon' % course_id"
+                        <img t-att-src="image_data_uri(course.image_icon)"
                              style="transform: scaleX(-1);"
                              alt="section14" class="object-fit-none img-fluid"/>
                     </div>
@@ -1530,7 +1530,7 @@
                 </div>
                 <div class="container">
                     <div class="d-flex justify-content-center flex-column gap-2 align-items-center">
-                        <img t-att-src="'/web/image/slide.channel/%s/image_icon' % course_id" alt="section23"
+                        <img t-att-src="image_data_uri(course.image_icon)" alt="section23"
                              class="img-fluid position-relative"/>
                     </div>
                 </div>
@@ -1858,7 +1858,7 @@
                     <div class="d-flex justify-content-between flex-column align-items-center gap-2"
                          style="height:550px;">
                         <div class="border-kreator-yellow-900 rounded-30" style="border: 4px solid; height:100%">
-                            <img t-att-src="'/web/image/slide.channel/%s/my_image_icon' % course_id"
+                            <img t-att-src="image_data_uri(course.my_image_icon)"
                                  alt="Online Course Illustration"
                                  class="img-fluid rounded-30 position-relative" style="height: 100%;"/>
                         </div>
@@ -2083,7 +2083,7 @@
                         </div>
                     </div>
                 </div>
-                <img t-att-src="'/web/image/slide.channel/%s/image1' % course_id" alt="section9" class="img-fluid" width="482"/>
+                <img t-att-src="image_data_uri(course.image1)" alt="section9" class="img-fluid" width="482"/>
             </div>
         </div>
     </template>

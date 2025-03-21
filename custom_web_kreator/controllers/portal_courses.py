@@ -11,7 +11,6 @@ from odoo.addons.website.controllers.main import QueryURL
 from odoo.http import content_disposition
 
 
-
 class PortalMyCourses(http.Controller):
 
     # Not in Use Bharat/Roystan
@@ -171,7 +170,7 @@ class PortalMyCourses(http.Controller):
             return http.request.render('custom_web_kreator.nleaderboard_page', values)
         else:
             raise NotFound()
-    
+
     # Not in Use Bharat/Roystan
     # @http.route('/sales', type='http', auth='public', website=True)
     # def sales_page(self, **kwargs):
@@ -603,7 +602,7 @@ class PortalMyCourses(http.Controller):
     @http.route(['/consume/course/<int:course_id>'], type='http', auth="public", website=True)
     def consume_to_course(self, course_id, **kwargs):
         # You can add custom logic here before redirecting
-        course = request.env['slide.channel'].sudo().search([('id', '=', course_id)],limit=1)
+        course = request.env['slide.channel'].sudo().search([('id', '=', course_id)], limit=1)
         if not course.exists():
             return request.redirect('/404')  # Redirect if the course does not exist
         # Redirect to the target URL
@@ -1197,7 +1196,7 @@ class PortalMyCourses(http.Controller):
 
     # @http.route('/creator-dashboard', type='http', auth="public", website=True)
     # def creator_layout(self, **kwargs):
-        # return http.request.render('custom_web_kreator.creator_dashboard', {})
+    # return http.request.render('custom_web_kreator.creator_dashboard', {})
 
     # @http.route('/partner-dashboard', type='http', auth="public", website=True)
     # def partner_layout(self, **kwargs):
@@ -1291,7 +1290,7 @@ class PortalMyCourses(http.Controller):
         my_cart_id = request.env['my.product.cart'].sudo().create({
             'course_id': course_id,
             'partner_id': partner.id,
-            })
+        })
         return request.redirect('/choose-product')
 
     @http.route('/partner/myproducts', type='http', auth="public", website=True)
@@ -1322,8 +1321,6 @@ class PortalMyCourses(http.Controller):
             product_cart_id.sudo().unlink()
             print("Product Removed Successfully")
         return request.redirect('/partner/myproducts')
-
-
 
     @http.route('/my-product', type='http', auth="public", website=True)
     def myproduct_new(self, **kwargs):
@@ -1684,7 +1681,6 @@ class PortalMyCourses(http.Controller):
         else:
             raise NotFound()
 
-
     # @http.route('/partner_income_data', type='http', auth='public', website=True)
     # def partner_income(self, **kwargs):
     #     # Render the data page template
@@ -1695,8 +1691,7 @@ class PortalMyCourses(http.Controller):
     #     # Render the data page template
     #     return http.request.render('custom_web_kreator.creator_landing_page')
 
-
-    #Pass Data through JS
+    # Pass Data through JS
     @http.route('/creator/landing-page-js', type='http', auth='public', methods=['POST'], csrf=False)
     def handle_form_data(self, **kwargs):
         # Get the list from the form_data field
@@ -2664,8 +2659,8 @@ class PortalMyCourses(http.Controller):
             'text_color': text_color,
             'background_color': background_color,
         }
-        print("values",values)
-        
+        print("values", values)
+
         if landing_id:
             product_id = landing_id.product_id.id
             if not product_id:
@@ -2673,11 +2668,11 @@ class PortalMyCourses(http.Controller):
             product_template_id = landing_id.product_id.id
             values['product_id'] = product_id
             values['product_template_id'] = product_template_id
-            
+
         # Check if session has referral access
         session_data = request.session.get('course_access', {})
         partner_id = session_data.get('partner_id')
-        
+
         user = request.env.user
         partner = user.partner_id
 
@@ -2761,7 +2756,6 @@ class PortalMyCourses(http.Controller):
             'course': course,
             'promotional_materials': course.promotional_material_ids
         })
-
 
     @http.route('/download_attachment/<int:material_id>', type='http', auth='public')
     def download_attachment(self, material_id, **kwargs):
@@ -2884,11 +2878,11 @@ class PortalMyCourses(http.Controller):
             # Redirect based on user type
             user_type = user.user_type
             if user_type == 'creator':
-                return redirect('/creator/my-courses')
+                return request.redirect('/creator/my-courses')
             elif user_type == 'customer':
-                return redirect('/customer/mycourses')
+                return request.redirect('/customer/mycourses')
             elif user_type == 'partner':
-                return redirect('/partner/income')
+                return request.redirect('/partner/income')
 
         # Fetch updated details
         phone = partner.phone if partner and partner.phone else ''
@@ -2972,6 +2966,54 @@ class PortalMyCourses(http.Controller):
         else:
             raise NotFound()
 
+    @http.route('/partner/promotional-material/consume', type='http', auth='public', website=True, methods=['GET', 'POST'])
+    def customer_support(self, **kwargs):
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
+
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'partner']:
+            try:
+                course_id = kwargs.get('course_id')
+                material_id = int(kwargs.get('material_id'))
+                if not course_id or not material_id:
+                    raise NotFound()
+                course = request.env['slide.channel'].sudo().search([('id', '=', int(course_id))], limit=1)
+                promote_url = course.promotional_material_ids.filtered(lambda pm: pm.id == material_id).promotional_url
+                values = {
+                    'course_id': course_id,
+                    'course_name': course.name,
+                    'promote_url': promote_url
+                }
+                return request.render('custom_web_kreator.promotional_consume', values)
+            except Exception as ex:
+                raise NotFound()
+        else:
+            raise NotFound()
+
+    @http.route('/partner/raise/query', type='http', auth='public', website=True, methods=['GET', 'POST'], csrf=False)
+    def customer_support(self, **kwargs):
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
+        # Check if the user is an Internal User or Creator
+        team_id = request.env['helpdesk.team'].sudo().search([('name', '=', 'Partner Support')], limit=1)
+        if not team_id:
+            team_id = request.env['helpdesk.team'].sudo().create({'name': 'Partner Support'})
+        if partner.user_type in ['internal_user', 'partner']:
+            try:
+                query = kwargs.get('query')
+                support_ticket = request.env['helpdesk.ticket'].sudo().create({'name': 'test','description':
+                    query, 'team_id': team_id.id, 'partner_id': partner.id, 'partner_phone': partner.mobile})
+                return request.make_response(
+                    data=json.dumps({'response': "success", 'ticket_id': f' Partner Support {support_ticket.id}'}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=400
+                )
+            except Exception as ex:
+                raise NotFound()
+        else:
+            raise NotFound()
+
     @http.route('/customer-profile', type='http', auth='public', website=True)
     def customer_profile(self, **kwargs):
         # Render the data page template
@@ -2992,7 +3034,6 @@ class PortalMyCourses(http.Controller):
         # Render the data page template
         return http.request.render('custom_web_kreator.partner_video2')
 
-
     @http.route('/partner-video3', type='http', auth='public', website=True)
     def partner_video_three(self, **kwargs):
         # Render the data page template
@@ -3001,7 +3042,7 @@ class PortalMyCourses(http.Controller):
     @http.route('/partner-term', type='http', auth='public', website=True)
     def partner_term(self, **kwargs):
         # Render the data page template
-        return http.request.render('custom_web_kreator.partner_term',)
+        return http.request.render('custom_web_kreator.partner_term', )
 
     @http.route('/submit-terms', type='http', auth='public', website=True, methods=['POST'])
     def submit_terms(self, **post):
@@ -3023,13 +3064,12 @@ class PortalMyCourses(http.Controller):
 
         return request.redirect('/partner-welcome')
 
-
     @http.route('/partner-welcome', type='http', auth='public', website=True)
     def partner_welcome(self, **kwargs):
         # Render the data page template
-        
+
         agreement = request.session.get('agreement', 'No Selection')
-        return http.request.render('custom_web_kreator.partner_welcome',{'agreement':agreement})
+        return http.request.render('custom_web_kreator.partner_welcome', {'agreement': agreement})
 
     @http.route('/get_video_url', type='json', auth="public", website=True)
     def get_video_url(self):

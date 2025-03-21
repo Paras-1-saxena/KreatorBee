@@ -10,7 +10,7 @@
     "summary": """
         This module allows the user signin via OTP.
     """,
-    'depends': ['base', 'mail', 'web', 'website', 'auth_signup'],
+    'depends': ['base', 'mail', 'web', 'website', 'auth_signup', 'portal'],
     'data': [
         "security/ir.model.access.csv",
         "security/security_group.xml",

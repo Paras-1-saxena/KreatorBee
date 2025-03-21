@@ -438,30 +438,30 @@
                                     <!-- Sales Dropdown -->
                                     <div class="ps-2 d-block d-lg-none">
                                         <li>
-                                            <a href="/creator/income">
+                                            <a href="/partner/income">
                                                 <i
                                                         class="ri-subtract-fill"></i>
                                                 Income Data
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/creator/referral">
+                                            <a href="/partner-referral">
                                                 <i class="ri-subtract-fill"></i>
                                                 Links
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/creator/kyc">
+                                            <a href="/partner/kyc">
                                                 <i class="ri-subtract-fill"></i>
                                                 kyc
                                             </a>
                                         </li>
                                         <li>
                                             <i class="ri-subtract-fill"></i>
-                                            <a href="/creator/lead">Lead</a>
+                                            <a href="/partner/lead">Lead</a>
                                         </li>
-                                        <li>
-                                            <a href="/creator/leaderboard">
+                                        <li class="active">
+                                            <a href="/partner/leaderboard">
                                                 <i
                                                         class="ri-subtract-fill"></i>
                                                 Leaderboard
@@ -528,16 +528,16 @@
                                 </div>
                             </section>
                             <!-- Lead Details -->
-<!--                            <div class="row justify-content-end">-->
-<!--                                <div class="col-4">-->
-<!--                                    <div class="tab-menu">-->
-<!--                                        <button class="active">All Time</button>-->
-<!--                                        <button>Yearly</button>-->
-<!--                                        <button>Monthly</button>-->
-<!--                                        <button>This Week</button>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                            <!--                            <div class="row justify-content-end">-->
+                            <!--                                <div class="col-4">-->
+                            <!--                                    <div class="tab-menu">-->
+                            <!--                                        <button class="active">All Time</button>-->
+                            <!--                                        <button>Yearly</button>-->
+                            <!--                                        <button>Monthly</button>-->
+                            <!--                                        <button>This Week</button>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
 
 
                             <!-- Leaderboard Content -->

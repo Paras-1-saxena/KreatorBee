@@ -140,43 +140,27 @@
                                         </a>
                                     </li>
                                     <!-- Sales Dropdown -->
-                                    <div class="ps-2 d-block d-lg-none">
-                                        <li>
-                                            <a href="/partner/income">
-                                                <i class="ri-subtract-fill"></i>
-                                                Income Data
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/partner-referral">
-                                                <i class="ri-subtract-fill"></i>
-                                                Links
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/partner/kyc">
-                                                <i class="ri-subtract-fill"></i>
-                                                kyc
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <i class="ri-subtract-fill"></i>
-                                            <a href="/partner-links">Lead</a>
-                                        </li>
-                                        <li>
-                                            <a href="/partner/leaderboard">
-                                                <i
-                                                        class="ri-subtract-fill"></i>
-                                                Leaderboard
-                                            </a>
-                                        </li>
-                                    </div>
                                     <li class="active">
                                         <a href="/partner/myproducts">
                                             <i class="ri-product-hunt-fill"></i>
                                             Products
                                         </a>
                                     </li>
+                                    <div class="ps-2 d-block d-lg-none">
+                                        <li class="active">
+                                            <a href="/partner/myproducts">
+                                                <i
+                                                        class="ri-subtract-fill"></i>
+                                                My Product
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/partner/product">
+                                                <i class="ri-subtract-fill"></i>
+                                                Choose Product
+                                            </a>
+                                        </li>
+                                    </div>
                                     <li>
                                         <a href="/partner/promotional-material">
                                             <i class="ri-user-community-fill"></i>
@@ -280,7 +264,7 @@
                                                    t-att-value="cart.partner_id.id"/>
                                             <div class="product d-flex">
                                                 <div class="product-img">
-                                                    <a t-att-href="'/landing/page/{}?course_id={}'.format(cart.course_id.landing_page_id, cart.course_id.id)">
+                                                    <a>
                                                         <img
                                                                 t-att-src="image_data_uri(cart.course_id.image_1920) if cart.course_id.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'"
                                                                 alt="Course Image" class="rounded"
@@ -317,11 +301,12 @@
                                                             </button>
                                                         </div>
                                                         <div class="col-6 my-4">
-                                                            <a type="button" class="o-cust-referral-link" style=" background-color:
+                                                            <a type="button" href="/partner-referral"
+                                                               class="o-cust-referral-link" style=" background-color:
                     #ffd000; color: #212529; font-family: 'Poppins', sans-serif; border: none; border-radius: 25px;
                     cursor: pointer; transition: background-color 0.3s ease; font-size: 12px; padding:5px 10px;
                     letter-spacing: 1px;"
-                                                               id="cartCopyReferralLink">Copy Affiliate Link
+                                                            >Generate Affiliate Link
                                                             </a>
                                                         </div>
                                                     </div>

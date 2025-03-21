@@ -2,9 +2,10 @@
 {
     'name': 'Kreator Website',
     'description': 'Kreator',
-    'depends': ['website'],
+    'depends': ['website', 'web'],
     'data': [
         'views/templates.xml',
+        'views/pixel_integration.xml'
     ],
     "assets": {
         "web._assets_frontend_helpers": [

@@ -8,7 +8,8 @@
                 <!-- title -->
                 <title>Kreator Bee | Sales</title>
                 <!-- external css -->
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+                <link rel="stylesheet"
+                      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
                 <link rel="stylesheet" href="/custom_web_kreator/static/src/css/custom_styl.css"/>
                 <!-- bootstrap css -->
                 <link
@@ -455,30 +456,30 @@
                                     <!-- Sales Dropdown -->
                                     <div class="ps-2 d-block d-lg-none">
                                         <li>
-                                            <a href="/creator/income">
+                                            <a href="/partner/income">
                                                 <i
                                                         class="ri-subtract-fill"></i>
                                                 Income Data
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="/creator/referral">
+                                        <li class="active">
+                                            <a href="/partner-referral">
                                                 <i class="ri-subtract-fill"></i>
                                                 Links
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/creator/kyc">
+                                            <a href="/partner/kyc">
                                                 <i class="ri-subtract-fill"></i>
                                                 kyc
                                             </a>
                                         </li>
                                         <li>
                                             <i class="ri-subtract-fill"></i>
-                                            <a href="/creator/lead">Lead</a>
+                                            <a href="/partner/lead">Lead</a>
                                         </li>
                                         <li>
-                                            <a href="/creator/leaderboard">
+                                            <a href="/partner/leaderboard">
                                                 <i
                                                         class="ri-subtract-fill"></i>
                                                 Leaderboard
@@ -637,7 +638,7 @@
                                         </select>
                                         <label>Generated Link</label>
                                         <input type="text" readonly="readonly"
-                                               value="https://www.bizgurukul.com/Signup?id=cbcDJ7DVHoQ&gt;ref=BGbh/Jf$+jbdjlL+ohZsSg=="/>
+                                               value="https://www.kreatorbee.com/"/>
                                         <button class="mr-5" style="width: 70%">Generate Link</button>
                                         <i class="fa fa-copy" style="cursor: pointer;margin-left: 10px;"/>
                                     </div>

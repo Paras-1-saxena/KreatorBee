@@ -408,6 +408,12 @@ class WebsiteSale(payment_portal.PaymentPortal):
         user_type = user.partner_id.user_type  # Assuming user_type is a field in res.partner
         public_user_id = request.website.user_id.id  # Get the public user ID
 
+        if user.id == public_user_id and order and order.order_line:  # if current user is public user
+            # Store the current product URL to return after signup
+            current_url = request.httprequest.referrer
+            request.session['redirect_after_signup'] = current_url
+            return request.redirect('/web/signup?user_type=customer')
+
         if user.id != public_user_id and order and order.order_line:
             # ✅ Fix: Check if already redirected once to prevent loops
             if request.session.get('checkout_redirected'):
