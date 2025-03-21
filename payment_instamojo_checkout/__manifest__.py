@@ -37,4 +37,6 @@
   "price"                :  99,
   "currency"             :  "USD",
   "pre_init_hook"        :  "pre_init_check",
+  'post_init_hook'       :  "post_init_hook",
+  'uninstall_hook'       :  "uninstall_hook",
 }
