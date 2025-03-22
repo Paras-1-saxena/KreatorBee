@@ -2751,12 +2751,13 @@ class PortalMyCourses(http.Controller):
 
         if not course.exists():
             return request.not_found()
-
-        open_link = Markup(f'<a href="/partner/promotional-material/consume?course_id={course.id}&amp;material_id={material.id}"class="btn btn-warning mt-3 mb-1">Open Link</a>')
+        open_links = {}
+        for material in course.promotional_material_ids:
+            open_links.update({material.id: Markup(f'<a href="/partner/promotional-material/consume?course_id={course.id}&amp;material_id={material.id}"class="btn btn-warning mt-3 mb-1">Open Link</a>')})
 
         return request.render('custom_web_kreator.promotional_detail', {
             'course': course,
-            'open_link': open_link,
+            'open_links': open_links,
             'promotional_materials': course.promotional_material_ids
         })
 

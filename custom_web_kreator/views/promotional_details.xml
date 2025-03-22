@@ -486,7 +486,7 @@
                                                             </a>
                                                         </t>
                                                         <t t-if="material.document_type == 'url'">
-                                                            <t t-esc="open_link"/>
+                                                            <t t-esc="open_links.get(material.id)"/>
                                                         </t>
                                                     </td>
                                                 </tr>
