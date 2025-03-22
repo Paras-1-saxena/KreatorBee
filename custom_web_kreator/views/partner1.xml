@@ -109,31 +109,30 @@
                                 <div class="ps-2 d-block d-lg-none">
                                     <li class="active">
                                         <a href="/partner/income">
-                                            <i
-                                                    class="ri-subtract-fill"></i>
+                                            <i class="ri-checkbox-circle-fill"></i>
                                             Income Data
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/partner-referral">
-                                            <i class="ri-subtract-fill"></i>
+                                            <i class="ri-checkbox-blank-circle-line"></i>
                                             Links
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/partner/kyc">
-                                            <i class="ri-subtract-fill"></i>
+                                            <i class="ri-checkbox-blank-circle-line"></i>
                                             kyc
                                         </a>
                                     </li>
                                     <li>
-                                        <i class="ri-subtract-fill"></i>
-                                        <a href="/partner/lead">Lead</a>
+                                        <a href="/partner/lead">
+                                            <i class="ri-checkbox-blank-circle-line"></i>
+                                            Lead</a>
                                     </li>
                                     <li>
                                         <a href="/partner/leaderboard">
-                                            <i
-                                                    class="ri-subtract-fill"></i>
+                                            <i class="ri-checkbox-blank-circle-line"></i>
                                             Leaderboard
                                         </a>
                                     </li>
@@ -167,11 +166,6 @@
                     </div>
                     <!-- Sidebar Backdrop on mobile -->
                     <div class="backdrop d-none d-lg-none"></div>
-
-
-
-
-
 
                     <!-- Main Content -->
                     <main class="flex-grow-1 p-4 overflow-auto">

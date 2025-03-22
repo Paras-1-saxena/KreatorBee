@@ -457,31 +457,29 @@
                                     <div class="ps-2 d-block d-lg-none">
                                         <li>
                                             <a href="/partner/income">
-                                                <i
-                                                        class="ri-subtract-fill"></i>
+                                                <i class="ri-checkbox-blank-circle-line"></i>
                                                 Income Data
                                             </a>
                                         </li>
                                         <li class="active">
                                             <a href="/partner-referral">
-                                                <i class="ri-subtract-fill"></i>
+                                                <i class="ri-checkbox-circle-fill"></i>
                                                 Links
                                             </a>
                                         </li>
                                         <li>
                                             <a href="/partner/kyc">
-                                                <i class="ri-subtract-fill"></i>
+                                                <i class="ri-checkbox-blank-circle-line"></i>
                                                 kyc
                                             </a>
                                         </li>
                                         <li>
-                                            <i class="ri-subtract-fill"></i>
+                                            <i class="ri-checkbox-blank-circle-line"></i>
                                             <a href="/partner/lead">Lead</a>
                                         </li>
                                         <li>
                                             <a href="/partner/leaderboard">
-                                                <i
-                                                        class="ri-subtract-fill"></i>
+                                                <i class="ri-checkbox-blank-circle-line"></i>
                                                 Leaderboard
                                             </a>
                                         </li>

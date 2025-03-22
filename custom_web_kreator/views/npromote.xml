@@ -370,27 +370,25 @@
                                     <div class="ps-2 d-block d-lg-none">
                                         <li class="active">
                                             <a href="/partner/promotional-material">
-                                                <i
-                                                        class="ri-subtract-fill"></i>
+                                                <i class="ri-checkbox-circle-fill"></i>
                                                 Promotional Material
                                             </a>
                                         </li>
                                         <li>
                                             <a href="/partner/training">
-                                                <i class="ri-subtract-fill"></i>
+                                                <i class="ri-checkbox-blank-circle-line"></i>
                                                 Training
                                             </a>
                                         </li>
                                         <li>
                                             <a href="/partner/target">
-                                                <i
-                                                        class="ri-subtract-fill"></i>
+                                                <i class="ri-checkbox-blank-circle-line"></i>
                                                 Targets
                                             </a>
                                         </li>
                                         <li>
                                             <a href="/partner/offers">
-                                                <i class="ri-subtract-fill"></i>
+                                                <i class="ri-checkbox-blank-circle-line"></i>
                                                 Offers
                                             </a>
                                         </li>

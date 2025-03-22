@@ -149,14 +149,13 @@
                                     <div class="ps-2 d-block d-lg-none">
                                         <li class="active">
                                             <a href="/partner/myproducts">
-                                                <i
-                                                        class="ri-subtract-fill"></i>
+                                                <i class="ri-checkbox-circle-fill"></i>
                                                 My Product
                                             </a>
                                         </li>
                                         <li>
                                             <a href="/partner/product">
-                                                <i class="ri-subtract-fill"></i>
+                                                <i class="ri-checkbox-blank-circle-line"></i>
                                                 Choose Product
                                             </a>
                                         </li>
