@@ -486,10 +486,7 @@
                                                             </a>
                                                         </t>
                                                         <t t-if="material.document_type == 'url'">
-                                                            <a t-att-href="f'/partner/promotional-material/consume?course_id={course.id}&amp;material_id={material.id}'"
-                                                               class="btn btn-warning mt-3 mb-1">
-                                                                Open Link
-                                                            </a>
+                                                            <t t-esc="open_link"/>
                                                         </t>
                                                     </td>
                                                 </tr>
