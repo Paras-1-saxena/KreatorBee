@@ -449,10 +449,7 @@
                             <!-- Lead Details -->
                             <div class="row my-4">
                                 <div class="col-1 text-center">
-                                    <a t-att-href="f'/partner/promotional-material/details?course_id={course_id}'" class="border1 rounded p-2" style="background-color:#ffc107;">
-                                        Back
-                                        <i class="ri-arrow-left-fill"></i>
-                                    </a>
+                                    <t t-esc="back"/>
                                 </div>
                                 <div class="col-6">
                                     <h4>

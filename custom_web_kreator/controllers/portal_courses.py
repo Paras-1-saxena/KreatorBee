@@ -2980,10 +2980,12 @@ class PortalMyCourses(http.Controller):
                     raise NotFound()
                 course = request.env['slide.channel'].sudo().search([('id', '=', int(course_id))], limit=1)
                 promote_url = Markup(course.promotional_material_ids.filtered(lambda pm: pm.id == material_id).promotional_url)
+                back = Markup(f'<a href="/partner/promotional-material/details?course_id={course_id}" class="border1 rounded p-2" style="background-color:#ffc107;">Back<i class="ri-arrow-left-fill"></i></a>')
                 values = {
                     'course_id': course_id,
                     'course_name': course.name,
-                    'promote_url': promote_url
+                    'promote_url': promote_url,
+                    'back': back
                 }
                 return request.render('custom_web_kreator.promotional_consume', values)
             except Exception as ex:
