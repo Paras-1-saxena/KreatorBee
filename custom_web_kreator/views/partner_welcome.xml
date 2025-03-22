@@ -335,21 +335,18 @@
                                     <t t-if="agreement == 'agree'">
                                         <div class="col-6">
                                             <img src="/custom_web_kreator/static/src/thankyou.png" alt="Welcome Icon"/>
-                                            <h1>Thank You for Creating The Course!</h1>
-                                            <p>Here are the next steps:</p>
-                                            <p>
-                                                <span class="highlight">Wait for 24 hours:</span>
-                                                Our team will review your submission, and you will receive a
-                                                notification once
-                                                it is approved.
-                                            </p>
-                                            <p>
-                                                <span class="highlight">After Approval:</span>
-                                                You can proceed to fill in the complete details of your course.
-                                            </p>
-                                            <p>We appreciate your patience and look forward to helping you share your
-                                                knowledge!
-                                            </p>
+                                            <h1>Thank You for Joining the Bee Partner Program!</h1>
+<!--                                            <h5>Here are the next steps:</h5>-->
+<!--                                            <h6>-->
+<!--                                                <span class="highlight">Account Review (Up to 24 Hours):</span>-->
+<!--                                                Our team will review your application, and you'll receive a notification once approved.-->
+<!--                                            </h6>-->
+<!--                                            <h6>-->
+<!--                                                <span class="highlight">After Approval:</span>-->
+<!--                                                Gain access to your unique Bee Partner links and start promoting top courses.-->
+<!--                                            </h6>-->
+<!--                                            <h6>We appreciate your patience and look forward to helping you maximize your earnings-->
+<!--                                            </h6>-->
                                         </div>
                                     </t>
                                     <t t-else="">
@@ -357,7 +354,7 @@
 
 
                                             <img src="/custom_web_kreator/static/src/thankyou.png" alt="Welcome Icon"/>
-                                            <h1>Thank You for Creating The Course!</h1>
+                                            <h1>Thank You for Joining the Bee Partner Program!</h1>
 
 
                                             <p>
@@ -371,8 +368,8 @@
                                     <div class="col-12 p-2">
                                         <div class="row justify-content-around">
                                             <div class="col-4">
-                                                <a href="/partner/product" class="custom-btn">
-                                                    Start your Journey
+                                                <a href="/partner/product" class="custom-btn h5">
+                                                    Start Promoting Now
                                                 </a>
                                             </div>
                                         </div>

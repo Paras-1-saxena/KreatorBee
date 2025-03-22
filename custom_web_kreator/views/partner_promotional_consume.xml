@@ -462,12 +462,8 @@
                             </div>
                             <div class="row bg-white my-4 p-4 rounded justify-content-around">
                                 <!-- Promotional Materials Table -->
-                                <div class="col-8" style="padding:56.25% 0 0 0;position:relative; height:80vh;">
-                                    <iframe t-att-src="f'https://player.vimeo.com/video/{promote_url}?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479'"
-                                            frameborder="0"
-                                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-                                            style="position:absolute;top:0;left:0;width:100%;height:80%;"
-                                            title="outcome"></iframe>
+                                <div class="col-md-12" style="position: relative; height: 70vh; width: 70vh;">
+                                        <t t-esc="promote_url"/>
                                 </div>
                                 <script src="https://player.vimeo.com/api/player.js"></script>
                             </div>

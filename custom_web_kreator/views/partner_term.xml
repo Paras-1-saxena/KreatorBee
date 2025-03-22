@@ -290,44 +290,63 @@
                                 <!-- Form Section -->
                                 <div class="form-container">
                                     <div class="form-content">
-                                        <h3>What is Lorem Ipsum?</h3>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy text ever since the
-                                            1500s...
+                                        <h3>1. Introduction</h3>
+                                        <p>Welcome to the KreatorBee.com Affiliate Program. By signing up as an
+                                            affiliate, you agree to comply with the following terms and conditions.
+                                            Please read them carefully before participating.
                                         </p>
-                                        <h3>Why do we use it?</h3>
-                                        <p>It is a long established fact that a reader will be distracted by the
-                                            readable content of a page when looking at its layout...
+                                        <h3>2. Definitions</h3>
+                                        <p>
+                                            <ul>
+                                                <li>
+                                                    <b>Affiliate:</b> An individual or entity that promotes KreatorBee.com's
+                                                    products or services in exchange for commissions.
+                                                </li>
+                                                <li>
+                                                    <b>Merchant:</b> KreatorBee.com, the provider of products or services.
+                                                </li>
+                                                <li>
+                                                    <b>Commission:</b> The payment earned by the Affiliate for referred sales
+                                                    or leads.
+                                                </li>
+                                            </ul>
                                         </p>
-                                        <h3>Where does it come from?</h3>
-                                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has
-                                            roots in a piece of classical Latin literature...
+                                        <h3>3. Eligibility</h3>
+                                        <p>
+                                            To join the Affiliate Program, you must:
+                                            <ul>
+                                                <li>
+                                                    Be at least 18 years old.
+                                                </li>
+                                                <li>
+                                                    Possess a valid PAN (Permanent Account Number) and GSTIN (Goods and Services Tax Identification Number) if applicable.
+                                                </li>
+                                                <li>
+                                                    Own and operate a website, blog, or platform that complies with Indian laws and KreatorBee.com's standards.
+                                                </li>
+                                            </ul>
                                         </p>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy text ever since the
-                                            1500s...
+                                        <h3>4. Affiliate Responsibilities</h3>
+                                        <p>
+                                            As an Affiliate, you agree to:
+                                            <ul>
+                                                <li>
+                                                    Promote KreatorBee.com's products or services ethically and legally.
+                                                </li>
+                                                <li>
+                                                    Avoid misleading advertising and ensure all claims are truthful and substantiated.
+                                                </li>
+                                                <li>
+                                                    Comply with the Information Technology Act, 2000, the Consumer Protection Act, 2019, and ASCI guidelines.
+                                                </li>
+                                                <li>
+                                                    Disclose your affiliate relationship as required by law.
+                                                </li>
+                                                <li>
+                                                    Refrain from bidding on keywords containing KreatorBee.com's trademark or variations thereof without prior approval.
+                                                </li>
+                                            </ul>
                                         </p>
-                                        <h3>Why do we use it?</h3>
-                                        <p>It is a long established fact that a reader will be distracted by the
-                                            readable content of a page when looking at its layout...
-                                        </p>
-                                        <h3>Where does it come from?</h3>
-                                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has
-                                            roots in a piece of classical Latin literature...
-                                        </p>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy text ever since the
-                                            1500s...
-                                        </p>
-                                        <h3>Why do we use it?</h3>
-                                        <p>It is a long established fact that a reader will be distracted by the
-                                            readable content of a page when looking at its layout...
-                                        </p>
-                                        <h3>Where does it come from?</h3>
-                                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has
-                                            roots in a piece of classical Latin literature...
-                                        </p>
-
                                     </div>
                                     <div class="image-container">
                                         <img src="/custom_web_kreator/static/src/Term-Condition.png"

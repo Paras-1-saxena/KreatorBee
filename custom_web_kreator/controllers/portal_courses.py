@@ -9,7 +9,7 @@ import json
 from werkzeug.exceptions import NotFound
 from odoo.addons.website.controllers.main import QueryURL
 from odoo.http import content_disposition
-
+from markupsafe import Markup
 
 class PortalMyCourses(http.Controller):
 
@@ -2967,7 +2967,7 @@ class PortalMyCourses(http.Controller):
             raise NotFound()
 
     @http.route('/partner/promotional-material/consume', type='http', auth='public', website=True, methods=['GET', 'POST'])
-    def customer_support(self, **kwargs):
+    def promotional_consume(self, **kwargs):
         user = request.env.user
         partner = user.partner_id  # Get related partner
 
@@ -2979,7 +2979,7 @@ class PortalMyCourses(http.Controller):
                 if not course_id or not material_id:
                     raise NotFound()
                 course = request.env['slide.channel'].sudo().search([('id', '=', int(course_id))], limit=1)
-                promote_url = course.promotional_material_ids.filtered(lambda pm: pm.id == material_id).promotional_url
+                promote_url = Markup(course.promotional_material_ids.filtered(lambda pm: pm.id == material_id).promotional_url)
                 values = {
                     'course_id': course_id,
                     'course_name': course.name,
@@ -3027,17 +3027,20 @@ class PortalMyCourses(http.Controller):
     @http.route('/partner-video1', type='http', auth='public', website=True)
     def partner_video_one(self, **kwargs):
         # Render the data page template
-        return http.request.render('custom_web_kreator.partner_video1')
+        iframe = Markup('<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1068061920?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="PART 1"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>')
+        return http.request.render('custom_web_kreator.partner_video1', {'iframe': iframe})
 
     @http.route('/partner-video2', type='http', auth='public', website=True)
     def partner_video_two(self, **kwargs):
         # Render the data page template
-        return http.request.render('custom_web_kreator.partner_video2')
+        iframe = Markup('<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1068093187?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="PART 2"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>')
+        return http.request.render('custom_web_kreator.partner_video2', {'iframe': iframe})
 
     @http.route('/partner-video3', type='http', auth='public', website=True)
     def partner_video_three(self, **kwargs):
         # Render the data page template
-        return http.request.render('custom_web_kreator.partner_video3')
+        iframe = Markup('<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1068087104?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="PART 3"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>')
+        return http.request.render('custom_web_kreator.partner_video3', {'iframe': iframe})
 
     @http.route('/partner-term', type='http', auth='public', website=True)
     def partner_term(self, **kwargs):
