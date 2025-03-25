@@ -22,6 +22,7 @@ his module allow your employees/users to do the customisations.
         'views/login_template_inherit.xml',
         'views/menu.xml',
         'views/partner_signup_second_page.xml',
+        'views/custom_otp_signup_kreatorbee.xml',
         'data/email_template.xml',
     ],
     'demo': [
