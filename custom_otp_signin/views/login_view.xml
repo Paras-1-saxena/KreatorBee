@@ -77,18 +77,16 @@
 
         <t t-call="website.layout">
             <div id="wrap" class="row justify-content-around" style="background-color:#ffd000;">
-                <div class="col-4">
-                    <div class="content">
+                <div class="col-8">
                         <form t-if="otp_login and not otp" id="form_otp_login" class="oe_login_form" role="form"
                               t-attf-action="/web/otp/login" method="post"
-                              style="background-color:#fff; width:446px;">
+                              style="background-color:#fff; width: 100%;">
                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                             <div class="text-center c_signup_logo">
                                 <a href="/">
                                     <img src="/apg_signup/static/src/img/signup_logo.png" style="width: 155px;"
                                          alt="Logo"/>
                                 </a>
-
                             </div>
                             <div class="m-1">
                                 <div class="user-phone">
@@ -116,7 +114,7 @@
                                         The Mobile number entered is incorrect.
                                     </p>
                                     <div t-attf-class="clearfix oe_login_buttons text-center mb-1 {{'pt-2' if form_small else 'pt-3'}}">
-                                        <button style="width:100%" type="submit">Send OTP</button>
+                                        <button style="width:100%; background-color: #ffd000;" class="rounded" type="submit">Send OTP</button>
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +126,7 @@
                             </div>
                         </form>
                         <form t-if="otp and otp_no" id="form_otp" class="oe_login_form" role="form"
-                              t-attf-action="/web/otp/verify" method="post" style="background-color:#fff;">
+                              t-attf-action="/web/otp/verify" method="post" style="background-color:#fff; width: 100%;">
                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                             <div class="form-group">
                                 <label t-attf-style="margin-bottom:10px" for="otp">OTP</label>
@@ -144,7 +142,7 @@
                             </div>
                         </form>
                         <form t-if="otp and not otp_no" id="form_resend_otp" class="oe_login_form" role="form"
-                              t-attf-action="/web/otp/login" method="post" style="background-color:#fff;">
+                              t-attf-action="/web/otp/login" method="post" style="background-color:#fff; width: 100%;">
                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                             <label t-attf-style="margin-bottom:10px" for="otp">OTP</label>
                             <input type="text" placeholder="OTP" name="otp" id="otp"
@@ -162,10 +160,6 @@
                         </form>
                     </div>
                 </div>
-
-            </div>
         </t>
     </template>
-
-
 </odoo>
