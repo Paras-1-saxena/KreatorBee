@@ -109,9 +109,13 @@ class PaymentProviderInstamojoCheckout(models.Model):
                         "https://api.test.instamojo.com/v2/payments/" + payment_id
             try:
                 result = requests.get(api_end,headers=headers)
+
                 result_content = json.loads(result.content)
                 _logger.info(f'\n Instamojo Payment Status {pprint.pformat(result_content)} \n')
+
                 if not result_content.get('status'):
+                    raise ValidationError("Instamojo: " + _("Payment Unsuccessfull reason: '%s' ",
+                    result_content.get('failure')['reason']))
                     raise UserError(result_content.get('message'))
                 else:
                     return result_content

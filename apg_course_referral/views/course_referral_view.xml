@@ -14,6 +14,8 @@
                         <field name="website_url"/>
                         <field name="partner_id"/>
                         <field name="generated_url"/>
+                        <field name="order_id"/>
+                        <field name="payment_link"/>
                         <field name="expiry_time"/>
                     </group>
                 </sheet>

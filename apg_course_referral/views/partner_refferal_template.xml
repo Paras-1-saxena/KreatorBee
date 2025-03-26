@@ -8,8 +8,7 @@
                 <!-- title -->
                 <title>Kreator Bee | Sales</title>
                 <!-- external css -->
-                <link rel="stylesheet"
-                      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
                 <link rel="stylesheet" href="/custom_web_kreator/static/src/css/custom_styl.css"/>
                 <!-- bootstrap css -->
                 <link
@@ -456,30 +455,32 @@
                                     <!-- Sales Dropdown -->
                                     <div class="ps-2 d-block d-lg-none">
                                         <li>
-                                            <a href="/partner/income">
-                                                <i class="ri-checkbox-blank-circle-line"></i>
+                                            <a href="/creator/income">
+                                                <i
+                                                        class="ri-subtract-fill"></i>
                                                 Income Data
                                             </a>
                                         </li>
-                                        <li class="active">
-                                            <a href="/partner-referral">
-                                                <i class="ri-checkbox-circle-fill"></i>
+                                        <li>
+                                            <a href="/creator/referral">
+                                                <i class="ri-subtract-fill"></i>
                                                 Links
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/partner/kyc">
-                                                <i class="ri-checkbox-blank-circle-line"></i>
+                                            <a href="/creator/kyc">
+                                                <i class="ri-subtract-fill"></i>
                                                 kyc
                                             </a>
                                         </li>
                                         <li>
-                                            <i class="ri-checkbox-blank-circle-line"></i>
-                                            <a href="/partner/lead">Lead</a>
+                                            <i class="ri-subtract-fill"></i>
+                                            <a href="/creator/lead">Lead</a>
                                         </li>
                                         <li>
-                                            <a href="/partner/leaderboard">
-                                                <i class="ri-checkbox-blank-circle-line"></i>
+                                            <a href="/creator/leaderboard">
+                                                <i
+                                                        class="ri-subtract-fill"></i>
                                                 Leaderboard
                                             </a>
                                         </li>
@@ -618,28 +619,85 @@
                                     </form>
                                 </div>
                                 <div class="col-6">
-                                    <div class="link-box">
-                                        <label>Payment Link</label>
-                                        <select>
-                                            <option>All Courses</option>
-                                            <option>Marketing and above</option>
-                                            <option>Branding and above</option>
-                                            <option>Traffic and above</option>
-                                            <option>Influence and above</option>
-                                            <option>Finance Mastery and Business Mastery</option>
-                                        </select>
-                                        <select>
-                                            <option>No Limit</option>
-                                            <option>1 Day</option>
-                                            <option>7 Days</option>
-                                            <option>30 Days</option>
-                                        </select>
-                                        <label>Generated Link</label>
-                                        <input type="text" readonly="readonly"
-                                               value="https://www.kreatorbee.com/"/>
-                                        <button class="mr-5" style="width: 70%">Generate Link</button>
-                                        <i class="fa fa-copy" style="cursor: pointer;margin-left: 10px;"/>
-                                    </div>
+                                    <!-- Payment Link -->
+                                    <form method="post" action="/partner/payment/link">
+                                        <!-- CSRF Token for security -->
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <div class="link-box">
+                                            <label>Payment Link</label>
+                                            <select id="payment_course_id" name="payment_course_id" required="required">
+                                                <option value="" selected="selected">e.g. Select Course</option>
+                                                <t t-if="payment_referral_id">
+                                                    <t t-foreach="product_cart_ids or []" t-as="course">
+                                                        <option t-att-value="course.id" t-att-selected="course.id == payment_referral_id.course_id.id">
+                                                            <t t-esc="course.name"/>
+                                                        </option>
+                                                    </t>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-foreach="product_cart_ids or []" t-as="course">
+                                                        <option t-att-value="course.id">
+                                                            <t t-esc="course.name"/>
+                                                        </option>
+                                                    </t>
+                                                </t>
+                                            </select>
+                                            <select id="payment_partner_id" name="payment_partner_id" required="required">
+                                                <option value="" selected="selected">e.g. Select Customer</option>
+                                                <t t-if="payment_referral_id">
+                                                    <t t-foreach="partner_ids or []" t-as="partner">
+                                                        <option t-att-value="partner.id" t-att-selected="partner.id == payment_referral_id.order_id.partner_id.id">
+                                                            <t t-esc="partner.name"/>
+                                                        </option>
+                                                    </t>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-foreach="partner_ids or []" t-as="partner">
+                                                        <option t-att-value="partner.id">
+                                                            <t t-esc="partner.name"/>
+                                                        </option>
+                                                    </t>
+                                                </t>
+                                                
+                                            </select>
+                                            <select id="payment_expiry_time" name="payment_expiry_time">
+                                                <option value="5_minutes">5 minutes</option>
+                                                <option value="15_minutes">15 minutes</option>
+                                                <option value="30_minutes">30 minutes</option>
+                                                <option value="no_limit">No Limit</option>
+                                            </select>
+                                            <label>Generated Link</label>
+                                            <t t-if="payment_referral_id">
+                                                <input type="text" id="generated_payment_link" readonly="readonly" t-att-value="payment_referral_id.generated_url"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="text" id="generated_payment_link" readonly="readonly"/>
+                                            </t>
+                                            
+                                            <button type="submit" class="mr-5">Generate Link</button>
+                                            <a type="button" class="fa fa-copy" id="payment_copy_icon" style="cursor: pointer;margin-left: 10px;color: black;"/>
+
+                                            <!-- <a type="button" class="btn btn-warning mr-5"
+                                               id="generatePaymentLinkButton">Generate Link</a>
+                                            <a type="button" class="fa fa-copy" id="copy_icon" style="cursor: pointer;margin-left: 10px;color: black;"/> -->
+                                            <!-- <input type="text" readonly="readonly" value="https://www.bizgurukul.com/Signup?id=cbcDJ7DVHoQ&gt;ref=BGbh/Jf$+jbdjlL+ohZsSg==" /> -->
+                                            <!-- <button class="mr-5">Generate Link</button><i class="fa fa-copy" style="cursor: pointer;margin-left: 10px;"></i> -->
+                                        </div>
+                                        <script>
+                                            document.getElementById("payment_copy_icon").addEventListener("click", function () {
+                                                const copyButton = document.getElementById('payment_copy_icon');  // Copy button ID
+                                                const fieldTextElement = document.getElementById('generated_payment_link');
+                                                const fieldText = fieldTextElement.value.trim();
+                                                navigator.clipboard.writeText(fieldText).then(() =&gt; {
+                                                    alert("Referral link copied");
+                                                }).catch(err =&gt; {
+                                                    console.error('Failed to copy:', err);
+                                                    alert("Failed to copy the Referral link.");
+                                                });
+                                            });
+
+                                        </script>
+                                    </form>
                                 </div>
                             </div>
 
