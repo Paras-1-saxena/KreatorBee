@@ -17,10 +17,7 @@
                         crossorigin="anonymous"
                 />
                 <!-- remix icon -->
-                <link
-                        href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
-                        rel="stylesheet"
-                />
+                <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
                 <style>
                     <!--  Page-Specific Styles  -->
                     /* Top Menu */ .top-menu { width: 100%; display:
@@ -220,14 +217,14 @@
                             <div class="row border1 bg-white my-4">
                                 <!-- Left Section: Course Image and Buttons -->
                                 <div class="col-md-4 text-center p-3">
-                                    <a t-att-href="'/landing/page/{}?course_id={}'.format(course.landing_page_id, course.id)"
+                                    <a t-att-href="'/landing/page/{}?course_id={}'.format(course.landing_page_record_id.lading_id, course.id)"
                                        style="text-decoration: none; color: inherit;">
                                         <img t-att-src="image_data_uri(course.image_1920) if course.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'"
                                              alt="Course Image" class="img-fluid rounded mb-4"
                                              style="max-width: 100%; height: auto; border: 1px solid #fdf000; padding: 15px; background: white;"/>
                                     </a>
                                     <div class="d-flex justify-content-between">
-                                        <a t-att-href="'/landing/page/{}?course_id={}'.format(course.landing_page_id, course.id)">
+                                        <a t-att-href="'/landing/page/{}?course_id={}'.format(course.landing_page_record_id.lading_id, course.id)">
                                             <button class="btn1 right">View Landing Page</button>
                                         </a>
                                         <t t-if="course.id in added_course_ids">

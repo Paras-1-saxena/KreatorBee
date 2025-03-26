@@ -49,3 +49,7 @@ access_individual_learn_portal,access.individual.learn.portal,model_individual_l
 access_colour_combination_public,access.colour.combination.public,model_colour_combination,base.group_public,1,1,1,1
 access_colour_combination_internal,access.colour.combination.internal,model_colour_combination,base.group_user,1,1,1,1
 access_colour_combination_portal,access.colour.combination.portal,model_colour_combination,base.group_portal,1,1,1,1
+
+landing_page_record_public,access.landing.page.record.public,model_landing_page_record,base.group_public,1,1,1,1
+landing_page_record_internal,access.landing.page.record.internal,model_landing_page_record,base.group_user,1,1,1,1
+landing_page_record_portal,access.landing.page.record.portal,model_landing_page_record,base.group_portal,1,1,1,1

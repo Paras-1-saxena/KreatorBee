@@ -267,7 +267,7 @@ class SlideChannel(models.Model):
                 base_url = channel.get_base_url()
                 print("Base URL:", base_url)
                 # Customize the website_url with course ID instead of slug
-                channel.website_url = '%s/landing/page/%s?course_id=%s' % (base_url,channel.landing_page_id, channel.id)
+                channel.website_url = '%s/landing/page/%s?course_id=%s' % (base_url,channel.landing_page_record_id.lading_id, channel.id)
 
 
 

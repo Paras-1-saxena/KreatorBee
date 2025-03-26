@@ -497,7 +497,7 @@
                                     <input type="text" id="generated_payment_link" readonly="readonly"/>
                                 </t>
                                 
-                                <button type="submit" class="mr-5">Generate Link</button>
+                                <button type="submit" class="mr-5" style="width: 70%;">Generate Link</button>
                                 <a type="button" class="fa fa-copy" id="payment_copy_icon" style="cursor: pointer;margin-left: 10px;color: black;"/>
 
                                 <!-- <a type="button" class="btn btn-warning mr-5"

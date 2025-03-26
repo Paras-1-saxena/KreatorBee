@@ -9,9 +9,9 @@ from odoo.http import request
 
 class OtpLoginHome(Home):
 
-    @http.route('/web/login', type='http', auth='public', website=True, csrf=False)
-    def custom_login(self, **kw):
-        return request.redirect('/web/otp/login')
+    # @http.route('/web/login', type='http', auth='public', website=True, csrf=False)
+    # def custom_login(self, **kw):
+    #     return request.redirect('/web/otp/login')
     
     @http.route(website=True)
     def web_login(self, redirect=None, **kw):

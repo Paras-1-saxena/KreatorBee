@@ -105,12 +105,17 @@ class SlideChannel(models.Model):
     ], string="Is This Certificate Course?")
     issued_by = fields.Char(string="Certificate Issued By?")
     upload_signature = fields.Binary(string="Upload Signature")
-    landing_page_id = fields.Selection(
-        selection=[('1', 'Page 1'), ('2', 'page 2'), ('3', 'page 3'), ('4', 'page 4'), ('5', 'page 5')])
+    landing_page_record_id = fields.Many2one('landing.page.record', string='Landing Page')
 
     #Course Thumbnail
     # browse_file = fields.Binary(string="Course Thumbnail")
 
+class LandingPageRecords(models.Model):
+    _name = 'landing.page.record'
+    _description = 'This model will keep the record of landing pages'
+
+    name = fields.Char(string='Name')
+    lading_id = fields.Integer(string='Landing Page Id')
 
 
 class CourseCurriculumLine(models.Model):

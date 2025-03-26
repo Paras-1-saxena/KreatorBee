@@ -1,0 +1,1214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="video_editing_ayushman">
+        <head>
+            <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+        </head>
+        <t t-call="website.layout">
+            <style>.navbar{ display: none !important;} .o_footer{ display: none !important;}
+                .popup {
+                display: none;
+                position: fixed;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                justify-content: center;
+                align-items: center;
+                z-index: 1;
+                }
+                .popup-content {
+                background: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                text-align: center;
+                }
+                .popup:target {
+                display: flex;
+                }
+                .blink_me {
+                animation: blinker 1s linear infinite;
+                }
+
+                @keyframes blinker {
+                50% {
+                opacity: 0;
+                }
+                }
+            </style>
+            <a href="#popup1" class="dropdown-item" style="color: #fff; text-decoration: none;" hidden="hidden"
+               id="open_pop">
+            </a>
+            <div id="popup1" class="popup">
+                <div class="popup-content">
+                    <h2>Link Expired</h2>
+
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="mb-4">
+                        <span>
+                            The link you are using is expired now. Please connect with your Bee Partner to get a new
+                            link.
+                        </span>
+                    </div>
+
+                    <div class="text-end mt-2" id="close" onclick="popclose()">
+                        <a href="#" style="display: inline-block; margin-top: 10px; padding:
+                               5px 10px; background-color: #dc3545; color: #fff; text-decoration:
+                               none; border-radius: 3px;">Close
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between bg-black" style="position: fixed; width: 100%; z-index:1;">
+                <div class="col-3">
+                    <p class="py-4 px-4 fs-4" style="color: #FFCD00;">
+                        <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
+                        <b>Video Editing</b>
+                    </p>
+                </div>
+                <div class="col-2">
+                    <p id="demo" class="fs-3 my-4 blink_me">
+
+                    </p>
+                </div>
+                <div class="col-5">
+                    <div class="row justify-content-end">
+                        <div class="col-6 my-4 fs-4">
+                            INR
+                            <span class="text-decoration-line-through">
+                                <t t-esc="price1"/>
+                            </span>
+                            / INR
+                            <t t-esc="price2"/>
+                            (Excl. Tax)
+                        </div>
+                        <div class="col-3">
+                            <div class="add_to_cart_button my-2" id="cart1">
+                                <form action="/shop/cart/update" method="POST">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                    <button type="submit"
+                                            class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3">
+                                        Enroll Now
+                                    </button>
+                                    <div id="product_option_block"></div>
+                                </form>
+                            </div>
+                            <div class="add_to_cart_button my-2" hidden="hidden" id="cart1_hidden">
+                                <a class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3"
+                                   onclick="openPop()">
+                                    Enroll Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="section_1" class="container py-5 px-3" style="margin-top: 60px;">
+                <div class="row d-flex justify-content-center align-items-center rounded-50 bg-black mx-2 mx-md-0">
+                    <!-- Text Section -->
+                    <div class="col-lg-6 col-md-6 col-12 text-center text-md-start py-4">
+                        <div class="d-flex flex-column justify-content-center gap-4">
+                            <span class="fs-45">
+                                <span class="text-kreator-yellow-900">
+                                    Video Editing
+                                </span>
+                            </span>
+                            <div>
+                                <p>
+                                    The Ultimate Beginner-Friendly Video Editing Cohort to Kickstart Your Freelance
+                                    Career
+                                    Turn your curiosity for video editing into a profitable career. Learn editing,
+                                    visual
+                                    effects, and how to land high-paying clients.
+                                </p>
+                                <p>
+                                    Whether you want to freelance, build an agency, or grow your personal brand, this
+                                    course
+                                    will give you the roadmap for everything from scratch. No prior experience needed.
+                                    Just
+                                    your passion for creating great videos!
+                                    Join now and start earning with video editing!
+                                </p>
+                            </div>
+                            <div class="add_to_cart_button" id="cart2">
+                                <form action="/shop/cart/update" method="POST">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                    <button type="submit"
+                                            class="btn btn-kreator-yellow-900 fw-bold text-black px-4 py-2 rounded shadow-sm mt-3">
+                                        Enroll Now
+                                    </button>
+
+                                    <div id="product_option_block"></div>
+                                </form>
+                            </div>
+                            <div class="add_to_cart_button my-2" hidden="hidden" id="cart2_hidden">
+                                <div class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3"
+                                     onclick="openPop()">
+                                    Enroll Now
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image Section -->
+                    <div class="col-lg-4 col-md-6 col-12 p-4">
+                        <img src="/kreator_website/static/src/img/ayushman_heading.png"
+                             alt="section_1"
+                             class="img-fluid rounded-50"/>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section_2" class="p-4 container-fluid">
+                <div class="container d-flex flex-wrap justify-content-center align-items-center">
+                    <div class="container-box rounded-30 w-100 p-4 border border-black d-flex flex-column flex-lg-row align-items-center">
+                        <div class="col-12 col-lg-6 d-flex flex-column gap-3 text-center text-lg-start">
+                            <span class="fs-2 fs-md-3 fs-lg-2 fw-bold">About the
+                                <span class="text-kreator-yellow-900">COURSE</span>
+                            </span>
+                            <span class="fw-bold fs-4">
+                                Learn. Practice. Earn.
+                            </span>
+                            <span class="text-kreator-yellow-900">
+                                <t t-if="len(course_line_ids) &gt;= 1">
+                                    This course takes you from absolute basic to professional-level video editing and
+                                    also teaches you how to get your first freelance gig, how to start your own agency,
+                                    how to grow on your socials. This course gives you a step-by-step blueprint to start
+                                    making money as a video editor.
+                                </t>
+                            </span>
+                            <span class="fw-bold">
+                                <t t-if="len(course_line_ids) &gt;= 2">
+                                    No fluff. No outdated methods. Only proven strategies that work in 2025. Because
+                                    video editing shouldn’t just be a hobby—it should pay you!
+                                </t>
+                            </span>
+                        </div>
+                        <div class="col-12 col-lg-6 text-center mt-4 mt-lg-0">
+                            <img src="/kreator_website/static/src/img/image2.png" class="img-fluid"
+                                 style="transform: scaleX(-1);"
+                                 alt="Online Course Illustration"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="intro_video" class="p-4 container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-8">
+                            <t t-esc="intro_video"/>
+                        <script src="https://player.vimeo.com/api/player.js"></script>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section_3" class="p-4 container-fluid">
+                <div class="container d-flex flex-wrap justify-content-center align-items-center">
+                    <div class="row w-100 align-items-center">
+                        <div class="col-12 col-lg-5 rounded-50 p-4"
+                             style="box-shadow: 0px 3.519px 28.503px 9.677px rgba(0, 0, 0, 0.25);">
+                            <div class="icon-box row">
+                                <div class="col-6 d-flex flex-column icon-item align-items-center justify-content-center p-3">
+                                    <img width="82" src="/kreator_website/static/src/img/generative.svg" alt="icon1"/>
+                                    <span class="text-center">
+                                        AI &amp; Advanced Editing Techniques
+                                    </span>
+                                </div>
+                                <div class="col-6 d-flex flex-column icon-item align-items-center justify-content-center p-3">
+                                    <img width="82" src="/kreator_website/static/src/img/library.svg" alt="icon1"/>
+                                    <span class="text-center">
+                                        100% Practical &amp; Hands-On Learning
+                                    </span>
+                                </div>
+                                <div class="col-6 d-flex flex-column icon-item align-items-center justify-content-center p-3">
+                                    <img width="82" src="/kreator_website/static/src/img/trim.svg" alt="icon1"/>
+                                    <span class="text-center">
+                                        Learn Video Editing from basic to advance
+                                    </span>
+                                </div>
+                                <div class="col-6 d-flex flex-column icon-item align-items-center justify-content-center p-3">
+                                    <img width="82" src="/kreator_website/static/src/img/handshake.svg" alt="icon1"/>
+                                    <span class="text-center">
+                                        Personal Mentorship &amp; Community Support
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-7 mt-4 mt-lg-4 text-center text-lg-start">
+                            <div class="d-flex flex-column gap-4 justify-content-center px-3 px-lg-5">
+                                <span class="fs-4 fs-md-3 fs-lg-2 fw-bold">
+                                    What an Individual can <span class="text-kreator-yellow-900">LEARN</span> from this?
+                                </span>
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-6">
+                                        <div class="section3_shadow p-4 text-center d-flex flex-column gap-3 rounded-30 bg-kreator-yellow-300">
+                                            <div>
+                                                <div>
+                                                    <b>Video Editing Mastery</b>
+                                                </div>
+                                                <hr/>
+                                                <p>
+                                                    Learn the best techniques &amp; industry-standard software
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="section3_shadow p-4 text-center d-flex flex-column gap-3 rounded-30 bg-kreator-yellow-300">
+                                            <div>
+                                                <div>
+                                                    <b>Personal Branding</b>
+                                                </div>
+                                                <hr/>
+                                                <p>
+                                                    Build an audience and attract clients through social media
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="section3_shadow p-4 text-center d-flex flex-column gap-3 rounded-30 bg-kreator-yellow-300">
+                                            <div>
+                                                <div>
+                                                    <b>
+                                                        Client Acquisition
+                                                    </b>
+                                                </div>
+                                                <hr/>
+                                                <p>
+                                                    Learn how to find, pitch, and close high-paying clients
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="section3_shadow p-4 text-center d-flex flex-column gap-3 rounded-30 bg-kreator-yellow-300">
+                                            <div>
+                                                <div>
+                                                    <b>
+                                                        Freelancing
+                                                    </b>
+                                                </div>
+                                                <hr/>
+                                                <p>
+                                                    Master outreach, negotiation, and pricing strategies
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section_4" class="w-100 px-3">
+                <div class="rounded-30 bg-kreator-yellow-300 pb-4 mx-2 mx-md-0">
+                    <div class="p-5 d-flex justify-content-center flex-column align-items-center text-center">
+                        <div>
+                            <div class="jost-bold text-black fw-normal" style="font-size: clamp(24px, 4vw, 36px);">
+                                Who should take this
+                            </div>
+                            <div class="jost-bold text-warning fw-normal" style="font-size: clamp(48px, 6vw, 86px);">
+                                COURSE?
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center text-center mx-0 px-2">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-2 p-2">
+                            <div class="bg-black text-white p-3 rounded-4">
+                                <b>Aspiring Video Editors</b>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-2 p-2">
+                            <div class="bg-black text-white p-3 rounded-4">
+                                <b>Freelancers &amp; Side Hustlers</b>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-2 p-2">
+                            <div class="bg-black text-white p-3 rounded-4">
+                                <b>Content Creators &amp; Influencers</b>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-2 p-2">
+                            <div class="bg-black text-white p-3 rounded-4">
+                                <b>Filmmakers &amp; YouTubers</b>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2">
+                            <div class="bg-black text-white p-3 rounded-4">
+                                <b>Marketing &amp; Business Professionals</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section_5" class="p-5 container">
+                <div class="row">
+                    <div class="col-12 col-md-2 text-start">
+                        <span class="curriculum-title" style="padding-top:60px;">CURRICULUM</span>
+                    </div>
+                    <div class="col-md-10">
+                        <h2 style="color: #292929;font-family: Futura-Bold;font-size: 94.078px;font-style: normal;font-weight: 400;line-height: normal;">
+                            Course
+                        </h2>
+                        <div id="customAccordion" class="w-100">
+                            <div class="accordion-section">
+                                <div class="accordion-title pe-5 fs-5">
+                                    Introduction To Video Editing
+                                    <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
+                                </div>
+                                <div class="accordion-body p-3">
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Introduction</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Introduction to course and what to expect
+                                        </li>
+                                        <li>
+                                            Importance of video editors in content ecosystem
+                                        </li>
+                                        <li>
+                                            Advance topics we will cover (Motion Graphics, AI Automation etc)
+                                        </li>
+                                        <li>
+                                            What kind of edits you will be able to create by the end
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Community</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Launching our community of video editors
+                                        </li>
+                                        <li>
+                                            Weekly live sessions with editor and monthly with Ayushman
+                                        </li>
+                                        <li>
+                                            Free resources and assets in this course
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Video Editing As A Career</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Career paths as a video editor (freelancer, employee, creator)
+                                        </li>
+                                        <li>
+                                            How much money you can make
+                                        </li>
+                                        <li>
+                                            What more you can do after video editing
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class="accordion-title pe-5 fs-5">
+                                    Getting Started with Video Editing
+                                    <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
+                                </div>
+                                <div class="accordion-body p-3">
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Installation &amp; Setup</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Download &amp; install Premiere Pro
+                                        </li>
+                                        <li>
+                                            Change keyboard settings for efficiency
+                                        </li>
+                                        <li>
+                                            Optimize RAM settings &amp; clear cache
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Interface &amp; Workspace Overview</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Understanding toolbars &amp; panels
+                                        </li>
+                                        <li>
+                                            Importing clips (single, multiple, automate to sequence)
+                                        </li>
+                                        <li>
+                                            Sequence settings &amp; timeline overview
+                                        </li>
+                                        <li>
+                                            Adjustment layers &amp; color matte
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Keyboard Shortcuts &amp; Workflow Optimization</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Essential shortcuts for efficient editing
+                                        </li>
+                                        <li>
+                                            Trimming, duplicating, moving frames efficiently
+                                        </li>
+                                        <li>
+                                            Expanding layers, delete empty space, frame-by-frame navigation
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class="accordion-title pe-5 fs-5">
+                                    Basic Editing Techniques
+                                    <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
+                                </div>
+                                <div class="accordion-body p-3">
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Cuts &amp; Transitions</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Straight Cut, L-Cut, J-Cut
+                                        </li>
+                                        <li>
+                                            In-built transitions (Cross dissolve, slide, morph cut, zoom, etc.)
+                                        </li>
+                                        <li>
+                                            Using masking for transitions
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Keyframing &amp; Motion</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Scale, position, rotation, anchor point, opacity
+                                        </li>
+                                        <li>
+                                            Ken Burns Effect (Zoom in/out)
+                                        </li>
+                                        <li>
+                                            Blending modes
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Nesting Layers &amp; Effects</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Light adjustments, warp stabilizer, lens distortion
+                                        </li>
+                                        <li>
+                                            Gaussian blur, drop shadow, brightness/contrast
+                                        </li>
+                                        <li>
+                                            Track matte for text &amp; ink drop effects
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Overlays &amp; Typography</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Film burns, light leaks
+                                        </li>
+                                        <li>
+                                            Custom text animations (glitch, zoom, scrolling credits)
+                                        </li>
+                                        <li>
+                                            Importing premium templates &amp; customizing them
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Subtitles &amp; Speech-to-Text Automation</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Auto-generate subtitles
+                                        </li>
+                                        <li>
+                                            Customizing subtitles with animations
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class="accordion-title pe-5 fs-5">
+                                    Color Grading &amp; Advanced Visuals
+                                    <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
+                                </div>
+                                <div class="accordion-body p-3">
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Color Grading &amp; Correction</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Lumetri Color panel walkthrough
+                                        </li>
+                                        <li>
+                                            Premium LUTs &amp; custom looks
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Advanced Transitions &amp; Speed Ramping</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Directional blur, offset swipe, zoom in/out, spin effects
+                                        </li>
+                                        <li>
+                                            Speed ramping for cinematic effects
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Green Screen &amp; Compositing</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Keying out backgrounds
+                                        </li>
+                                        <li>
+                                            Using dynamic link with After Effects
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">VHS &amp; Vintage Effects</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            How to create retro looks with effects
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Live Editing Demonstrations</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Step-by-step edit of a viral video from scratch
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class="accordion-title pe-5 fs-5">
+                                    Sound Design &amp; Audio Editing
+                                    <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
+                                </div>
+                                <div class="accordion-body p-3">
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Syncing Audio &amp; Video</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Working with multi-camera setups
+                                        </li>
+                                        <li>
+                                            Synchronizing podcast interviews
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Sound Effects &amp; Enhancement</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Studio reverb, equalizer, noise reduction
+                                        </li>
+                                        <li>
+                                            Denoiser, Dereverb, Normalization
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Music Licensing &amp; Copyright</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            How to legally use music in your edits
+                                        </li>
+                                        <li>
+                                            Best websites for royalty-free music &amp; SFX
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Podcast &amp; Vlog Audio Mixing</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Enhancing dialogue clarity
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class="accordion-title pe-5 fs-5">
+                                    Exporting &amp; Delivery
+                                    <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
+                                </div>
+                                <div class="accordion-body p-3">
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Rendering &amp; Exporting</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Render settings for different platforms (YouTube, Instagram, Shorts, etc.)
+                                        </li>
+                                        <li>
+                                            Export transparent background videos
+                                        </li>
+                                        <li>
+                                            Using Adobe Media Encoder for batch exporting
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Optimizing for Social Media</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Best settings for Instagram Reels, YouTube Shorts, TikTok
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class="accordion-title pe-5 fs-5">
+                                    AI-Powered Editing &amp; YouTube Automation
+                                    <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
+                                </div>
+                                <div class="accordion-body p-3">
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">AI Tools for Video Editing</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            How AI can speed up editing workflows
+                                        </li>
+                                        <li>
+                                            Best AI-powered tools &amp; plugins
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">YouTube AI Automation</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Automating scriptwriting, voiceovers, and video creation using AI
+                                        </li>
+                                        <li>
+                                            End-to-end workflow for AI-generated videos
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Making Shorts with AI</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            AI-based editing techniques for YouTube Shorts, Instagram Reels
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class="accordion-title pe-5 fs-5">
+                                    Monetizing Your Editing Skills
+                                    <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
+                                </div>
+                                <div class="accordion-body p-3">
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Finding Clients &amp; Building Your Portfolio</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            How to create a standout video editing portfolio
+                                        </li>
+                                        <li>
+                                            Best platforms to find freelance clients (Upwork, Fiverr, etc.)
+                                        </li>
+                                        <li>
+                                            How to decide your pricing
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Starting Your Own Video Editing Agency</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            How to scale from a freelancer to an agency
+                                        </li>
+                                        <li>
+                                            Hiring editors &amp; managing projects
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Selling Video Editing Courses &amp; Templates</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            How to create &amp; sell your own courses
+                                        </li>
+                                        <li>
+                                            Making money with preset packs &amp; LUTs
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class="accordion-title pe-5 fs-5">
+                                    Niche Editing Styles
+                                    <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
+                                </div>
+                                <div class="accordion-body p-3">
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Vlog &amp; Travel Editing</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Editing cinematic travel vlogs
+                                        </li>
+                                        <li>
+                                            Best transitions &amp; color grading techniques for vlogs
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Documentary &amp; Long-Form Content Editing</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            Structuring storytelling in long videos
+                                        </li>
+                                        <li>
+                                            Advanced pacing &amp; B-roll selection
+                                        </li>
+                                    </ul>
+                                    <i class="ri-checkbox-fill"></i>
+                                    <span class="fs-4">Podcast &amp; Interview Editing</span>
+                                    <ul class="fs-6">
+                                        <li>
+                                            How to create engaging podcast videos
+                                        </li>
+                                        <li>
+                                            Multi-camera editing
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            document.querySelectorAll(".accordion-title").forEach(title => {
+                            title.addEventListener("click", function () {
+                            const currentlyOpen = document.querySelector(".accordion-section.expanded");
+                            if (currentlyOpen &amp;&amp; currentlyOpen !== this.parentElement) {
+                            currentlyOpen.classList.remove("expanded");
+                            }
+                            this.parentElement.classList.toggle("expanded");
+                            });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section_6" class="container px-4 py-5">
+                <div class="row aboutme_section d-flex flex-wrap align-items-center justify-content-between">
+                    <div class="col-md-4 col-12 d-flex flex-column gap-3 align-items-center text-center">
+                        <div style="font-size: 45px; padding: 20px; font-weight: bold;">
+                            About
+                            <span style="color: #FFC107;">Me</span>
+                        </div>
+                        <img t-att-src="'/web/image/slide.channel/%s/my_image_icon' % course_id" alt="About Me"
+                             class="img-fluid rounded-3" style="max-width: 300px; object-fit: cover;"/>
+                    </div>
+
+                    <div class="col-md-8 col-12 text-center py-3">
+                        <div style="font-size: 22px; font-weight: bold;">
+                            <span style="color: #FFC107;">
+                                Founder of Growth Rocket, a 7-figure social media agency specializing in content
+                                strategy and brand growth.
+                            </span>
+                        </div>
+                        <div class="text-muted"
+                             style="font-family: 'Futura Md BT'; font-size: 18px; font-weight: 400; margin-top: 10px;">
+                            I have built an audience of over 1 million followers across Instagram and YouTube by
+                            creating high-impact, viral finance content. Through strategic collaborations with top
+                            brands like Poker Baazi, Paytm, and WeWork, I have delivered content strategies and
+                            brand-building solutions that drive engagement and growth. Additionally, as a public speaker
+                            and mentor, I guide young entrepreneurs and content creators on scaling their brands and
+                            careers.
+                        </div>
+                        <hr/>
+                        <div class="mt-4" id="cart4">
+                            <form action="/shop/cart/update" method="POST">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                <button type="submit"
+                                        class="btn btn-kreator-yellow-900 fw-bold text-black px-4 py-2 rounded shadow-sm fs-5">
+                                    Enroll Now
+                                </button>
+                            </form>
+                        </div>
+                        <div class="mt-4" hidden="hidden" id="cart4_hidden">
+                            <div class="btn btn-kreator-yellow-900 fw-bold text-black px-4 py-2 rounded shadow-sm fs-5"
+                                 onclick="openPop()">
+                                Enroll Now
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-center gap-3 mt-4">
+                            <t t-if="m5">
+                                <a t-att-href="m5" target="_blank">
+                                    <img width="32" height="32" src="/kreator_website/static/src/img/instagram.svg"
+                                         alt="Instagram"/>
+                                </a>
+                            </t>
+                            <t t-if="m1">
+                                <a t-att-href="m1" target="_blank">
+                                    <img width="32" height="32" src="/kreator_website/static/src/img/fb.svg"
+                                         alt="Facebook"/>
+                                </a>
+                            </t>
+                            <t t-if="m2">
+                                <a t-att-href="m2" target="_blank">
+                                    <img width="32" height="32" src="/kreator_website/static/src/img/x.png" alt="X"/>
+                                </a>
+                            </t>
+                            <t t-if="m4">
+                                <a href="m4" target="_blank">
+                                    <img width="32" height="32" src="/kreator_website/static/src/img/Youtube.svg"
+                                         alt="Youtube"/>
+                                </a>
+                            </t>
+                            <t t-if="m3">
+                                <a t-att-href="m3" target="_blank">
+                                    <img width="32" height="32" src="/kreator_website/static/src/img/linkedin.svg"
+                                         alt="LinkedIn"/>
+                                </a>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section_7" style="padding: 5%; width: 100%; box-sizing: border-box;">
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px;">
+                    <!-- Left Section -->
+                    <div style="flex: 1; min-width: 300px; text-align: center;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: center;">
+                            <img src="/kreator_website/static/src/img/Camera.png" alt="section7"
+                                 class="img-fluid object-fit-cover rounded-30"
+                                 style="max-width: 80px; max-width: 200px; width: 100%; height: auto;"/>
+                            <div class="d-flex flex-column flex-sm-row gap-2 gap-md-3">
+                                <span class="jost-bold"
+                                      style="color: #000;font-family: Jost-Bold;font-size: 35px;font-weight: 400;">
+                                    From our
+                                </span>
+                                <span class="jost-bold"
+                                      style="color: #FFCD00;font-family: Jost-Bold;font-size: 40px;font-weight: 400;">
+                                    Students
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Section -->
+                    <div style="flex: 2; min-width: 300px;">
+                        <div class="row g-3 justify-content-center">
+                            <div class="col-12 col-md-5">
+                                <div class="section3_shadow p-4 text-center d-flex flex-column gap-3 rounded-30 bg-kreator-yellow-300">
+                                    <div>
+                                        <span>
+                                            <img src="/kreator_website/static/src/img/ayushman_pandita/video_editing/comma.png"
+                                                 style="height: 25px; width:25px; transform: rotate(180deg);"/>
+                                        </span>
+                                        <span class="fs-5">
+                                            I had zero experience in video editing before taking this course, and now I
+                                            feel confident enough to edit professional-quality videos! The lessons are
+                                            well-structured, easy to follow, and packed with practical tips. Highly
+                                            recommended for beginners!
+                                        </span>
+                                        <span>
+                                            <img src="/kreator_website/static/src/img/ayushman_pandita/video_editing/comma.png"
+                                                 style="height: 25px; width:25px;"/>
+                                        </span>
+                                        <hr/>
+                                        <div class="fs-4">
+                                            <b>Rohan S</b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-5 mx-3">
+                                <div class="section3_shadow p-4 text-center d-flex flex-column gap-3 rounded-30 bg-kreator-yellow-300">
+                                    <div>
+                                        <span>
+                                            <img src="/kreator_website/static/src/img/ayushman_pandita/video_editing/comma.png"
+                                                 style="height: 25px; width:25px; transform: rotate(180deg);"/>
+                                        </span>
+                                        <span class="fs-5">
+                                            As a freelancer, I was looking for a course that teaches not just editing
+                                            skills but also how to monetize them. This course nailed it! The freelancing
+                                            tips alone are worth the price. If you're serious about making money with
+                                            video editing, this is the course for you.
+                                        </span>
+                                        <span>
+                                            <img src="/kreator_website/static/src/img/ayushman_pandita/video_editing/comma.png"
+                                                 style="height: 25px; width:25px;"/>
+                                        </span>
+                                        <hr/>
+                                        <div class="fs-4">
+                                            <b>Meera T</b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-5" style="margin-top: 25px;">
+                                <div class="section3_shadow p-4 text-center d-flex flex-column gap-3 rounded-30 bg-kreator-yellow-300">
+                                    <div>
+                                        <span>
+                                            <img src="/kreator_website/static/src/img/ayushman_pandita/video_editing/comma.png"
+                                                 style="height: 25px; width:25px; transform: rotate(180deg);"/>
+                                        </span>
+                                        <span class="fs-5">
+                                            I've taken a few video editing courses before, but this one stands out. The
+                                            instructor makes everything so engaging and relatable. The real-world
+                                            examples and hands-on projects helped me apply what I learned instantly.
+                                            Loved it!
+                                        </span>
+                                        <span>
+                                            <img src="/kreator_website/static/src/img/ayushman_pandita/video_editing/comma.png"
+                                                 style="height: 25px; width:25px;"/>
+                                        </span>
+                                        <hr/>
+                                        <div class="fs-4">
+                                            <b>Arjun</b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-5 mx-3" style="margin-top: 25px;">
+                                <div class="section3_shadow p-4 text-center d-flex flex-column gap-3 rounded-30 bg-kreator-yellow-300">
+                                    <div>
+                                        <span>
+                                            <img src="/kreator_website/static/src/img/ayushman_pandita/video_editing/comma.png"
+                                                 style="height: 25px; width:25px; transform: rotate(180deg);"/>
+                                        </span>
+                                        <span class="fs-5">
+                                            I wanted to upskill and add video editing to my resume, and this course
+                                            delivered beyond expectations. The step-by-step breakdown of tools,
+                                            techniques, and industry insights made it super valuable. It’s a must-have
+                                            for anyone looking to get into video editing.
+                                        </span>
+                                        <span>
+                                            <img src="/kreator_website/static/src/img/ayushman_pandita/video_editing/comma.png"
+                                                 style="height: 25px; width:25px;"/>
+                                        </span>
+                                        <hr/>
+                                        <div class="fs-4">
+                                            <b>Pooja</b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="section_8" class="py-5 w-100">
+                <div class="container">
+                    <div class="row text-center">
+                        <div class="col-12 d-flex flex-column align-items-center">
+                            <div class="fs-45 fw-bold">Frequently Asked</div>
+                            <div class="text-kreator-yellow-900 fs-45 fw-bold">Questions</div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center mt-4">
+                        <!-- Left Image -->
+                        <div class="col-md-3 d-none d-md-flex justify-content-center">
+                            <img src="/kreator_website/static/src/img/section8.png" alt="FAQ" class="img-fluid w-75"/>
+                        </div>
+                        <!-- Accordion Content -->
+                        <div class="col-12 col-md-6 d-flex justify-content-center">
+                            <div class="w-100">
+                                <div class="accordion">
+                                    <div class="accordion-item">
+                                        <div class="accordion-header pe-5">
+                                            Which software will I learn in this course?
+                                            <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
+                                                 alt="Arrow"/>
+                                        </div>
+                                        <div class="accordion-content">
+                                            You will learn Adobe Premiere Pro and Adobe After Effects in this Course.
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <div class="accordion-header pe-5">
+                                            How much money can I earn after completing this course?
+                                            <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
+                                                 alt="Arrow"/>
+                                        </div>
+                                        <div class="accordion-content">
+                                            As a skilled video editor, Your earning potential can be anywhere between
+                                            ₹50,000 - ₹1,00,000 per month
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <div class="accordion-header pe-5">
+                                            Will I receive any resources to help me?
+                                            <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
+                                                 alt="Arrow"/>
+                                        </div>
+                                        <div class="accordion-content">
+                                            Yes, we will provide you many assets including png, sound effects, or video
+                                            overlays
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <div class="accordion-header pe-5">
+                                            Will I be able to get a job as video editor after completion of this course?
+                                            <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
+                                                 alt="Arrow"/>
+                                        </div>
+                                        <div class="accordion-content">
+                                            Yes, this will make you ready for the job market within 3 months of
+                                            practicing
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <div class="accordion-header pe-5">
+                                            Are there any hardware requirements for this course?
+                                            <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
+                                                 alt="Arrow"/>
+                                        </div>
+                                        <div class="accordion-content">
+                                            For our Video Editing Course, we recommend the following configuration for
+                                            the best editing experience:
+                                            <ul>
+                                                <li>
+                                                    Hardware:Intel i5 or i7 processor
+                                                </li>
+                                                <li>
+                                                    Dedicated GPU (e.g., NVIDIA GeForce or AMD Radeon)
+                                                </li>
+                                                <li>
+                                                    16GB of RAM for enhanced editing performance
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script>
+                                    document.querySelectorAll(".accordion-header").forEach(header => {
+                                    header.addEventListener("click", function () {
+                                    const currentActive = document.querySelector(".accordion-item.active");
+                                    if (currentActive &amp;&amp; currentActive !== this.parentElement) {
+                                    currentActive.classList.remove("active");
+                                    }
+                                    this.parentElement.classList.toggle("active");
+                                    });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        <!-- Right Image -->
+                        <div class="col-md-3 d-none d-md-flex justify-content-center">
+                            <img src="/kreator_website/static/src/img/section8.png" alt="FAQ" class="img-fluid w-75"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section_9" class="pt-5 w-100 container border-top mb-5 border-bottom border-black">
+                <div class="row align-items-center justify-content-center">
+                    <!-- Text & Button Section -->
+                    <div class="col-12 col-md-6 text-center text-md-start mb-4 mb-md-0">
+                        <div class="d-flex flex-column gap-3 align-items-center align-items-md-start">
+                            <span class="fs-34 text-ibm text-center text-md-start">
+                                Start MONETIZING<br/>Your
+                                <span class="text-kreator-yellow-900">Video Editing</span>
+                                Skills Today!
+                            </span>
+                            <span class="fs-4 w-100 w-md-75 text-center text-md-start">
+                                The Ultimate Beginner-Friendly Video Editing Cohort to Kickstart Your Freelance Career
+                            </span>
+                            <span class="fs-4 text-kreator-yellow-900 pb-3" style="letter-spacing: 7.26px;">
+                                INR
+                                <span class="text-decoration-line-through">
+                                    <t t-esc="price1"/>
+                                </span>
+                                / INR
+                                <t t-esc="price2"/>
+                                (Excl. Tax)
+                            </span>
+                            <div class="add_to_cart_button w-100 justify-content-center justify-content-md-start"
+                                 id="cart3">
+                                <form action="/shop/cart/update" method="POST" class="w-100 w-md-75">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                    <button type="submit"
+                                            class="btn btn-kreator-yellow-900 fw-bold text-black px-4 py-2 rounded shadow-sm mt-3">
+                                        Enroll Now
+                                    </button>
+                                    <div id="product_option_block"></div>
+                                </form>
+                            </div>
+                            <div class="add_to_cart_button w-100 justify-content-center justify-content-md-start"
+                                 hidden="hidden" id="cart3_hidden">
+                                <div class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3"
+                                     onclick="openPop()">
+                                    Enroll Now
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Image Section -->
+                    <div class="col-12 col-md-6 d-flex justify-content-center">
+                        <img t-att-src="'/web/image/slide.channel/%s/image1' % course_id" alt="section9"
+                             class="img-fluid w-75 w-md-100"/>
+                    </div>
+                </div>
+            </div>
+        </t>
+        <script
+                src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"
+        ></script>
+        <script>
+            // Set the date we're counting down to
+            const cart1 = document.getElementById("cart1");
+            const cart2 = document.getElementById("cart2");
+            const cart3 = document.getElementById("cart3");
+            const cart1_hidden = document.getElementById("cart1_hidden");
+            const cart2_hidden = document.getElementById("cart2_hidden");
+            const cart3_hidden = document.getElementById("cart3_hidden");
+            const cart4 = document.getElementById("cart4");
+            const cart4_hidden = document.getElementById("cart4_hidden");
+            const expire_date = document.getElementById("expired");
+            var countDownDate = new Date(expire_date.value).getTime();
+            let open_pop = document.getElementById("open_pop");
+            let close = document.getElementById("popup1");
+            function popclose() {
+            console.log('test');
+            close.style.display= 'none';
+            }
+            function openPop() {
+            close.style.display = 'flex';
+            }
+
+            // Update the count down every 1 second
+            var x = setInterval(function() {
+
+            // Get today's date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the element with id="demo"
+            document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s " + "Left";
+
+            // If the count down is finished, write some text
+            if (distance &lt; 30936){
+            document.getElementById("demo").classList.add("text-danger");
+            }
+            if (distance &lt; 0) {
+            clearInterval(x);
+            document.getElementById("demo").innerHTML = "LINK EXPIRED";
+            cart1.style.display = 'none';
+            cart1_hidden.removeAttribute("hidden");
+            cart2.style.display = 'none';
+            cart2_hidden.removeAttribute("hidden");
+            cart3.style.display = 'none';
+            cart3_hidden.removeAttribute("hidden");
+            cart4.style.display = 'none';
+            cart4_hidden.removeAttribute("hidden");
+            document.getElementById("demo").classList.remove('blink_me');
+            }
+            }, 1000);
+        </script>
+    </template>
+</odoo>

@@ -17,7 +17,7 @@
                             <field name="combination_id"/>
                         </group>
                         <group>
-                            <field name="landing_page_id"/>
+                            <field name="landing_page_record_id"/>
                         </group>
                     </group>
                     <notebook>
@@ -234,6 +234,29 @@
         <field name="name">Colour Combination</field>
         <field name="res_model">colour.combination</field>
         <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Data
+            </p>
+        </field>
+    </record>
+
+<!--    landing page record-->
+    <record id="view_landing_page_record_tree" model="ir.ui.view">
+        <field name="name">landing.page.record</field>
+        <field name="model">landing.page.record</field>
+        <field name="arch" type="xml">
+            <list string="Colour Combination" editable="top">
+                <field name="name"/>
+                <field name="lading_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_landing_page_record" model="ir.actions.act_window">
+        <field name="name">landing.page.record.action</field>
+        <field name="res_model">landing.page.record</field>
+        <field name="view_mode">list</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create a Data

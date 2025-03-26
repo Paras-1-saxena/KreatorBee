@@ -5,7 +5,10 @@
     'depends': ['website', 'web'],
     'data': [
         'views/templates.xml',
-        'views/pixel_integration.xml'
+        'views/pixel_integration.xml',
+        'views/video_editing_ayushman.xml',
+        'views/freelancing_employees_ayushman.xml',
+        'views/freelancing_genZ_ayushmaan.xml'
     ],
     "assets": {
         "web._assets_frontend_helpers": [

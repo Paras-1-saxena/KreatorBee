@@ -480,18 +480,78 @@ class PortalMyCourses(http.Controller):
                     partner_commission_last_7_days += line.partner_commission_amount
                 if last_30_days <= order_date <= today:
                     partner_commission_last_30_days += line.partner_commission_amount
-
+            labels =  ["Video Editing", "Lead Generation", "Freelancing", "Freelancing (Gen Z)","Freelancing (Employees)"]
+            data = [35, 25, 20, 15, 5]
+            label_color = {0: 'electro', 1: 'clo', 2: 'foo', 3: 'boo', 4: 'oth'}
+            xml_label = []
+            for lid, label in enumerate(labels):
+                xml_label.append(f'<li><i class="ri-circle-fill pe-1 {label_color.get(lid)}"></i>{label}</li>')
+            xml_label = Markup(''.join(xml_label))
+            print(type(xml_label))
             # Prepare data for rendering or JSON response
             commission_data = {
                 'commission': {
                     'total': partner_total_commission,
                     'today': partner_commission_today,
                     'last_7_days': partner_commission_last_7_days,
-                    'last_30_days': partner_commission_last_30_days
-                }
+                    'last_30_days': partner_commission_last_30_days,
+                },
+                'labels': labels,
+                'data': data,
+                'xml_label': xml_label
             }
             # Render the data page template
             return http.request.render('custom_web_kreator.Npartner', commission_data)
+        else:
+            raise NotFound()
+
+    @http.route('/partner/income/course-wise-earning', type='http', auth='public', website=True, methods=['GET', 'POST'], csrf=False)
+    def partner_course_earning(self, **kwargs):
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
+
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'partner']:
+            current_user = request.env.user
+            partner = current_user.partner_id
+            # Define date ranges
+            values = {}
+            orders_obj = request.env['sale.order.line']
+            # Initialize commission data
+            order_lines = orders_obj.sudo().search([
+                ('is_commission', '=', True),
+                ('state', '=', 'sale'),
+                ('partner_commission_partner_id', '=', partner.id)
+            ])
+            courses = order_lines.product_id
+
+            # for line in order_lines:
+            #     order_date = line.create_date.date()
+            #     partner_total_commission += line.partner_commission_amount
+            #     if order_date == today:
+            #         partner_commission_today += line.partner_commission_amount
+            #     if last_7_days <= order_date <= today:
+            #         partner_commission_last_7_days += line.partner_commission_amount
+            #     if last_30_days <= order_date <= today:
+            #         partner_commission_last_30_days += line.partner_commission_amount
+            #
+            # # Prepare data for rendering or JSON response
+            # commission_data = {
+            #     'commission': {
+            #         'total': partner_total_commission,
+            #         'today': partner_commission_today,
+            #         'last_7_days': partner_commission_last_7_days,
+            #         'last_30_days': partner_commission_last_30_days
+            #     }
+            # }
+            # Render the data page template
+            values = {'labels': ['Video Editing', 'Lead Generation', 'Freelancing', 'Freelancing (Gen Z)',
+                     'Freelancing (Employees)'], 'data': [35, 25, 20, 15, 5]}
+            return request.make_response(
+                data=json.dumps({'response': "success", 'values': values}),
+                headers=[('Content-Type', 'application/json')],
+                status=200
+            )
         else:
             raise NotFound()
 
@@ -3013,7 +3073,7 @@ class PortalMyCourses(http.Controller):
                 return request.make_response(
                     data=json.dumps({'response': "success", 'ticket_id': f' Partner Support {support_ticket.id}'}),
                     headers=[('Content-Type', 'application/json')],
-                    status=400
+                    status=200
                 )
             except Exception as ex:
                 raise NotFound()

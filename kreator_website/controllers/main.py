@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
+from markupsafe import Markup
 
 from odoo import http
 from odoo.http import request
-
+import datetime as datetime
+import pytz
 
 class KreatorWebsite(http.Controller):
 
@@ -41,8 +43,43 @@ class KreatorWebsite(http.Controller):
         values = self.fetch_values(**kwargs)
         return request.render("kreator_website.landing_page_5", values)
 
+    @http.route('/landing/page/6', auth='public', website=True)
+    def video_editing_ayushman(self, **kwargs):
+        course = request.env['slide.channel'].sudo().search([('id', '=', kwargs.get('course_id'))])
+        values = self.fetch_values(**kwargs)
+        intro_video = Markup('''<iframe src="https://player.vimeo.com/video/1067332531?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                    frameborder="0"
+                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                    style="width:100%;height:40vh; border-radius: 25px;"
+                                    title="problem"></iframe>''')
+        values.update({'intro_video': intro_video})
+        return request.render("kreator_website.video_editing_ayushman", values)
+
+    @http.route('/landing/page/7', auth='public', website=True)
+    def freelancing_employees_ayushman(self, **kwargs):
+        course = request.env['slide.channel'].sudo().search([('id', '=', kwargs.get('course_id'))])
+        values = self.fetch_values(**kwargs)
+        intro_video = Markup('''<iframe src="https://player.vimeo.com/video/1068749072?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+         frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+          style="width:100%;height:40vh; border-radius: 25px;" title="Long Promo_1"></iframe>''')
+        values.update({'intro_video': intro_video})
+        return request.render("kreator_website.freelancing_employees_ayushman", values)
+
+    @http.route('/landing/page/8', auth='public', website=True)
+    def freelancing_genz_ayushman(self, **kwargs):
+        course = request.env['slide.channel'].sudo().search([('id', '=', kwargs.get('course_id'))])
+        values = self.fetch_values(**kwargs)
+        intro_video = Markup('''<iframe src="https://player.vimeo.com/video/1068746592?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+         frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+          style="width:100%;height:40vh; border-radius: 25px; title="Promotional  gen-z-"></iframe>''')
+        values.update({'intro_video': intro_video})
+        return request.render("kreator_website.freelancing_genz_ayushman", values)
+
     def fetch_values(self, **kwargs):
         course = request.env['slide.channel'].sudo().search([('id', '=', kwargs.get('course_id'))])
+        expiry_time = kwargs.get('exp')
+        expiry_date = datetime.datetime.fromtimestamp(int(expiry_time), pytz.timezone("Asia/Calcutta")).strftime(
+            "%b %d, %Y %H:%M:%S")
         return {
             'main_heading': course.name, 'p2': course.p2, 'creator_name': course.creator_name,
             'image_icon': course.image_icon, 'c1': course.c1, 'c2': course.c2, 'c3': course.c3, 'c4': course.c4,
@@ -54,5 +91,6 @@ class KreatorWebsite(http.Controller):
             'product_template_id': course.product_id.product_tmpl_id.id, 'product_id': course.product_id.id,
             'price1': course.price1, 'price2': course.price2, 'num_to_word': {1: 'One', 2: 'Two', 3: 'Three',
                                                                               4: 'Four', 5: 'Five', 6: 'Six',
-                                                                              7: 'Seven', 8: 'Eight', 9: 'Nine'}
+                                                                              7: 'Seven', 8: 'Eight', 9: 'Nine'},
+            'expired': expiry_date
         }

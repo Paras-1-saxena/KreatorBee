@@ -1,0 +1,1107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="freelancing_employees_ayushman">
+        <head>
+            <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+        </head>
+        <t t-call="website.layout">
+            <style>.navbar{ display: none !important;} .o_footer{ display: none !important;}
+                .popup {
+                display: none;
+                position: fixed;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                justify-content: center;
+                align-items: center;
+                z-index: 1;
+                }
+                .popup-content {
+                background: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                text-align: center;
+                }
+                .popup:target {
+                display: flex;
+                }
+                .blink_me {
+                animation: blinker 1s linear infinite;
+                }
+
+                @keyframes blinker {
+                50% {
+                opacity: 0;
+                }
+                }
+            </style>
+            <a href="#popup1" class="dropdown-item" style="color: #fff; text-decoration: none;" hidden="hidden"
+               id="open_pop">
+            </a>
+            <div id="popup1" class="popup">
+                <div class="popup-content">
+                    <h2>Link Expired</h2>
+
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="mb-4">
+                        <span>
+                            The link you are using is expired now. Please connect with your Bee Partner to get a new
+                            link.
+                        </span>
+                    </div>
+
+                    <div class="text-end mt-2" id="close" onclick="popclose()">
+                        <a href="#" style="display: inline-block; margin-top: 10px; padding:
+                               5px 10px; background-color: #dc3545; color: #fff; text-decoration:
+                               none; border-radius: 3px;">Close
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between bg-black" style="position: fixed; width: 100%; z-index: 1;">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <p class="py-4 px-4 fs-4" style="color: #FFCD00;">
+                        <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
+                        <b>Freelancing (Employees)</b>
+                    </p>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-12">
+                    <p id="demo" class="fs-4 my-4 blink_me">
+
+                    </p>
+                </div>
+                <div class="col-5">
+                    <div class="row justify-content-end">
+                        <div class="col-lg-6 col-md-6 col-sm-12 my-4 fs-4">
+                            INR
+                            <span class="text-decoration-line-through">
+                                <t t-esc="price1"/>
+                            </span>
+                            / INR
+                            <t t-esc="price2"/>
+                            (Excl. Tax)
+                        </div>
+                        <div class="col-3">
+                            <div class="add_to_cart_button my-2" id="cart1">
+                                <form action="/shop/cart/update" method="POST">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                    <button type="submit"
+                                            class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3">
+                                        Enroll Now
+                                    </button>
+                                    <div id="product_option_block"></div>
+                                </form>
+                            </div>
+                            <div class="add_to_cart_button my-2" hidden="hidden" id="cart1_hidden">
+                                <a class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3"
+                                   onclick="openPop()">
+                                    Enroll Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between bg-black">
+                <div class="col-3">
+                    <p class="py-4 px-4 fs-4" style="color: #FFCD00;">
+                        <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
+                        <b>Freelancing (Employees)</b>
+                    </p>
+                </div>
+                <div class="col-2">
+                    <p id="demo" class="fs-4 my-4 blink_me">
+
+                    </p>
+                </div>
+                <div class="col-5">
+                    <div class="row justify-content-end">
+                        <div class="col-6 my-4 fs-4">
+                            INR
+                            <span class="text-decoration-line-through">
+                                <t t-esc="price1"/>
+                            </span>
+                            / INR
+                            <t t-esc="price2"/>
+                            (Excl. Tax)
+                        </div>
+                        <div class="col-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="section_10" class="bg-black">
+                <div class="container py-5">
+                    <div class="row p-4 p-md-5 rounded"
+                         style="background: #FFF;
+                        box-shadow: 0.826px 1.651px 12.88px 12px #FFCD00;
+                        margin: 20px;">
+
+                        <div class="col-lg-8 col-md-12 order-2 order-lg-1">
+                            <div class="d-flex flex-column justify-content-center gap-3 pt-3 pt-lg-4">
+                                <div class="jost-bold text-center text-lg-start"
+                                     style="font-size: clamp(28px, 4vw, 54px); color: #000; font-family: Jost-Bold; font-weight: 400;">
+                                    <span class="text-kreator-yellow-900">
+                                        Freelancing (Employees)
+                                    </span>
+                                </div>
+                                <div class="w-100 text-black text-center text-lg-start"
+                                     style="font-size: clamp(14px, 1.5vw, 18px); line-height: 1.6;">
+                                    A Step-by-Step Course for Professionals to Build a Profitable Freelance Career While
+                                    Keeping Their Job.
+                                    Feeling stuck with a fixed salary and limited growth? It’s time to create an
+                                    additional income stream that works for you.
+                                    This course is designed for professionals who want to monetize their skills, build a
+                                    sustainable side hustle, and secure financial independence—without immediately
+                                    quitting their job.
+                                </div>
+                                <div class="py-3 py-lg-4 text-center text-lg-start">
+                                    <div class="add_to_cart_button" id="cart2">
+                                        <form action="/shop/cart/update" method="POST">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <input type="hidden" name="product_template_id"
+                                                   t-att-value="product_template_id"/>
+                                            <input type="hidden" class="product_id" name="product_id"
+                                                   t-att-value="product_id"/>
+                                            <button type="submit"
+                                                    class="btn bg-black fw-bold text-white w-75 w-md-50 w-lg-25 py-2 py-md-3 rounded-pill mt-3 mt-md-4">
+                                                Enroll Now
+                                            </button>
+                                            <div id="product_option_block"></div>
+                                        </form>
+                                    </div>
+                                    <div class="add_to_cart_button my-2" hidden="hidden" id="cart2_hidden">
+                                        <a class="btn bg-black fw-bold text-white w-75 w-md-50 w-lg-25 py-2 py-md-3 rounded-pill mt-3 mt-md-4"
+                                           onclick="openPop()">
+                                            Enroll Now
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-12 order-1 order-lg-2 text-center">
+                            <img t-att-src="'/web/image/slide.channel/%s/image1' % course_id" alt="section_10"
+                                 class="img-fluid w-75 w-md-50 w-lg-100" style="max-height: 410px; object-fit: cover;"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Responsive Adjustments -->
+            <style>
+                @media (max-width: 768px) {
+                #section_10 .row {
+                margin: 15px; /* Added margin to prevent edges from touching */
+                }
+                }
+                @media (max-width: 480px) {
+                #section_10 .row {
+                margin: 10px; /* Reduced margin for extra small devices */
+                }
+                }
+            </style>
+
+            <div id="section_2" class="p-4 container-fluid">
+                <div class="container d-flex flex-wrap justify-content-center align-items-center">
+                    <div class="container-box rounded-30 w-100 p-4 border border-black d-flex flex-column flex-lg-row align-items-center">
+                        <div class="col-12 col-lg-6 d-flex flex-column gap-3 text-center text-lg-start">
+                            <span class="fs-2 fs-md-3 fs-lg-2 fw-bold">About the
+                                <span class="text-kreator-yellow-900">COURSE</span>
+                            </span>
+                            <span class="fw-bold fs-4">
+                                Take Control of Your Income and Start Your Side Hustle Today!
+                            </span>
+                            <span class="text-kreator-yellow-900">
+                                <t t-if="len(course_line_ids) &gt;= 1">
+                                    We know that starting something new while managing a full-time job can feel
+                                    overwhelming. That’s why this course is designed specifically for employees looking
+                                    to build an alternative income stream.
+                                </t>
+                            </span>
+                            <span class="fw-bold">
+                                <t t-if="len(course_line_ids) &gt;= 2">
+                                    You’ll learn high-paying skills that fit into your schedule, how to create a
+                                    portfolio that attracts premium clients, and how to market yourself for consistent
+                                    work.
+                                </t>
+                            </span>
+                        </div>
+                        <div class="col-12 col-lg-6 text-center mt-4 mt-lg-0">
+                            <img src="/kreator_website/static/src/img/image2.png" class="img-fluid"
+                                 style="transform: scaleX(-1);"
+                                 alt="Online Course Illustration"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="intro_video" class="p-4 container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-8">
+                            <t t-esc="intro_video"/>
+                        <script src="https://player.vimeo.com/api/player.js"></script>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: center; align-items: center; padding: 50px;">
+                <div style="max-width: 1200px; width: 100%; background: linear-gradient(135deg, #FFD700, #FFB400);
+                padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); text-align: center;
+                position: relative; overflow: hidden; ">
+
+                    <!-- Heading -->
+                    <h1 style="
+    font-size: 36px;
+    font-family: 'Jost', sans-serif;
+    font-weight: bold;
+    color: #000;
+    text-transform: uppercase;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    line-height: 1.3;
+">
+                        <span style="
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        display: inline-block;
+        box-decoration-break: clone;
+        padding: 0 5px;
+    ">Enroll Now
+                        </span>
+                        and Avail the
+                        <span style="
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        display: inline-block;
+        box-decoration-break: clone;
+        padding: 0 5px;
+    ">Benefits
+                        </span>
+                    </h1>
+
+
+                    <!-- USP Section -->
+                    <div style="
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 25px;
+                margin-top: 50px;
+            ">
+                        <!-- USP Cards -->
+                        <div class="usp-card">
+                            <img src="/kreator_website/static/src/img/working-time.svg" alt="USP 1" width="55"/>
+                            <span>
+                                Build a profitable
+                                <br/>
+                                side hustle without
+                                <br/>
+                                quitting your job.
+                            </span>
+                        </div>
+                        <div class="usp-card">
+                            <img src="/kreator_website/static/src/img/logical-thinking.svg" alt="USP 2" width="55"/>
+                            <span>
+                                Learn high-demand
+                                <br/>
+                                skills that businesses
+                                <br/>
+                                actively pay for.
+                            </span>
+                        </div>
+                        <div class="usp-card">
+                            <img src="/kreator_website/static/src/img/wallet.svg" alt="USP 3" width="55"/>
+                            <span>
+                                Charge premium
+                                <br/>
+                                prices &amp; avoid burnout
+                                <br/>
+                                while freelancing.
+                            </span>
+                        </div>
+                        <div class="usp-card">
+                            <img src="/kreator_website/static/src/img/bullseye.svg" alt="USP 4" width="55"/>
+                            <span>
+                                Get proven strategies
+                                <br/>
+                                to land high-ticket
+                                <br/>
+                                clients.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Styling -->
+            <style>
+                .usp-card {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 12px;
+                background: rgba(255, 255, 255, 0.8);
+                backdrop-filter: blur(10px);
+                padding: 20px 25px;
+                border-radius: 15px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                min-width: 200px;
+                text-align: center;
+                }
+
+                .usp-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+                }
+
+                .usp-card span {
+                font-size: 18px;
+                font-weight: bold;
+                color: #000;
+                }
+
+                @media (max-width: 1024px) {
+                h1 {
+                font-size: 36px !important;
+                }
+                }
+                @media (max-width: 768px) {
+                h1 {
+                font-size: 32px !important;
+                }
+                .usp-card {
+                min-width: 160px;
+                padding: 15px 20px;
+                }
+                }
+                @media (max-width: 480px) {
+                h1 {
+                font-size: 26px !important;
+                }
+                .usp-card {
+                min-width: 140px;
+                padding: 12px 15px;
+                }
+                }
+            </style>
+
+            <div id="section_11" class="w-100 bg-black">
+                <div class="container py-5">
+                    <div class="row align-items-center">
+                        <!-- Heading Section -->
+                        <div class="col-md-4 col-12 text-center text-md-start">
+                            <div class="d-flex flex-column justify-content-center jost-bold">
+                                <span class="text-white" style="font-size: clamp(24px, 3vw, 40px);">Who should take this
+                                </span>
+                                <span class="text-kreator-yellow-900 fw-bold"
+                                      style="font-size: clamp(32px, 5vw, 64px);">
+                                    COURSE?
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Courses Section -->
+                        <div class="col-md-8 col-12 mt-4 mt-md-0">
+                            <div class="row justify-content-center justify-content-md-around text-center my-2">
+                                <div class="col-6 col-md-2 p-2 bg-white text-black m-1 m-md-0"
+                                     style="border: 1px solid black; border-radius: 25px; font-size: clamp(14px, 2vw, 18px);">
+                                    <t t-esc="course_ids[0].name"/>
+                                </div>
+                                <div class="col-6 col-md-2 p-2 bg-white text-black m-1 m-md-0"
+                                     style="border: 1px solid black; border-radius: 25px; font-size: clamp(14px, 2vw, 18px);">
+                                    <t t-esc="course_ids[1].name"/>
+                                </div>
+                                <div class="col-6 col-md-2 p-2 bg-white text-black m-1 m-md-0"
+                                     style="border: 1px solid black; border-radius: 25px; font-size: clamp(14px, 2vw, 18px);">
+                                    <t t-esc="course_ids[2].name"/>
+                                </div>
+                                <div class="col-6 col-md-2 p-2 bg-white text-black m-1 m-md-0"
+                                     style="border: 1px solid black; border-radius: 25px; font-size: clamp(14px, 2vw, 18px);">
+                                    <t t-esc="course_ids[3].name"/>
+                                </div>
+                                <div class="col-6 col-md-2 p-2 bg-white text-black m-1 m-md-0"
+                                     style="border: 1px solid black; border-radius: 25px; font-size: clamp(14px, 2vw, 18px);">
+                                    <t t-esc="course_ids[4].name"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section_5" class="p-5 container">
+                <div class="row">
+                    <div class="col-12 col-md-2 text-start">
+                        <span class="curriculum-title" style="padding-top:60px;">CURRICULUM</span>
+                    </div>
+                    <div class="col-md-10">
+                        <h2 style="color: #292929;font-family: Futura-Bold;font-size: 94.078px;font-style: normal;font-weight: 400;line-height: normal;">
+                            Course
+                        </h2>
+                        <div id="customAccordion" class="w-100">
+                            <div class="accordion-section">
+                                <div class="accordion-title pe-5 fs-5">
+                                    Introduction To Freelancing
+                                    <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
+                                </div>
+                                <div class="accordion-body p-3">
+                                    <ul>
+                                        <li>
+                                            Introduction
+                                        </li>
+                                        <li>
+                                            What is freelancing &amp; why it’s the best career option in 2025
+                                        </li>
+                                        <li>
+                                            Real earning potential: ₹10K/month → ₹1L/month roadmap
+                                        </li>
+                                        <li>
+                                            Who is this course for &amp; what you’ll learn?
+                                        </li>
+                                        <li>
+                                            Freelancer Mindset &amp; Soft Skills for Success
+                                        </li>
+                                        <li>
+                                            our First 30, 90 &amp; 180 Days Roadmap
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class="accordion-title pe-5 fs-5">
+                                    Choosing The Right Freelancing Skill
+                                    <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
+                                </div>
+                                <div class="accordion-body p-3">
+                                    <ul>
+                                        <li>
+                                            High-paying vs. easy-to-learn skills
+                                        </li>
+                                        <li>
+                                            Fastest skills to start earning (in 30 days or less!)
+                                        </li>
+                                        <li>
+                                            Choosing the Right Skill Based on Your Personality &amp; Interests
+                                        </li>
+                                        <li>
+                                            Deep dives into (Video Editing, AI Content Creation, Thumbnail
+                                            Designing)
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class="accordion-title pe-5 fs-5">
+                                    Building a Portfolio That Stands Out
+                                    <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
+                                </div>
+                                <div class="accordion-body p-3">
+                                    <ul>
+                                        <li>
+                                            Creating a beginner-friendly but high-impact portfolio
+                                        </li>
+                                        <li>
+                                            Best tools &amp; platforms for building your portfolio
+                                        </li>
+                                        <li>
+                                            What clients actually look for in your portfolio
+                                        </li>
+                                        <li>
+                                            Case Studies: Reviewing Best Portfolio Examples
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class="accordion-title pe-5 fs-5">
+                                    Personal Branding to Get Clients on Autopilot
+                                    <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
+                                </div>
+                                <div class="accordion-body p-3">
+                                    <ul>
+                                        <li>
+                                            Why personal branding is a game-changer for freelancers?
+                                        </li>
+                                        <li>
+                                            How to build your brand on Instagram &amp; LinkedIn
+                                        </li>
+                                        <li>
+                                            What type of content should you post to attract clients?
+                                        </li>
+                                        <li>
+                                            How personal branding helps you charge more
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class="accordion-title pe-5 fs-5">
+                                    Finding Clients – The Best Ways to Get Work
+                                    <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
+                                </div>
+                                <div class="accordion-body p-3">
+                                    <ul>
+                                        <li>
+                                            Best platforms for freelancers (Upwork, Fiverr, Contra, etc.)
+                                        </li>
+                                        <li>
+                                            Finding clients by sending cold outreach (Mail, Instagram, LinkedIn)
+                                        </li>
+                                        <li>
+                                            Crafting cold outreach messages that actually work
+                                        </li>
+                                        <li>
+                                            How to get clients by attending networking events &amp; meetups
+                                        </li>
+                                        <li>
+                                            How to build a strong network online &amp; offline
+                                        </li>
+                                        <li>
+                                            BONUS - 5 stories of how I landed clients as a freelance - ?
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class="accordion-title pe-5 fs-5">
+                                    iscovery Call &amp; Payment Mastery (Best way to pitch your services)
+                                    <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
+                                </div>
+                                <div class="accordion-body p-3">
+                                    <ul>
+                                        <li>
+                                            Setting up the first meeting
+                                        </li>
+                                        <li>
+                                            How to pitch a retainer deal
+                                        </li>
+                                        <li>
+                                            Crafting proposal that gets you the client
+                                        </li>
+                                        <li>
+                                            Setting right price as a freelancer
+                                        </li>
+                                        <li>
+                                            How to get clients to accept Your pricing
+                                        </li>
+                                        <li>
+                                            What are the payment structures in freelancing
+                                        </li>
+                                        <li>
+                                            How to create invoices without getting scammed Create Invoice
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class="accordion-title pe-5 fs-5">
+                                    30-Day Freelancing Action Plan
+                                    <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
+                                </div>
+                                <div class="accordion-body p-3">
+                                    <ul>
+                                        <li>
+                                            Step by step guide how to make money
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            document.querySelectorAll(".accordion-title").forEach(title => {
+                            title.addEventListener("click", function () {
+                            const currentlyOpen = document.querySelector(".accordion-section.expanded");
+                            if (currentlyOpen &amp;&amp; currentlyOpen !== this.parentElement) {
+                            currentlyOpen.classList.remove("expanded");
+                            }
+                            this.parentElement.classList.toggle("expanded");
+                            });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section_6" class="container px-4 py-5">
+                <div class="row aboutme_section d-flex flex-wrap align-items-center justify-content-between">
+                    <div class="col-md-4 col-12 d-flex flex-column gap-3 align-items-center text-center">
+                        <div style="font-size: 45px; padding: 20px; font-weight: bold;">
+                            About
+                            <span style="color: #FFC107;">Me</span>
+                        </div>
+                        <img t-att-src="'/web/image/slide.channel/%s/my_image_icon' % course_id" alt="About Me"
+                             class="img-fluid rounded-3" style="max-width: 300px; object-fit: cover;"/>
+                    </div>
+
+                    <div class="col-md-8 col-12 text-center py-3">
+                        <div style="font-size: 22px; font-weight: bold;">
+                            <span style="color: #FFC107;">
+                                Founder of Growth Rocket, a 7-figure social media agency specializing in content
+                                strategy and brand growth.
+                            </span>
+                        </div>
+                        <div class="text-muted"
+                             style="font-family: 'Futura Md BT'; font-size: 18px; font-weight: 400; margin-top: 10px;">
+                            I have built an audience of over 1 million followers across Instagram and YouTube by
+                            creating high-impact, viral finance content. Through strategic collaborations with top
+                            brands like Poker Baazi, Paytm, and WeWork, I have delivered content strategies and
+                            brand-building solutions that drive engagement and growth. Additionally, as a public speaker
+                            and mentor, I guide young entrepreneurs and content creators on scaling their brands and
+                            careers.
+                        </div>
+                        <hr/>
+                        <div class="mt-4">
+                            <form action="/shop/cart/update" method="POST" id="cart3">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                <button type="submit"
+                                        class="btn btn-kreator-yellow-900 fw-bold text-black px-4 py-2 rounded shadow-sm fs-5">
+                                    Enroll Now
+                                </button>
+                            </form>
+                            <div class="add_to_cart_button my-2" hidden="hidden" id="cart3_hidden">
+                                <a class="btn btn-kreator-yellow-900 fw-bold text-black px-4 py-2 rounded shadow-sm fs-5"
+                                   onclick="openPop()">
+                                    Enroll Now
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-center gap-3 mt-4">
+                            <t t-if="m5">
+                                <a t-att-href="m5" target="_blank">
+                                    <img width="32" height="32" src="/kreator_website/static/src/img/instagram.svg"
+                                         alt="Instagram"/>
+                                </a>
+                            </t>
+                            <t t-if="m1">
+                                <a t-att-href="m1" target="_blank">
+                                    <img width="32" height="32" src="/kreator_website/static/src/img/fb.svg"
+                                         alt="Facebook"/>
+                                </a>
+                            </t>
+                            <t t-if="m2">
+                                <a t-att-href="m2" target="_blank">
+                                    <img width="32" height="32" src="/kreator_website/static/src/img/x.png" alt="X"/>
+                                </a>
+                            </t>
+                            <t t-if="m4">
+                                <a href="m4" target="_blank">
+                                    <img width="32" height="32" src="/kreator_website/static/src/img/Youtube.svg"
+                                         alt="Youtube"/>
+                                </a>
+                            </t>
+                            <t t-if="m3">
+                                <a t-att-href="m3" target="_blank">
+                                    <img width="32" height="32" src="/kreator_website/static/src/img/linkedin.svg"
+                                         alt="LinkedIn"/>
+                                </a>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section_13" class="p-5">
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-0"></div>
+                    <div class="px-3 px-md-5 col-lg-4 col-md-4 col-sm-12">
+                        <div class="d-flex flex-column flex-md-row gap-4 align-items-center">
+                            <img src="/kreator_website/static/src/img/Camera.png" alt="section7"
+                                 class="img-fluid object-fit-cover rounded-30"
+                                 style="max-width: 80px; max-width: 200px; width: 100%; height: auto;"/>
+                            <div class="d-flex flex-column flex-sm-row gap-2 gap-md-3">
+                                <span class="jost-bold"
+                                      style="color: #000;font-family: Jost-Bold;font-size: 35px;font-weight: 400;">
+                                    From our
+                                </span>
+                                <span class="jost-bold"
+                                      style="color: #FFCD00;font-family: Jost-Bold;font-size: 40px;font-weight: 400;">
+                                    Students
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="w-60" style="width: 60%; min-width: 320px;">
+                                        <div class="d-flex justify-content-start gap-2">
+                                            <div class="w-100">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="69"
+                                                     viewBox="0 0 70 69"
+                                                     fill="none">
+                                                    <circle cx="35.309" cy="34.5248" r="34.3988" fill="#FF5555"/>
+                                                    <path
+                                                            d="M30.9009 21.4434L32.5269 24.4384C31.6141 25.7304 30.7583 27.1692 29.9595 28.7548C29.2179 30.3404 28.79 31.9847 28.6759 33.6878L33.3827 34.5686V44.6989H20.2891V37.4756C20.2891 33.306 21.2304 29.9586 23.1132 27.4334C25.053 24.8495 27.6489 22.8528 30.9009 21.4434ZM47.8457 21.4434L49.4717 24.4384C48.5588 25.7304 47.703 27.1692 46.9043 28.7548C46.1626 30.3404 45.7347 31.9847 45.6206 33.6878L50.3275 34.5686V44.6989H37.2338V37.4756C37.2338 33.306 38.1752 29.9586 40.0579 27.4334C41.9977 24.8495 44.5936 22.8528 47.8457 21.4434Z"
+                                                            fill="white"/>
+                                                </svg>
+                                            </div>
+
+                                            <div class="d-flex flex-column gap-5">
+                                                <span class="ibm_plex mt-5"
+                                                      style="font-size: 16px; text-align: left; display: block;">
+                                                    I was tired of my corporate job but didn’t know how to transition
+                                                    into freelancing. This course gave me a clear roadmap, from finding
+                                                    my first client to building a stable income.
+                                                </span>
+
+
+                                                <div class="d-flex gap-2 mt-3" style="align-items: center;">
+                                                    <div class="d-flex flex-column align-items-center justify-content-center">
+                                                        <span class="ibm_plex text-k-orange" style="font-size: 18px;">
+                                                            - Kritika
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="w-60" style="width: 60%; min-width: 320px;">
+                                        <div class="d-flex justify-content-start gap-2">
+                                            <div class="w-100">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="69"
+                                                     viewBox="0 0 70 69"
+                                                     fill="none">
+                                                    <circle cx="35.309" cy="34.5248" r="34.3988" fill="#FF5555"/>
+                                                    <path
+                                                            d="M30.9009 21.4434L32.5269 24.4384C31.6141 25.7304 30.7583 27.1692 29.9595 28.7548C29.2179 30.3404 28.79 31.9847 28.6759 33.6878L33.3827 34.5686V44.6989H20.2891V37.4756C20.2891 33.306 21.2304 29.9586 23.1132 27.4334C25.053 24.8495 27.6489 22.8528 30.9009 21.4434ZM47.8457 21.4434L49.4717 24.4384C48.5588 25.7304 47.703 27.1692 46.9043 28.7548C46.1626 30.3404 45.7347 31.9847 45.6206 33.6878L50.3275 34.5686V44.6989H37.2338V37.4756C37.2338 33.306 38.1752 29.9586 40.0579 27.4334C41.9977 24.8495 44.5936 22.8528 47.8457 21.4434Z"
+                                                            fill="white"/>
+                                                </svg>
+                                            </div>
+
+                                            <div class="d-flex flex-column gap-5">
+                                                <span class="ibm_plex mt-5"
+                                                      style="font-size: 16px; text-align: left; display: block;">
+                                                    I always thought freelancing required quitting my job, but this
+                                                    course showed me how to start as a side hustle while managing my
+                                                    9-5. The step-by-step approach made it so easy to get my first
+                                                    paying client. Highly recommended for working professionals!
+                                                </span>
+
+
+                                                <div class="d-flex gap-2 mt-3" style="align-items: center;">
+                                                    <div class="d-flex flex-column align-items-center justify-content-center">
+                                                        <span class="ibm_plex text-k-orange" style="font-size: 18px;">
+                                                            – Nidhi Bansal
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="w-60" style="width: 60%; min-width: 320px;">
+                                        <div class="d-flex justify-content-start gap-2">
+                                            <div class="w-100">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="69"
+                                                     viewBox="0 0 70 69"
+                                                     fill="none">
+                                                    <circle cx="35.309" cy="34.5248" r="34.3988" fill="#FF5555"/>
+                                                    <path
+                                                            d="M30.9009 21.4434L32.5269 24.4384C31.6141 25.7304 30.7583 27.1692 29.9595 28.7548C29.2179 30.3404 28.79 31.9847 28.6759 33.6878L33.3827 34.5686V44.6989H20.2891V37.4756C20.2891 33.306 21.2304 29.9586 23.1132 27.4334C25.053 24.8495 27.6489 22.8528 30.9009 21.4434ZM47.8457 21.4434L49.4717 24.4384C48.5588 25.7304 47.703 27.1692 46.9043 28.7548C46.1626 30.3404 45.7347 31.9847 45.6206 33.6878L50.3275 34.5686V44.6989H37.2338V37.4756C37.2338 33.306 38.1752 29.9586 40.0579 27.4334C41.9977 24.8495 44.5936 22.8528 47.8457 21.4434Z"
+                                                            fill="white"/>
+                                                </svg>
+                                            </div>
+
+                                            <div class="d-flex flex-column gap-5">
+                                                <span class="ibm_plex mt-5"
+                                                      style="font-size: 16px; text-align: left; display: block;">
+                                                    As a full-time employee, my income was always fixed. This course
+                                                    helped me start freelancing on the side, and now I make extra money
+                                                    every month. The pricing strategies and client negotiation tips were
+                                                    absolute game-changers!
+                                                </span>
+
+
+                                                <div class="d-flex gap-2 mt-3" style="align-items: center;">
+                                                    <div class="d-flex flex-column align-items-center justify-content-center">
+                                                        <span class="ibm_plex text-k-orange" style="font-size: 18px;">
+                                                            – Rohit Kumar
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="w-60" style="width: 60%; min-width: 320px;">
+                                        <div class="d-flex justify-content-start gap-2">
+                                            <div class="w-100">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="69"
+                                                     viewBox="0 0 70 69"
+                                                     fill="none">
+                                                    <circle cx="35.309" cy="34.5248" r="34.3988" fill="#FF5555"/>
+                                                    <path
+                                                            d="M30.9009 21.4434L32.5269 24.4384C31.6141 25.7304 30.7583 27.1692 29.9595 28.7548C29.2179 30.3404 28.79 31.9847 28.6759 33.6878L33.3827 34.5686V44.6989H20.2891V37.4756C20.2891 33.306 21.2304 29.9586 23.1132 27.4334C25.053 24.8495 27.6489 22.8528 30.9009 21.4434ZM47.8457 21.4434L49.4717 24.4384C48.5588 25.7304 47.703 27.1692 46.9043 28.7548C46.1626 30.3404 45.7347 31.9847 45.6206 33.6878L50.3275 34.5686V44.6989H37.2338V37.4756C37.2338 33.306 38.1752 29.9586 40.0579 27.4334C41.9977 24.8495 44.5936 22.8528 47.8457 21.4434Z"
+                                                            fill="white"/>
+                                                </svg>
+                                            </div>
+
+                                            <div class="d-flex flex-column gap-5">
+                                                <span class="ibm_plex mt-5"
+                                                      style="font-size: 16px; text-align: left; display: block;">
+                                                    This course doesn’t waste time on generic advice—it gives you a
+                                                    direct path to start freelancing, even if you have a full-time job.
+                                                    I love how realistic and actionable the lessons are. I’ve already
+                                                    landed two freelance gigs while still working my 9-5!
+                                                </span>
+
+
+                                                <div class="d-flex gap-2 mt-3" style="align-items: center;">
+                                                    <div class="d-flex flex-column align-items-center justify-content-center">
+                                                        <span class="ibm_plex text-k-orange" style="font-size: 18px;">
+                                                            – Varun Tondon
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#carouselExampleAutoplaying"
+                                    data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon text-black" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                    data-bs-target="#carouselExampleAutoplaying"
+                                    data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="section_8" class="py-5 w-100">
+                <div class="container">
+                    <div class="row text-center">
+                        <div class="col-12 d-flex flex-column align-items-center">
+                            <div class="fs-45 fw-bold">Frequently Asked</div>
+                            <div class="text-kreator-yellow-900 fs-45 fw-bold">Questions</div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center mt-4">
+                        <!-- Left Image -->
+                        <div class="col-md-3 d-none d-md-flex justify-content-center">
+                            <img src="/kreator_website/static/src/img/section8.png" alt="FAQ" class="img-fluid w-75"/>
+                        </div>
+                        <!-- Accordion Content -->
+                        <div class="col-12 col-md-6 d-flex justify-content-center">
+                            <div class="w-100">
+                                <div class="accordion">
+                                    <div class="accordion-item">
+                                        <div class="accordion-header pe-5">
+                                            Is this course suitable for working professionals with no skill and prior
+                                            experience as freelancer?
+                                            <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
+                                                 alt="Arrow"/>
+                                        </div>
+                                        <div class="accordion-content">
+                                            Yes, this course is perfect for working professionals who are beginners with
+                                            no prior skill set or for someone at intermediate level in freelancing.
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <div class="accordion-header pe-5">
+                                            Q2. Will I be able to replace my job income with freelancing?
+                                            <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
+                                                 alt="Arrow"/>
+                                        </div>
+                                        <div class="accordion-content">
+                                            Yes, with consistent effort, many freelancers start earning ₹50K-1L per
+                                            month and even transition full-time.
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <div class="accordion-header pe-5">
+                                            Will I learn how to scale my freelancing business?
+                                            <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
+                                                 alt="Arrow"/>
+                                        </div>
+                                        <div class="accordion-content">
+                                            Yes, you’ll learn how to start from zero and attract high-paying clients.
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <div class="accordion-header pe-5">
+                                            Can I do this course while having a 9-5 job?
+                                            <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
+                                                 alt="Arrow"/>
+                                        </div>
+                                        <div class="accordion-content">
+                                            Yes the duration of the course is self paced. You can complete it at your
+                                            own pace
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <div class="accordion-header pe-5">
+                                            Can I start freelancing part-time while keeping my job?
+                                            <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
+                                                 alt="Arrow"/>
+                                        </div>
+                                        <div class="accordion-content">
+                                            Absolutely! You can take up small projects and gradually scale as you gain
+                                            experience.
+                                        </div>
+                                    </div>
+                                </div>
+                                <script>
+                                    document.querySelectorAll(".accordion-header").forEach(header => {
+                                    header.addEventListener("click", function () {
+                                    const currentActive = document.querySelector(".accordion-item.active");
+                                    if (currentActive &amp;&amp; currentActive !== this.parentElement) {
+                                    currentActive.classList.remove("active");
+                                    }
+                                    this.parentElement.classList.toggle("active");
+                                    });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        <!-- Right Image -->
+                        <div class="col-md-3 d-none d-md-flex justify-content-center">
+                            <img src="/kreator_website/static/src/img/section8.png" alt="FAQ" class="img-fluid w-75"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section_9" class="pt-5 w-100 container border-top mb-5 border-bottom border-black">
+                <div class="row align-items-center justify-content-center">
+                    <!-- Text & Button Section -->
+                    <div class="col-12 col-md-6 text-center text-md-start mb-4 mb-md-0">
+                        <div class="d-flex flex-column gap-3 align-items-center align-items-md-start">
+                            <span class="fs-34 text-ibm text-center text-md-start">
+                                Take Control of<br/>Your
+                                <span class="text-kreator-yellow-900">Income</span>
+                                and Start Your Side Hustle Today!
+                            </span>
+                            <span class="fs-4 w-100 w-md-75 text-center text-md-start">
+                                This isn’t just another online course. It’s a structured roadmap that helps you set up a
+                                side hustle that actually works
+                            </span>
+                            <span class="fs-4 text-kreator-yellow-900 pb-3" style="letter-spacing: 7.26px;">
+                                INR
+                                <span class="text-decoration-line-through">
+                                    <t t-esc="price1"/>
+                                </span>
+                                / INR
+                                <t t-esc="price2"/>
+                                (Excl. Tax)
+                            </span>
+                            <div class="add_to_cart_button w-100 justify-content-center justify-content-md-start" id="cart4">
+                                <form action="/shop/cart/update" method="POST" class="w-100 w-md-75">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                    <button type="submit"
+                                            class="btn btn-kreator-yellow-900 fw-bold text-black px-4 py-2 rounded shadow-sm mt-3">
+                                        Enroll Now
+                                    </button>
+                                    <div id="product_option_block"></div>
+                                </form>
+                            </div>
+                            <div class="add_to_cart_button my-2" hidden="hidden" id="cart4_hidden">
+                                <a class="btn btn-kreator-yellow-900 fw-bold text-black px-4 py-2 rounded shadow-sm mt-3"
+                                   onclick="openPop()">
+                                    Enroll Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Image Section -->
+                    <div class="col-12 col-md-6 d-flex justify-content-center">
+                        <img t-att-src="'/web/image/slide.channel/%s/image1' % course_id" alt="section9"
+                             class="img-fluid w-75 w-md-100"/>
+                    </div>
+                </div>
+            </div>
+        </t>
+        <script
+                src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"
+        ></script>
+        <script>
+            // Set the date we're counting down to
+            const cart1 = document.getElementById("cart1");
+            const cart2 = document.getElementById("cart2");
+            const cart3 = document.getElementById("cart3");
+            const cart1_hidden = document.getElementById("cart1_hidden");
+            const cart2_hidden = document.getElementById("cart2_hidden");
+            const cart3_hidden = document.getElementById("cart3_hidden");
+            const cart4 = document.getElementById("cart4");
+            const cart4_hidden = document.getElementById("cart4_hidden");
+            const expire_date = document.getElementById("expired");
+            var countDownDate = new Date(expire_date.value).getTime();
+            let open_pop = document.getElementById("open_pop");
+            let close = document.getElementById("popup1");
+            function popclose() {
+            console.log('test');
+            close.style.display= 'none';
+            }
+            function openPop() {
+            close.style.display = 'flex';
+            }
+
+            // Update the count down every 1 second
+            var x = setInterval(function() {
+
+            // Get today's date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the element with id="demo"
+            document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s " + "Left";
+
+            // If the count down is finished, write some text
+            if (distance &lt; 30936){
+            document.getElementById("demo").classList.add("text-danger");
+            }
+            if (distance &lt; 0) {
+            clearInterval(x);
+            document.getElementById("demo").innerHTML = "LINK EXPIRED";
+            cart1.style.display = 'none';
+            cart1_hidden.removeAttribute("hidden");
+            cart2.style.display = 'none';
+            cart2_hidden.removeAttribute("hidden");
+            cart3.style.display = 'none';
+            cart3_hidden.removeAttribute("hidden");
+            cart4.style.display = 'none';
+            cart4_hidden.removeAttribute("hidden");
+            document.getElementById("demo").classList.remove('blink_me');
+            }
+            }, 1000);
+        </script>
+    </template>
+</odoo>

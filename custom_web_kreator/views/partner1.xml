@@ -233,13 +233,15 @@
                                     <div class="doughnutChart-container">
                                       <canvas id="doughnutChart-four" width="150" height="150"></canvas>
                                     </div>
+                                      <textarea hidden="hidden" id="labels">
+                                          <t t-esc="labels"/>
+                                      </textarea>
+                                      <textarea hidden="hidden" id="data">
+                                          <t t-esc="data"/>
+                                      </textarea>
                                     <div class="chart-data">
                                       <ul>
-                                        <li><i class="ri-circle-fill pe-1 electro"></i>Video Editing</li>
-                                        <li><i class="ri-circle-fill pe-1 clo"></i>Lead Generation</li>
-                                        <li><i class="ri-circle-fill pe-1 foo"></i>Freelancing</li>
-                                        <li><i class="ri-circle-fill pe-1 boo"></i>Freelancing (Gen Z)</li>
-                                        <li><i class="ri-circle-fill pe-1 oth"></i>Freelancing (Employees)</li>
+                                        <t t-esc="xml_label"/>
                                       </ul>
                                     </div>
                                   </div>
@@ -275,15 +277,17 @@
                     // Get the context of the canvas elements for the doughnut charts
                     const ctx1 = document.getElementById('doughnutChart-four').getContext('2d');
                     const ctx2 = document.getElementById('doughnutChart-five').getContext('2d');
-
+                    const ctx1_labels = JSON.parse(document.getElementById('labels').value.trim().replaceAll("'", '"'));
+                    const ctx1_data = JSON.parse(document.getElementById('data').value.trim().replaceAll("'", '"'));
+                    console.log(ctx1_data)
                     // Doughnut Chart for 'doughnutChart-four'
                     new Chart(ctx1, {
                         type: 'doughnut',
                         data: {
-                            labels: ['Video Editing', 'Lead Generation', 'Freelancing', 'Freelancing (Gen Z)', 'Freelancing (Employees)'],
+                            labels: ctx1_labels,
                             datasets: [{
                                 label: 'Sales Distribution',
-                                data: [35, 25, 20, 15, 5],
+                                data: ctx1_data,
                                 backgroundColor: [
                                     'rgba(255, 205, 0, 1)',
                                     'rgba(255, 255, 255, 1)',
@@ -317,7 +321,6 @@
                             },
                         }
                     });
-
                     // Doughnut Chart for 'doughnutChart-five'
                     new Chart(ctx2, {
                         type: 'doughnut',
