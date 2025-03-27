@@ -233,37 +233,6 @@
                                         </a>
                                     </li>
                                     <!-- Sales Dropdown -->
-                                    <div class="ps-2 d-block d-lg-none">
-                                        <li>
-                                            <a style="cursor: pointer;">
-                                                <i class="ri-subtract-fill"></i>
-                                                Income Data
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a style="cursor: pointer;">
-                                                <i class="ri-subtract-fill"></i>
-                                                Links
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a style="cursor: pointer;">
-                                                <i class="ri-subtract-fill"></i>
-                                                kyc
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <i class="ri-subtract-fill"></i>
-                                            <a href="/partner-links">Lead</a>
-                                        </li>
-                                        <li>
-                                            <a href="/partner/leaderboard">
-                                                <i
-                                                        class="ri-subtract-fill"></i>
-                                                Leaderboard
-                                            </a>
-                                        </li>
-                                    </div>
                                     <li>
                                         <a style="cursor: pointer;">
                                             <i class="ri-product-hunt-fill"></i>
@@ -333,8 +302,8 @@
                             <div class="my-4">
                                 <div class="row justify-content-around border1 rounded text-center">
                                     <t t-if="agreement == 'agree'">
-                                        <div class="col-6">
-                                            <img src="/custom_web_kreator/static/src/thankyou.png" alt="Welcome Icon"/>
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <img src="/custom_web_kreator/static/src/thankyou.png" class="img-fluid" alt="Welcome Icon"/>
                                             <h1>Thank You for Joining the Bee Partner Program!</h1>
 <!--                                            <h5>Here are the next steps:</h5>-->
 <!--                                            <h6>-->
@@ -349,25 +318,25 @@
 <!--                                            </h6>-->
                                         </div>
                                     </t>
-                                    <t t-else="">
-                                        <div class="col-6">
+<!--                                    <t t-else="">-->
+<!--                                        <div class="col-6">-->
 
 
-                                            <img src="/custom_web_kreator/static/src/thankyou.png" alt="Welcome Icon"/>
-                                            <h1>Thank You for Joining the Bee Partner Program!</h1>
+<!--                                            <img src="/custom_web_kreator/static/src/thankyou.png" class="img-fluid" alt="Welcome Icon"/>-->
+<!--                                            <h1>Thank You for Joining the Bee Partner Program!</h1>-->
 
 
-                                            <p>
-                                                Our team will contact you within 24 hours, or you can reach us directly
-                                                at
-                                                0120-4162586.
-                                            </p>
-                                            <p>Sorry to hear that you do not agree with our terms and conditions.</p>
-                                        </div>
-                                    </t>
+<!--                                            <p>-->
+<!--                                                Our team will contact you within 24 hours, or you can reach us directly-->
+<!--                                                at-->
+<!--                                                0120-4162586.-->
+<!--                                            </p>-->
+<!--                                            <p>Sorry to hear that you do not agree with our terms and conditions.</p>-->
+<!--                                        </div>-->
+<!--                                    </t>-->
                                     <div class="col-12 p-2">
                                         <div class="row justify-content-around">
-                                            <div class="col-4">
+                                            <div class="col-lg-4 col-md-4 col-sm-10">
                                                 <a href="/partner/product" class="custom-btn h5">
                                                     Start Promoting Now
                                                 </a>
