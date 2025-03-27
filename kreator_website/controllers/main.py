@@ -75,6 +75,16 @@ class KreatorWebsite(http.Controller):
         values.update({'intro_video': intro_video})
         return request.render("kreator_website.freelancing_genz_ayushman", values)
 
+    @http.route('/landing/page/9', auth='public', website=True)
+    def lead_generation_lakshit(self, **kwargs):
+        course = request.env['slide.channel'].sudo().search([('id', '=', kwargs.get('course_id'))])
+        values = self.fetch_values(**kwargs)
+        intro_video = Markup('''<iframe src="https://player.vimeo.com/video/1068746592?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+             frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              style="width:100%;height:40vh; border-radius: 25px; title="Promotional  gen-z-"></iframe>''')
+        values.update({'intro_video': intro_video})
+        return request.render("kreator_website.lead_generation_lakshit", values)
+
     def fetch_values(self, **kwargs):
         course = request.env['slide.channel'].sudo().search([('id', '=', kwargs.get('course_id'))])
         expiry_time = kwargs.get('exp')

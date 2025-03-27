@@ -58,7 +58,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between bg-black" style="position: fixed; width: 100%; z-index: 1;">
+            <div class="row justify-content-between bg-black" style="position: fixed; width: 100vw; z-index: 1;">
                 <div class="col-lg-3 col-md-3 col-sm-12">
                     <p class="py-4 px-4 fs-4" style="color: #FFCD00;">
                         <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
@@ -81,7 +81,7 @@
                             <t t-esc="price2"/>
                             (Excl. Tax)
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
                             <div class="add_to_cart_button my-2" id="cart1">
                                 <form action="/shop/cart/update" method="POST">
                                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
@@ -104,21 +104,21 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between bg-black">
-                <div class="col-3">
+            <div class="row justify-content-between bg-black" style="width: 100vw;">
+                <div class="col-lg-3 col-md-3 col-sm-12">
                     <p class="py-4 px-4 fs-4" style="color: #FFCD00;">
                         <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
                         <b>Freelancing (Employees)</b>
                     </p>
                 </div>
-                <div class="col-2">
+                <div class="col-lg-2 col-md-2 col-sm-12">
                     <p id="demo" class="fs-4 my-4 blink_me">
 
                     </p>
                 </div>
-                <div class="col-5">
+                <div class="col-lg-5 col-md-5 col-sm-12">
                     <div class="row justify-content-end">
-                        <div class="col-6 my-4 fs-4">
+                        <div class="col-lg-6 col-md-6 col-sm-12 my-4 fs-4">
                             INR
                             <span class="text-decoration-line-through">
                                 <t t-esc="price1"/>
@@ -127,13 +127,31 @@
                             <t t-esc="price2"/>
                             (Excl. Tax)
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="add_to_cart_button my-2" id="cart1">
+                                <form action="/shop/cart/update" method="POST">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                    <button type="submit"
+                                            class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3">
+                                        Enroll Now
+                                    </button>
+                                    <div id="product_option_block"></div>
+                                </form>
+                            </div>
+                            <div class="add_to_cart_button my-2" hidden="hidden" id="cart1_hidden">
+                                <a class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3"
+                                   onclick="openPop()">
+                                    Enroll Now
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div id="section_10" class="bg-black">
-                <div class="container py-5">
+                <div class="container py-5 mt-4">
                     <div class="row p-4 p-md-5 rounded"
                          style="background: #FFF;
                         box-shadow: 0.826px 1.651px 12.88px 12px #FFCD00;
@@ -241,7 +259,7 @@
             <div id="intro_video" class="p-4 container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-8">
-                            <t t-esc="intro_video"/>
+                        <t t-esc="intro_video"/>
                         <script src="https://player.vimeo.com/api/player.js"></script>
                     </div>
                 </div>
@@ -446,12 +464,12 @@
                             Course
                         </h2>
                         <div id="customAccordion" class="w-100">
-                            <div class="accordion-section">
-                                <div class="accordion-title pe-5 fs-5">
+                            <div class="accordion-section1">
+                                <div class="accordion-title1 pe-5 fs-5">
                                     Introduction To Freelancing
                                     <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
                                 </div>
-                                <div class="accordion-body p-3">
+                                <div class="accordion-body1 p-3">
                                     <ul>
                                         <li>
                                             Introduction
@@ -474,12 +492,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="accordion-section">
-                                <div class="accordion-title pe-5 fs-5">
+                            <div class="accordion-section1">
+                                <div class="accordion-title1 pe-5 fs-5">
                                     Choosing The Right Freelancing Skill
                                     <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
                                 </div>
-                                <div class="accordion-body p-3">
+                                <div class="accordion-body1 p-3">
                                     <ul>
                                         <li>
                                             High-paying vs. easy-to-learn skills
@@ -497,12 +515,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="accordion-section">
-                                <div class="accordion-title pe-5 fs-5">
+                            <div class="accordion-section1">
+                                <div class="accordion-title1 pe-5 fs-5">
                                     Building a Portfolio That Stands Out
                                     <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
                                 </div>
-                                <div class="accordion-body p-3">
+                                <div class="accordion-body1 p-3">
                                     <ul>
                                         <li>
                                             Creating a beginner-friendly but high-impact portfolio
@@ -519,12 +537,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="accordion-section">
-                                <div class="accordion-title pe-5 fs-5">
+                            <div class="accordion-section1">
+                                <div class="accordion-title1 pe-5 fs-5">
                                     Personal Branding to Get Clients on Autopilot
                                     <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
                                 </div>
-                                <div class="accordion-body p-3">
+                                <div class="accordion-body1 p-3">
                                     <ul>
                                         <li>
                                             Why personal branding is a game-changer for freelancers?
@@ -541,12 +559,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="accordion-section">
-                                <div class="accordion-title pe-5 fs-5">
+                            <div class="accordion-section1">
+                                <div class="accordion-title1 pe-5 fs-5">
                                     Finding Clients – The Best Ways to Get Work
                                     <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
                                 </div>
-                                <div class="accordion-body p-3">
+                                <div class="accordion-body1 p-3">
                                     <ul>
                                         <li>
                                             Best platforms for freelancers (Upwork, Fiverr, Contra, etc.)
@@ -569,12 +587,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="accordion-section">
-                                <div class="accordion-title pe-5 fs-5">
+                            <div class="accordion-section1">
+                                <div class="accordion-title1 pe-5 fs-5">
                                     iscovery Call &amp; Payment Mastery (Best way to pitch your services)
                                     <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
                                 </div>
-                                <div class="accordion-body p-3">
+                                <div class="accordion-body1 p-3">
                                     <ul>
                                         <li>
                                             Setting up the first meeting
@@ -600,12 +618,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="accordion-section">
-                                <div class="accordion-title pe-5 fs-5">
+                            <div class="accordion-section1">
+                                <div class="accordion-title1 pe-5 fs-5">
                                     30-Day Freelancing Action Plan
                                     <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
                                 </div>
-                                <div class="accordion-body p-3">
+                                <div class="accordion-body1 p-3">
                                     <ul>
                                         <li>
                                             Step by step guide how to make money
@@ -616,9 +634,9 @@
                         </div>
 
                         <script>
-                            document.querySelectorAll(".accordion-title").forEach(title => {
+                            document.querySelectorAll(".accordion-title1").forEach(title => {
                             title.addEventListener("click", function () {
-                            const currentlyOpen = document.querySelector(".accordion-section.expanded");
+                            const currentlyOpen = document.querySelector(".accordion-section1.expanded");
                             if (currentlyOpen &amp;&amp; currentlyOpen !== this.parentElement) {
                             currentlyOpen.classList.remove("expanded");
                             }
@@ -912,67 +930,67 @@
                         <!-- Accordion Content -->
                         <div class="col-12 col-md-6 d-flex justify-content-center">
                             <div class="w-100">
-                                <div class="accordion">
-                                    <div class="accordion-item">
-                                        <div class="accordion-header pe-5">
+                                <div class="accordion1">
+                                    <div class="accordion-item1">
+                                        <div class="accordion-header1 pe-5">
                                             Is this course suitable for working professionals with no skill and prior
                                             experience as freelancer?
                                             <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
                                                  alt="Arrow"/>
                                         </div>
-                                        <div class="accordion-content">
+                                        <div class="accordion-content1">
                                             Yes, this course is perfect for working professionals who are beginners with
                                             no prior skill set or for someone at intermediate level in freelancing.
                                         </div>
                                     </div>
-                                    <div class="accordion-item">
-                                        <div class="accordion-header pe-5">
+                                    <div class="accordion-item1">
+                                        <div class="accordion-header1 pe-5">
                                             Q2. Will I be able to replace my job income with freelancing?
                                             <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
                                                  alt="Arrow"/>
                                         </div>
-                                        <div class="accordion-content">
+                                        <div class="accordion-content1">
                                             Yes, with consistent effort, many freelancers start earning ₹50K-1L per
                                             month and even transition full-time.
                                         </div>
                                     </div>
-                                    <div class="accordion-item">
-                                        <div class="accordion-header pe-5">
+                                    <div class="accordion-item1">
+                                        <div class="accordion-header1 pe-5">
                                             Will I learn how to scale my freelancing business?
                                             <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
                                                  alt="Arrow"/>
                                         </div>
-                                        <div class="accordion-content">
+                                        <div class="accordion-content1">
                                             Yes, you’ll learn how to start from zero and attract high-paying clients.
                                         </div>
                                     </div>
-                                    <div class="accordion-item">
-                                        <div class="accordion-header pe-5">
+                                    <div class="accordion-item1">
+                                        <div class="accordion-header1 pe-5">
                                             Can I do this course while having a 9-5 job?
                                             <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
                                                  alt="Arrow"/>
                                         </div>
-                                        <div class="accordion-content">
+                                        <div class="accordion-content1">
                                             Yes the duration of the course is self paced. You can complete it at your
                                             own pace
                                         </div>
                                     </div>
-                                    <div class="accordion-item">
-                                        <div class="accordion-header pe-5">
+                                    <div class="accordion-item1">
+                                        <div class="accordion-header1 pe-5">
                                             Can I start freelancing part-time while keeping my job?
                                             <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
                                                  alt="Arrow"/>
                                         </div>
-                                        <div class="accordion-content">
+                                        <div class="accordion-content1">
                                             Absolutely! You can take up small projects and gradually scale as you gain
                                             experience.
                                         </div>
                                     </div>
                                 </div>
                                 <script>
-                                    document.querySelectorAll(".accordion-header").forEach(header => {
+                                    document.querySelectorAll(".accordion-header1").forEach(header => {
                                     header.addEventListener("click", function () {
-                                    const currentActive = document.querySelector(".accordion-item.active");
+                                    const currentActive = document.querySelector(".accordion-item1.active");
                                     if (currentActive &amp;&amp; currentActive !== this.parentElement) {
                                     currentActive.classList.remove("active");
                                     }
@@ -1013,7 +1031,8 @@
                                 <t t-esc="price2"/>
                                 (Excl. Tax)
                             </span>
-                            <div class="add_to_cart_button w-100 justify-content-center justify-content-md-start" id="cart4">
+                            <div class="add_to_cart_button w-100 justify-content-center justify-content-md-start"
+                                 id="cart4">
                                 <form action="/shop/cart/update" method="POST" class="w-100 w-md-75">
                                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                     <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>

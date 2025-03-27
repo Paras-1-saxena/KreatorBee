@@ -480,6 +480,7 @@ class PortalMyCourses(http.Controller):
                     partner_commission_last_7_days += line.partner_commission_amount
                 if last_30_days <= order_date <= today:
                     partner_commission_last_30_days += line.partner_commission_amount
+            # courses = request.env['slide.channel'].sudo().search([('user_id', '=', user.id)], order="product_sale_revenues desc", limit=5)
             labels =  ["Video Editing", "Lead Generation", "Freelancing", "Freelancing (Gen Z)","Freelancing (Employees)"]
             data = [35, 25, 20, 15, 5]
             label_color = {0: 'electro', 1: 'clo', 2: 'foo', 3: 'boo', 4: 'oth'}

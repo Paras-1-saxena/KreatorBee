@@ -359,12 +359,12 @@
                             Course
                         </h2>
                         <div id="customAccordion" class="w-100">
-                            <div class="accordion-section">
-                                <div class="accordion-title pe-5 fs-5">
+                            <div class="accordion-section1">
+                                <div class="accordion-title1 pe-5 fs-5">
                                     Introduction To Video Editing
                                     <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
                                 </div>
-                                <div class="accordion-body p-3">
+                                <div class="accordion-body1 p-3">
                                     <i class="ri-checkbox-fill"></i>
                                     <span class="fs-4">Introduction</span>
                                     <ul class="fs-6">
@@ -409,12 +409,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="accordion-section">
-                                <div class="accordion-title pe-5 fs-5">
+                            <div class="accordion-section1">
+                                <div class="accordion-title1 pe-5 fs-5">
                                     Getting Started with Video Editing
                                     <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
                                 </div>
-                                <div class="accordion-body p-3">
+                                <div class="accordion-body1 p-3">
                                     <i class="ri-checkbox-fill"></i>
                                     <span class="fs-4">Installation &amp; Setup</span>
                                     <ul class="fs-6">
@@ -459,12 +459,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="accordion-section">
-                                <div class="accordion-title pe-5 fs-5">
+                            <div class="accordion-section1">
+                                <div class="accordion-title1 pe-5 fs-5">
                                     Basic Editing Techniques
                                     <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
                                 </div>
-                                <div class="accordion-body p-3">
+                                <div class="accordion-body1 p-3">
                                     <i class="ri-checkbox-fill"></i>
                                     <span class="fs-4">Cuts &amp; Transitions</span>
                                     <ul class="fs-6">
@@ -529,12 +529,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="accordion-section">
-                                <div class="accordion-title pe-5 fs-5">
+                            <div class="accordion-section1">
+                                <div class="accordion-title1 pe-5 fs-5">
                                     Color Grading &amp; Advanced Visuals
                                     <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
                                 </div>
-                                <div class="accordion-body p-3">
+                                <div class="accordion-body1 p-3">
                                     <i class="ri-checkbox-fill"></i>
                                     <span class="fs-4">Color Grading &amp; Correction</span>
                                     <ul class="fs-6">
@@ -581,12 +581,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="accordion-section">
-                                <div class="accordion-title pe-5 fs-5">
+                            <div class="accordion-section1">
+                                <div class="accordion-title1 pe-5 fs-5">
                                     Sound Design &amp; Audio Editing
                                     <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
                                 </div>
-                                <div class="accordion-body p-3">
+                                <div class="accordion-body1 p-3">
                                     <i class="ri-checkbox-fill"></i>
                                     <span class="fs-4">Syncing Audio &amp; Video</span>
                                     <ul class="fs-6">
@@ -626,12 +626,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="accordion-section">
-                                <div class="accordion-title pe-5 fs-5">
+                            <div class="accordion-section1">
+                                <div class="accordion-title1 pe-5 fs-5">
                                     Exporting &amp; Delivery
                                     <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
                                 </div>
-                                <div class="accordion-body p-3">
+                                <div class="accordion-body1 p-3">
                                     <i class="ri-checkbox-fill"></i>
                                     <span class="fs-4">Rendering &amp; Exporting</span>
                                     <ul class="fs-6">
@@ -654,12 +654,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="accordion-section">
-                                <div class="accordion-title pe-5 fs-5">
+                            <div class="accordion-section1">
+                                <div class="accordion-title1 pe-5 fs-5">
                                     AI-Powered Editing &amp; YouTube Automation
                                     <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
                                 </div>
-                                <div class="accordion-body p-3">
+                                <div class="accordion-body1 p-3">
                                     <i class="ri-checkbox-fill"></i>
                                     <span class="fs-4">AI Tools for Video Editing</span>
                                     <ul class="fs-6">
@@ -689,12 +689,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="accordion-section">
-                                <div class="accordion-title pe-5 fs-5">
+                            <div class="accordion-section1">
+                                <div class="accordion-title1 pe-5 fs-5">
                                     Monetizing Your Editing Skills
                                     <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
                                 </div>
-                                <div class="accordion-body p-3">
+                                <div class="accordion-body1 p-3">
                                     <i class="ri-checkbox-fill"></i>
                                     <span class="fs-4">Finding Clients &amp; Building Your Portfolio</span>
                                     <ul class="fs-6">
@@ -730,12 +730,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="accordion-section">
-                                <div class="accordion-title pe-5 fs-5">
+                            <div class="accordion-section1">
+                                <div class="accordion-title1 pe-5 fs-5">
                                     Niche Editing Styles
                                     <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg" alt="Arrow"/>
                                 </div>
-                                <div class="accordion-body p-3">
+                                <div class="accordion-body1 p-3">
                                     <i class="ri-checkbox-fill"></i>
                                     <span class="fs-4">Vlog &amp; Travel Editing</span>
                                     <ul class="fs-6">
@@ -771,9 +771,9 @@
                         </div>
 
                         <script>
-                            document.querySelectorAll(".accordion-title").forEach(title => {
+                            document.querySelectorAll(".accordion-title1").forEach(title => {
                             title.addEventListener("click", function () {
-                            const currentlyOpen = document.querySelector(".accordion-section.expanded");
+                            const currentlyOpen = document.querySelector(".accordion-section1.expanded");
                             if (currentlyOpen &amp;&amp; currentlyOpen !== this.parentElement) {
                             currentlyOpen.classList.remove("expanded");
                             }
@@ -1008,57 +1008,57 @@
                         <!-- Accordion Content -->
                         <div class="col-12 col-md-6 d-flex justify-content-center">
                             <div class="w-100">
-                                <div class="accordion">
-                                    <div class="accordion-item">
-                                        <div class="accordion-header pe-5">
+                                <div class="accordion1">
+                                    <div class="accordion-item1">
+                                        <div class="accordion-header1 pe-5">
                                             Which software will I learn in this course?
                                             <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
                                                  alt="Arrow"/>
                                         </div>
-                                        <div class="accordion-content">
+                                        <div class="accordion-content1">
                                             You will learn Adobe Premiere Pro and Adobe After Effects in this Course.
                                         </div>
                                     </div>
-                                    <div class="accordion-item">
-                                        <div class="accordion-header pe-5">
+                                    <div class="accordion-item1">
+                                        <div class="accordion-header1 pe-5">
                                             How much money can I earn after completing this course?
                                             <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
                                                  alt="Arrow"/>
                                         </div>
-                                        <div class="accordion-content">
+                                        <div class="accordion-content1">
                                             As a skilled video editor, Your earning potential can be anywhere between
                                             ₹50,000 - ₹1,00,000 per month
                                         </div>
                                     </div>
-                                    <div class="accordion-item">
-                                        <div class="accordion-header pe-5">
+                                    <div class="accordion-item1">
+                                        <div class="accordion-header1 pe-5">
                                             Will I receive any resources to help me?
                                             <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
                                                  alt="Arrow"/>
                                         </div>
-                                        <div class="accordion-content">
+                                        <div class="accordion-content1">
                                             Yes, we will provide you many assets including png, sound effects, or video
                                             overlays
                                         </div>
                                     </div>
-                                    <div class="accordion-item">
-                                        <div class="accordion-header pe-5">
+                                    <div class="accordion-item1">
+                                        <div class="accordion-header1 pe-5">
                                             Will I be able to get a job as video editor after completion of this course?
                                             <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
                                                  alt="Arrow"/>
                                         </div>
-                                        <div class="accordion-content">
+                                        <div class="accordion-content1">
                                             Yes, this will make you ready for the job market within 3 months of
                                             practicing
                                         </div>
                                     </div>
-                                    <div class="accordion-item">
-                                        <div class="accordion-header pe-5">
+                                    <div class="accordion-item1">
+                                        <div class="accordion-header1 pe-5">
                                             Are there any hardware requirements for this course?
                                             <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
                                                  alt="Arrow"/>
                                         </div>
-                                        <div class="accordion-content">
+                                        <div class="accordion-content1">
                                             For our Video Editing Course, we recommend the following configuration for
                                             the best editing experience:
                                             <ul>
@@ -1076,9 +1076,9 @@
                                     </div>
                                 </div>
                                 <script>
-                                    document.querySelectorAll(".accordion-header").forEach(header => {
+                                    document.querySelectorAll(".accordion-header1").forEach(header => {
                                     header.addEventListener("click", function () {
-                                    const currentActive = document.querySelector(".accordion-item.active");
+                                    const currentActive = document.querySelector(".accordion-item1.active");
                                     if (currentActive &amp;&amp; currentActive !== this.parentElement) {
                                     currentActive.classList.remove("active");
                                     }

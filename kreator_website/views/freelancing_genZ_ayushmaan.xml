@@ -413,12 +413,12 @@
                         <span class="ibm_plex text-k-pinkish-orange">Curriculum</span>
                     </h3>
                     <div class="d-flex flex-column justify-content-center align-items-center">
-                        <div t-attf-class="accordion {{bg}} mt-4 p-1" id="sec_28_courseAccordion" style="width: 100%;">
+                        <div t-attf-class="accordion1 {{bg}} mt-4 p-1" id="sec_28_courseAccordion1" style="width: 100%;">
                             <!-- Part 1 -->
-                            <div class="space_gro sec_28_accordion-item px-5" id="sec_28_part1" style="width: 100%;">
-                                <h2 class="space_gro sec_28_accordion-header px-5" id="sec_28_headingOne"
+                            <div class="space_gro sec_28_accordion-item1 px-5" id="sec_28_part1" style="width: 100%;">
+                                <h2 class="space_gro sec_28_accordion-header1 px-5" id="sec_28_headingOne"
                                     style="width: 100%;">
-                                    <button class="space_gro sec_28_accordion-button" type="button"
+                                    <button class="space_gro sec_28_accordion-button1" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#sec_28_collapseOne"
                                             aria-expanded="true" aria-controls="sec_19_collapseOne"
                                             style="width: 100%;">
@@ -430,9 +430,9 @@
                                              class="space_gro sec_28_icon sec_28_toggle-icon" id="sec_28_iconOne"/>
                                     </button>
                                 </h2>
-                                <div id="sec_28_collapseOne" class="accordion-collapse collapse show px-5"
-                                     aria-labelledby="sec_28_headingOne" data-bs-parent="#sec_28_courseAccordion">
-                                    <div class="space_gro sec_28_accordion-body">
+                                <div id="sec_28_collapseOne" class="accordion-collapse1 collapse show px-5"
+                                     aria-labelledby="sec_28_headingOne" data-bs-parent="#sec_28_courseAccordion1">
+                                    <div class="space_gro sec_28_accordion-body1">
                                         <ul>
                                             <li>
                                                 Introduction
@@ -457,9 +457,9 @@
                                 </div>
                             </div>
                             <!-- Part 2 -->
-                            <div class="space_gro sec_28_accordion-item px-5" id="sec_28_part2">
-                                <h2 class="space_gro sec_28_accordion-header px-5" id="sec_28_headingTwo">
-                                    <button class="space_gro sec_28_accordion-button collapsed" type="button"
+                            <div class="space_gro sec_28_accordion-item1 px-5" id="sec_28_part2">
+                                <h2 class="space_gro sec_28_accordion-header1 px-5" id="sec_28_headingTwo">
+                                    <button class="space_gro sec_28_accordion-button1 collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#sec_28_collapseTwo"
                                             aria-expanded="false" aria-controls="sec_28_collapseTwo">
                                         <span>
@@ -470,9 +470,9 @@
                                              class="space_gro sec_28_icon sec_28_toggle-icon" id="sec_28_iconTwo"/>
                                     </button>
                                 </h2>
-                                <div id="sec_28_collapseTwo" class="accordion-collapse collapse px-5"
-                                     aria-labelledby="sec_28_headingTwo" data-bs-parent="#sec_28_courseAccordion">
-                                    <div class="space_gro sec_28_accordion-body">
+                                <div id="sec_28_collapseTwo" class="accordion-collapse1 collapse px-5"
+                                     aria-labelledby="sec_28_headingTwo" data-bs-parent="#sec_28_courseAccordion1">
+                                    <div class="space_gro sec_28_accordion-body1">
                                         <ul>
                                             <li>
                                                 High-paying vs. easy-to-learn skills
@@ -492,9 +492,9 @@
                                 </div>
                             </div>
                             <!-- Part 3 -->
-                            <div class="space_gro sec_28_accordion-item px-5" id="sec_28_part3">
-                                <h2 class="space_gro sec_28_accordion-header px-5" id="sec_28_headingThree">
-                                    <button class="space_gro sec_28_accordion-button collapsed" type="button"
+                            <div class="space_gro sec_28_accordion-item1 px-5" id="sec_28_part3">
+                                <h2 class="space_gro sec_28_accordion-header1 px-5" id="sec_28_headingThree">
+                                    <button class="space_gro sec_28_accordion-button1 collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#sec_28_collapseThree"
                                             aria-expanded="false" aria-controls="sec_28_collapseThree">
                                         <span>
@@ -505,9 +505,9 @@
                                              class="space_gro sec_28_icon sec_28_toggle-icon" id="sec_28_iconThree"/>
                                     </button>
                                 </h2>
-                                <div id="sec_28_collapseThree" class="accordion-collapse collapse px-5"
-                                     aria-labelledby="sec_28_headingThree" data-bs-parent="#sec_28_courseAccordion">
-                                    <div class="space_gro sec_28_accordion-body">
+                                <div id="sec_28_collapseThree" class="accordion-collapse1 collapse px-5"
+                                     aria-labelledby="sec_28_headingThree" data-bs-parent="#sec_28_courseAccordion1">
+                                    <div class="space_gro sec_28_accordion-body1">
                                         <ul>
                                             <li>
                                                 Creating a beginner-friendly but high-impact portfolio
@@ -526,9 +526,9 @@
                                 </div>
                             </div>
                             <!-- Part 4 -->
-                            <div class="space_gro sec_28_accordion-item px-5" id="sec_28_part4">
-                                <h2 class="space_gro sec_28_accordion-header px-5" id="sec_28_headingFour">
-                                    <button class="space_gro sec_28_accordion-button collapsed" type="button"
+                            <div class="space_gro sec_28_accordion-item1 px-5" id="sec_28_part4">
+                                <h2 class="space_gro sec_28_accordion-header1 px-5" id="sec_28_headingFour">
+                                    <button class="space_gro sec_28_accordion-button1 collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#sec_28_collapseFour"
                                             aria-expanded="false" aria-controls="sec_28_collapseFour">
                                         <span>
@@ -539,9 +539,9 @@
                                              class="space_gro sec_28_icon sec_28_toggle-icon" id="sec_28_iconFour"/>
                                     </button>
                                 </h2>
-                                <div id="sec_28_collapseFour" class="accordion-collapse collapse px-5"
-                                     aria-labelledby="sec_28_headingFour" data-bs-parent="#sec_28_courseAccordion">
-                                    <div class="space_gro sec_28_accordion-body">
+                                <div id="sec_28_collapseFour" class="accordion-collapse1 collapse px-5"
+                                     aria-labelledby="sec_28_headingFour" data-bs-parent="#sec_28_courseAccordion1">
+                                    <div class="space_gro sec_28_accordion-body1">
                                         <ul>
                                             <li>
                                                 Why personal branding is a game-changer for freelancers?
@@ -560,9 +560,9 @@
                                 </div>
                             </div>
                             <!-- Part 5 -->
-                            <div class="space_gro sec_28_accordion-item px-5" id="sec_28_part5">
-                                <h2 class="space_gro sec_28_accordion-header px-5" id="sec_28_headingFive">
-                                    <button class="space_gro sec_28_accordion-button collapsed" type="button"
+                            <div class="space_gro sec_28_accordion-item1 px-5" id="sec_28_part5">
+                                <h2 class="space_gro sec_28_accordion-header1 px-5" id="sec_28_headingFive">
+                                    <button class="space_gro sec_28_accordion-button1 collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#sec_28_collapseFive"
                                             aria-expanded="false" aria-controls="sec_28_collapseFive">
                                         <span>
@@ -573,9 +573,9 @@
                                              class="space_gro sec_28_icon sec_28_toggle-icon" id="sec_28_iconFive"/>
                                     </button>
                                 </h2>
-                                <div id="sec_28_collapseFive" class="accordion-collapse collapse px-5"
-                                     aria-labelledby="sec_28_headingFive" data-bs-parent="#sec_28_courseAccordion">
-                                    <div class="space_gro sec_28_accordion-body">
+                                <div id="sec_28_collapseFive" class="accordion-collapse1 collapse px-5"
+                                     aria-labelledby="sec_28_headingFive" data-bs-parent="#sec_28_courseAccordion1">
+                                    <div class="space_gro sec_28_accordion-body1">
                                         <ul>
                                             <li>
                                                 Best platforms for freelancers (Upwork, Fiverr, Contra, etc.)
@@ -600,9 +600,9 @@
                                 </div>
                             </div>
                             <!-- Part 6 -->
-                            <div class="space_gro sec_28_accordion-item px-5" id="sec_28_part6">
-                                <h2 class="space_gro sec_28_accordion-header px-5" id="sec_28_headingSix">
-                                    <button class="space_gro sec_28_accordion-button collapsed" type="button"
+                            <div class="space_gro sec_28_accordion-item1 px-5" id="sec_28_part6">
+                                <h2 class="space_gro sec_28_accordion-header1 px-5" id="sec_28_headingSix">
+                                    <button class="space_gro sec_28_accordion-button1 collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#sec_28_collapseSix"
                                             aria-expanded="false" aria-controls="sec_28_collapseSix">
                                         <span>
@@ -613,9 +613,9 @@
                                              class="space_gro sec_28_icon sec_28_toggle-icon" id="sec_28_iconSix"/>
                                     </button>
                                 </h2>
-                                <div id="sec_28_collapseSix" class="accordion-collapse collapse px-5"
-                                     aria-labelledby="sec_28_headingSix" data-bs-parent="#sec_28_courseAccordion">
-                                    <div class="space_gro sec_28_accordion-body">
+                                <div id="sec_28_collapseSix" class="accordion-collapse1 collapse px-5"
+                                     aria-labelledby="sec_28_headingSix" data-bs-parent="#sec_28_courseAccordion1">
+                                    <div class="space_gro sec_28_accordion-body1">
                                         <ul>
                                             <li>
                                                 Setting up the first meeting
@@ -643,9 +643,9 @@
                                 </div>
                             </div>
                             <!--                            part 7 -->
-                            <div class="space_gro sec_28_accordion-item px-5" id="sec_28_part7">
-                                <h2 class="space_gro sec_28_accordion-header px-5" id="sec_28_headingSeven">
-                                    <button class="space_gro sec_28_accordion-button collapsed" type="button"
+                            <div class="space_gro sec_28_accordion-item1 px-5" id="sec_28_part7">
+                                <h2 class="space_gro sec_28_accordion-header1 px-5" id="sec_28_headingSeven">
+                                    <button class="space_gro sec_28_accordion-button1 collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#sec_28_collapseSeven"
                                             aria-expanded="false" aria-controls="sec_28_collapseSeven">
                                         <span>
@@ -656,9 +656,9 @@
                                              class="space_gro sec_28_icon sec_28_toggle-icon" id="sec_28_iconSeven"/>
                                     </button>
                                 </h2>
-                                <div id="sec_28_collapseSeven" class="accordion-collapse collapse px-5"
-                                     aria-labelledby="sec_28_headingSeven" data-bs-parent="#sec_28_courseAccordion">
-                                    <div class="space_gro sec_28_accordion-body">
+                                <div id="sec_28_collapseSeven" class="accordion-collapse1 collapse px-5"
+                                     aria-labelledby="sec_28_headingSeven" data-bs-parent="#sec_28_courseAccordion1">
+                                    <div class="space_gro sec_28_accordion-body1">
                                         <ul>
                                             <li>
                                                 Step by step guide how to make money
@@ -673,15 +673,15 @@
 
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
-                    let sec_28_accordionButtons = document.querySelectorAll(".sec_28_accordion-button");
+                    let sec_28_accordionButtons1 = document.querySelectorAll(".sec_28_accordion-button1");
 
-                    sec_28_accordionButtons.forEach(button => {
+                    sec_28_accordionButtons1.forEach(button => {
                     button.addEventListener("click", function () {
                     let icon = this.querySelector(".sec_28_toggle-icon");
                     let isCollapsed = this.classList.contains("collapsed");
 
                     // Reset all icons to "plus"
-                    sec_28_accordionButtons.forEach(btn => {
+                    sec_28_accordionButtons1.forEach(btn => {
                     let btnIcon = btn.querySelector(".sec_28_toggle-icon");
                     btnIcon.src = "/kreator_website/static/src/img/plus.svg";
                     });
@@ -696,15 +696,15 @@
                     });
 
                     // Handle Bootstrap's accordion events for toggling icons
-                    document.querySelectorAll('.accordion-collapse').forEach(collapse => {
+                    document.querySelectorAll('.accordion-collapse1').forEach(collapse => {
                     collapse.addEventListener('shown.bs.collapse', function () {
-                    let button = this.previousElementSibling.querySelector('.sec_28_accordion-button');
+                    let button = this.previousElementSibling.querySelector('.sec_28_accordion-button1');
                     let icon = button.querySelector(".sec_28_toggle-icon");
                     icon.src = "/kreator_website/static/src/img/minus.svg"; // Set to minus when opened
                     });
 
                     collapse.addEventListener('hidden.bs.collapse', function () {
-                    let button = this.previousElementSibling.querySelector('.sec_28_accordion-button');
+                    let button = this.previousElementSibling.querySelector('.sec_28_accordion-button1');
                     let icon = button.querySelector(".sec_28_toggle-icon");
                     icon.src = "/kreator_website/static/src/img/plus.svg"; // Set to plus when closed
                     });
@@ -718,7 +718,7 @@
                 .sec_28_accordion-item {
                 padding: 10px !important;
                 }
-                .sec_28_accordion-button {
+                .sec_28_accordion-button1 {
                 font-size: 16px !important;
                 }
                 }
@@ -731,10 +731,10 @@
                 .sec_19_title {
                 font-size: 22px !important;
                 }
-                .sec_28_accordion-item {
+                .sec_28_accordion-item1 {
                 padding: 10px !important;
                 }
-                .sec_28_accordion-button {
+                .sec_28_accordion-button1 {
                 font-size: 16px !important;
                 }
                 }
@@ -747,10 +747,10 @@
                 .sec_19_title {
                 font-size: 18px !important;
                 }
-                .sec_28_accordion-item {
+                .sec_28_accordion-item1 {
                 padding: 5px !important;
                 }
-                .sec_28_accordion-button {
+                .sec_28_accordion-button1 {
                 font-size: 14px !important;
                 }
                 }

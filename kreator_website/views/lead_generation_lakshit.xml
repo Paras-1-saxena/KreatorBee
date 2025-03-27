@@ -1,0 +1,1023 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <template id="lead_generation_lakshit">
+        <head>
+            <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+        </head>
+        <t t-call="website.layout">
+            <style>.navbar{ display: none !important;} .o_footer{ display: none !important;}
+                .popup {
+                display: none;
+                position: fixed;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                justify-content: center;
+                align-items: center;
+                z-index: 1;
+                }
+                .popup-content {
+                background: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                text-align: center;
+                }
+                .popup:target {
+                display: flex;
+                }
+                .blink_me {
+                animation: blinker 1s linear infinite;
+                }
+
+                @keyframes blinker {
+                50% {
+                opacity: 0;
+                }
+                }
+            </style>
+            <a href="#popup1" class="dropdown-item" style="color: #fff; text-decoration: none;" hidden="hidden"
+               id="open_pop">
+            </a>
+            <div id="popup1" class="popup">
+                <div class="popup-content">
+                    <h2>Link Expired</h2>
+
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="mb-4">
+                        <span>
+                            The link you are using is expired now. Please connect with your Bee Partner to get a new
+                            link.
+                        </span>
+                    </div>
+
+                    <div class="text-end mt-2" id="close" onclick="popclose()">
+                        <a href="#" style="display: inline-block; margin-top: 10px; padding:
+                               5px 10px; background-color: #dc3545; color: #fff; text-decoration:
+                               none; border-radius: 3px;">Close
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between bg-black" style="position: fixed; width: 100%; z-index: 1;">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <p class="py-4 px-4 fs-4" style="color: #FFCD00;">
+                        <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
+                        <b>Lead Generation</b>
+                    </p>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-12">
+                    <p id="demo" class="fs-4 my-4 blink_me">
+
+                    </p>
+                </div>
+                <div class="col-5">
+                    <div class="row justify-content-end">
+                        <div class="col-lg-6 col-md-6 col-sm-12 my-4 fs-4">
+                            INR
+                            <span class="text-decoration-line-through">
+                                <t t-esc="price1"/>
+                            </span>
+                            / INR
+                            <t t-esc="price2"/>
+                            (Excl. Tax)
+                        </div>
+                        <div class="col-3">
+                            <div class="add_to_cart_button my-2" id="cart1">
+                                <form action="/shop/cart/update" method="POST">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                    <button type="submit"
+                                            class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3">
+                                        Enroll Now
+                                    </button>
+                                    <div id="product_option_block"></div>
+                                </form>
+                            </div>
+                            <div class="add_to_cart_button my-2" hidden="hidden" id="cart1_hidden">
+                                <a class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3"
+                                   onclick="openPop()">
+                                    Enroll Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between bg-black" style="width: 100%;">
+                <div class="col-3">
+                    <p class="py-4 px-4 fs-4" style="color: #FFCD00;">
+                        <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
+                        <b>Lead generation</b>
+                    </p>
+                </div>
+                <div class="col-2">
+                    <p id="demo" class="fs-4 my-4 blink_me">
+
+                    </p>
+                </div>
+                <div class="col-5">
+                    <div class="row justify-content-end">
+                        <div class="col-6 my-4 fs-4">
+                            INR
+                            <span class="text-decoration-line-through">
+                                <t t-esc="price1"/>
+                            </span>
+                            / INR
+                            <t t-esc="price2"/>
+                            (Excl. Tax)
+                        </div>
+                        <div class="col-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section_20" class="p-5" style="padding-left: 5%; padding-right: 5%;">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center p-3 p-md-5">
+                    <div class="row w-100">
+                        <!-- Left Section -->
+                        <div class="col-12 col-md-6 pe-md-5">
+                            <div class="d-flex px-3 gap-4 flex-column text-center text-md-start">
+                                <span class="fs-40 fs-md-60 jost-bold">
+                                    Lead Generation
+                                </span>
+                                <span class="fs-6 fs-md-5 w-100 w-md-75 pe-md-5">
+                                    <t t-esc="p2"/>
+                                </span>
+                                <div class="add_to_cart_button" id="cart2">
+                                    <form action="/shop/cart/update" method="POST">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="product_template_id"
+                                               t-att-value="product_template_id"/>
+                                        <input type="hidden" class="product_id" name="product_id"
+                                               t-att-value="product_id"/>
+                                        <button type="submit"
+                                                style="font-style: italic; font-family: 'Times New Roman';
+                                               box-shadow: 5px 5px black; width: 100%; max-width: 200px;"
+                                                class="bg-kreator-yellow-900 py-3 rounded-50">
+                                            Enroll Now
+                                        </button>
+                                        <div id="product_option_block"></div>
+                                    </form>
+                                </div>
+                                <div class="add_to_cart_button my-2" hidden="hidden" id="cart2_hidden">
+                                    <button style="font-style: italic; font-family: 'Times New Roman';
+                                               box-shadow: 5px 5px black; width: 100%; max-width: 200px;"
+                                       class="bg-kreator-yellow-900 py-3 rounded-50"
+                                       onclick="openPop()">
+                                        Enroll Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-5 d-flex justify-content-center align-items-center mt-4 mt-md-0">
+                            <div class="bg-kreator-yellow-900 d-flex justify-content-center align-items-center rounded-50"
+                                 style="border: 5px solid black; box-shadow: 15px 15px black;
+                width: 100%; max-width: 500px; height: auto; padding: 5%;">
+                                <img t-att-src="'/web/image/slide.channel/%s/image_icon' % course_id"
+                                     style="transform: scaleX(-1); width: 100%; max-width: 100%; height: auto;"
+                                     alt="section14" class="object-fit-contain img-fluid"/>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="section_21" class="p-5 bg-black">
+                <div class="d-flex px-5 justify-content-start align-items-center flex-wrap flex-md-nowrap text-center">
+                    <div class="align-items-center d-flex flex-column gap-3 justify-content-center px-3"
+                         style="width: 100%; max-width: 250px;">
+                        <img class="img-fluid" src="/kreator_website/static/src/img/paper plane.png"
+                             style="width: 50px; max-width: 64px;" alt="section21"/>
+                        <span style="width: 90%;">
+                            AI-Driven Lead Generation
+                        </span>
+                    </div>
+                    <div class="align-items-center d-flex flex-column gap-3 justify-content-center px-3"
+                         style="width: 100%; max-width: 250px;">
+                        <img class="img-fluid" src="/kreator_website/static/src/img/Flag.png"
+                             style="width: 50px; max-width: 64px;" alt="section21"/>
+                        <span style="width: 90%;">
+                            Conversion-Focused Strategies
+                        </span>
+                    </div>
+                    <div class="align-items-center d-flex flex-column gap-3 justify-content-center px-3"
+                         style="width: 100%; max-width: 250px;">
+                        <img class="img-fluid" src="/kreator_website/static/src/img/Credit card.png"
+                             style="width: 50px; max-width: 64px;" alt="section21"/>
+                        <span style="width: 90%;">
+                            Life Time Access
+                        </span>
+                    </div>
+                    <div class="align-items-center d-flex flex-column gap-3 justify-content-center px-3"
+                         style="width: 100%; max-width: 250px;">
+                        <img class="img-fluid" src="/kreator_website/static/src/img/Play.png"
+                             style="width: 50px; max-width: 64px;" alt="section21"/>
+                        <span style="width: 90%;">
+                            LIVE QnA Sessions
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="section_22" class="container p-5">
+                <div class="row g-4">
+                    <!-- Black Section -->
+                    <div class="col-12 col-lg-6 d-flex justify-content-center">
+                        <div class="bg-black rounded-30 p-5 w-100">
+                            <div class="text-center jos-bold pb-4">
+                                <h2>
+                                    <strong>What an Individual can
+                                        <em style="color: #FFCD00; font-family: 'Times New Roman'; font-size: 55.632px; font-style: italic; font-weight: 700; line-height: normal;">
+                                            Learn
+                                        </em>
+                                        from this?
+                                    </strong>
+                                </h2>
+                            </div>
+                            <div class="row pt-4">
+                                <div class="col-6 col-md-6 pb-4">
+                                    <div class="feature-card d-flex gap-3 flex-column justify-content-center align-items-center">
+                                        The core principles of lead generation and how
+                                        <br/>
+                                        it works.
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-6 pb-4">
+                                    <div class="feature-card d-flex gap-3 flex-column justify-content-center align-items-center">
+                                        Different types of lead generation and their applications.
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-6 pb-4">
+                                    <div class="feature-card d-flex gap-3 flex-column justify-content-center align-items-center">
+                                        Platform-specific lead generation techniques, including Instagram, WhatsApp,
+                                        YouTube, LinkedIn, Google, and Meta Ads.
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-6 pb-4">
+                                    <div class="feature-card d-flex gap-3 flex-column justify-content-center align-items-center">
+                                        Advanced methods like webinar-based and SEO-driven lead generation.
+                                        The role of AI tools in automating and optimizing lead generation.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Yellow Section -->
+                    <div class="col-12 col-lg-6 d-flex justify-content-center">
+                        <div class="yellow-section rounded-30 bg-kreator-yellow-300 d-flex justify-content-center flex-column gap-4 p-4 w-100">
+                            <h2 class="text-center">
+                                <strong>About the
+                                    <br/>
+                                    <em class="text-kreator-yellow-900 times_font fs-64">Course.</em>
+                                </strong>
+                            </h2>
+                            <div class="d-flex justify-content-center flex-column gap-3">
+                                <p>
+                                    This course is designed to help businesses and individuals master lead generation,
+                                    from understanding the fundamentals to advanced platform-specific techniques.
+                                </p>
+                                <p>
+                                    <strong class="text-kreator-yellow-900">
+                                        Whether you are a beginner or an experienced marketer, this course will equip
+                                        you with actionable strategies to boost your lead-generation efforts.
+                                    </strong>
+                                </p>
+                                <p>
+                                    Learn how to attract, engage, and convert high-quality leads using various digital
+                                    platforms and strategies.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="section_18" class="container p-5">
+                <div class="container text-center mt-5">
+                    <h3 class="ibm_plex fs-54">Who Should Take this <span class="text-kreator-yellow-900">Course</span>?
+                    </h3>
+
+                    <div class="d-flex flex-wrap justify-content-center gap-3 mt-4"
+                         style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
+
+                        <div class="card-custom" style="width: 100%; max-width: 300px;">
+                            <div class="d-flex gap-3 align-items-end"
+                                 style="display: flex; gap: 12px; align-items: flex-end;">
+                                <div class="circle"></div>
+                                <div class="text-label pb-2">
+                                    Entrepreneurs
+                                </div>
+                            </div>
+                            <hr style="width: 50%; margin: 4px auto;"/>
+                        </div>
+
+                        <div class="card-custom" style="width: 100%; max-width: 300px;">
+                            <div class="d-flex gap-3 align-items-end"
+                                 style="display: flex; gap: 12px; align-items: flex-end;">
+                                <div class="circle"></div>
+                                <div class="text-label pb-2">
+                                    Small business Owners
+                                </div>
+                            </div>
+                            <hr style="width: 50%; margin: 4px auto;"/>
+                        </div>
+
+                        <div class="card-custom" style="width: 100%; max-width: 300px;">
+                            <div class="d-flex gap-3 align-items-end"
+                                 style="display: flex; gap: 12px; align-items: flex-end;">
+                                <div class="circle"></div>
+                                <div class="text-label pb-2">
+                                    Online Marketers
+                                </div>
+                            </div>
+                            <hr style="width: 50%; margin: 4px auto;"/>
+                        </div>
+
+                        <div class="card-custom" style="width: 100%; max-width: 300px;">
+                            <div class="d-flex gap-3 align-items-end"
+                                 style="display: flex; gap: 12px; align-items: flex-end;">
+                                <div class="circle"></div>
+                                <div class="text-label pb-2">
+                                    Social Media influencers
+                                </div>
+                            </div>
+                            <hr style="width: 50%; margin: 4px auto;"/>
+                        </div>
+
+                        <div class="card-custom" style="width: 100%; max-width: 300px;">
+                            <div class="d-flex gap-3 align-items-end"
+                                 style="display: flex; gap: 12px; align-items: flex-end;">
+                                <div class="circle"></div>
+                                <div class="text-label pb-2">
+                                    Sales Professionals
+                                </div>
+                            </div>
+                            <hr style="width: 50%; margin: 4px auto;"/>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="section_19" t-attf-class="{{bg}} p-5" style="max-width: 100%;">
+                <div class="container mt-5" style="width: 100%;">
+                    <h3 class="space_gro sec_19_title">Course
+                        <span class="space_gro sec_19_highlight">Curriculum</span>
+                    </h3>
+
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <div t-attf-class="accordion1 {{bg}} mt-4 p-1" id="sec_19_courseAccordion1" style="width: 100%;">
+                            <!-- Part 1 -->
+                            <div class="space_gro sec_19_accordion-item1 px-5" id="sec_19_part1" style="width: 100%;">
+                                <h2 class="space_gro sec_19_accordion-header1 px-5" id="sec_19_headingOne"
+                                    style="width: 100%;">
+                                    <button class="space_gro sec_19_accordion-button1" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#sec_19_collapseOne"
+                                            aria-expanded="true" aria-controls="sec_19_collapseOne"
+                                            style="width: 100%;">
+                                        <span>
+                                            <span class="space_gro sec_19_part-number"></span>
+                                            What is Lead Generation &amp; How it Works
+                                        </span>
+                                        <img src="/kreator_website/static/src/img/minus.svg"
+                                             class="space_gro sec_19_icon sec_19_toggle-icon" id="sec_19_iconOne"/>
+                                    </button>
+                                </h2>
+                                <div id="sec_19_collapseOne" class="accordion-collapse1 collapse show px-5"
+                                     aria-labelledby="sec_19_headingOne" data-bs-parent="#sec_19_courseAccordion1">
+                                    <div class="space_gro sec_19_accordion-body1">
+                                        Learn the fundamentals of lead generation, its importance, and how it drives
+                                        business growth.
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Part 2 -->
+                            <div class="space_gro sec_19_accordion-item1 px-5" id="sec_19_part2">
+                                <h2 class="space_gro sec_19_accordion-header1 px-5" id="sec_19_headingTwo">
+                                    <button class="space_gro sec_19_accordion-button1 collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#sec_19_collapseTwo"
+                                            aria-expanded="false" aria-controls="sec_19_collapseTwo">
+                                        <span>
+                                            <span class="space_gro sec_19_part-number"></span>
+                                            Types of Lead Generation
+                                        </span>
+                                        <img src="/kreator_website/static/src/img/plus.svg"
+                                             class="space_gro sec_19_icon sec_19_toggle-icon" id="sec_19_iconTwo"/>
+                                    </button>
+                                </h2>
+                                <div id="sec_19_collapseTwo" class="accordion-collapse1 collapse px-5"
+                                     aria-labelledby="sec_19_headingTwo" data-bs-parent="#sec_19_courseAccordion1">
+                                    <div class="space_gro sec_19_accordion-body1">
+                                        <p>Explore different lead generation methods, including inbound and outbound
+                                            strategies.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Part 3 -->
+                            <div class="space_gro sec_19_accordion-item1 px-5" id="sec_19_part3">
+                                <h2 class="space_gro sec_19_accordion-header1 px-5" id="sec_19_headingThree">
+                                    <button class="space_gro sec_19_accordion-button1 collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#sec_19_collapseThree"
+                                            aria-expanded="false" aria-controls="sec_19_collapseThree">
+                                        <span>
+                                            <span class="space_gro sec_19_part-number"></span>
+                                            <p>Step-by-Step Process of Lead Generation</p>
+                                        </span>
+                                        <img src="/kreator_website/static/src/img/plus.svg"
+                                             class="space_gro sec_19_icon sec_19_toggle-icon" id="sec_19_iconThree"/>
+                                    </button>
+                                </h2>
+                                <div id="sec_19_collapseThree" class="accordion-collapse1 collapse px-5"
+                                     aria-labelledby="sec_19_headingThree" data-bs-parent="#sec_19_courseAccordion1">
+                                    <div class="space_gro sec_19_accordion-body1">
+                                        <p>Get a structured approach to generating and converting leads effectively.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Part 4 -->
+                            <div class="space_gro sec_19_accordion-item1 px-5" id="sec_19_part4">
+                                <h2 class="space_gro sec_19_accordion-header1 px-5" id="sec_19_headingFour">
+                                    <button class="space_gro sec_19_accordion-button1 collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#sec_19_collapseFour"
+                                            aria-expanded="false" aria-controls="sec_19_collapseFour">
+                                        <span>
+                                            <span class="space_gro sec_19_part-number"></span>
+                                            Instagram Lead Generation
+                                        </span>
+                                        <img src="/kreator_website/static/src/img/plus.svg"
+                                             class="space_gro sec_19_icon sec_19_toggle-icon" id="sec_19_iconFour"/>
+                                    </button>
+                                </h2>
+                                <div id="sec_19_collapseFour" class="accordion-collapse1 collapse px-5"
+                                     aria-labelledby="sec_19_headingFour" data-bs-parent="#sec_19_courseAccordion1">
+                                    <div class="space_gro sec_19_accordion-body1">
+                                        <p>Master Instagram marketing techniques to attract and capture potential
+                                            leads
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Part 5 -->
+                            <div class="space_gro sec_19_accordion-item1 px-5" id="sec_19_part5">
+                                <h2 class="space_gro sec_19_accordion-header1 px-5" id="sec_19_headingFive">
+                                    <button class="space_gro sec_19_accordion-button1 collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#sec_19_collapseFive"
+                                            aria-expanded="false" aria-controls="sec_19_collapseFive">
+                                        <span>
+                                            <span class="space_gro sec_19_part-number"></span>
+                                            WhatsApp Lead Generation
+                                        </span>
+                                        <img src="/kreator_website/static/src/img/plus.svg"
+                                             class="space_gro sec_19_icon sec_19_toggle-icon" id="sec_19_iconFive"/>
+                                    </button>
+                                </h2>
+                                <div id="sec_19_collapseFive" class="accordion-collapse1 collapse px-5"
+                                     aria-labelledby="sec_19_headingFive" data-bs-parent="#sec_19_courseAccordion1">
+                                    <div class="space_gro sec_19_accordion-body1">
+                                        <p>Learn how to use WhatsApp for customer engagement and direct lead
+                                            generation.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Part 6 -->
+                            <div class="space_gro sec_19_accordion-item1 px-5" id="sec_19_part6">
+                                <h2 class="space_gro sec_19_accordion-header1 px-5" id="sec_19_headingSix">
+                                    <button class="space_gro sec_19_accordion-button1 collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#sec_19_collapseSix"
+                                            aria-expanded="false" aria-controls="sec_19_collapseSix">
+                                        <span>
+                                            <span class="space_gro sec_19_part-number"></span>
+                                            YouTube Lead Generation
+                                        </span>
+                                        <img src="/kreator_website/static/src/img/plus.svg"
+                                             class="space_gro sec_19_icon sec_19_toggle-icon" id="sec_19_iconSix"/>
+                                    </button>
+                                </h2>
+                                <div id="sec_19_collapseSix" class="accordion-collapse1 collapse px-5"
+                                     aria-labelledby="sec_19_headingSix" data-bs-parent="#sec_19_courseAccordion1">
+                                    <div class="space_gro sec_19_accordion-body1">
+                                        <p>Discover how to leverage YouTube content for attracting and converting
+                                            leads.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--                            Part 7-->
+                            <div class="space_gro sec_19_accordion-item1 px-5" id="sec_19_part7">
+                                <h2 class="space_gro sec_19_accordion-header1 px-5" id="sec_19_headingSeven">
+                                    <button class="space_gro sec_19_accordion-button1 collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#sec_19_collapseSeven"
+                                            aria-expanded="false" aria-controls="sec_19_collapseSeven">
+                                        <span>
+                                            <span class="space_gro sec_19_part-number"></span>
+                                            Meta Ads Lead Generation
+                                        </span>
+                                        <img src="/kreator_website/static/src/img/plus.svg"
+                                             class="space_gro sec_19_icon sec_19_toggle-icon" id="sec_19_iconSeven"/>
+                                    </button>
+                                </h2>
+                                <div id="sec_19_collapseSeven" class="accordion-collapse1 collapse px-5"
+                                     aria-labelledby="sec_19_headingSeven" data-bs-parent="#sec_19_courseAccordion1">
+                                    <div class="space_gro sec_19_accordion-body1">
+                                        <p>Understand how to create and optimize Meta (Facebook &amp; Instagram) ads for
+                                            lead generation..
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--                            part 8-->
+                            <div class="space_gro sec_19_accordion-item1 px-5" id="sec_19_part8">
+                                <h2 class="space_gro sec_19_accordion-header1 px-5" id="sec_19_headingEight">
+                                    <button class="space_gro sec_19_accordion-button1 collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#sec_19_collapseEight"
+                                            aria-expanded="false" aria-controls="sec_19_collapseSix">
+                                        <span>
+                                            <span class="space_gro sec_19_part-number"></span>
+                                            LinkedIn Lead Generation
+                                        </span>
+                                        <img src="/kreator_website/static/src/img/plus.svg"
+                                             class="space_gro sec_19_icon sec_19_toggle-icon" id="sec_19_iconEight"/>
+                                    </button>
+                                </h2>
+                                <div id="sec_19_collapseEight" class="accordion-collapse1 collapse px-5"
+                                     aria-labelledby="sec_19_headingEight" data-bs-parent="#sec_19_courseAccordion1">
+                                    <div class="space_gro sec_19_accordion-body1">
+                                        <p>Learn professional networking strategies to generate B2B leads on LinkedIn.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="section_30" class="lato_font container p-3 mt-5" style="max-width: 90%;">
+                    <div class="d-flex justify-content-center align-items-center gap-4 p-4 text-black"
+                         style="border-radius: 40px; background: #FFF5C6; display: flex; flex-wrap: wrap;">
+
+                        <!-- Left Section: Text Content -->
+                        <div class="text-center text-md-start" style="flex: 1; min-width: 300px; max-width: 500px;">
+                            <h2 class="jost-bold fw-bold sec_293_about" style="font-size: 35px; margin-bottom: 15px;">
+                                About
+                                <em class="text-kreator-yellow-900">Me</em>
+                            </h2>
+                            <p style="font-size: 16px; line-height: 1.6;">
+                                <span class="text-kreator-yellow-900">
+                                    Lakshit Sethia is a proactive student at the Indian Institute of Technology,
+                                    Guwahati, specializing in Electronics and Communication Engineering.
+                                </span>
+                                <br/>
+                                He serves as the Branch Representative for the ECE department, demonstrating leadership
+                                and commitment to his peers.
+                                <br/>
+                                Beyond academics, Lakshit has achieved various technical and managerial accomplishments,
+                                reflecting his dedication to technology and problem-solving.
+                            </p>
+
+                            <!-- Enroll Button & Social Icons -->
+                            <div class="d-flex flex-column align-items-center align-items-md-start gap-3 mt-3">
+                                <form action="/shop/cart/update" method="POST" id="cart3">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                    <button type="submit"
+                                            class="bg-kreator-yellow-900 border text-black fw-bold py-2 rounded-pill"
+                                            style="width: 160px; font-size: 16px;">
+                                        Enroll Now
+                                    </button>
+                                </form>
+
+                                <div class="my-2" hidden="hidden" id="cart3_hidden">
+                                    <button class="bg-kreator-yellow-900 border text-black fw-bold py-2 rounded-pill"
+                                            style="width: 160px; font-size: 16px;"
+                                       onclick="openPop()">
+                                        Enroll Now
+                                    </button>
+                                </div>
+
+                                <!-- Social Media Icons -->
+                                <div class="d-flex gap-2 justify-content-center justify-content-md-start">
+                                    <t t-if="m5">
+                                        <a t-att-href="m5" target="_blank">
+                                            <img width="26" height="26"
+                                                 src="/kreator_website/static/src/img/instagram.svg"
+                                                 alt="Instagram"/>
+                                        </a>
+                                    </t>
+                                    <t t-if="m1">
+                                        <a t-att-href="m1" target="_blank">
+                                            <img width="26" height="26"
+                                                 src="/kreator_website/static/src/img/fb.svg"
+                                                 alt="Facebook"/>
+                                        </a>
+                                    </t>
+                                    <t t-if="m2">
+                                        <a t-att-href="m2" target="_blank">
+                                            <img width="26" height="26"
+                                                 src="/kreator_website/static/src/img/x.png"
+                                                 alt="X"/>
+                                        </a>
+                                    </t>
+                                    <t t-if="m4">
+                                        <a t-att-href="m4" target="_blank">
+                                            <img width="26" height="26"
+                                                 src="/kreator_website/static/src/img/Youtube.svg"
+                                                 alt="Youtube"/>
+                                        </a>
+                                    </t>
+                                    <t t-if="m3">
+                                        <a t-att-href="m3" target="_blank">
+                                            <img width="26" height="26"
+                                                 src="/kreator_website/static/src/img/linkedin.svg"
+                                                 alt="LinkedIn"/>
+                                        </a>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Section: Image -->
+                        <div style="flex: 1; min-width: 250px; max-width: 400px; display: flex; justify-content: center;">
+                            <div class="border-kreator-yellow-900 rounded-30"
+                                 style="border: 3px solid; width: 100%; max-width: 300px; height: auto;">
+                                <img t-att-src="'/web/image/slide.channel/%s/my_image_icon' % course_id"
+                                     alt="Online Course Illustration"
+                                     class="img-fluid rounded-30"
+                                     style="width: 100%; height: auto;"/>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="section_p3_video bg-kreator-yellow-300 rounded-30 container my-5 p-1">
+                    <div class=" p-5">
+                        <div class="row justify-content-center">
+                            <!-- Left Section -->
+                            <div class="col-4">
+                                <img src="/kreator_website/static/src/img/Camera.png" alt="Camera"
+                                     class="img-fluid object-fit-cover" loading="lazy"
+                                     style="width: 100px; height: auto;"/>
+                                <div class="mt-3 text-center text-md-start">
+                                    <span style="font-size: 35px; font-weight: bold;">
+                                        From our
+                                        <span style="font-size: 42px; color: #b58900;">Students</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Right Section (Video) -->
+                            <div class="col-8">
+                                <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <div class="w-60" style="width: 60%; min-width: 320px;">
+                                                <div class="d-flex justify-content-start gap-2">
+                                                    <div class="w-100">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="70" height="69"
+                                                             viewBox="0 0 70 69"
+                                                             fill="none">
+                                                            <circle cx="35.309" cy="34.5248" r="34.3988"
+                                                                    fill="#FF5555"/>
+                                                            <path
+                                                                    d="M30.9009 21.4434L32.5269 24.4384C31.6141 25.7304 30.7583 27.1692 29.9595 28.7548C29.2179 30.3404 28.79 31.9847 28.6759 33.6878L33.3827 34.5686V44.6989H20.2891V37.4756C20.2891 33.306 21.2304 29.9586 23.1132 27.4334C25.053 24.8495 27.6489 22.8528 30.9009 21.4434ZM47.8457 21.4434L49.4717 24.4384C48.5588 25.7304 47.703 27.1692 46.9043 28.7548C46.1626 30.3404 45.7347 31.9847 45.6206 33.6878L50.3275 34.5686V44.6989H37.2338V37.4756C37.2338 33.306 38.1752 29.9586 40.0579 27.4334C41.9977 24.8495 44.5936 22.8528 47.8457 21.4434Z"
+                                                                    fill="white"/>
+                                                        </svg>
+                                                    </div>
+
+                                                    <div class="d-flex flex-column gap-5">
+                                                        <span class="ibm_plex mt-5"
+                                                              style="font-size: 16px; text-align: left; display: block;">
+                                                            KreatorBee’s course gave me a clear roadmap for lead
+                                                            generation. The platform-specific strategies and AI tools
+                                                            have helped me grow my business faster than ever!
+                                                        </span>
+
+
+                                                        <div class="d-flex gap-2 mt-3" style="align-items: center;">
+                                                            <div class="d-flex flex-column align-items-center justify-content-center">
+                                                                <span class="ibm_plex text-k-orange"
+                                                                      style="font-size: 18px;">
+                                                                    - Amit S
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                            data-bs-target="#carouselExampleAutoplaying"
+                                            data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon text-black" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                            data-bs-target="#carouselExampleAutoplaying"
+                                            data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="section_8" class="py-5 w-100">
+                    <div class="container">
+                        <div class="row text-center">
+                            <div class="col-12 d-flex flex-column align-items-center">
+                                <div class="fs-45 fw-bold">Frequently Asked</div>
+                                <div class="text-kreator-yellow-900 fs-45 fw-bold">Questions</div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center mt-4">
+                            <!-- Left Image -->
+                            <div class="col-md-3 d-none d-md-flex justify-content-center">
+                                <img src="/kreator_website/static/src/img/section8.png" alt="FAQ"
+                                     class="img-fluid w-75"/>
+                            </div>
+                            <!-- Accordion Content -->
+                            <div class="col-12 col-md-6 d-flex justify-content-center">
+                                <div class="w-100">
+                                    <div class="accordion1">
+                                        <div class="accordion-item1">
+                                            <div class="accordion-header1 pe-5">
+                                                Who is this course for?
+                                                <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
+                                                     alt="Arrow"/>
+                                            </div>
+                                            <div class="accordion-content1">
+                                                This course is for anyone looking to generate more leads, whether you're
+                                                a business owner, marketer, salesperson, or freelancer.
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item1">
+                                            <div class="accordion-header1 pe-5">
+                                                Do I need prior experience in marketing?
+                                                <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
+                                                     alt="Arrow"/>
+                                            </div>
+                                            <div class="accordion-content1">
+                                                No prior experience is required. The course is designed for both
+                                                beginners and professionals.
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item1">
+                                            <div class="accordion-header1 pe-5">
+                                                How long will it take to complete the course?
+                                                <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
+                                                     alt="Arrow"/>
+                                            </div>
+                                            <div class="accordion-content1">
+                                                The course is self-paced, allowing you to learn at your convenience.
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item1">
+                                            <div class="accordion-header1 pe-5">
+                                                Will I get a certificate after completing the course?
+                                                <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
+                                                     alt="Arrow"/>
+                                            </div>
+                                            <div class="accordion-content1">
+                                                Yes, you will receive a certification upon successful completion.
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item1">
+                                            <div class="accordion-header1 pe-5">
+                                                How can I access the course?Can I start freelancing part-time while
+                                                keeping my job?
+                                                <img src="/kreator_website/static/src/img/fi-bs-angle-down.svg"
+                                                     alt="Arrow"/>
+                                            </div>
+                                            <div class="accordion-content1">
+                                                You can access the course online through KreatorBee’s learning platform.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <script>
+                                        document.querySelectorAll(".accordion-header1").forEach(header => {
+                                        header.addEventListener("click", function () {
+                                        const currentActive = document.querySelector(".accordion-item1.active");
+                                        if (currentActive &amp;&amp; currentActive !== this.parentElement) {
+                                        currentActive.classList.remove("active");
+                                        }
+                                        this.parentElement.classList.toggle("active");
+                                        });
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                            <!-- Right Image -->
+                            <div class="col-md-3 d-none d-md-flex justify-content-center">
+                                <img src="/kreator_website/static/src/img/section8.png" alt="FAQ"
+                                     class="img-fluid w-75"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="section_9" class="pt-5 w-100 container border-top mb-5 border-bottom border-black">
+                    <div class="row align-items-center justify-content-center">
+                        <!-- Text & Button Section -->
+                        <div class="col-12 col-md-6 text-center text-md-start mb-4 mb-md-0">
+                            <div class="d-flex flex-column gap-3 align-items-center align-items-md-start">
+                                <span class="fs-34 text-ibm text-center text-md-start">
+                                    The COMPLETE GUIDE<br/>TO
+                                    <span class="text-kreator-yellow-900">STARTING</span>
+                                    IT UP
+                                </span>
+                                <span class="fs-4 w-100 w-md-75 text-center text-md-start">
+                                    Learn the most effective lead generation strategies and take your business to the
+                                    next level.
+                                </span>
+                                <span class="fs-4 text-kreator-yellow-900 pb-3" style="letter-spacing: 7.26px;">
+                                    INR
+                                    <span class="text-decoration-line-through">
+                                        <t t-esc="price1"/>
+                                    </span>
+                                    / INR
+                                    <t t-esc="price2"/>
+                                    (Excl. Tax)
+                                </span>
+                                <div class="add_to_cart_button justify-content-center justify-content-md-start" id="cart4">
+                                    <form action="/shop/cart/update" method="POST" class="w-100 w-md-75">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="product_template_id"
+                                               t-att-value="product_template_id"/>
+                                        <input type="hidden" class="product_id" name="product_id"
+                                               t-att-value="product_id"/>
+                                        <button type="submit"
+                                                class="btn btn-kreator-yellow-900 fw-bold text-black px-4 py-2 rounded shadow-sm mt-3">
+                                            Enroll Now
+                                        </button>
+                                        <div id="product_option_block"></div>
+                                    </form>
+                                </div>
+                                <div class="add_to_cart_button my-2" hidden="hidden" id="cart4_hidden">
+                                    <a class="btn btn-kreator-yellow-900 fw-bold text-black px-4 py-2 rounded shadow-sm mt-3"
+                                       onclick="openPop()">
+                                        Enroll Now
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Image Section -->
+                        <div class="col-12 col-md-6 d-flex justify-content-center">
+                            <img t-att-src="'/web/image/slide.channel/%s/image1' % course_id" alt="section9"
+                                 class="img-fluid w-75 w-md-100"/>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                    let sec_19_accordionButtons1 = document.querySelectorAll(".sec_19_accordion-button1");
+
+                    sec_19_accordionButtons1.forEach(button => {
+                    button.addEventListener("click", function () {
+                    let icon = this.querySelector(".sec_19_toggle-icon");
+                    let isCollapsed = this.classList.contains("collapsed");
+
+                    // Reset all icons to "plus"
+                    sec_19_accordionButtons1.forEach(btn => {
+                    let btnIcon = btn.querySelector(".sec_19_toggle-icon");
+                    btnIcon.src = "/kreator_website/static/src/img/plus.svg";
+                    });
+
+                    // Change icon based on state
+                    if (isCollapsed) {
+                    icon.src = "/kreator_website/static/src/img/minus.svg";
+                    } else {
+                    icon.src = "/kreator_website/static/src/img/plus.svg";
+                    }
+                    });
+                    });
+
+                    // Handle Bootstrap's accordion events for toggling icons
+                    document.querySelectorAll('.accordion-collapse1').forEach(collapse => {
+                    collapse.addEventListener('shown.bs.collapse', function () {
+                    let button = this.previousElementSibling.querySelector('.sec_19_accordion-button1');
+                    let icon = button.querySelector(".sec_19_toggle-icon");
+                    icon.src = "/kreator_website/static/src/img/minus.svg"; // Set to minus when opened
+                    });
+
+                    collapse.addEventListener('hidden.bs.collapse', function () {
+                    let button = this.previousElementSibling.querySelector('.sec_19_accordion-button1');
+                    let icon = button.querySelector(".sec_19_toggle-icon");
+                    icon.src = "/kreator_website/static/src/img/plus.svg"; // Set to plus when closed
+                    });
+                    });
+                    });
+                </script>
+            </div>
+            <style>
+                @media (max-width: 1024px) { /* Tablets and smaller screens */
+                #section_19 {
+                padding: 10px !important;
+                }
+                .sec_19_title {
+                font-size: 22px !important;
+                }
+                .sec_19_accordion-item1 {
+                padding: 10px !important;
+                }
+                .sec_19_accordion-button1 {
+                font-size: 16px !important;
+                }
+                }
+
+                @media (max-width: 768px) { /* Mobile screens */
+                .sec_19_title {
+                font-size: 18px !important;
+                }
+                .sec_19_accordion-item1 {
+                padding: 5px !important;
+                }
+                .sec_19_accordion-button1 {
+                font-size: 14px !important;
+                }
+                }
+            </style>
+
+        </t>
+        <script
+                src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"
+        ></script>
+                <script>
+                    // Set the date we're counting down to
+                    const cart1 = document.getElementById("cart1");
+                    const cart2 = document.getElementById("cart2");
+                    const cart3 = document.getElementById("cart3");
+                    const cart1_hidden = document.getElementById("cart1_hidden");
+                    const cart2_hidden = document.getElementById("cart2_hidden");
+                    const cart3_hidden = document.getElementById("cart3_hidden");
+                    const cart4 = document.getElementById("cart4");
+                    const cart4_hidden = document.getElementById("cart4_hidden");
+                    const expire_date = document.getElementById("expired");
+                    var countDownDate = new Date(expire_date.value).getTime();
+                    let open_pop = document.getElementById("open_pop");
+                    let close = document.getElementById("popup1");
+                    function popclose() {
+                    console.log('test');
+                    close.style.display= 'none';
+                    }
+                    function openPop() {
+                    close.style.display = 'flex';
+                    }
+
+                    // Update the count down every 1 second
+                    var x = setInterval(function() {
+
+                    // Get today's date and time
+                    var now = new Date().getTime();
+
+                    // Find the distance between now and the count down date
+                    var distance = countDownDate - now;
+
+                    // Time calculations for days, hours, minutes and seconds
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    // Display the result in the element with id="demo"
+                    document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s " + "Left";
+
+                    // If the count down is finished, write some text
+                    if (distance &lt; 30936){
+                    document.getElementById("demo").classList.add("text-danger");
+                    }
+                    if (distance &lt; 0) {
+                    clearInterval(x);
+                    document.getElementById("demo").innerHTML = "LINK EXPIRED";
+                    cart1.style.display = 'none';
+                    cart1_hidden.removeAttribute("hidden");
+                    cart2.style.display = 'none';
+                    cart2_hidden.removeAttribute("hidden");
+                    cart3.style.display = 'none';
+                    cart3_hidden.removeAttribute("hidden");
+                    cart4.style.display = 'none';
+                    cart4_hidden.removeAttribute("hidden");
+                    document.getElementById("demo").classList.remove('blink_me');
+                    }
+                    }, 1000);
+                </script>
+    </template>
+</odoo>
