@@ -104,6 +104,7 @@
                 <field name="product_type"
                        help="This field indicates the type of product. Choose from 'Live Workshop', 'Pre-ordered Course', or 'One to One'. It is a readonly field for informational purposes."/>
                 <field name="reference"/>
+                <field name="specify"/>
                 <field name="description"/>
             </field>
             <xpath expr="//notebook" position="inside">

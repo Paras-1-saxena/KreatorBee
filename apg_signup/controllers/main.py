@@ -314,6 +314,7 @@ class AuthSignupHome(Home):
                 country_id = request.env['res.country'].search([('id', '=', post.get('country'))], limit=1)
                 partner_vals.update({
                     'reference' : post.get('reference'),
+                    'specify': post.get('specify'),
                     'city': post.get('city'),
                     'state_id': state_id.id if state_id else False,
                     'country_id': country_id.id if country_id else False,

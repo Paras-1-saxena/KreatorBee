@@ -58,6 +58,7 @@ class ResPartner(models.Model):
         required=True,
         default='google'
     )
+    specify = fields.Char(string="specify")
     description = fields.Text(string='Description')
 
     # Add KYC-specific fields here
