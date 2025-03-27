@@ -7,12 +7,11 @@
             <t t-call="website.layout">
                 <div id="wrap" class="oe_structure oe_empty" style="background-color: #FFD000;">
                     <div class="container">
-                        <div class="content">
                             <div class="o-cust-signup" style="max-width: 673px !important;">
                                 <form action="/sign-up/about/update" method="post" name="signup_details" class="o-cust-signup-details-form" enctype="multipart/form-data">
                                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                     <input type="hidden" name="partner_id" t-att-value="partner_id" id="partner_id" class="f14 o-cust-form-control"/>
-                                                           
+
                                     <!-- Header -->
                                     <div class="mt-3" style="text-align: center;">
                                         <h3 class="freedomMainTitle bold-text">We'd love to know you better!</h3>
@@ -89,7 +88,6 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>
                     </div>
                 </div>
             </t>

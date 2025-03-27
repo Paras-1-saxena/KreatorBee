@@ -139,7 +139,7 @@ class AuthSignupHome(Home):
                     return request.redirect("sign-up/about?partner=%d" % user.partner_id)
                 elif user.partner_id.user_type == 'partner':
                     return request.redirect("sign-up/about?partner=%d" % user.partner_id)
-                elif partner_id.user_type == 'customer':
+                elif user.partner_id.user_type == 'customer':
                     return request.redirect('/customer/mycourses')
                 else:
                     return request.redirect('/web/login?%s' % url_encode({'login': user.login, 'redirect': '/web'}))
@@ -212,7 +212,7 @@ class AuthSignupHome(Home):
         # Get India (Default Country)
         # Fetch India country ID
         india = request.env['res.country'].search([('code', '=', 'IN')], limit=1)
-        states = request.env['res.country.state'].search([('country_id', '=', india.id)])
+        states = request.env['res.country.state'].search([('country_id', '=', india.id), ('code', 'not in', ['IN_OC', 'IN_OT'])])
         default_country_id = india.id if india else False
 
         # Get the currently logged-in user
