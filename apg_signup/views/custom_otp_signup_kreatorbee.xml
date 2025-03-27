@@ -4,7 +4,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <t t-call="website.layout">
             <div id="wrap" class="row justify-content-around" style="background-color: #FFD000;">
-                <div class="col-4">
+                <div class="col-lg-4 col-md-4 col-sm-12">
                             <div class="o-cust-signup">
                                 <form role="form" method="post" name="login" class="o-cust-signup-form"
                                       enctype="multipart/form-data">
