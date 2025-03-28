@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="custom_dashboard_redirect" inherit_id="portal.my_account_link">
+        <xpath expr="//a[hasclass('dropdown-item')][2]" position="replace">
+            <a href="/my/dashboard" role="menuitem" class="dropdown-item ps-3">
+                <i class="fa fa-fw fa-id-card-o me-1 small text-primary text-primary-emphasis"/>
+                My Account
+            </a>
+        </xpath>
+    </template>
+</odoo>

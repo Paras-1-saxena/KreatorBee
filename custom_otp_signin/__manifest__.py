@@ -16,6 +16,7 @@
         "security/security_group.xml",
         "views/otp_verification.xml",
         "views/login_view.xml",
+        'views/custom_dashboard_redirect.xml',
         "data/cron.xml"
     ],
     "license": "LGPL-3",

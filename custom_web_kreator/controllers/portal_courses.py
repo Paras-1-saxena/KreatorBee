@@ -480,15 +480,32 @@ class PortalMyCourses(http.Controller):
                     partner_commission_last_7_days += line.partner_commission_amount
                 if last_30_days <= order_date <= today:
                     partner_commission_last_30_days += line.partner_commission_amount
-            # courses = request.env['slide.channel'].sudo().search([('user_id', '=', user.id)], order="product_sale_revenues desc", limit=5)
-            labels =  ["Video Editing", "Lead Generation", "Freelancing", "Freelancing (Gen Z)","Freelancing (Employees)"]
-            data = [35, 25, 20, 15, 5]
+            filter_date = datetime.now() - timedelta(days=30)
+            order_lines = orders_obj.sudo().search([
+                ('is_commission', '=', True),
+                ('state', '=', 'sale'),
+                ('partner_commission_partner_id', '=', partner.id),
+                ('create_date', '>=', filter_date)
+            ])
+            courses_data = {pid.name: sum([pamount.partner_commission_amount for pamount in order_lines.filtered(lambda ol: ol.product_id.id == pid.id)]) for pid in order_lines.product_id}
+            sorted_courses = {k: v for k, v in sorted(courses_data.items(), key=lambda item: item[1], reverse=True)}
+            labels =  list(sorted_courses.keys())[:5]
+            data = list(sorted_courses.values())[:5]
             label_color = {0: 'electro', 1: 'clo', 2: 'foo', 3: 'boo', 4: 'oth'}
             xml_label = []
             for lid, label in enumerate(labels):
                 xml_label.append(f'<li><i class="ri-circle-fill pe-1 {label_color.get(lid)}"></i>{label}</li>')
             xml_label = Markup(''.join(xml_label))
-            print(type(xml_label))
+            courses_data_state = {pid.name: sum([pamount.partner_commission_amount for pamount in
+                                           order_lines.filtered(lambda ol: ol.order_partner_id.state_id.id == pid.id)]) for pid in
+                            order_lines.order_partner_id.state_id}
+            sorted_courses_state = {k: v for k, v in sorted(courses_data_state.items(), key=lambda item: item[1], reverse=True)}
+            labels_state = list(sorted_courses_state.keys())[:5]
+            data_state = list(sorted_courses_state.values())[:5]
+            xml_label_state = []
+            for lid, label in enumerate(labels_state):
+                xml_label_state.append(f'<li><i class="ri-circle-fill pe-1 {label_color.get(lid)}"></i>{label}</li>')
+            xml_label_state = Markup(''.join(xml_label_state))
             # Prepare data for rendering or JSON response
             commission_data = {
                 'commission': {
@@ -499,7 +516,10 @@ class PortalMyCourses(http.Controller):
                 },
                 'labels': labels,
                 'data': data,
-                'xml_label': xml_label
+                'xml_label': xml_label,
+                'labels_state': labels_state,
+                'data_state': data_state,
+                'xml_label_state': xml_label_state
             }
             # Render the data page template
             return http.request.render('custom_web_kreator.Npartner', commission_data)

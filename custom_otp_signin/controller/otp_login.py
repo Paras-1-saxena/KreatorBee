@@ -9,9 +9,21 @@ from odoo.http import request
 
 class OtpLoginHome(Home):
 
-    @http.route('/web/login', type='http', auth='public', website=True, csrf=False)
-    def custom_login(self, **kw):
-        return request.redirect('/web/otp/login')
+    # @http.route('/web/login', type='http', auth='public', website=True, csrf=False)
+    # def custom_login(self, **kw):
+    #     return request.redirect('/web/otp/login')
+
+    @http.route('/my/dashboard', type='http', auth="user", website=True)
+    def custom_redirect(self, **kw):
+        user_type = request.env.user.user_type
+        if request.env.user.has_group('base.group_user'):
+            return request.redirect('/my/home')
+        if user_type == 'creator':
+            return request.redirect('/creator/income')
+        elif user_type == 'customer':
+            return request.redirect('/customer/mycourses')
+        elif user_type == 'partner':
+            return request.redirect('/partner/income')
     
     @http.route(website=True)
     def web_login(self, redirect=None, **kw):

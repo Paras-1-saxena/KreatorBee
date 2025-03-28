@@ -21,360 +21,398 @@
                         href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
                         rel="stylesheet"
                 />
-                <style> @media (max-width: 769px) { /* Style the input field */ #fromDate,#toDate { position: relative;
-                padding-right: 30px; /* Space for the calendar icon */ } /* Add the calendar icon using the ::after
-                pseudo-element */ #fromDate::after,#toDate::after { content: "📅"; /* Unicode calendar icon */ position:
-                absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; /* Make sure the
-                icon does not interfere with clicking the input */ font-size: 18px; /* Adjust the size of the calendar
-                icon */ } }
-            </style>
-        </head>
+                <style>@media (max-width: 769px) { /* Style the input field */ #fromDate,#toDate { position: relative;
+                    padding-right: 30px; /* Space for the calendar icon */ } /* Add the calendar icon using the ::after
+                    pseudo-element */ #fromDate::after,#toDate::after { content: "📅"; /* Unicode calendar icon */
+                    position:
+                    absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; /* Make sure the
+                    icon does not interfere with clicking the input */ font-size: 18px; /* Adjust the size of the
+                    calendar
+                    icon */ } }
+                </style>
+            </head>
 
-        <body>
-            <div class="layout">
-                <!-- Header -->
-                <header class="container-fluid">
-                    <div
-                            class="d-flex justify-content-between align-items-center border-bottom"
-                    >
-                        <!-- Menu Icon visible on mobile-->
-                        <img
-                                class="pe-2 d-block d-lg-none hamburger"
-                                src="/custom_web_kreator/static/src/nev-icon.svg"
-                        />
-                        <!-- Logo -->
-                        <img src="/custom_web_kreator/static/src/logo.png"/>
-                        <!-- Menu-->
-                        <div class="d-lg-flex d-none gap-4">
-                            <div
-                                    class="active p-lg-2 p-1 d-flex flex-column align-items-center"
-                            >
-                                <a href="/partner/income" class='text-center'>
-                                    <i class="ri-line-chart-fill"></i>
-                                    <p>
-                                        Income
-                                    </p>
-                                </a>
-                            </div>
-                            <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
-                                <a href="/partner-referral" class='text-center'>
-                                    <i class="ri-links-fill"></i>
-                                    <p>
-                                        Links
-                                    </p>
-                                </a>
-                            </div>
-                            <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
-                                <a href="/partner/kyc" class='text-center'>
-                                    <i class="ri-profile-fill"></i>
-                                    <p>
-                                        KYC
-                                    </p>
-                                </a>
-                            </div>
-                            <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
-                                <a href="/partner/lead" class='text-center'>
-                                    <i class="ri-megaphone-fill"></i>
-                                    <p>
-                                        Lead
-                                    </p>
-                                </a>
-                            </div>
-                            <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
-                                <a href="/partner/leaderboard" class='text-center'>
-                                    <i class="ri-award-fill"></i>
-                                    <p>
-                                        Leaderboard
-                                    </p>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- Profile -->
-                        <t t-call="custom_web_kreator.partner_profile_dropdown"/>
-                    </div>
-                </header>
-                <div class="d-flex w-100">
-                    <!-- Sidebar -->
-                    <div class="sidebar border-end d-none d-lg-block">
-                        <nav class="py-3 px-2">
-                            <!-- Sidebar Menu -->
-                            <ul class="d-flex flex-column gap-2">
-                                <a href="/partner/income">
-                                    <li class="active">
-                                        <i class="ri-discount-percent-fill"></i>
-                                        Sales
-                                    </li>
-                                </a>
-                                <!-- Sales Dropdown -->
-                                <div class="ps-2 d-block d-lg-none">
-                                    <li class="active">
-                                        <a href="/partner/income">
-                                            <i class="ri-checkbox-circle-fill"></i>
-                                            Income Data
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/partner-referral">
-                                            <i class="ri-checkbox-blank-circle-line"></i>
+            <body>
+                <div class="layout">
+                    <!-- Header -->
+                    <header class="container-fluid">
+                        <div
+                                class="d-flex justify-content-between align-items-center border-bottom"
+                        >
+                            <!-- Menu Icon visible on mobile-->
+                            <img
+                                    class="pe-2 d-block d-lg-none hamburger"
+                                    src="/custom_web_kreator/static/src/nev-icon.svg"
+                            />
+                            <!-- Logo -->
+                            <img src="/custom_web_kreator/static/src/logo.png"/>
+                            <!-- Menu-->
+                            <div class="d-lg-flex d-none gap-4">
+                                <div
+                                        class="active p-lg-2 p-1 d-flex flex-column align-items-center"
+                                >
+                                    <a href="/partner/income" class='text-center'>
+                                        <i class="ri-line-chart-fill"></i>
+                                        <p>
+                                            Income
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
+                                    <a href="/partner-referral" class='text-center'>
+                                        <i class="ri-links-fill"></i>
+                                        <p>
                                             Links
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/partner/kyc">
-                                            <i class="ri-checkbox-blank-circle-line"></i>
-                                            kyc
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/partner/lead">
-                                            <i class="ri-checkbox-blank-circle-line"></i>
-                                            Lead</a>
-                                    </li>
-                                    <li>
-                                        <a href="/partner/leaderboard">
-                                            <i class="ri-checkbox-blank-circle-line"></i>
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
+                                    <a href="/partner/kyc" class='text-center'>
+                                        <i class="ri-profile-fill"></i>
+                                        <p>
+                                            KYC
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
+                                    <a href="/partner/lead" class='text-center'>
+                                        <i class="ri-megaphone-fill"></i>
+                                        <p>
+                                            Lead
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
+                                    <a href="/partner/leaderboard" class='text-center'>
+                                        <i class="ri-award-fill"></i>
+                                        <p>
                                             Leaderboard
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Profile -->
+                            <t t-call="custom_web_kreator.partner_profile_dropdown"/>
+                        </div>
+                    </header>
+                    <div class="d-flex w-100">
+                        <!-- Sidebar -->
+                        <div class="sidebar border-end d-none d-lg-block">
+                            <nav class="py-3 px-2">
+                                <!-- Sidebar Menu -->
+                                <ul class="d-flex flex-column gap-2">
+                                    <a href="/partner/income">
+                                        <li class="active">
+                                            <i class="ri-discount-percent-fill"></i>
+                                            Sales
+                                        </li>
+                                    </a>
+                                    <!-- Sales Dropdown -->
+                                    <div class="ps-2 d-block d-lg-none">
+                                        <li class="active">
+                                            <a href="/partner/income">
+                                                <i class="ri-checkbox-circle-fill"></i>
+                                                Income Data
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/partner-referral">
+                                                <i class="ri-checkbox-blank-circle-line"></i>
+                                                Links
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/partner/kyc">
+                                                <i class="ri-checkbox-blank-circle-line"></i>
+                                                kyc
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/partner/lead">
+                                                <i class="ri-checkbox-blank-circle-line"></i>
+                                                Lead
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/partner/leaderboard">
+                                                <i class="ri-checkbox-blank-circle-line"></i>
+                                                Leaderboard
+                                            </a>
+                                        </li>
+                                    </div>
+                                    <a href="/partner/myproducts">
+                                        <li>
+                                            <i class="ri-product-hunt-fill"></i>
+                                            Products
+                                        </li>
+                                    </a>
+                                    <a href="/partner/promotional-material">
+                                        <li>
+                                            <i class="ri-user-community-fill"></i>
+                                            Promote
+                                        </li>
+                                    </a>
+                                    <a href="/partner/community/updates">
+                                        <li>
+                                            <i class="ri-user-fill"></i>
+                                            Community
+                                        </li>
+                                    </a>
+                                    <a href="/partner/mycourses">
+                                        <li>
+                                            <i class="ri-user-community-fill"></i>
+                                            My Courses
+                                        </li>
+                                    </a>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- Sidebar Backdrop on mobile -->
+                        <div class="backdrop d-none d-lg-none"></div>
+
+                        <!-- Main Content -->
+                        <main class="flex-grow-1 p-4 overflow-auto">
+
+                            <!-- Welcome Section -->
+                            <section class="welcome">
+                                <div class="d-flex gap-2 flex-column flex-lg-row align-items-lg-center justify-content-between">
+                                    <h1 class="d-flex align-items-center gap-1">
+                                        <img
+                                                class="play"
+                                                src="/custom_web_kreator/static/src/user_icon.svg"
+                                        />
+                                        Welcome,
+                                        <t t-esc="request.env.user.name"/>
+                                    </h1>
+                                    <div class="d-flex gap-3 align-items-center">
+                                        <a
+                                                href="/tutorial"
+                                        >
+                                            Tutorial
+                                            <img
+                                                    class="ms-1"
+                                                    src="/custom_web_kreator/static/src/play.png"
+                                            />
                                         </a>
-                                    </li>
+                                        <a
+                                                href="#"
+                                        >
+                                            <img
+                                                    src="/custom_web_kreator/static/src/Whatsapp.png"
+                                            />
+                                            +1234567890
+                                        </a>
+                                    </div>
                                 </div>
-                                <a href="/partner/myproducts">
-                                    <li>
-                                        <i class="ri-product-hunt-fill"></i>
-                                        Products
-                                    </li>
-                                </a>
-                                <a href="/partner/promotional-material">
-                                    <li>
-                                        <i class="ri-user-community-fill"></i>
-                                        Promote
-                                    </li>
-                                </a>
-                                <a href="/partner/community/updates">
-                                    <li>
-                                        <i class="ri-user-fill"></i>
-                                        Community
-                                    </li>
-                                </a>
-                                <a href="/partner/mycourses">
-                                    <li>
-                                        <i class="ri-user-community-fill"></i>
-                                        My Courses
-                                    </li>
-                                </a>
-                            </ul>
-                        </nav>
+                            </section>
+
+
+                            <section class="sales-data my-5">
+                                <t t-if="data">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <div class="total-sales-card p-4 d-flex flex-column justify-content-center align-items-center">
+                                            <h2>Total Sales</h2>
+                                            <p>₹
+                                                <t t-esc="commission['total']"/>
+                                            </p>
+                                            <div class="d-flex justify-content-center gap-5 mt-2">
+                                                <div class="text-center">
+                                                    <h3>TODAY</h3>
+                                                    <p>
+                                                        <t t-esc="commission['today']"/>
+                                                    </p>
+                                                </div>
+                                                <div class="text-center">
+                                                    <h3>LAST 7 DAYS</h3>
+                                                    <p>
+                                                        <t t-esc="commission['last_7_days']"/>
+                                                    </p>
+                                                </div>
+                                                <div class="text-center">
+                                                    <h3>LAST 30 DAYS</h3>
+                                                    <p>
+                                                        <t t-esc="commission['last_30_days']"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-5 mt-5">
+                                        <div class="sales-breakdown-card p-3">
+                                            <h2 class="text-center mb-3">Course Wise Earnings
+                                                <span style="font-size: 14px;">(Last 30 Days)</span>
+                                            </h2>
+                                            <div class="d-flex align-items-center justify-content-center gap-2 gap-lg-4">
+                                                <div class="doughnutChart-container">
+                                                    <canvas id="doughnutChart-four" width="150" height="150"></canvas>
+                                                </div>
+                                                <textarea hidden="hidden" id="labels">
+                                                    <t t-esc="labels"/>
+                                                </textarea>
+                                                <textarea hidden="hidden" id="data">
+                                                    <t t-esc="data"/>
+                                                </textarea>
+                                                <div class="chart-data">
+                                                    <ul>
+                                                        <t t-esc="xml_label"/>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="sales-breakdown-card p-3">
+                                            <h2 class="text-center mb-3">State Wise Earnings
+                                                <span style="font-size: 14px;">(Last 30 Days)</span>
+                                            </h2>
+                                            <div class="d-flex align-items-center justify-content-center gap-2 gap-lg-4">
+                                                <div class="doughnutChart-container">
+                                                    <canvas id="doughnutChart-five" width="150" height="150"></canvas>
+                                                </div>
+                                                <textarea hidden="hidden" id="labels_state">
+                                                    <t t-esc="labels_state"/>
+                                                </textarea>
+                                                <textarea hidden="hidden" id="data_state">
+                                                    <t t-esc="data_state"/>
+                                                </textarea>
+                                                <div class="chart-data">
+                                                    <ul>
+                                                        <t t-esc="xml_label_state"/>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                                <t t-if="not data">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-5 col-md-5 col-sm-11">
+                                            <img class="img-fluid" src="/custom_web_kreator/static/src/no_data.svg" atl="No Data"/>
+                                        </div>
+                                        <div class="col-12 text-center fs-4">
+                                            <span style="background-color:#fff5c6;" class="shadow px-3 py-2 mb-5 rounded">
+                                                No sales data available. Data will appear once sales are recorded.
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </t>
+                            </section>
+                        </main>
                     </div>
-                    <!-- Sidebar Backdrop on mobile -->
-                    <div class="backdrop d-none d-lg-none"></div>
 
-                    <!-- Main Content -->
-                    <main class="flex-grow-1 p-4 overflow-auto">
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-                        <!-- Welcome Section -->
-                        <section class="welcome">
-                            <div class="d-flex gap-2 flex-column flex-lg-row align-items-lg-center justify-content-between">
-                                <h1 class="d-flex align-items-center gap-1">
-                                    <img
-                                        class="play"
-                                        src="/custom_web_kreator/static/src/user_icon.svg"
-                                    />
-                                    Welcome, <t t-esc="request.env.user.name"/>
-                                </h1>
-                                <div class="d-flex gap-3 align-items-center">
-                                    <a
-                                        href="/tutorial"
-                                    >
-                                        Tutorial
-                                        <img
-                                            class="ms-1"
-                                            src="/custom_web_kreator/static/src/play.png"
-                                        />
-                                    </a>
-                                    <a
-                                        href="#"
-                                    >
-                                        <img
-                                            src="/custom_web_kreator/static/src/Whatsapp.png"
-                                        />
-                                        +1234567890
-                                    </a>
-                                </div>
-                            </div>
-                        </section>
+                    <script type="text/javascript">
+                        document.addEventListener('DOMContentLoaded', function () {
+                        // Get the context of the canvas elements for the doughnut charts
+                        const ctx1 = document.getElementById('doughnutChart-four').getContext('2d');
+                        const ctx2 = document.getElementById('doughnutChart-five').getContext('2d');
+                        const ctx1_labels = JSON.parse(document.getElementById('labels').value.trim().replaceAll("'",
+                        '"'));
+                        const ctx1_data = JSON.parse(document.getElementById('data').value.trim().replaceAll("'", '"'));
+                        console.log(ctx1_data)
+                        const ctx2_labels =
+                        JSON.parse(document.getElementById('labels_state').value.trim().replaceAll("'",
+                        '"'));
+                        const ctx2_data = JSON.parse(document.getElementById('data_state').value.trim().replaceAll("'",
+                        '"'));
+                        console.log(ctx1_data)
+                        // Doughnut Chart for 'doughnutChart-four'
+                        new Chart(ctx1, {
+                        type: 'doughnut',
+                        data: {
+                        labels: ctx1_labels,
+                        datasets: [{
+                        label: '',
+                        data: ctx1_data,
+                        backgroundColor: [
+                        'rgba(255, 205, 0, 1)',
+                        'rgba(255, 255, 255, 1)',
+                        'rgba(8, 0, 102, 1)',
+                        'rgba(255, 119, 0, 1)',
+                        'rgba(144, 44, 62, 1)'
+                        ],
+                        borderColor: [
+                        'rgba(255, 205, 0, 0.7)',
+                        'rgba(255, 255, 255, 0.7)',
+                        'rgba(8, 0, 102, 0.7)',
+                        'rgba(255, 119, 0, 0.7)',
+                        'rgba(144, 44, 62, 1)'
+                        ],
+                        borderWidth: 1
+                        }]
+                        },
+                        options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '65%',
+                        animation: {
+                        animateScale: true,
+                        animateRotate: true,
+                        duration: 2000
+                        },
+                        plugins: {
+                        legend: {
+                        display: false // This hides the labels in the legend
+                        }
+                        },
+                        }
+                        });
+                        // Doughnut Chart for 'doughnutChart-five'
+                        new Chart(ctx2, {
+                        type: 'doughnut',
+                        data: {
+                        labels: ctx2_labels,
+                        datasets: [{
+                        label: '',
+                        data: ctx2_data,
+                        backgroundColor: [
+                        'rgba(255, 205, 0, 1)',
+                        'rgba(255, 255, 255, 1)',
+                        'rgba(8, 0, 102, 1)',
+                        'rgba(255, 119, 0, 1)',
+                        'rgba(144, 44, 62, 1)'
+                        ],
+                        borderColor: [
+                        'rgba(255, 205, 0, 0.7)',
+                        'rgba(255, 255, 255, 0.7)',
+                        'rgba(8, 0, 102, 0.7)',
+                        'rgba(255, 119, 0, 0.7)',
+                        'rgba(144, 44, 62, 1)'
+                        ],
+                        borderWidth: 1
+                        }]
+                        },
+                        options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '65%',
+                        animation: {
+                        animateScale: true,
+                        animateRotate: true,
+                        duration: 2000
+                        },
+                        plugins: {
+                        legend: {
+                        display: false // This hides the labels in the legend
+                        }
+                        },
+                        }
+                        });
+                        });
+                    </script>
 
-
-
-                        <section class="sales-data my-5">
-                            <div class="d-flex justify-content-center align-items-center">
-                                <div class="total-sales-card p-4 d-flex flex-column justify-content-center align-items-center">
-                                    <h2>Total Sales</h2>
-                                    <p>₹<t t-esc="commission['total']"/></p>
-                                    <div class="d-flex justify-content-center gap-5 mt-2">
-                                        <div class="text-center">
-                                            <h3>TODAY</h3>
-                                            <p><t t-esc="commission['today']"/></p>
-                                        </div>
-                                        <div class="text-center">
-                                            <h3>LAST 7 DAYS</h3>
-                                            <p><t t-esc="commission['last_7_days']"/></p>
-                                        </div>
-                                        <div class="text-center">
-                                            <h3>LAST 30 DAYS</h3>
-                                            <p><t t-esc="commission['last_30_days']"/></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-5 mt-5">
-                                <div class="sales-breakdown-card p-3">
-                                  <h2 class="text-center mb-3">Course Wise Earnings</h2>
-                                  <div class="d-flex align-items-center justify-content-center gap-2 gap-lg-4">
-                                    <div class="doughnutChart-container">
-                                      <canvas id="doughnutChart-four" width="150" height="150"></canvas>
-                                    </div>
-                                      <textarea hidden="hidden" id="labels">
-                                          <t t-esc="labels"/>
-                                      </textarea>
-                                      <textarea hidden="hidden" id="data">
-                                          <t t-esc="data"/>
-                                      </textarea>
-                                    <div class="chart-data">
-                                      <ul>
-                                        <t t-esc="xml_label"/>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div class="sales-breakdown-card p-3">
-                                  <h2 class="text-center mb-3">State Wise Earnings</h2>
-                                  <div class="d-flex align-items-center justify-content-center gap-2 gap-lg-4">
-                                    <div class="doughnutChart-container">
-                                      <canvas id="doughnutChart-five" width="150" height="150"></canvas>
-                                    </div>
-                                    <div class="chart-data">
-                                      <ul>
-                                        <li><i class="ri-circle-fill pe-1 electro"></i>Delhi</li>
-                                        <li><i class="ri-circle-fill pe-1 clo"></i>Andhra Pradesh</li>
-                                        <li><i class="ri-circle-fill pe-1 foo"></i>Karnataka</li>
-                                        <li><i class="ri-circle-fill pe-1 boo"></i>Maharashtra</li>
-                                        <li><i class="ri-circle-fill pe-1 oth"></i>Rajasthan</li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-
-                        </section>
-                    </main>
+                    <!-- External Script -->
+                    <script src="/custom_web_kreator/static/src/js/script.js"></script>
+                    <!-- bootstrap script -->
+                    <script
+                            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                            crossorigin="anonymous"
+                    ></script>
                 </div>
-
-                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-                <script type="text/javascript">
-                document.addEventListener('DOMContentLoaded', function () {
-                    // Get the context of the canvas elements for the doughnut charts
-                    const ctx1 = document.getElementById('doughnutChart-four').getContext('2d');
-                    const ctx2 = document.getElementById('doughnutChart-five').getContext('2d');
-                    const ctx1_labels = JSON.parse(document.getElementById('labels').value.trim().replaceAll("'", '"'));
-                    const ctx1_data = JSON.parse(document.getElementById('data').value.trim().replaceAll("'", '"'));
-                    console.log(ctx1_data)
-                    // Doughnut Chart for 'doughnutChart-four'
-                    new Chart(ctx1, {
-                        type: 'doughnut',
-                        data: {
-                            labels: ctx1_labels,
-                            datasets: [{
-                                label: 'Sales Distribution',
-                                data: ctx1_data,
-                                backgroundColor: [
-                                    'rgba(255, 205, 0, 1)',
-                                    'rgba(255, 255, 255, 1)',
-                                    'rgba(8, 0, 102, 1)',
-                                    'rgba(255, 119, 0, 1)',
-                                    'rgba(255, 245, 198, 1)'
-                                ],
-                                borderColor: [
-                                    'rgba(255, 205, 0, 0.7)',
-                                    'rgba(255, 255, 255, 0.7)',
-                                    'rgba(8, 0, 102, 0.7)',
-                                    'rgba(255, 119, 0, 0.7)',
-                                    'rgba(255, 245, 198, 0.7)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            cutout: '65%',
-                            animation: {
-                                animateScale: true,
-                                animateRotate: true,
-                                duration: 2000
-                            },
-                            plugins: {
-                                legend: {
-                                    display: false // This hides the labels in the legend
-                                }
-                            },
-                        }
-                    });
-                    // Doughnut Chart for 'doughnutChart-five'
-                    new Chart(ctx2, {
-                        type: 'doughnut',
-                        data: {
-                            labels: ['Delhi', 'Andhra Pradesh', 'Karnataka', 'Maharashtra', 'Rajasthan'],
-                            datasets: [{
-                                label: 'Sales Distribution',
-                                data: [30, 30, 10, 20, 10],
-                                backgroundColor: [
-                                    'rgba(255, 205, 0, 1)',
-                                    'rgba(255, 255, 255, 1)',
-                                    'rgba(8, 0, 102, 1)',
-                                    'rgba(255, 119, 0, 1)',
-                                    'rgba(255, 245, 198, 1)'
-                                ],
-                                borderColor: [
-                                    'rgba(255, 205, 0, 0.7)',
-                                    'rgba(255, 255, 255, 0.7)',
-                                    'rgba(8, 0, 102, 0.7)',
-                                    'rgba(255, 119, 0, 0.7)',
-                                    'rgba(255, 245, 198, 0.7)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            cutout: '65%',
-                            animation: {
-                                animateScale: true,
-                                animateRotate: true,
-                                duration: 2000
-                            },
-                            plugins: {
-                                legend: {
-                                    display: false // This hides the labels in the legend
-                                }
-                            },
-                        }
-                    });
-                });
-            </script>
-
-                <!-- External Script -->
-                <script src="/custom_web_kreator/static/src/js/script.js"></script>
-                <!-- bootstrap script -->
-                <script
-                        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-                        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-                        crossorigin="anonymous"
-                ></script>
-            </div>
-        </body>
-    </template>
-</data>
-        </odoo>
+            </body>
+        </template>
+    </data>
+</odoo>
