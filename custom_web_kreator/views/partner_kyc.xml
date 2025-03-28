@@ -627,7 +627,7 @@
                             </section>
                             <!-- Lead Details -->
                             <div class="row my-4 justify-content-end">
-                                <div class="col-lg-5 col-md-5 col-sm-12">
+                                <div class="col-lg-5 col-md-7 d-none d-lg-block">
                                     <section
                                             class="timeline d-flex gap-2 flex-column flex-lg-row align-items-center justify-content-between"
                                     >
@@ -659,6 +659,34 @@
                                             </t>
                                             <t t-if="state_selection != 'approved'">
                                                 <span>
+                                                    <a href="">Approved</a>
+                                                </span>
+                                            </t>
+                                            <t t-if="state_selection == 'rejected'">
+                                                <span class="active">
+                                                    <a href="">Rejected</a>
+                                                </span>
+                                            </t>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="col-lg-5 col-md-7 d-block d-lg-none">
+                                    <section
+                                            class="timeline d-flex gap-2 flex-column flex-lg-row align-items-center justify-content-between"
+                                    >
+                                        <div class="lead-type mb-5">
+                                            <t t-if="state_selection == 'pending'">
+                                                <span class="active">
+                                                    <a href="">Pending</a>
+                                                </span>
+                                            </t>
+                                            <t t-if="state_selection == 'under_review'">
+                                                <span class="active">
+                                                    <a href="">Under Review</a>
+                                                </span>
+                                            </t>
+                                            <t t-if="state_selection == 'approved'">
+                                                <span class="active">
                                                     <a href="">Approved</a>
                                                 </span>
                                             </t>

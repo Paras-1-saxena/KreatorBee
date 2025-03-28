@@ -19,8 +19,10 @@
                         <field name="is_training_course"/>
                         <field name="regular_price" required="1" invisible="is_training_course == True"/>
                         <field name="sales_price" required="1" invisible="is_training_course == True"/>
-                        <field name="partner_commission" readonly="1" force_save="1" invisible="is_training_course == True"/>
-                        <field name="direct_commission" readonly="1" force_save="1" invisible="is_training_course == True"/>
+                        <field name="partner_commission" readonly="1" force_save="1"
+                               invisible="is_training_course == True"/>
+                        <field name="direct_commission" readonly="1" force_save="1"
+                               invisible="is_training_course == True"/>
                         <field name="partner_commission_id" invisible="1"/>
                         <field name="direct_commission_id" invisible="1"/>
                     </group>
@@ -68,14 +70,14 @@
         </record>
 
 
-         <!-- Inherit the slide.channel form view to add custom website button-->
+        <!-- Inherit the slide.channel form view to add custom website button-->
 
         <record id="view_slide_channel_form_inherit1" model="ir.ui.view">
             <field name="name">slide.channel.form.custom</field>
             <field name="model">slide.channel</field>
             <field name="inherit_id" ref="website_slides.view_slide_channel_form"/>
             <field name="arch" type="xml">
-                
+
                 <!-- Hide the Existing "Go to Website" Button -->
                 <xpath expr="//field[@name='is_published']" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -97,54 +99,62 @@
         <template id="custom_course_nav" inherit_id="website_slides.course_nav">
             <!-- Replace all content inside the template -->
             <xpath expr="." position="replace">
-                <div>Hello</div>
-                
+                <div></div>
+
             </xpath>
         </template>
 
 
         <template id="custom_sidebar_slider" inherit_id="website_slides.course_sidebar">
             <!-- Replace all content inside the template -->
-                <xpath expr="//div[@id='o_wslides_sidebar_collapse']//table//tr[th[normalize-space(text())='Responsible']]" position="replace">
-                <!-- Empty to remove the row -->
+            <xpath expr="//div[hasclass('o_wslides_course_sidebar')]/div[@id='o_wslides_sidebar_collapse']/div[hasclass('o_not_editable')]/button[hasclass('o_wslides_share')]"
+                   position="replace">
             </xpath>
-
-            <!-- Remove the "Last Update" row -->
-            <xpath expr="//div[@id='o_wslides_sidebar_collapse']//table//tr[th[normalize-space(text())='Last Update']]" position="replace">
-                <!-- Empty to remove the row -->
+            <xpath expr="//div[hasclass('o_wslides_course_sidebar')]/div[@id='o_wslides_sidebar_collapse']/table"
+                   position="replace">
+                <table class="table table-sm mt-3">
+                    <tr t-if="channel.total_time">
+                        <th class="border-top-0">Completion Time</th>
+                        <td class="border-top-0">
+                            <t class="fw-bold" t-esc="channel.total_time"
+                               t-options="{'widget': 'duration', 'unit': 'hour', 'round': 'minute'}"/>
+                        </td>
+                    </tr>
+                </table>
             </xpath>
         </template>
 
 
         <template id="inherit_course_main" inherit_id="website_slides.course_main">
-        <!-- Remove the t-call for website_slides.course_nav -->
-        
+            <!-- Remove the t-call for website_slides.course_nav -->
 
-        <!-- Add dynamic background color to o_record_cover_container -->
-        <xpath expr="//div[@id='wrap']/div/div" position="attributes">
-            <attribute name="t-att-style">
-                "background-color: " + (channel.combination_id.primary_color or '#000') + ";"
-            </attribute>
-        </xpath>
 
-        <!-- Add dynamic background color to ::before pseudo-element -->
-        <xpath expr="///div[@id='wrap']/div/div/div/div" position="before">
-            <style>
-                #wrap .o_record_cover_container::before {
+            <!-- Add dynamic background color to o_record_cover_container -->
+            <xpath expr="//div[@id='wrap']/div/div" position="attributes">
+                <attribute name="t-att-style">
+                    "background-color: " + (channel.combination_id.primary_color or '#000') + ";"
+                </attribute>
+            </xpath>
+
+            <!-- Add dynamic background color to ::before pseudo-element -->
+            <xpath expr="///div[@id='wrap']/div/div/div/div" position="before">
+                <style>
+                    #wrap .o_record_cover_container::before {
                     content: '';
                     position: absolute;
                     top: 0;
                     left: 0;
                     width: 100%;
                     height: 100%;
-                    background-color: <t t-esc="channel.combination_id.secondary_color or '#000'"/> !important;
+                    background-color:
+                    <t t-esc="channel.combination_id.secondary_color or '#000'"/>
+                    !important;
                     z-index: -1;
-                }
-            </style>
-        </xpath>
-        
-    </template>
+                    }
+                </style>
+            </xpath>
 
+        </template>
 
 
     </data>

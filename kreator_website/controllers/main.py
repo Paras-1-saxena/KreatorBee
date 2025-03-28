@@ -87,10 +87,7 @@ class KreatorWebsite(http.Controller):
 
     def fetch_values(self, **kwargs):
         course = request.env['slide.channel'].sudo().search([('id', '=', kwargs.get('course_id'))])
-        expiry_time = kwargs.get('exp')
-        expiry_date = datetime.datetime.fromtimestamp(int(expiry_time), pytz.timezone("Asia/Calcutta")).strftime(
-            "%b %d, %Y %H:%M:%S")
-        return {
+        value = {
             'main_heading': course.name, 'p2': course.p2, 'creator_name': course.creator_name,
             'image_icon': course.image_icon, 'c1': course.c1, 'c2': course.c2, 'c3': course.c3, 'c4': course.c4,
             'course_line_ids': course.course_line_ids, 'individual_line_ids': course.individual_line_ids,
@@ -101,6 +98,10 @@ class KreatorWebsite(http.Controller):
             'product_template_id': course.product_id.product_tmpl_id.id, 'product_id': course.product_id.id,
             'price1': course.price1, 'price2': course.price2, 'num_to_word': {1: 'One', 2: 'Two', 3: 'Three',
                                                                               4: 'Four', 5: 'Five', 6: 'Six',
-                                                                              7: 'Seven', 8: 'Eight', 9: 'Nine'},
-            'expired': expiry_date
+                                                                              7: 'Seven', 8: 'Eight', 9: 'Nine'}
         }
+        expiry_time = kwargs.get('exp')
+        if expiry_time:
+            expiry_date = datetime.datetime.fromtimestamp(int(expiry_time), pytz.timezone("Asia/Calcutta")).strftime(
+                "%b %d, %Y %H:%M:%S")
+            value.update({'expired': expiry_date})

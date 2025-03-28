@@ -542,7 +542,7 @@
                             <div class="leaderboard-container my-4">
                                 <!-- Leaderboard List -->
                                 <div class="row">
-                                    <div class="col-8">
+                                    <div class="col-lg-8 col-md-8 col-sm-11">
                                         <div class="leaderboard-list">
                                             <h3>(March to February)</h3>
                                             <t t-if="leaderboard">
@@ -566,7 +566,7 @@
                                             </t>
                                         </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-lg-4 col-md-4 d-none d-md-block">
                                         <div class="user-stats">
                                             <t t-foreach="leaderboard[:3]" t-as="data">
                                                 <img src="/custom_web_kreator/static/src/user2.png" alt="User"/>

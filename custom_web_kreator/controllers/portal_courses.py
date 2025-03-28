@@ -3078,21 +3078,35 @@ class PortalMyCourses(http.Controller):
         else:
             raise NotFound()
 
-    @http.route('/partner/raise/query', type='http', auth='public', website=True, methods=['GET', 'POST'], csrf=False)
+    @http.route('/raise/query', type='http', auth='public', website=True, methods=['GET', 'POST'], csrf=False)
     def customer_support(self, **kwargs):
         user = request.env.user
         partner = user.partner_id  # Get related partner
-        # Check if the user is an Internal User or Creator
-        team_id = request.env['helpdesk.team'].sudo().search([('name', '=', 'Partner Support')], limit=1)
-        if not team_id:
-            team_id = request.env['helpdesk.team'].sudo().create({'name': 'Partner Support'})
         if partner.user_type in ['internal_user', 'partner']:
+            team_id = request.env['helpdesk.team'].sudo().search([('name', '=', 'Partner Support')], limit=1)
+            if not team_id:
+                team_id = request.env['helpdesk.team'].sudo().create({'name': 'Partner Support'})
             try:
                 query = kwargs.get('query')
                 support_ticket = request.env['helpdesk.ticket'].sudo().create({'name': 'test','description':
                     query, 'team_id': team_id.id, 'partner_id': partner.id, 'partner_phone': partner.mobile})
                 return request.make_response(
                     data=json.dumps({'response': "success", 'ticket_id': f' Partner Support {support_ticket.id}'}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=200
+                )
+            except Exception as ex:
+                raise NotFound()
+        if partner.user_type in ['internal_user', 'customer']:
+            team_id = request.env['helpdesk.team'].sudo().search([('name', '=', 'Customer Support')], limit=1)
+            if not team_id:
+                team_id = request.env['helpdesk.team'].sudo().create({'name': 'Customer Support'})
+            try:
+                query = kwargs.get('query')
+                support_ticket = request.env['helpdesk.ticket'].sudo().create({'name': 'test','description':
+                    query, 'team_id': team_id.id, 'partner_id': partner.id, 'partner_phone': partner.mobile})
+                return request.make_response(
+                    data=json.dumps({'response': "success", 'ticket_id': f'Customer Support {support_ticket.id}'}),
                     headers=[('Content-Type', 'application/json')],
                     status=200
                 )

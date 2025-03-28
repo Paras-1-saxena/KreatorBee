@@ -4,6 +4,7 @@ import { rpc } from "@web/core/network/rpc";
 
 const allOtpInputs = document.querySelectorAll('.otp-input')
 const signUpDiv = document.querySelector('#div_signup');
+const signUpDivDisable = document.querySelector('#div_signup_disable');
 const getOtpDiv = document.querySelector('#div_generate_otp');
 const otpDiv = document.querySelector('#div_otp');
 const signInDiv = document.querySelector('#o_signin_div');
@@ -99,6 +100,8 @@ publicWidget.registry.custSignup = publicWidget.Widget.extend({
                     otpVerifiedDiv.classList.add("o-cust-visible")
                     signUpDiv.classList.add("o-cust-visible")
                     otpDiv.style.display = 'none';
+                    signUpDivDisable.style.display = 'none';
+                    signUpDiv.removeAttribute('style');
                     // alert('OTP verified successfully!');
                     // is_otp_verify.checked = true;
 

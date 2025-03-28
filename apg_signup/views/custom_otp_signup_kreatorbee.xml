@@ -41,7 +41,7 @@
                                             </label>
                                             <div class="mb-2 field-name o-cust-div">
                                                 <input type="text" name="name" t-att-value="name" id="name"
-                                                       class="f14 o-cust-form-control" placeholder="e.g. John Doe"
+                                                       class="f14 o-cust-form-control" placeholder="Enter your Full Name"
                                                        required="required"
                                                        t-att-readonly="'readonly' if only_passwords else None"
                                                        t-att-autofocus="'autofocus' if login and not only_passwords else None"/>
@@ -54,7 +54,7 @@
                                             <div class="mb-2 field-login o-cust-div">
                                                 <input type="text" name="login" t-att-value="login" id="login"
                                                        class="f14 o-cust-form-control" autofocus="autofocus"
-                                                       required="required" autocapitalize="off"/>
+                                                       required="required" autocapitalize="off" placeholder="Enter your Email Address"/>
                                             </div>
                                         </div>
                                         <div class="user-phone">
@@ -102,7 +102,7 @@
                                                 <input type="text" name="phone" t-att-value="phone" id="phone"
                                                        class="f14 o-cust-form-control" style="width: 60%;"
                                                        maxlength="10" autofocus="autofocus" autocapitalize="off"
-                                                       required="required"
+                                                       required="required" placeholder="Enter your Phone Number"
                                                        t-att-readonly="'readonly' if only_passwords else None"/>
                                                 <div id="div_generate_otp"
                                                      class="d-flex justify-content-end o-cust-otp-button">
@@ -162,11 +162,18 @@
                                             </p>
                                         </div>
 
-                                        <div id="div_signup" class="o-cust-signup-button">
+                                        <div id="div_signup" class="o-cust-signup-button" style="display: none;">
                                             <div class="mb-2 o-cust-div" style="margin-top: 20px !important;">
                                                 <button type="submit" class="btn btn-primary"
                                                         id="submit_button _onSubmit_cus" style="width:100%;">Sign up
                                                 </button>
+                                            </div>
+                                        </div>
+                                        <div id="div_signup_disable" class="o-cust-signup-button" style="opacity: 0.7; pointer-events: none;">
+                                            <div class="mb-2 o-cust-div" style="margin-top: 20px !important;">
+                                                <a class="btn btn-primary"
+                                                        style="width:100%;">Sign up
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

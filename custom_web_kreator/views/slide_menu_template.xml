@@ -276,7 +276,7 @@
                 }
                 else {
                 try {
-                fetch('/partner/raise/query', {
+                fetch('/raise/query', {
                 method: "POST",
                 headers: {
                 "Content-Type": "application/json",

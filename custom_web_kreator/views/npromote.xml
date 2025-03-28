@@ -444,9 +444,9 @@
                             <div class="my-4">
                                 <h4>Promotional Material</h4>
                             </div>
-                            <div class="row">
+                            <div class="row justify-content-center">
                                 <t t-foreach="promotional_courses" t-as="course">
-                                    <div class="col-3 my-2">
+                                    <div class="col-10 col-md-3 my-2">
                                         <div class="card text-center p-3">
                                             <a>
                                                 <img t-att-src="image_data_uri(course.image_1920) if course.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'"

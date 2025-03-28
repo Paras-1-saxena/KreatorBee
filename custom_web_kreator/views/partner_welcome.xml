@@ -284,12 +284,6 @@
                                     </h1>
                                     <div class="d-flex gap-3 align-items-center">
                                         <a href="#"
-                                        >Tutorial
-                                            <img class="ms-1"
-                                                 src="/custom_web_kreator/static/src/play.png"
-                                            />
-                                        </a>
-                                        <a href="#"
                                         >
                                             <img
                                                     src="/custom_web_kreator/static/src/Whatsapp.png"/>

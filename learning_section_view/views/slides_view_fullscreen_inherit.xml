@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="slide_view_update" inherit_id="website_slides.slide_main">
+        <xpath expr="//t[@t-call='website.layout']/div[hasclass('o_wslides_wrap')]/t[@t-call='website.record_cover']/div[hasclass('o_wslides_lesson_header')]"
+               position="replace">
+            <div class="o_wslides_lesson_header position-relative pb-0 pt-2 pt-md-5">
+                <div class="row">
+                    <h4 class="fw-medium w-100 text-truncate overflow-hidden">
+                        <a t-att-href="'/slides/%s' % (slug(slide.channel_id))" class="text-white text-decoration-none"
+                           t-field="slide.channel_id.name"/>
+                    </h4>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//t[@t-call='website.layout']/div[hasclass('o_wslides_wrap')]/div[hasclass('o_wslides_lesson_main')]"
+               position="replace">
+            <div class="container o_wslides_lesson_main">
+                <div class="row">
+                    <t t-set="can_access_channel" t-value="slide.channel_id.is_member or slide.channel_id.can_publish"/>
+                    <div t-attf-class="o_wslides_lesson_content  col-lg-9 #{'order-1' if slide.channel_id.channel_type == 'documentation' else ''}">
+                        <t t-call="website_slides.slide_content_detailed"/>
+                    </div>
+                    <div t-attf-class="o_wslides_lesson_aside col-lg-3 #{'order-2' if slide.channel_id.channel_type == 'documentation' else ''}">
+                        <t t-if="slide.channel_id.channel_type == 'training'"
+                           t-call="website_slides.slide_aside_training"/>
+                        <t t-if="slide.channel_id.channel_type == 'documentation'"
+                           t-call="website_slides.slide_aside_documentation"/>
+                    </div>
+
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="slide_content_detailed_inherit" inherit_id="website_slides.slide_content_detailed">
+        <xpath expr="//div[hasclass('d-flex')]/div[hasclass('col-12')]/a[hasclass('o_wslides_share')]"
+               position="replace">
+        </xpath>
+    </template>
+
+    <template id="slide_fullscreen_inherit" inherit_id="website_slides.slide_fullscreen">
+        <xpath expr="//t[@t-call='website.layout']/div[hasclass('o_wslides_fs_main')]/div[hasclass('o_wslides_slide_fs_header')]/div[hasclass('d-flex')]/a[hasclass('o_wslides_fs_share')]"
+               position="replace">
+        </xpath>
+        <xpath expr="//t[@t-call='website.layout']/div[hasclass('o_wslides_fs_main')]/div[hasclass('o_wslides_slide_fs_header')]/div[hasclass('d-flex')]/a[hasclass('o_wslides_fs_exit_fullscreen')]"
+               position="replace">
+        </xpath>
+    </template>
+
+    <template id="course_join_inherit" inherit_id="website_slides.course_join">
+        <xpath expr="//div[hasclass('o_wslides_js_course_join')]/t[@t-elif='channel.is_member']/button[hasclass('o_wslides_js_channel_unsubscribe')]"
+               position="replace">
+        </xpath>
+    </template>
+</odoo>

@@ -185,8 +185,6 @@
                     border: 1px solid #ffd000;
 
                     }
-
-
                 </style>
                 <!-- Top Menu -->
                 <div class="top-menu">
@@ -204,9 +202,10 @@
                     <t t-call="custom_web_kreator.partner_profile_dropdown"/>
                 </div>
                 <!-- Side Menu -->
-                <div class="side-menu">
+                <div class="side-menu d-none d-md-block">
                     <div class="text-center my-4">
-                        <a href="/partner/income" class="text-center border1 p-2 rounded" style="background-color: #ffc107; text-decoration:none; color: black;">
+                        <a href="/partner/income" class="text-center border1 p-2 rounded"
+                           style="background-color: #ffc107; text-decoration:none; color: black;">
                             back to dashboard
                         </a>
                     </div>
@@ -214,7 +213,15 @@
                 <div class="main-content">
                     <div class="row">
                         <!-- Left Block: User Profile -->
-                        <div class="col-md-4">
+                        <div class="col-12 d-block d-md-none">
+                            <div class="text-center my-4">
+                                <a href="/partner/income" class="text-center border1 p-2 rounded"
+                                   style="background-color: #ffc107; text-decoration:none; color: black;">
+                                    back to dashboard
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
                             <div class="card text-center">
                                 <div class="card-body border1">
                                     <!-- Profile Image with Edit Icon -->
@@ -288,7 +295,7 @@
                         </script>
 
                         <!-- Right Block: Edit Profile Form -->
-                        <div class="col-md-8">
+                        <div class="col-12 col-md-8">
                             <div class="card">
                                 <div class="card-body border1">
                                     <h5>Edit Profile</h5>

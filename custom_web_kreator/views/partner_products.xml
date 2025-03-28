@@ -231,9 +231,12 @@
                                         Courses Listed
                                     </t>
                                     <t t-if="len(product_cart) == 0">
-                                        No Courses Added, Kindly choose a Product
+                                        <div style="margin-top: 5vh;">
+                                            No Courses Added, Kindly choose a Product
+                                        </div>
                                     </t>
                                 </h3>
+
                                 <!--                                <div class="d-flex align-items-center gap-4">-->
                                 <!--                                    &lt;!&ndash; search &ndash;&gt;-->
                                 <!--                                    <i class="ri-search-line ri-lg"></i>-->
@@ -248,6 +251,16 @@
                                 <!--                                    <i class="ri-sound-module-line ri-lg"></i>-->
                                 <!--                                </div>-->
                             </section>
+                            <t t-if="len(product_cart) == 0">
+                                <div class="row justify-content-around" style="margin-top: 10vh;">
+                                    <div class="col-6 col-md-3">
+                                        <a href="/partner/product" style="background-color:#fff5c6;"
+                                           class="shadow px-3 py-2 mb-5 rounded">
+                                            Choose Product
+                                        </a>
+                                    </div>
+                                </div>
+                            </t>
                             <!-- Products -->
                             <section class="row g-4">
                                 <t t-foreach="product_cart" t-as="cart">
