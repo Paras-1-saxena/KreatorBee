@@ -105,3 +105,4 @@ class KreatorWebsite(http.Controller):
             expiry_date = datetime.datetime.fromtimestamp(int(expiry_time), pytz.timezone("Asia/Calcutta")).strftime(
                 "%b %d, %Y %H:%M:%S")
             value.update({'expired': expiry_date})
+        return value

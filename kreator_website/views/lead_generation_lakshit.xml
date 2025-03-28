@@ -165,8 +165,8 @@
                                 <div class="add_to_cart_button my-2" hidden="hidden" id="cart2_hidden">
                                     <button style="font-style: italic; font-family: 'Times New Roman';
                                                box-shadow: 5px 5px black; width: 100%; max-width: 200px;"
-                                       class="bg-kreator-yellow-900 py-3 rounded-50"
-                                       onclick="openPop()">
+                                            class="bg-kreator-yellow-900 py-3 rounded-50"
+                                            onclick="openPop()">
                                         Enroll Now
                                     </button>
                                 </div>
@@ -376,7 +376,8 @@
                     </h3>
 
                     <div class="d-flex flex-column justify-content-center align-items-center">
-                        <div t-attf-class="accordion1 {{bg}} mt-4 p-1" id="sec_19_courseAccordion1" style="width: 100%;">
+                        <div t-attf-class="accordion1 {{bg}} mt-4 p-1" id="sec_19_courseAccordion1"
+                             style="width: 100%;">
                             <!-- Part 1 -->
                             <div class="space_gro sec_19_accordion-item1 px-5" id="sec_19_part1" style="width: 100%;">
                                 <h2 class="space_gro sec_19_accordion-header1 px-5" id="sec_19_headingOne"
@@ -602,7 +603,7 @@
                                 <div class="my-2" hidden="hidden" id="cart3_hidden">
                                     <button class="bg-kreator-yellow-900 border text-black fw-bold py-2 rounded-pill"
                                             style="width: 160px; font-size: 16px;"
-                                       onclick="openPop()">
+                                            onclick="openPop()">
                                         Enroll Now
                                     </button>
                                 </div>
@@ -856,7 +857,8 @@
                                     <t t-esc="price2"/>
                                     (Excl. Tax)
                                 </span>
-                                <div class="add_to_cart_button justify-content-center justify-content-md-start" id="cart4">
+                                <div class="add_to_cart_button justify-content-center justify-content-md-start"
+                                     id="cart4">
                                     <form action="/shop/cart/update" method="POST" class="w-100 w-md-75">
                                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                         <input type="hidden" name="product_template_id"
@@ -962,62 +964,64 @@
                 integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
                 crossorigin="anonymous"
         ></script>
-                <script>
-                    // Set the date we're counting down to
-                    const cart1 = document.getElementById("cart1");
-                    const cart2 = document.getElementById("cart2");
-                    const cart3 = document.getElementById("cart3");
-                    const cart1_hidden = document.getElementById("cart1_hidden");
-                    const cart2_hidden = document.getElementById("cart2_hidden");
-                    const cart3_hidden = document.getElementById("cart3_hidden");
-                    const cart4 = document.getElementById("cart4");
-                    const cart4_hidden = document.getElementById("cart4_hidden");
-                    const expire_date = document.getElementById("expired");
-                    var countDownDate = new Date(expire_date.value).getTime();
-                    let open_pop = document.getElementById("open_pop");
-                    let close = document.getElementById("popup1");
-                    function popclose() {
-                    console.log('test');
-                    close.style.display= 'none';
-                    }
-                    function openPop() {
-                    close.style.display = 'flex';
-                    }
+        <script>
+            // Set the date we're counting down to
+            const cart1 = document.getElementById("cart1");
+            const cart2 = document.getElementById("cart2");
+            const cart3 = document.getElementById("cart3");
+            const cart1_hidden = document.getElementById("cart1_hidden");
+            const cart2_hidden = document.getElementById("cart2_hidden");
+            const cart3_hidden = document.getElementById("cart3_hidden");
+            const cart4 = document.getElementById("cart4");
+            const cart4_hidden = document.getElementById("cart4_hidden");
+            const expire_date = document.getElementById("expired");
+            var countDownDate = new Date(expire_date.value).getTime();
+            let open_pop = document.getElementById("open_pop");
+            let close = document.getElementById("popup1");
+            function popclose() {
+            console.log('test');
+            close.style.display= 'none';
+            }
+            function openPop() {
+            close.style.display = 'flex';
+            }
+            if (expire_date.value) {
+            // Update the count down every 1 second
+            var x = setInterval(function() {
 
-                    // Update the count down every 1 second
-                    var x = setInterval(function() {
+            // Get today's date and time
+            var now = new Date().getTime();
 
-                    // Get today's date and time
-                    var now = new Date().getTime();
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
 
-                    // Find the distance between now and the count down date
-                    var distance = countDownDate - now;
+            // Time calculations for days, hours, minutes and seconds
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                    // Time calculations for days, hours, minutes and seconds
-                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // Display the result in the element with id="demo"
+            document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s " + "Left";
 
-                    // Display the result in the element with id="demo"
-                    document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s " + "Left";
+            // If the count down is finished, write some text
+            if (distance &lt; 30936){
+            document.getElementById("demo").classList.add("text-danger");
+            }
+            if (distance &lt; 0) {
+            clearInterval(x);
+            document.getElementById("demo").innerHTML = "LINK EXPIRED";
+            cart1.style.display = 'none';
+            cart1_hidden.removeAttribute("hidden");
+            cart2.style.display = 'none';
+            cart2_hidden.removeAttribute("hidden");
+            cart3.style.display = 'none';
+            cart3_hidden.removeAttribute("hidden");
+            cart4.style.display = 'none';
+            cart4_hidden.removeAttribute("hidden");
+            document.getElementById("demo").classList.remove('blink_me');
+            }
+            }, 1000);
+            }
 
-                    // If the count down is finished, write some text
-                    if (distance &lt; 30936){
-                    document.getElementById("demo").classList.add("text-danger");
-                    }
-                    if (distance &lt; 0) {
-                    clearInterval(x);
-                    document.getElementById("demo").innerHTML = "LINK EXPIRED";
-                    cart1.style.display = 'none';
-                    cart1_hidden.removeAttribute("hidden");
-                    cart2.style.display = 'none';
-                    cart2_hidden.removeAttribute("hidden");
-                    cart3.style.display = 'none';
-                    cart3_hidden.removeAttribute("hidden");
-                    cart4.style.display = 'none';
-                    cart4_hidden.removeAttribute("hidden");
-                    document.getElementById("demo").classList.remove('blink_me');
-                    }
-                    }, 1000);
-                </script>
+        </script>
     </template>
 </odoo>

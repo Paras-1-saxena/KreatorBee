@@ -199,7 +199,7 @@
             <div id="intro_video" class="p-4 container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-8">
-                            <t t-esc="intro_video"/>
+                        <t t-esc="intro_video"/>
                         <script src="https://player.vimeo.com/api/player.js"></script>
                     </div>
                 </div>
@@ -1174,7 +1174,7 @@
             function openPop() {
             close.style.display = 'flex';
             }
-
+            if (expire_date.value) {
             // Update the count down every 1 second
             var x = setInterval(function() {
 
@@ -1209,6 +1209,7 @@
             document.getElementById("demo").classList.remove('blink_me');
             }
             }, 1000);
+            }
         </script>
     </template>
 </odoo>

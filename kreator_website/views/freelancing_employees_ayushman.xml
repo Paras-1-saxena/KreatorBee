@@ -1086,7 +1086,7 @@
             function openPop() {
             close.style.display = 'flex';
             }
-
+            if (expire_date.value) {
             // Update the count down every 1 second
             var x = setInterval(function() {
 
@@ -1121,6 +1121,7 @@
             document.getElementById("demo").classList.remove('blink_me');
             }
             }, 1000);
+            }
         </script>
     </template>
 </odoo>
