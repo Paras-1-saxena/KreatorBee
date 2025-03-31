@@ -14,6 +14,10 @@
                     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
                     crossorigin="anonymous"/>
             <link rel="stylesheet" href="https://static.eu1.mindsphere.io/mdsp-css/v2.7.0/css/mdsp-css.min.css"/>
+            <link
+                    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+                    rel="stylesheet"
+            />
 
             <body>
                 <!-- Page-Specific Styles -->
@@ -195,7 +199,7 @@
                         </span>
                     </button>
                     <div class="logo">
-                        <img src="/custom_web_kreator/static/src/logo2.png" alt="Logo"/>
+                        <img src="/custom_web_kreator/static/src/logo.png" alt="Logo"/>
                     </div>
 
                     <!-- Use <img> tag for user icon -->
@@ -204,9 +208,9 @@
                 <!-- Side Menu -->
                 <div class="side-menu d-none d-md-block">
                     <div class="text-center my-4">
-                        <a href="/partner/income" class="text-center border1 p-2 rounded"
-                           style="background-color: #ffc107; text-decoration:none; color: black;">
-                            back to dashboard
+                        <a class="text-center border1 p-2 rounded" onclick="goBack()"
+                           style="background-color: #ffc107; text-decoration:none; color: black; cursor:pointer;">
+                            <i class="ri-arrow-left-line"></i>Back
                         </a>
                     </div>
                 </div>
@@ -215,9 +219,9 @@
                         <!-- Left Block: User Profile -->
                         <div class="col-12 d-block d-md-none">
                             <div class="text-center my-4">
-                                <a href="/partner/income" class="text-center border1 p-2 rounded"
-                                   style="background-color: #ffc107; text-decoration:none; color: black;">
-                                    back to dashboard
+                                <a class="text-center border1 p-2 rounded" onclick="goBack()"
+                                   style="background-color: #ffc107; text-decoration:none; color: black; cursor:pointer;">
+                                    <i class="ri-arrow-left-line"></i>Back
                                 </a>
                             </div>
                         </div>
@@ -260,6 +264,9 @@
 
                         </div>
                         <script>
+                            function goBack() {
+                            window.history.back();
+                            }
                             function previewImage(event) {
                             var reader = new FileReader();
                             reader.onload = function() {

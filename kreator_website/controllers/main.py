@@ -100,8 +100,9 @@ class KreatorWebsite(http.Controller):
                                                                               4: 'Four', 5: 'Five', 6: 'Six',
                                                                               7: 'Seven', 8: 'Eight', 9: 'Nine'}
         }
-        expiry_time = kwargs.get('exp')
+        expiry_time = kwargs.get('course_name')
         if expiry_time:
+            expiry_time = int(''.join([x for x in expiry_time[::3]]))
             expiry_date = datetime.datetime.fromtimestamp(int(expiry_time), pytz.timezone("Asia/Calcutta")).strftime(
                 "%b %d, %Y %H:%M:%S")
             value.update({'expired': expiry_date})

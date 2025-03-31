@@ -248,6 +248,11 @@
                                 </div>
                             </section>
                             <!-- product filter -->
+                            <div class="my-4 text-center d-block d-md-none">
+                                <span class="fs-4">
+                                    <b>Term &amp; Conditions</b>
+                                </span>
+                            </div>
                             <div class="content-containter my-4">
                                 <!-- Progress Bar -->
                                 <!-- Form Section -->
@@ -311,7 +316,7 @@
                                             </ul>
                                         </p>
                                     </div>
-                                    <div class="image-container">
+                                    <div class="image-container d-none d-md-flex">
                                         <img src="/custom_web_kreator/static/src/Term-Condition.png"
                                              alt="Term Condition Image"/>
                                     </div>

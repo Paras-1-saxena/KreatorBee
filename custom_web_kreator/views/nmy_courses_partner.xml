@@ -411,6 +411,12 @@
                                         </div>
                                     </div>
                                 </t>
+                                <t t-if="not courses">
+                                    <div class="my-4">
+                                        <img src="/custom_web_kreator/static/src/coming-soon.png"
+                                             style="width:100%; height:auto;"/>
+                                    </div>
+                                </t>
                             </div>
                         </main>
                     </div>

@@ -41,11 +41,11 @@
             </a>
             <div id="popup1" class="popup">
                 <div class="popup-content">
-                    <h2>Link Expired</h2>
+                    <h2 id="pop_title">Link Expired</h2>
 
                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                     <div class="mb-4">
-                        <span>
+                        <span id="pop_text">
                             The link you are using is expired now. Please connect with your Bee Partner to get a new
                             link.
                         </span>
@@ -1002,6 +1002,18 @@
             }
             function openPop() {
             close.style.display = 'flex';
+            }
+            if (expire_date.value == '') {
+            document.getElementById("pop_title").innerHTML = 'Referral Link Not Generated';
+            document.getElementById("pop_text").innerHTML = 'To Earn Commission, Generate the Referral Link <br/> and share it with Customer';
+            cart1.style.display = 'none';
+            cart1_hidden.removeAttribute("hidden");
+            cart2.style.display = 'none';
+            cart2_hidden.removeAttribute("hidden");
+            cart3.style.display = 'none';
+            cart3_hidden.removeAttribute("hidden");
+            cart4.style.display = 'none';
+            cart4_hidden.removeAttribute("hidden");
             }
             if (expire_date.value) {
             // Update the count down every 1 second

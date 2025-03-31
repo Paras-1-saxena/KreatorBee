@@ -458,45 +458,49 @@
                                 </div>
                             </section>
                             <!-- Lead Details -->
-                            <div class="target-container row pt-0 my-4">
-                                <t t-if="targets">
-                                    <t t-foreach="targets" t-as="target">
-                                        <!-- First Block -->
-                                        <div class="col-md-3 mt-3">
-                                            <h2>
-                                                <t t-esc="target['name']"/>
-                                            </h2>
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <span>Achieve this milestone for</span>
-                                                    <img src="/custom_web_kreator/static/src/bees2.png"
-                                                         alt="Mega Star Award"/>
-                                                </div>
-                                                <div class="card-progress">
-                                                    <div class="progress-bar">
-                                                        <div class="progress"></div>
-                                                    </div>
-                                                    <span class="progress-text">
-                                                        <span t-field="currency_id.symbol"/>
-                                                        <t t-esc="'%.2f'% target['achievement_amount']"/>
-                                                        /
-                                                        <span t-field="currency_id.symbol"/>
-                                                        <t t-esc="'%.2f'% target['target_amount']"/>
-                                                    </span>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <a href="#" class="know-more">Know More ></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </t>
-                                </t>
-                                <t t-else="">
-                                    <div class="text-center">
-                                        <h3>No Targets Found</h3>
-                                    </div>
-                                </t>
+                            <div class="my-4">
+                                <img src="/custom_web_kreator/static/src/no_data.svg" style="width:100%; height:auto;"/>
                             </div>
+
+<!--                            <div class="target-container row pt-0 my-4">-->
+<!--                                <t t-if="targets">-->
+<!--                                    <t t-foreach="targets" t-as="target">-->
+<!--                                        &lt;!&ndash; First Block &ndash;&gt;-->
+<!--                                        <div class="col-md-3 mt-3">-->
+<!--                                            <h2>-->
+<!--                                                <t t-esc="target['name']"/>-->
+<!--                                            </h2>-->
+<!--                                            <div class="card">-->
+<!--                                                <div class="card-header">-->
+<!--                                                    <span>Achieve this milestone for</span>-->
+<!--                                                    <img src="/custom_web_kreator/static/src/bees2.png"-->
+<!--                                                         alt="Mega Star Award"/>-->
+<!--                                                </div>-->
+<!--                                                <div class="card-progress">-->
+<!--                                                    <div class="progress-bar">-->
+<!--                                                        <div class="progress"></div>-->
+<!--                                                    </div>-->
+<!--                                                    <span class="progress-text">-->
+<!--                                                        <span t-field="currency_id.symbol"/>-->
+<!--                                                        <t t-esc="'%.2f'% target['achievement_amount']"/>-->
+<!--                                                        /-->
+<!--                                                        <span t-field="currency_id.symbol"/>-->
+<!--                                                        <t t-esc="'%.2f'% target['target_amount']"/>-->
+<!--                                                    </span>-->
+<!--                                                </div>-->
+<!--                                                <div class="card-footer">-->
+<!--                                                    <a href="#" class="know-more">Know More ></a>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </t>-->
+<!--                                </t>-->
+<!--                                <t t-else="">-->
+<!--                                    <div class="text-center">-->
+<!--                                        <h3>No Targets Found</h3>-->
+<!--                                    </div>-->
+<!--                                </t>-->
+<!--                            </div>-->
                         </main>
                     </div>
 

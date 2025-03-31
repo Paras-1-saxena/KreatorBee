@@ -220,8 +220,8 @@
                                 <t t-foreach="courses" t-as="course">
                                     <div class="col-lg-6 col-12">
                                         <div class="product d-flex">
-                                            <div class="product-img">
-                                                <a t-att-href="'/landing_page?course_id=%s' % course.id">
+                                            <div class="col-5">
+                                                <a>
                                                     <img
                                                             t-att-src="image_data_uri(course.image_1920) if course.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'"
                                                             alt="Course Image" class="rounded"
@@ -229,22 +229,25 @@
                                                 </a>
                                             </div>
                                             <div class="p-3 row">
-                                                <t t-esc="course.name"/>
+                                                <p class="fs-3">
+                                                    <t t-esc="course.name"/>
+                                                </p>
+
                                                 <div class="d-flex gap-4 align-items-center">
                                                     <p>By
                                                         <t t-esc="course.user_id.name"/>
                                                     </p>
-                                                    <p>
-                                                        <i class="ri-star-fill"></i>
-                                                        <i class="ri-star-fill"></i>
-                                                        <i class="ri-star-fill"></i>
-                                                        <i class="ri-star-fill"></i>
-                                                        <i class="ri-star-fill"></i>
-                                                        <span>5.0</span>
-                                                    </p>
+                                                    <!--                                                    <p>-->
+                                                    <!--                                                        <i class="ri-star-fill"></i>-->
+                                                    <!--                                                        <i class="ri-star-fill"></i>-->
+                                                    <!--                                                        <i class="ri-star-fill"></i>-->
+                                                    <!--                                                        <i class="ri-star-fill"></i>-->
+                                                    <!--                                                        <i class="ri-star-fill"></i>-->
+                                                    <!--                                                        <span>5.0</span>-->
+                                                    <!--                                                    </p>-->
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-6">
+                                                    <div class="col-12 col-md-6">
                                                         <a t-att-href="'/partner/product-detail?course_id=%s' % course.id">
                                                             <button class="btn1"
                                                                     style="width: 100%; height: auto; font-size: 12px;">
@@ -252,7 +255,7 @@
                                                             </button>
                                                         </a>
                                                     </div>
-                                                    <div class="col-6">
+                                                    <div class="col-12 col-md-6 my-2 my-md-0">
                                                         <t t-if="course.id in added_course_ids">
                                                             <button class="btn1"
                                                                     style="width: 100%; height: auto; opacity: 0.5; cursor: not-allowed; font-size: 12px;"
@@ -276,9 +279,10 @@
                                                     </div>
                                                 </div>
                                                 <t t-if="course.id in added_course_ids">
-                                                    <div class="row justify-content-end">
-                                                        <div class="col-lg-5 col-md-5 col-sm-12" style="font-size: 13px;">
-                                                            Course Added to My Product
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-12 col-md-6"
+                                                             style="font-size: 13px;">
+                                                            <b>Course Added to My Product</b>
                                                         </div>
                                                     </div>
                                                 </t>

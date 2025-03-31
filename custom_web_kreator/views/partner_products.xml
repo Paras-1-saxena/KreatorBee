@@ -284,19 +284,19 @@
                                                     </a>
                                                 </div>
                                                 <div class="product-details p-3">
-                                                    <t t-esc="cart.name"/>
+                                                    <p class="fs-3"><t t-esc="cart.name"/></p>
                                                     <div class="d-flex gap-4 align-items-center">
                                                         <p>By
                                                             <t t-esc="cart.user_id.name"/>
                                                         </p>
-                                                        <p>
-                                                            <i class="ri-star-fill"></i>
-                                                            <i class="ri-star-fill"></i>
-                                                            <i class="ri-star-fill"></i>
-                                                            <i class="ri-star-fill"></i>
-                                                            <i class="ri-star-fill"></i>
-                                                            <span>5.0</span>
-                                                        </p>
+<!--                                                        <p>-->
+<!--                                                            <i class="ri-star-fill"></i>-->
+<!--                                                            <i class="ri-star-fill"></i>-->
+<!--                                                            <i class="ri-star-fill"></i>-->
+<!--                                                            <i class="ri-star-fill"></i>-->
+<!--                                                            <i class="ri-star-fill"></i>-->
+<!--                                                            <span>5.0</span>-->
+<!--                                                        </p>-->
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-6">
@@ -307,12 +307,12 @@
                                                             <t t-esc="currency_id.name"/>
                                                             <t t-esc="cart.partner_commission"/>
                                                         </div>
-                                                        <div class="col-6 my-2">
+                                                        <div class="col-12 col-md-6 my-2">
                                                             <button class="btn1 mt-3">
                                                                 Remove
                                                             </button>
                                                         </div>
-                                                        <div class="col-6 my-4">
+                                                        <div class="col-12 col-md-6 my-4">
                                                             <a type="button" href="/partner-referral"
                                                                class="o-cust-referral-link" style=" background-color:
                     #ffd000; color: #212529; font-family: 'Poppins', sans-serif; border: none; border-radius: 25px;

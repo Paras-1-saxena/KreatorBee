@@ -260,14 +260,19 @@
                             <!-- product filter -->
                             <div class="row justify-content-center my-4 bg-white border1 p-2 rounded">
                                 <div class="col-12 text-center mt-3">
-                                    <h5>Watch &amp; Learn</h5>
+                                    <h4>Watch &amp; Learn</h4>
                                 </div>
 
 
                                 <!-- Video Section -->
 
-                                <div class="col-md-12" style="position: relative; height: 70vh; width: 70vh;">
-                                        <t t-esc="iframe"/>
+                                <div id="intro_video" class="p-4 container-fluid">
+                                    <div class="row justify-content-center">
+                                        <div class="col-8">
+                                            <t t-esc="iframe"/>
+                                            <script src="https://player.vimeo.com/api/player.js"></script>
+                                        </div>
+                                    </div>
                                 </div>
 
 

@@ -493,9 +493,11 @@ class PortalMyCourses(http.Controller):
                 ('partner_commission_partner_id', '=', partner.id),
                 ('create_date', '>=', filter_date)
             ])
-            courses_data = {pid.name: sum([pamount.partner_commission_amount for pamount in order_lines.filtered(lambda ol: ol.product_id.id == pid.id)]) for pid in order_lines.product_id}
+            courses_data = {pid.name: sum([pamount.partner_commission_amount for pamount in
+                                           order_lines.filtered(lambda ol: ol.product_id.id == pid.id)]) for pid in
+                            order_lines.product_id}
             sorted_courses = {k: v for k, v in sorted(courses_data.items(), key=lambda item: item[1], reverse=True)}
-            labels =  list(sorted_courses.keys())[:5]
+            labels = list(sorted_courses.keys())[:5]
             data = list(sorted_courses.values())[:5]
             label_color = {0: 'electro', 1: 'clo', 2: 'foo', 3: 'boo', 4: 'oth'}
             xml_label = []
@@ -503,9 +505,11 @@ class PortalMyCourses(http.Controller):
                 xml_label.append(f'<li><i class="ri-circle-fill pe-1 {label_color.get(lid)}"></i>{label}</li>')
             xml_label = Markup(''.join(xml_label))
             courses_data_state = {pid.name: sum([pamount.partner_commission_amount for pamount in
-                                           order_lines.filtered(lambda ol: ol.order_partner_id.state_id.id == pid.id)]) for pid in
-                            order_lines.order_partner_id.state_id}
-            sorted_courses_state = {k: v for k, v in sorted(courses_data_state.items(), key=lambda item: item[1], reverse=True)}
+                                                 order_lines.filtered(
+                                                     lambda ol: ol.order_partner_id.state_id.id == pid.id)]) for pid in
+                                  order_lines.order_partner_id.state_id}
+            sorted_courses_state = {k: v for k, v in
+                                    sorted(courses_data_state.items(), key=lambda item: item[1], reverse=True)}
             labels_state = list(sorted_courses_state.keys())[:5]
             data_state = list(sorted_courses_state.values())[:5]
             xml_label_state = []
@@ -532,7 +536,8 @@ class PortalMyCourses(http.Controller):
         else:
             raise NotFound()
 
-    @http.route('/partner/income/course-wise-earning', type='http', auth='public', website=True, methods=['GET', 'POST'], csrf=False)
+    @http.route('/partner/income/course-wise-earning', type='http', auth='public', website=True,
+                methods=['GET', 'POST'], csrf=False)
     def partner_course_earning(self, **kwargs):
         user = request.env.user
         partner = user.partner_id  # Get related partner
@@ -573,7 +578,7 @@ class PortalMyCourses(http.Controller):
             # }
             # Render the data page template
             values = {'labels': ['Video Editing', 'Lead Generation', 'Freelancing', 'Freelancing (Gen Z)',
-                     'Freelancing (Employees)'], 'data': [35, 25, 20, 15, 5]}
+                                 'Freelancing (Employees)'], 'data': [35, 25, 20, 15, 5]}
             return request.make_response(
                 data=json.dumps({'response': "success", 'values': values}),
                 headers=[('Content-Type', 'application/json')],
@@ -1677,7 +1682,7 @@ class PortalMyCourses(http.Controller):
         # Check if the user is an Internal User or Creator
         if partner.user_type in ['internal_user', 'partner']:
             search_query = kwargs.get('name', '').strip()  # Get search query from URL
-            domain = [('program_type', '=', 'promo_code')]  # Base domain to filter Discount coupons
+            domain = [('program_type', '=', 'promo_code'), ('date_to', '>=', date.today())]  # Base domain to filter Discount coupons
             selected_coupon_id = kwargs.get('coupon_id')  # Get selected coupon ID from reques
             # If a specific course is selected, show only that course
 
@@ -2843,7 +2848,8 @@ class PortalMyCourses(http.Controller):
             return request.not_found()
         open_links = {}
         for material in course.promotional_material_ids:
-            open_links.update({material.id: Markup(f'<a href="/partner/promotional-material/consume?course_id={course.id}&amp;material_id={material.id}"class="btn btn-warning mt-3 mb-1">Open Link</a>')})
+            open_links.update({material.id: Markup(
+                f'<a href="/partner/promotional-material/consume?course_id={course.id}&amp;material_id={material.id}"class="btn btn-warning mt-3 mb-1">Open Link</a>')})
 
         return request.render('custom_web_kreator.promotional_detail', {
             'course': course,
@@ -3060,7 +3066,8 @@ class PortalMyCourses(http.Controller):
         else:
             raise NotFound()
 
-    @http.route('/partner/promotional-material/consume', type='http', auth='public', website=True, methods=['GET', 'POST'])
+    @http.route('/partner/promotional-material/consume', type='http', auth='public', website=True,
+                methods=['GET', 'POST'])
     def promotional_consume(self, **kwargs):
         user = request.env.user
         partner = user.partner_id  # Get related partner
@@ -3073,8 +3080,10 @@ class PortalMyCourses(http.Controller):
                 if not course_id or not material_id:
                     raise NotFound()
                 course = request.env['slide.channel'].sudo().search([('id', '=', int(course_id))], limit=1)
-                promote_url = Markup(course.promotional_material_ids.filtered(lambda pm: pm.id == material_id).promotional_url)
-                back = Markup(f'<a href="/partner/promotional-material/details?course_id={course_id}" class="border1 rounded p-2" style="background-color:#ffc107;">Back<i class="ri-arrow-left-fill"></i></a>')
+                promote_url = Markup(
+                    course.promotional_material_ids.filtered(lambda pm: pm.id == material_id).promotional_url)
+                back = Markup(
+                    f'<a href="/partner/promotional-material/details?course_id={course_id}" class="border1 rounded p-2" style="background-color:#ffc107;">Back<i class="ri-arrow-left-fill"></i></a>')
                 values = {
                     'course_id': course_id,
                     'course_name': course.name,
@@ -3097,7 +3106,7 @@ class PortalMyCourses(http.Controller):
                 team_id = request.env['helpdesk.team'].sudo().create({'name': 'Partner Support'})
             try:
                 query = kwargs.get('query')
-                support_ticket = request.env['helpdesk.ticket'].sudo().create({'name': 'test','description':
+                support_ticket = request.env['helpdesk.ticket'].sudo().create({'name': 'test', 'description':
                     query, 'team_id': team_id.id, 'partner_id': partner.id, 'partner_phone': partner.mobile})
                 return request.make_response(
                     data=json.dumps({'response': "success", 'ticket_id': f' Partner Support {support_ticket.id}'}),
@@ -3112,10 +3121,52 @@ class PortalMyCourses(http.Controller):
                 team_id = request.env['helpdesk.team'].sudo().create({'name': 'Customer Support'})
             try:
                 query = kwargs.get('query')
-                support_ticket = request.env['helpdesk.ticket'].sudo().create({'name': 'test','description':
+                support_ticket = request.env['helpdesk.ticket'].sudo().create({'name': 'test', 'description':
                     query, 'team_id': team_id.id, 'partner_id': partner.id, 'partner_phone': partner.mobile})
                 return request.make_response(
                     data=json.dumps({'response': "success", 'ticket_id': f'Customer Support {support_ticket.id}'}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=200
+                )
+            except Exception as ex:
+                raise NotFound()
+        else:
+            raise NotFound()
+
+    @http.route('/partner/training/video', type='http', auth='user', website=True, methods=['GET', 'POST'], csrf=False)
+    def partner_training_video(self, **kwargs):
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
+        if partner.user_type in ['internal_user', 'partner']:
+            try:
+                ved_no = kwargs.get('video_no')
+                if int(ved_no) == 1:
+                    video_data = Markup('''
+                    <iframe src="https://player.vimeo.com/video/1068061920?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh; title="PART 1"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
+                    ''')
+                    next_vid = Markup('''
+                    <a onclick="openVideo(2)" class="border1 rounded p-2" style="background-color:#ffc107; cursor:pointer;">
+                                        Next
+                                        <i class="ri-arrow-right-line"></i>
+                                    </a>
+                    ''')
+                if int(ved_no) == 2:
+                    video_data = Markup('''
+                    <iframe src="https://player.vimeo.com/video/1068093187?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh; title="PART 2"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
+                    ''')
+                    next_vid = Markup('''
+                                        <a onclick="openVideo(3)" class="border1 rounded p-2" style="background-color:#ffc107; cursor:pointer;">
+                                                            Next
+                                                            <i class="ri-arrow-right-line"></i>
+                                                        </a>
+                                        ''')
+                if int(ved_no) == 3:
+                    video_data = Markup('''
+                    <iframe src="https://player.vimeo.com/video/1068087104?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh; title="PART 3"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
+                    ''')
+                    next_vid = ''
+                return request.make_response(
+                    data=json.dumps({'response': "success", 'video_data': video_data, 'next_but': next_vid}),
                     headers=[('Content-Type', 'application/json')],
                     status=200
                 )
@@ -3134,22 +3185,25 @@ class PortalMyCourses(http.Controller):
         # Render the data page template
         return http.request.render('custom_web_kreator.partner_master')
 
-    @http.route('/partner-video1', type='http', auth='public', website=True)
+    @http.route('/partner-video1', type='http', auth='user', website=True)
     def partner_video_one(self, **kwargs):
         # Render the data page template
-        iframe = Markup('<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1068061920?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="PART 1"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>')
+        iframe = Markup(
+            '<iframe src="https://player.vimeo.com/video/1068061920?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh; title="PART 1"></iframe>')
         return http.request.render('custom_web_kreator.partner_video1', {'iframe': iframe})
 
-    @http.route('/partner-video2', type='http', auth='public', website=True)
+    @http.route('/partner-video2', type='http', auth='user', website=True)
     def partner_video_two(self, **kwargs):
         # Render the data page template
-        iframe = Markup('<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1068093187?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="PART 2"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>')
+        iframe = Markup(
+            '<iframe src="https://player.vimeo.com/video/1068093187?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh; title="PART 2"></iframe>')
         return http.request.render('custom_web_kreator.partner_video2', {'iframe': iframe})
 
-    @http.route('/partner-video3', type='http', auth='public', website=True)
+    @http.route('/partner-video3', type='http', auth='user', website=True)
     def partner_video_three(self, **kwargs):
         # Render the data page template
-        iframe = Markup('<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1068087104?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="PART 3"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>')
+        iframe = Markup(
+            '<iframe src="https://player.vimeo.com/video/1068087104?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh; title="PART 3"></iframe>')
         return http.request.render('custom_web_kreator.partner_video3', {'iframe': iframe})
 
     @http.route('/partner-term', type='http', auth='public', website=True)
@@ -3193,16 +3247,17 @@ class PortalMyCourses(http.Controller):
 
 class WebsiteFormCustom(WebsiteForm):  # Correct inheritance
     # Check and insert values from the form on the model <model>
-    @http.route('/website/form/<string:model_name>', type='http', auth="public", methods=['POST'], website=True, csrf=False)
+    @http.route('/website/form/<string:model_name>', type='http', auth="public", methods=['POST'], website=True,
+                csrf=False)
     def website_form(self, model_name, **kwargs):
-        response =  super().website_form(model_name, **kwargs)
+        response = super().website_form(model_name, **kwargs)
         if kwargs.get('landing_info') == 'Landing Page Info':
             crm = self.create_crm(**kwargs)
         return response
 
-
     def create_crm(self, **kwargs):
-        model_record = request.env['ir.model'].sudo().search([('model', '=', 'crm.lead'), ('website_form_access', '=', True)])
+        model_record = request.env['ir.model'].sudo().search(
+            [('model', '=', 'crm.lead'), ('website_form_access', '=', True)])
         if not model_record:
             return json.dumps({
                 'error': _("The form's specified model does not exist")
@@ -3231,7 +3286,8 @@ class WebsiteFormCustom(WebsiteForm):  # Correct inheritance
     def insert_record_crm(self, request, model, values, custom, meta=None):
         model_name = model.sudo().model
         if model_name == 'mail.mail':
-            email_from = _('"%(company)s form submission" <%(email)s>', company=request.env.company.name, email=request.env.company.email)
+            email_from = _('"%(company)s form submission" <%(email)s>', company=request.env.company.name,
+                           email=request.env.company.email)
             values.update({'reply_to': values.get('email_from'), 'email_from': email_from})
         record = request.env[model_name].with_user(SUPERUSER_ID).with_context(
             mail_create_nosubscribe=True,
@@ -3244,8 +3300,8 @@ class WebsiteFormCustom(WebsiteForm):  # Correct inheritance
             default_field = model.website_form_default_field_id
             default_field_data = values.get(default_field.name, '')
             custom_content = (default_field_data + "\n\n" if default_field_data else '') \
-                + (_custom_label + custom + "\n\n" if custom else '') \
-                + (self._meta_label + "\n________\n\n" + meta if meta else '')
+                             + (_custom_label + custom + "\n\n" if custom else '') \
+                             + (self._meta_label + "\n________\n\n" + meta if meta else '')
 
             # If there is a default field configured for this model, use it.
             # If there isn't, put the custom data in a message instead

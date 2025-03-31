@@ -290,7 +290,6 @@
                     query_close.click();
                     response_id.innerHTML = data['ticket_id'];
                     open_pop.click();
-                    console.log(data['ticket_id']);
                 } else {
                 alert('Error');
                 }

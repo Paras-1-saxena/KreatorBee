@@ -20,6 +20,8 @@ import odoo.exceptions
 from odoo.exceptions import AccessError
 from odoo.service import security 
 from odoo.tools.translate import _
+import random
+import string
 
 class ReferralController(http.Controller):
     @http.route('/creator/referral', type='http', auth='public', website=True)
@@ -344,7 +346,9 @@ class ReferralController(http.Controller):
                 'course_id': int(course_id),
                 'partner_id': int(partner_id)
             }
-            course_url = f"{course_url}&exp={expiry_time}"
+            encrypt_expiry = [f'{x}{''.join(random.choices(string.ascii_letters + string.digits, k=2))}' for x in str(expiry_time)]
+            encrypt_expiry = ''.join(encrypt_expiry)
+            course_url = f"{course_url}&course_name={encrypt_expiry}"
             return request.redirect(course_url)
         except Exception as e:
             return "Invalid or expired referral link."

@@ -124,7 +124,7 @@
 
                     .curve-second {
                     top: 30%;
-                    right: -12%;
+                    right: -10%;
                     }
 
 
@@ -566,21 +566,21 @@
                                     class="d-flex flex-column gap-3 justify-content-center align-items-center my-5 search-offers"
                             >
                                 <!-- Select -->
-                                <select>
-                                    <option>TODAY'S OFFERS</option>
-                                    <option>UPCOMING OFFERS</option>
-                                </select>
-                                <!-- Search  -->
-                                <div
-                                        class="search-input d-flex justify-content-between align-items-center"
-                                >
-                                    <input
-                                            class="w-100"
-                                            type="text"
-                                            placeholder="Search for the Coupon"
-                                    />
-                                    <i class="ri-search-line"></i>
-                                </div>
+<!--                                <select>-->
+<!--                                    <option>TODAY'S OFFERS</option>-->
+<!--                                    <option>UPCOMING OFFERS</option>-->
+<!--                                </select>-->
+<!--                                &lt;!&ndash; Search  &ndash;&gt;-->
+<!--                                <div-->
+<!--                                        class="search-input d-flex justify-content-between align-items-center"-->
+<!--                                >-->
+<!--                                    <input-->
+<!--                                            class="w-100"-->
+<!--                                            type="text"-->
+<!--                                            placeholder="Search for the Coupon"-->
+<!--                                    />-->
+<!--                                    <i class="ri-search-line"></i>-->
+<!--                                </div>-->
                             </section>
                             <!-- Coupons Section -->
                             <section class="coupons mx-lg-4">
@@ -626,7 +626,7 @@
                                                 <div
                                                         class="curve-second d-flex align-items-center justify-content-left"
                                                 >
-                                                    <i class="ri-file-copy-line ri-lg ps-2"></i>
+                                                    <a><i class="ri-file-copy-line ri-lg ps-2"></i></a>
                                                 </div>
                                             </div>
                                         </div>
