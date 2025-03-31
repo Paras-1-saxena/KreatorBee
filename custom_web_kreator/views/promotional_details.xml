@@ -442,7 +442,7 @@
                             </section>
                             <!-- Lead Details -->
                             <div class="row my-4">
-                                <div class="col-1 text-center">
+                                <div class="col-5 col-md-2 text-center">
                                     <a href="/partner/promotional-material" class="border1 rounded p-2" style="background-color:#ffc107;">
                                         Back
                                         <i class="ri-arrow-left-fill"></i>

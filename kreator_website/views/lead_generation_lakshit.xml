@@ -59,21 +59,21 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between bg-black" style="position: fixed; width: 100%; z-index: 1;">
-                <div class="col-lg-3 col-md-3 col-sm-12">
+            <div class="row justify-content-between bg-black" style="position: fixed; width: 100vw; z-index: 1;">
+                <div class="col-10 col-md-3">
                     <p class="py-4 px-4 fs-4" style="color: #FFCD00;">
                         <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
                         <b>Lead Generation</b>
                     </p>
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-12">
+                <div class="col-3 col-md-2">
                     <p id="demo" class="fs-4 my-4 blink_me">
 
                     </p>
                 </div>
-                <div class="col-5">
+                <div class="col-12 col-md-5">
                     <div class="row justify-content-end">
-                        <div class="col-lg-6 col-md-6 col-sm-12 my-4 fs-4">
+                        <div class="col-8 col-md-6 my-4 fs-4">
                             INR
                             <span class="text-decoration-line-through">
                                 <t t-esc="price1"/>
@@ -82,7 +82,7 @@
                             <t t-esc="price2"/>
                             (Excl. Tax)
                         </div>
-                        <div class="col-3">
+                        <div class="col-6 col-md-3">
                             <div class="add_to_cart_button my-2" id="cart1">
                                 <form action="/shop/cart/update" method="POST">
                                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
@@ -105,21 +105,21 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between bg-black" style="width: 100%;">
-                <div class="col-3">
+            <div class="row justify-content-between bg-black" style="width: 100vw;">
+                <div class="col-10 col-md-3">
                     <p class="py-4 px-4 fs-4" style="color: #FFCD00;">
                         <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
-                        <b>Lead generation</b>
+                        <b>Lead Generation</b>
                     </p>
                 </div>
-                <div class="col-2">
+                <div class="col-3 col-md-2">
                     <p id="demo" class="fs-4 my-4 blink_me">
 
                     </p>
                 </div>
-                <div class="col-5">
+                <div class="col-12 col-md-5">
                     <div class="row justify-content-end">
-                        <div class="col-6 my-4 fs-4">
+                        <div class="col-8 col-md-6 my-4 fs-4">
                             INR
                             <span class="text-decoration-line-through">
                                 <t t-esc="price1"/>
@@ -128,7 +128,25 @@
                             <t t-esc="price2"/>
                             (Excl. Tax)
                         </div>
-                        <div class="col-3">
+                        <div class="col-6 col-md-3">
+                            <div class="add_to_cart_button my-2" id="cart1">
+                                <form action="/shop/cart/update" method="POST">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                    <button type="submit"
+                                            class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3">
+                                        Enroll Now
+                                    </button>
+                                    <div id="product_option_block"></div>
+                                </form>
+                            </div>
+                            <div class="add_to_cart_button my-2" hidden="hidden" id="cart1_hidden">
+                                <a class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3"
+                                   onclick="openPop()">
+                                    Enroll Now
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

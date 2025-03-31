@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import http
+from odoo import http, tools, _
 from odoo.http import request
 import base64
 from itertools import groupby
@@ -10,6 +10,12 @@ from werkzeug.exceptions import NotFound
 from odoo.addons.website.controllers.main import QueryURL
 from odoo.http import content_disposition
 from markupsafe import Markup
+from psycopg2 import IntegrityError
+from odoo import http, SUPERUSER_ID
+from odoo.addons.website.controllers.form import WebsiteForm
+from odoo.addons.base.models.ir_qweb_fields import nl2br, nl2br_enclose
+from odoo.exceptions import ValidationError
+
 
 class PortalMyCourses(http.Controller):
 
@@ -1044,6 +1050,21 @@ class PortalMyCourses(http.Controller):
 
             # Check the agreement value
             agreement = kwargs.get('agreement')
+            # Get the logged-in user
+            current_user = request.env.user
+            # Get the partner record associated with the current user
+            partner = current_user.partner_id
+
+            published_courses = request.env['slide.channel'].sudo().search([
+                ('create_uid', '=', current_user.id),
+                ('state', '=', 'published')
+            ])
+            course_count = request.env['slide.channel'].sudo().search([
+                ('create_uid', '=', current_user.id),
+                ('state', 'in', ['draft', 'course_preview', 'published'])  # Filter for draft and under review
+            ])
+            approve_course_count = True if published_courses else False
+            course_count = True if course_count else False
 
             if agreement == 'agree':
                 # Create a record in slide.channel
@@ -1082,7 +1103,9 @@ class PortalMyCourses(http.Controller):
                     )
 
                 return request.render('custom_web_kreator.master_welcome',
-                                      {'course_data': course_data, 'agreement': agreement})
+                                      {'course_data': course_data, 'agreement': agreement,
+                                       'approve_course_count': approve_course_count,
+                                       'course_count': course_count, })
             elif agreement == 'disagree':
                 # Create a record in crm.lead
                 CrmLead = request.env['crm.lead']
@@ -1103,23 +1126,9 @@ class PortalMyCourses(http.Controller):
                     template.sudo().with_context(ctx=ctx).send_mail(user.id, force_send=True)  # Pass context as ctx
 
                 return request.render('custom_web_kreator.master_welcome',
-                                      {'course_data': course_data, 'agreement': agreement})
-
-            # Get the logged-in user
-            current_user = request.env.user
-            # Get the partner record associated with the current user
-            partner = current_user.partner_id
-
-            published_courses = request.env['slide.channel'].sudo().search([
-                ('create_uid', '=', current_user.id),
-                ('state', '=', 'published')
-            ])
-            course_count = request.env['slide.channel'].sudo().search([
-                ('create_uid', '=', current_user.id),
-                ('state', 'in', ['draft', 'course_preview', 'published'])  # Filter for draft and under review
-            ])
-            approve_course_count = True if published_courses else False
-            course_count = True if course_count else False
+                                      {'course_data': course_data, 'agreement': agreement,
+                                       'approve_course_count': approve_course_count,
+                                       'course_count': course_count, })
 
             # If the user disagrees, just return the page without creating anything
             return request.render('custom_web_kreator.master_welcome',
@@ -3180,3 +3189,74 @@ class PortalMyCourses(http.Controller):
         video = request.env['slide.video.config'].sudo().search([('page_key', '=', 'nmy_courses')], limit=1)
         print("video", video.video_url)
         return {'video_url': video.video_url if video else ''}
+
+
+class WebsiteFormCustom(WebsiteForm):  # Correct inheritance
+    # Check and insert values from the form on the model <model>
+    @http.route('/website/form/<string:model_name>', type='http', auth="public", methods=['POST'], website=True, csrf=False)
+    def website_form(self, model_name, **kwargs):
+        response =  super().website_form(model_name, **kwargs)
+        if kwargs.get('landing_info') == 'Landing Page Info':
+            crm = self.create_crm(**kwargs)
+        return response
+
+
+    def create_crm(self, **kwargs):
+        model_record = request.env['ir.model'].sudo().search([('model', '=', 'crm.lead'), ('website_form_access', '=', True)])
+        if not model_record:
+            return json.dumps({
+                'error': _("The form's specified model does not exist")
+            })
+
+        try:
+            data = self.extract_data(model_record, kwargs)
+            # If we encounter an issue while extracting data
+        except ValidationError as e:
+            # I couldn't find a cleaner way to pass data to an exception
+            return json.dumps({'error_fields': e.args[0]})
+
+        try:
+            id_record = self.insert_record_crm(request, model_record, data['record'], data['custom'], data.get('meta'))
+            # if id_record:
+            #     self.insert_attachment(model_record, id_record, data['attachments'])
+        except IntegrityError:
+            return json.dumps(False)
+
+        request.session['form_builder_model_model'] = model_record.model
+        request.session['form_builder_model'] = model_record.name
+        request.session['form_builder_id'] = id_record
+
+        return json.dumps({'id': id_record})
+
+    def insert_record_crm(self, request, model, values, custom, meta=None):
+        model_name = model.sudo().model
+        if model_name == 'mail.mail':
+            email_from = _('"%(company)s form submission" <%(email)s>', company=request.env.company.name, email=request.env.company.email)
+            values.update({'reply_to': values.get('email_from'), 'email_from': email_from})
+        record = request.env[model_name].with_user(SUPERUSER_ID).with_context(
+            mail_create_nosubscribe=True,
+        ).create(values)
+
+        if custom or meta:
+            _custom_label = "%s\n___________\n\n" % _("Other Information:")  # Title for custom fields
+            if model_name == 'mail.mail':
+                _custom_label = "%s\n___________\n\n" % _("This message has been posted on your website!")
+            default_field = model.website_form_default_field_id
+            default_field_data = values.get(default_field.name, '')
+            custom_content = (default_field_data + "\n\n" if default_field_data else '') \
+                + (_custom_label + custom + "\n\n" if custom else '') \
+                + (self._meta_label + "\n________\n\n" + meta if meta else '')
+
+            # If there is a default field configured for this model, use it.
+            # If there isn't, put the custom data in a message instead
+            if default_field.name:
+                if default_field.ttype == 'html' or model_name == 'mail.mail':
+                    custom_content = nl2br_enclose(custom_content)
+                record.update({default_field.name: custom_content})
+            elif hasattr(record, '_message_log'):
+                record._message_log(
+                    body=nl2br_enclose(custom_content, 'p'),
+                    message_type='comment',
+                )
+
+        return record.id
