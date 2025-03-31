@@ -143,7 +143,7 @@ class AuthSignupHome(Home):
                     return request.redirect('/customer/mycourses')
                 else:
                     return request.redirect('/web/login?%s' % url_encode({'login': user.login, 'redirect': '/web'}))
-        response = request.render('apg_signup.custom_signup_otp_kreatorbee', qcontext)
+        response = request.render('apg_signup.otp_signup_kreatorbee_custom', qcontext)
         response.headers['X-Frame-Options'] = 'SAMEORIGIN'
         response.headers['Content-Security-Policy'] = "frame-ancestors 'self'"
         return response
