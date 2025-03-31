@@ -13,8 +13,7 @@
                                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                     <input type="hidden" name="partner_id" t-att-value="partner_id" id="partner_id" class="f14 o-cust-form-control"/>
                                     <div class="mt-3" style="text-align: center;">
-                                        <h3 class="freedomMainTitle bold-text">We'd to know you better!</h3>
-                                        <p class="freedomSubTitle bold-text f14">Your input helps us improve the platform</p>
+                                        <h3 class="freedomMainTitle bold-text">We would love to know you better!</h3>
                                     </div>
                                     <div name="niche_type_ids_div" class="niche-type">
                                         <label for="name" class="mb-1">Niche Type<span style="color: red;">*</span></label>

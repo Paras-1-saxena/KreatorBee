@@ -94,8 +94,6 @@
                     padding:5px 10px;
                     letter-spacing: 1px;
                     text-decoration:none!important;
-
-
                     }
 
                 </style>
@@ -110,11 +108,11 @@
                         >
                             <!-- Menu Icon visible on mobile-->
                             <img
-                                    class="pe-2 d-block d-lg-none hamburger"
+                                    class="pe-2 d-block d-lg-none hamburger img-fluid"
                                     src="/custom_web_kreator/static/src/nev-icon.svg"
                             />
                             <!-- Logo -->
-                            <img src="/custom_web_kreator/static/src/logo.png"/>
+                            <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 109px;"/>
 
                             <div class="d-lg-flex d-none gap-4">
                                 <div
