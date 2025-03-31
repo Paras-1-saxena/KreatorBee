@@ -346,7 +346,7 @@ class ReferralController(http.Controller):
                 'course_id': int(course_id),
                 'partner_id': int(partner_id)
             }
-            encrypt_expiry = [f'{x}{''.join(random.choices(string.ascii_letters + string.digits, k=2))}' for x in str(expiry_time)]
+            encrypt_expiry = [f"{x}{''.join(random.choices(string.ascii_letters + string.digits, k=2))}" for x in str(expiry_time)]
             encrypt_expiry = ''.join(encrypt_expiry)
             course_url = f"{course_url}&course_name={encrypt_expiry}"
             return request.redirect(course_url)
