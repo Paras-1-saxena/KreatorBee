@@ -58,21 +58,21 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between bg-black" style="position: fixed; width: 100%; z-index:1;">
-                <div class="col-3">
+            <div class="row justify-content-between bg-black d-none d-md-flex" style="position: fixed; width: 100vw; z-index: 1;">
+                <div class="col-10 col-md-3">
                     <p class="py-4 px-4 fs-4" style="color: #FFCD00;">
                         <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
                         <b>Video Editing</b>
                     </p>
                 </div>
-                <div class="col-2">
-                    <p id="demo" class="fs-3 my-4 blink_me">
+                <div class="col-3 col-md-2">
+                    <p id="demo" class="fs-4 my-4 blink_me">
 
                     </p>
                 </div>
-                <div class="col-5">
+                <div class="col-12 col-md-5">
                     <div class="row justify-content-end">
-                        <div class="col-6 my-4 fs-4">
+                        <div class="col-8 col-md-6 my-4 fs-4">
                             INR
                             <span class="text-decoration-line-through">
                                 <t t-esc="price1"/>
@@ -81,7 +81,7 @@
                             <t t-esc="price2"/>
                             (Excl. Tax)
                         </div>
-                        <div class="col-3">
+                        <div class="col-6 col-md-3">
                             <div class="add_to_cart_button my-2" id="cart1">
                                 <form action="/shop/cart/update" method="POST">
                                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
@@ -104,10 +104,96 @@
                     </div>
                 </div>
             </div>
-            <div id="section_1" class="container py-5 px-3" style="margin-top: 60px;">
-                <div class="row d-flex justify-content-center align-items-center rounded-50 bg-black mx-2 mx-md-0">
+            <div class="row justify-content-between bg-black d-none d-md-flex" style="width: 100vw;">
+                <div class="col-10 col-md-3">
+                    <p class="py-4 px-4 fs-4" style="color: #FFCD00;">
+                        <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
+                        <b>Video Editing</b>
+                    </p>
+                </div>
+                <div class="col-3 col-md-2">
+                    <p id="demo" class="fs-4 my-4 blink_me">
+
+                    </p>
+                </div>
+                <div class="col-12 col-md-5">
+                    <div class="row justify-content-end">
+                        <div class="col-8 col-md-6 my-4 fs-4">
+                            INR
+                            <span class="text-decoration-line-through">
+                                <t t-esc="price1"/>
+                            </span>
+                            / INR
+                            <t t-esc="price2"/>
+                            (Excl. Tax)
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="add_to_cart_button my-2" id="cart1">
+                                <form action="/shop/cart/update" method="POST">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                    <button type="submit"
+                                            class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3">
+                                        Enroll Now
+                                    </button>
+                                    <div id="product_option_block"></div>
+                                </form>
+                            </div>
+                            <div class="add_to_cart_button my-2" hidden="hidden" id="cart1_hidden">
+                                <a class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3"
+                                   onclick="openPop()">
+                                    Enroll Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between bg-black d-flex d-md-none" style="position: fixed; width: 104vw; z-index: 1;">
+                <div class="col-3 col-md-2">
+                    <p id="demores" class="fs-4 my-4 blink_me text-center">
+
+                    </p>
+                </div>
+                <div class="col-9 col-md-5">
+                    <div class="row justify-content-end">
+                        <div class="col-8 col-md-6 my-4 fs-4">
+                            INR
+                            <span class="text-decoration-line-through">
+                                <t t-esc="price1"/>
+                            </span>
+                            / INR
+                            <t t-esc="price2"/>
+                            (Excl. Tax)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between bg-black d-flex d-md-none" style="width: 104vw; z-index: 1;">
+                <div class="col-3 col-md-2">
+                    <p id="demores" class="fs-4 my-4 blink_me">
+
+                    </p>
+                </div>
+                <div class="col-9 col-md-5">
+                    <div class="row justify-content-end">
+                        <div class="col-8 col-md-6 my-4 fs-4">
+                            INR
+                            <span class="text-decoration-line-through">
+                                <t t-esc="price1"/>
+                            </span>
+                            / INR
+                            <t t-esc="price2"/>
+                            (Excl. Tax)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="section_1" class="container px-3" style="margin-top: 20px;">
+                <div class="row d-flex justify-content-around align-items-center rounded-50 bg-black mx-2 mx-md-0">
                     <!-- Text Section -->
-                    <div class="col-lg-6 col-md-6 col-12 text-center text-md-start py-4">
+                    <div class="col-lg-5 col-md-6 col-12 text-center text-md-start py-4">
                         <div class="d-flex flex-column justify-content-center gap-4">
                             <span class="fs-45">
                                 <span class="text-kreator-yellow-900">
@@ -155,7 +241,7 @@
 
                     <!-- Image Section -->
                     <div class="col-lg-4 col-md-6 col-12 p-4">
-                        <img src="/kreator_website/static/src/img/ayushman_heading.png"
+                        <img src="/kreator_website/static/src/img/video1.jpg"
                              alt="section_1"
                              class="img-fluid rounded-50"/>
                     </div>
@@ -198,7 +284,7 @@
 
             <div id="intro_video" class="p-4 container-fluid">
                 <div class="row justify-content-center">
-                    <div class="col-8">
+                    <div class="col-12 col-md-8">
                         <t t-esc="intro_video"/>
                         <script src="https://player.vimeo.com/api/player.js"></script>
                     </div>
@@ -792,7 +878,7 @@
                             About
                             <span style="color: #FFC107;">Me</span>
                         </div>
-                        <img t-att-src="'/web/image/slide.channel/%s/my_image_icon' % course_id" alt="About Me"
+                        <img src="/kreator_website/static/src/img/video2.jpg" alt="About Me"
                              class="img-fluid rounded-3" style="max-width: 300px; object-fit: cover;"/>
                     </div>
 
@@ -894,7 +980,7 @@
                                 <div class="section3_shadow p-4 text-center d-flex flex-column gap-3 rounded-30 bg-kreator-yellow-300">
                                     <div>
                                         <span>
-                                            <img src="/kreator_website/static/src/img/ayushman_pandita/video_editing/comma.png"
+                                            <img src="/kreator_website/static/src/img/comma.png"
                                                  style="height: 25px; width:25px; transform: rotate(180deg);"/>
                                         </span>
                                         <span class="fs-5">
@@ -904,7 +990,7 @@
                                             recommended for beginners!
                                         </span>
                                         <span>
-                                            <img src="/kreator_website/static/src/img/ayushman_pandita/video_editing/comma.png"
+                                            <img src="/kreator_website/static/src/img/comma.png"
                                                  style="height: 25px; width:25px;"/>
                                         </span>
                                         <hr/>
@@ -918,7 +1004,7 @@
                                 <div class="section3_shadow p-4 text-center d-flex flex-column gap-3 rounded-30 bg-kreator-yellow-300">
                                     <div>
                                         <span>
-                                            <img src="/kreator_website/static/src/img/ayushman_pandita/video_editing/comma.png"
+                                            <img src="/kreator_website/static/src/img/comma.png"
                                                  style="height: 25px; width:25px; transform: rotate(180deg);"/>
                                         </span>
                                         <span class="fs-5">
@@ -928,7 +1014,7 @@
                                             video editing, this is the course for you.
                                         </span>
                                         <span>
-                                            <img src="/kreator_website/static/src/img/ayushman_pandita/video_editing/comma.png"
+                                            <img src="/kreator_website/static/src/img/comma.png"
                                                  style="height: 25px; width:25px;"/>
                                         </span>
                                         <hr/>
@@ -942,7 +1028,7 @@
                                 <div class="section3_shadow p-4 text-center d-flex flex-column gap-3 rounded-30 bg-kreator-yellow-300">
                                     <div>
                                         <span>
-                                            <img src="/kreator_website/static/src/img/ayushman_pandita/video_editing/comma.png"
+                                            <img src="/kreator_website/static/src/img/comma.png"
                                                  style="height: 25px; width:25px; transform: rotate(180deg);"/>
                                         </span>
                                         <span class="fs-5">
@@ -952,7 +1038,7 @@
                                             Loved it!
                                         </span>
                                         <span>
-                                            <img src="/kreator_website/static/src/img/ayushman_pandita/video_editing/comma.png"
+                                            <img src="/kreator_website/static/src/img/comma.png"
                                                  style="height: 25px; width:25px;"/>
                                         </span>
                                         <hr/>
@@ -966,7 +1052,7 @@
                                 <div class="section3_shadow p-4 text-center d-flex flex-column gap-3 rounded-30 bg-kreator-yellow-300">
                                     <div>
                                         <span>
-                                            <img src="/kreator_website/static/src/img/ayushman_pandita/video_editing/comma.png"
+                                            <img src="/kreator_website/static/src/img/comma.png"
                                                  style="height: 25px; width:25px; transform: rotate(180deg);"/>
                                         </span>
                                         <span class="fs-5">
@@ -976,7 +1062,7 @@
                                             for anyone looking to get into video editing.
                                         </span>
                                         <span>
-                                            <img src="/kreator_website/static/src/img/ayushman_pandita/video_editing/comma.png"
+                                            <img src="/kreator_website/static/src/img/comma.png"
                                                  style="height: 25px; width:25px;"/>
                                         </span>
                                         <hr/>
@@ -1142,7 +1228,7 @@
                     </div>
                     <!-- Image Section -->
                     <div class="col-12 col-md-6 d-flex justify-content-center">
-                        <img t-att-src="'/web/image/slide.channel/%s/image1' % course_id" alt="section9"
+                        <img src="/kreator_website/static/src/img/video3.jpg" alt="section9"
                              class="img-fluid w-75 w-md-100"/>
                     </div>
                 </div>
@@ -1168,7 +1254,6 @@
             let open_pop = document.getElementById("open_pop");
             let close = document.getElementById("popup1");
             function popclose() {
-            console.log('test');
             close.style.display= 'none';
             }
             function openPop() {
@@ -1176,7 +1261,7 @@
             }
             if (expire_date.value == '') {
             document.getElementById("pop_title").innerHTML = 'Referral Link Not Generated';
-            document.getElementById("pop_text").innerHTML = 'To Earn Commission, Generate the Referral Link <br/> and share it with Customer';
+            document.getElementById("pop_text").innerHTML = 'To Earn Commission, Generate the Referral Link<br/>and share it with Customer';
             cart1.style.display = 'none';
             cart1_hidden.removeAttribute("hidden");
             cart2.style.display = 'none';
@@ -1189,6 +1274,7 @@
             if (countDownDate >= 2058843862000) {
             console.log(expire_date);
             document.getElementById("demo").classList.add('d-none');
+            document.getElementById("demores").classList.add('d-none');
             }
             if (expire_date.value) {
             // Update the count down every 1 second
@@ -1206,14 +1292,17 @@
 
             // Display the result in the element with id="demo"
             document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s " + "Left";
+            document.getElementById("demores").innerHTML = minutes + "m " + seconds + "s " + "Left";
 
             // If the count down is finished, write some text
             if (distance &lt; 30936){
             document.getElementById("demo").classList.add("text-danger");
+            document.getElementById("demores").classList.add("text-danger");
             }
             if (distance &lt; 0) {
             clearInterval(x);
             document.getElementById("demo").innerHTML = "LINK EXPIRED";
+            document.getElementById("demores").innerHTML = "LINK EXPIRED";
             cart1.style.display = 'none';
             cart1_hidden.removeAttribute("hidden");
             cart2.style.display = 'none';
@@ -1223,6 +1312,7 @@
             cart4.style.display = 'none';
             cart4_hidden.removeAttribute("hidden");
             document.getElementById("demo").classList.remove('blink_me');
+            document.getElementById("demores").classList.remove('blink_me');
             }
             }, 1000);
             }

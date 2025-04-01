@@ -45,7 +45,7 @@
         </field>
     </record>
 
-    <record id="action_apg_creator_social_post" model="ir.actions.act_window">
+    <record id="action_apg_social_post" model="ir.actions.act_window">
         <field name="name">Social Post</field>
         <field name="res_model">apg.social.post</field>
         <field name="view_mode">list,form</field>

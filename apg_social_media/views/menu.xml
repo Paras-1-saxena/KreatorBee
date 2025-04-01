@@ -44,7 +44,7 @@
             name="Creator Post"
             sequence="1"
             groups="base.group_user"
-            action="action_apg_creator_social_post"/>
+            action="action_apg_social_post"/>
 
     <menuitem
             id="menu_social_partner_post_submain"

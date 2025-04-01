@@ -58,21 +58,21 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between bg-black" style="position: fixed; width: 100vw; z-index: 1;">
-                <div class="col-lg-3 col-md-3 col-sm-12">
+            <div class="row justify-content-between bg-black d-none d-md-flex" style="position: fixed; width: 100vw; z-index: 1;">
+                <div class="col-10 col-md-3">
                     <p class="py-4 px-4 fs-4" style="color: #FFCD00;">
                         <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
                         <b>Freelancing (Employees)</b>
                     </p>
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-12">
+                <div class="col-3 col-md-2">
                     <p id="demo" class="fs-4 my-4 blink_me">
 
                     </p>
                 </div>
-                <div class="col-5">
+                <div class="col-12 col-md-5">
                     <div class="row justify-content-end">
-                        <div class="col-lg-6 col-md-6 col-sm-12 my-4 fs-4">
+                        <div class="col-8 col-md-6 my-4 fs-4">
                             INR
                             <span class="text-decoration-line-through">
                                 <t t-esc="price1"/>
@@ -81,7 +81,7 @@
                             <t t-esc="price2"/>
                             (Excl. Tax)
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="col-6 col-md-3">
                             <div class="add_to_cart_button my-2" id="cart1">
                                 <form action="/shop/cart/update" method="POST">
                                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
@@ -104,21 +104,21 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between bg-black" style="width: 100vw;">
-                <div class="col-lg-3 col-md-3 col-sm-12">
+            <div class="row justify-content-between bg-black d-none d-md-flex" style="width: 100vw;">
+                <div class="col-10 col-md-3">
                     <p class="py-4 px-4 fs-4" style="color: #FFCD00;">
                         <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
                         <b>Freelancing (Employees)</b>
                     </p>
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-12">
+                <div class="col-3 col-md-2">
                     <p id="demo" class="fs-4 my-4 blink_me">
 
                     </p>
                 </div>
-                <div class="col-lg-5 col-md-5 col-sm-12">
+                <div class="col-12 col-md-5">
                     <div class="row justify-content-end">
-                        <div class="col-lg-6 col-md-6 col-sm-12 my-4 fs-4">
+                        <div class="col-8 col-md-6 my-4 fs-4">
                             INR
                             <span class="text-decoration-line-through">
                                 <t t-esc="price1"/>
@@ -127,7 +127,7 @@
                             <t t-esc="price2"/>
                             (Excl. Tax)
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="col-6 col-md-3">
                             <div class="add_to_cart_button my-2" id="cart1">
                                 <form action="/shop/cart/update" method="POST">
                                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
@@ -146,26 +146,66 @@
                                     Enroll Now
                                 </a>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between bg-black d-flex d-md-none" style="position: fixed; width: 104vw; z-index: 1;">
+                <div class="col-3 col-md-2">
+                    <p id="demores" class="fs-4 my-4 blink_me text-center">
+
+                    </p>
+                </div>
+                <div class="col-9 col-md-5">
+                    <div class="row justify-content-end">
+                        <div class="col-8 col-md-6 my-4 fs-4">
+                            INR
+                            <span class="text-decoration-line-through">
+                                <t t-esc="price1"/>
+                            </span>
+                            / INR
+                            <t t-esc="price2"/>
+                            (Excl. Tax)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between bg-black d-flex d-md-none" style="width: 104vw; z-index: 1;">
+                <div class="col-3 col-md-2">
+                    <p id="demores" class="fs-4 my-4 blink_me">
+
+                    </p>
+                </div>
+                <div class="col-9 col-md-5">
+                    <div class="row justify-content-end">
+                        <div class="col-8 col-md-6 my-4 fs-4">
+                            INR
+                            <span class="text-decoration-line-through">
+                                <t t-esc="price1"/>
+                            </span>
+                            / INR
+                            <t t-esc="price2"/>
+                            (Excl. Tax)
                         </div>
                     </div>
                 </div>
             </div>
             <div id="section_10" class="bg-black">
-                <div class="container py-5 mt-4">
-                    <div class="row p-4 p-md-5 rounded"
+                <div class="container py-5 mt-1">
+                    <div class="row rounded"
                          style="background: #FFF;
                         box-shadow: 0.826px 1.651px 12.88px 12px #FFCD00;
                         margin: 20px;">
 
-                        <div class="col-lg-8 col-md-12 order-2 order-lg-1">
-                            <div class="d-flex flex-column justify-content-center gap-3 pt-3 pt-lg-4">
+                        <div class="col-lg-7 col-md-12 order-2 order-lg-1">
+                            <div class="d-flex flex-column justify-content-center gap-3 pt-3 pt-lg-4 p-3">
                                 <div class="jost-bold text-center text-lg-start"
                                      style="font-size: clamp(28px, 4vw, 54px); color: #000; font-family: Jost-Bold; font-weight: 400;">
                                     <span class="text-kreator-yellow-900">
-                                        Freelancing (Employees)
+                                        Freelancing for Employees
                                     </span>
                                 </div>
-                                <div class="w-100 text-black text-center text-lg-start"
+                                <div class="w-100 text-black text-center text-lg-start fs-4"
                                      style="font-size: clamp(14px, 1.5vw, 18px); line-height: 1.6;">
                                     A Step-by-Step Course for Professionals to Build a Profitable Freelance Career While
                                     Keeping Their Job.
@@ -200,9 +240,9 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-12 order-1 order-lg-2 text-center">
-                            <img t-att-src="'/web/image/slide.channel/%s/image1' % course_id" alt="section_10"
-                                 class="img-fluid w-75 w-md-50 w-lg-100" style="max-height: 410px; object-fit: cover;"/>
+                        <div class="col-lg-5 col-md-12 order-1 order-lg-2 text-center">
+                            <img src="/kreator_website/static/src/img/video2.jpg" alt="section_10"
+                                 class="img-fluid" style="object-fit: cover;"/>
                         </div>
                     </div>
                 </div>
@@ -258,7 +298,7 @@
 
             <div id="intro_video" class="p-4 container-fluid">
                 <div class="row justify-content-center">
-                    <div class="col-8">
+                    <div class="col-12 col-md-8">
                         <t t-esc="intro_video"/>
                         <script src="https://player.vimeo.com/api/player.js"></script>
                     </div>
@@ -655,7 +695,7 @@
                             About
                             <span style="color: #FFC107;">Me</span>
                         </div>
-                        <img t-att-src="'/web/image/slide.channel/%s/my_image_icon' % course_id" alt="About Me"
+                        <img src="/kreator_website/static/src/img/freelance3.png" alt="About Me"
                              class="img-fluid rounded-3" style="max-width: 300px; object-fit: cover;"/>
                     </div>
 
@@ -1054,7 +1094,7 @@
                     </div>
                     <!-- Image Section -->
                     <div class="col-12 col-md-6 d-flex justify-content-center">
-                        <img t-att-src="'/web/image/slide.channel/%s/image1' % course_id" alt="section9"
+                        <img src="/kreator_website/static/src/img/video1.jpg" alt="section9"
                              class="img-fluid w-75 w-md-100"/>
                     </div>
                 </div>
@@ -1080,7 +1120,6 @@
             let open_pop = document.getElementById("open_pop");
             let close = document.getElementById("popup1");
             function popclose() {
-            console.log('test');
             close.style.display= 'none';
             }
             function openPop() {
@@ -1088,7 +1127,7 @@
             }
             if (expire_date.value == '') {
             document.getElementById("pop_title").innerHTML = 'Referral Link Not Generated';
-            document.getElementById("pop_text").innerHTML = 'To Earn Commission, Generate the Referral Link <br/> and share it with Customer';
+            document.getElementById("pop_text").innerHTML = 'To Earn Commission, Generate the Referral Link<br/>and share it with Customer';
             cart1.style.display = 'none';
             cart1_hidden.removeAttribute("hidden");
             cart2.style.display = 'none';
@@ -1101,6 +1140,7 @@
             if (countDownDate >= 2058843862000) {
             console.log(expire_date);
             document.getElementById("demo").classList.add('d-none');
+            document.getElementById("demores").classList.add('d-none');
             }
             if (expire_date.value) {
             // Update the count down every 1 second
@@ -1118,14 +1158,17 @@
 
             // Display the result in the element with id="demo"
             document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s " + "Left";
+            document.getElementById("demores").innerHTML = minutes + "m " + seconds + "s " + "Left";
 
             // If the count down is finished, write some text
             if (distance &lt; 30936){
             document.getElementById("demo").classList.add("text-danger");
+            document.getElementById("demores").classList.add("text-danger");
             }
             if (distance &lt; 0) {
             clearInterval(x);
             document.getElementById("demo").innerHTML = "LINK EXPIRED";
+            document.getElementById("demores").innerHTML = "LINK EXPIRED";
             cart1.style.display = 'none';
             cart1_hidden.removeAttribute("hidden");
             cart2.style.display = 'none';
@@ -1135,6 +1178,7 @@
             cart4.style.display = 'none';
             cart4_hidden.removeAttribute("hidden");
             document.getElementById("demo").classList.remove('blink_me');
+            document.getElementById("demores").classList.remove('blink_me');
             }
             }, 1000);
             }
