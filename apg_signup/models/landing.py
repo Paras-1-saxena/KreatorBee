@@ -39,6 +39,8 @@ class SlideChannel(models.Model):
     p1 = fields.Char(string="Topbar Title", default="Unlimited Lifetime Access. Starting at INR")
     price1 = fields.Integer(string="Amount")
     price2 = fields.Integer(string="Amount")
+    regular_price = fields.Float(string="Regular Price")
+    sales_price = fields.Float(string="Sales Price")
     combination_id = fields.Many2one('colour.combination', string="Colour Combination")
     primary_color = fields.Char(string="Primary Color")
     secondary_color = fields.Char(string="Secondary Color")
@@ -46,7 +48,7 @@ class SlideChannel(models.Model):
     # Main Heading
     creator_name = fields.Char(string="Creator Name")
     image_icon = fields.Binary(string="Creator Image")
-    main_heading = fields.Char(string="Title")
+    main_heading = fields.Char(string="Title",  default="Banner Information")
     p2 = fields.Text(string="Content")
 
     c1 = fields.Char(string="USP Content")

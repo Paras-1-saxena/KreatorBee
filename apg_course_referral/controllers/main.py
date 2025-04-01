@@ -195,7 +195,7 @@ class ReferralController(http.Controller):
 
             }
             # Render the data page template
-            return http.request.render('apg_course_referral.nreferral_link_page', values)
+            return http.request.render('apg_course_referral.partner_referral_link_page', values)
         if request.httprequest.method == 'POST':
             course_id = kwargs.get('course_id')
             expiry_time = kwargs.get('expiry_time')

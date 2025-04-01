@@ -100,7 +100,7 @@
                                     src="/custom_web_kreator/static/src/nev-icon.svg"
                             />
                             <!-- Logo -->
-                            <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 109px;"/>
+                            <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 160px;"/>
 
                             <div class="d-lg-flex d-none gap-4">
                                 <div
@@ -262,69 +262,146 @@
                                 </div>
                             </t>
                             <!-- Products -->
-                            <section class="row g-4">
+                            <!--                            <section class="row justify-content-around g-4">-->
+                            <!--                                <t t-foreach="product_cart" t-as="cart">-->
+                            <!--                                    <div class="col-lg-5 col-12 my-2">-->
+                            <!--                                        <form method="post" action="/remove/partner/myproducts">-->
+                            <!--                                            &lt;!&ndash;  CSRF Token for security  &ndash;&gt;-->
+                            <!--                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>-->
+                            <!--                                            <input type="hidden" id="cartCourseID" name="cartCourseID"-->
+                            <!--                                                   readonly="readonly"-->
+                            <!--                                                   t-att-value="cart.course_id.id"/>-->
+                            <!--                                            <input type="hidden" id="cartPartnerID" name="cartPartnerID"-->
+                            <!--                                                   readonly="readonly"-->
+                            <!--                                                   t-att-value="cart.partner_id.id"/>-->
+                            <!--                                            <div class="row" style="border: 1px solid var(&#45;&#45;yellow-); box-shadow: 0px 0px 10px 0px var(&#45;&#45;border-color); border-radius: 10px;">-->
+                            <!--                                                <div class="col-6">-->
+                            <!--                                                    <a>-->
+                            <!--                                                        <img-->
+                            <!--                                                                t-att-src="image_data_uri(cart.course_id.image_1920) if cart.course_id.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'"-->
+                            <!--                                                                alt="Course Image" class="rounded"-->
+                            <!--                                                                style="width: 152px; height: 170px;"/>-->
+                            <!--                                                    </a>-->
+                            <!--                                                </div>-->
+                            <!--                                                <div class="col-6 p-3">-->
+                            <!--                                                    <p class="fs-3"><t t-esc="cart.name"/></p>-->
+                            <!--                                                    <div class="d-flex gap-4 align-items-center">-->
+                            <!--                                                        <p>By-->
+                            <!--                                                            <t t-esc="cart.user_id.name"/>-->
+                            <!--                                                        </p>-->
+                            <!--&lt;!&ndash;                                                        <p>&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                                            <i class="ri-star-fill"></i>&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                                            <i class="ri-star-fill"></i>&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                                            <i class="ri-star-fill"></i>&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                                            <i class="ri-star-fill"></i>&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                                            <i class="ri-star-fill"></i>&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                                            <span>5.0</span>&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                                        </p>&ndash;&gt;-->
+                            <!--                                                    </div>-->
+                            <!--                                                    <div class="row">-->
+                            <!--                                                        <div class="col-6">-->
+                            <!--                                                            <t t-esc="currency_id.name"/>-->
+                            <!--                                                            <t t-esc="cart.sales_price"/>-->
+                            <!--                                                        </div>-->
+                            <!--                                                        <div class="col-6">-->
+                            <!--                                                            <t t-esc="currency_id.name"/>-->
+                            <!--                                                            <t t-esc="cart.partner_commission"/>-->
+                            <!--                                                        </div>-->
+                            <!--                                                        <div class="col-12 col-lg-5 my-2">-->
+                            <!--                                                            <button class="btn1 mt-3">-->
+                            <!--                                                                Remove-->
+                            <!--                                                            </button>-->
+                            <!--                                                        </div>-->
+                            <!--                                                        <div class="col-12 col-lg-7 my-4">-->
+                            <!--                                                            <a type="button" href="/partner-referral"-->
+                            <!--                                                               class="o-cust-referral-link rounded" style=" background-color:-->
+                            <!--                    #ffd000; color: #212529; font-family: 'Poppins', sans-serif; border: none;-->
+                            <!--                    cursor: pointer; transition: background-color 0.3s ease; font-size: 12px; padding:5px 10px;-->
+                            <!--                    letter-spacing: 1px;"-->
+                            <!--                                                            >Generate Affiliate Link-->
+                            <!--                                                            </a>-->
+                            <!--                                                        </div>-->
+                            <!--                                                    </div>-->
+                            <!--                                                </div>-->
+                            <!--                                            </div>-->
+                            <!--                                        </form>-->
+                            <!--                                    </div>-->
+                            <!--                                </t>-->
+                            <!--                            </section>-->
+
+                            <section class="row g-4 my-4">
                                 <t t-foreach="product_cart" t-as="cart">
-                                    <div class="col-lg-6 col-12 my-2">
-                                        <form method="post" action="/remove/partner/myproducts">
-                                            <!--  CSRF Token for security  -->
-                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                            <input type="hidden" id="cartCourseID" name="cartCourseID"
-                                                   readonly="readonly"
-                                                   t-att-value="cart.course_id.id"/>
-                                            <input type="hidden" id="cartPartnerID" name="cartPartnerID"
-                                                   readonly="readonly"
-                                                   t-att-value="cart.partner_id.id"/>
-                                            <div class="product d-flex">
-                                                <div class="product-img">
-                                                    <a>
-                                                        <img
-                                                                t-att-src="image_data_uri(cart.course_id.image_1920) if cart.course_id.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'"
-                                                                alt="Course Image" class="rounded"
-                                                                style="width: 100%; height: 250px; display: block; margin: 0 auto;"/>
-                                                    </a>
+                                    <div class="col-lg-6 col-12">
+                                        <div class="product d-flex">
+                                            <div class="col-5">
+                                                <a>
+                                                    <img
+                                                            t-att-src="image_data_uri(cart.course_id.image_1920) if cart.course_id.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'"
+                                                            alt="Course Image" class="rounded d-none d-md-block"
+                                                            style="width: 100%; height: 250px; display: block; margin: 0 auto;"/>
+                                                    <img
+                                                            t-att-src="image_data_uri(cart.course_id.image_1920) if cart.course_id.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'"
+                                                            alt="Course Image" class="rounded d-block d-md-none"
+                                                            style="width: 125px; height: 170px; display: block; margin: 0 auto;"/>
+                                                </a>
+                                            </div>
+                                            <div class="p-3 row">
+                                                <p class="fs-3">
+                                                    <t t-esc="cart.name"/>
+                                                </p>
+
+                                                <div class="d-flex gap-4 align-items-center">
+                                                    <p>By
+                                                        <t t-esc="cart.user_id.name"/>
+                                                    </p>
+                                                    <!--                                                    <p>-->
+                                                    <!--                                                        <i class="ri-star-fill"></i>-->
+                                                    <!--                                                        <i class="ri-star-fill"></i>-->
+                                                    <!--                                                        <i class="ri-star-fill"></i>-->
+                                                    <!--                                                        <i class="ri-star-fill"></i>-->
+                                                    <!--                                                        <i class="ri-star-fill"></i>-->
+                                                    <!--                                                        <span>5.0</span>-->
+                                                    <!--                                                    </p>-->
                                                 </div>
-                                                <div class="product-details p-3">
-                                                    <p class="fs-3"><t t-esc="cart.name"/></p>
-                                                    <div class="d-flex gap-4 align-items-center">
-                                                        <p>By
-                                                            <t t-esc="cart.user_id.name"/>
-                                                        </p>
-<!--                                                        <p>-->
-<!--                                                            <i class="ri-star-fill"></i>-->
-<!--                                                            <i class="ri-star-fill"></i>-->
-<!--                                                            <i class="ri-star-fill"></i>-->
-<!--                                                            <i class="ri-star-fill"></i>-->
-<!--                                                            <i class="ri-star-fill"></i>-->
-<!--                                                            <span>5.0</span>-->
-<!--                                                        </p>-->
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div><b>Price</b></div>
+                                                        ₹
+                                                        <t t-esc="cart.sales_price"/>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-6">
-                                                            <t t-esc="currency_id.name"/>
-                                                            <t t-esc="cart.sales_price"/>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <t t-esc="currency_id.name"/>
-                                                            <t t-esc="cart.partner_commission"/>
-                                                        </div>
-                                                        <div class="col-12 col-md-6 my-2">
-                                                            <button class="btn1 mt-3">
+                                                    <div class="col-6">
+                                                        <div><b>Commission</b></div>
+                                                        ₹
+                                                        <t t-esc="cart.partner_commission"/>
+                                                    </div>
+                                                    <div class="col-12 col-md-6">
+                                                        <a href="/partner-referral">
+                                                            <button class="btn1"
+                                                                    style="width: 100%; height: auto; font-size: 12px;">
+                                                                Generate Affiliate Link
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 my-2 my-md-0">
+                                                        <!-- ELSE show the "Add to My List" form -->
+                                                        <form method="post" action="/remove/partner/myproducts">
+                                                            <input type="hidden" name="csrf_token"
+                                                                   t-att-value="request.csrf_token()"/>
+                                                            <input type="hidden" id="cartCourseID" name="cartCourseID"
+                                                                   readonly="readonly"
+                                                                   t-att-value="cart.course_id.id"/>
+                                                            <input type="hidden" id="cartPartnerID" name="cartPartnerID"
+                                                                   readonly="readonly"
+                                                                   t-att-value="cart.partner_id.id"/>
+                                                            <button type="submit" href="/partner-referral" class="btn1"
+                                                               style="width: 100%; height: auto; font-size: 12px;">
                                                                 Remove
                                                             </button>
-                                                        </div>
-                                                        <div class="col-12 col-md-6 my-4">
-                                                            <a type="button" href="/partner-referral"
-                                                               class="o-cust-referral-link" style=" background-color:
-                    #ffd000; color: #212529; font-family: 'Poppins', sans-serif; border: none; border-radius: 25px;
-                    cursor: pointer; transition: background-color 0.3s ease; font-size: 12px; padding:5px 10px;
-                    letter-spacing: 1px;"
-                                                            >Generate Affiliate Link
-                                                            </a>
-                                                        </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </t>
                             </section>

@@ -10,13 +10,13 @@
                         <button name="generate_referral_link" type="object" string="Generate Referral" class="oe_stat_button"/>
                     </header>
                     <group>
-                        <field name="course_id"/>
-                        <field name="website_url"/>
-                        <field name="partner_id"/>
-                        <field name="generated_url"/>
-                        <field name="order_id"/>
-                        <field name="payment_link"/>
-                        <field name="expiry_time"/>
+                        <field name="course_id" readonly="1" force_save="1"/>
+                        <field name="website_url" readonly="1" force_save="1"/>
+                        <field name="partner_id" readonly="1" force_save="1"/>
+                        <field name="generated_url" readonly="1" force_save="1"/>
+                        <field name="order_id" readonly="1" force_save="1"/>
+                        <field name="payment_link" readonly="1" force_save="1"/>
+                        <field name="expiry_time" readonly="1" force_save="1"/>
                     </group>
                 </sheet>
             </form>
@@ -50,7 +50,7 @@
         id="website_slides_menu_apg_course_referral" 
         name="Course Referral"
         parent="website_slides.website_slides_menu_configuration"
-        sequence="5" 
+        sequence="58"
         action="action_apg_course_referral"/>
 </odoo>
 

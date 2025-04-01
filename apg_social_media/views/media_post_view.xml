@@ -28,16 +28,16 @@
                         <group string="Your Post" name="social_post_global">
                             <field string="Post Type" name="partner_type"/>
                             <field name="message" widget="text_emojis" class="o_social_post_message_wrapper"
-                                onchange_on_keydown="True" force_save="1" default_focus="1"
-                                placeholder="Write a message or upload an image"
-                                />
-                                <field string="Video Url" name="video_url"/>
-                                <field name="image_ids" widget="many2many_binary"
-                                class="o_social_post_form_attachments"
-                                />
-                                <!-- <field string="Campaign" name="utm_campaign_id" readonly="state in ['posting', 'posted']"/>
-                                <field name="post_method" widget="radio" invisible="state != 'draft'"/>
-                                <field name="scheduled_date" invisible="post_method == 'now' or state in ['posting', 'posted']" required="post_method != 'now'" /> -->
+                                   onchange_on_keydown="True" force_save="1" default_focus="1"
+                                   placeholder="Write a message or upload an image"
+                            />
+                            <field string="Video Url" name="video_url"/>
+                            <field name="image_ids" widget="many2many_binary"
+                                   class="o_social_post_form_attachments"
+                            />
+                            <!-- <field string="Campaign" name="utm_campaign_id" readonly="state in ['posting', 'posted']"/>
+                            <field name="post_method" widget="radio" invisible="state != 'draft'"/>
+                            <field name="scheduled_date" invisible="post_method == 'now' or state in ['posting', 'posted']" required="post_method != 'now'" /> -->
                         </group>
                     </group>
                 </sheet>
@@ -45,16 +45,42 @@
         </field>
     </record>
 
-    <record id="action_apg_social_post" model="ir.actions.act_window">
+    <record id="action_apg_creator_social_post" model="ir.actions.act_window">
         <field name="name">Social Post</field>
         <field name="res_model">apg.social.post</field>
         <field name="view_mode">list,form</field>
+        <field name="domain">[('partner_type', '=', 'creator')]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create a Content Tag
             </p>
         </field>
     </record>
+
+    <record id="action_apg_partner_social_post" model="ir.actions.act_window">
+        <field name="name">Social Post</field>
+        <field name="res_model">apg.social.post</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('partner_type', '=', 'partner')]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Content Tag
+            </p>
+        </field>
+    </record>
+
+    <record id="action_apg_customer_social_post" model="ir.actions.act_window">
+        <field name="name">Social Post</field>
+        <field name="res_model">apg.social.post</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('partner_type', '=', 'customer')]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Content Tag0
+            </p>
+        </field>
+    </record>
+
 
     <!-- Comment form -->
 

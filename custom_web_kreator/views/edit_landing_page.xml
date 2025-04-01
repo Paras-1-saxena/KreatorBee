@@ -348,7 +348,7 @@
                                     src="/custom_web_kreator/static/src/nev-icon.svg"
                             />
                             <!-- Logo -->
-                            <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 109px;"/>
+                            <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 160px;"/>
                             <!-- Menu-->
                             <div class="d-lg-flex d-none gap-4 menu-links">
                                 <div

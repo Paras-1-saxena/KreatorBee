@@ -115,7 +115,7 @@
                                     src="/custom_web_kreator/static/src/nev-icon.svg"
                             />
                             <!-- Logo -->
-                            <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 109px;"/>
+                            <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 160px;"/>
 
                             <div class="d-lg-flex d-none gap-4">
                                 <div
@@ -268,7 +268,7 @@
 
                                 <div id="intro_video" class="p-4 container-fluid">
                                     <div class="row justify-content-center">
-                                        <div class="col-8">
+                                        <div class="col-12">
                                             <t t-esc="iframe"/>
                                             <script src="https://player.vimeo.com/api/player.js"></script>
                                         </div>

@@ -96,7 +96,7 @@ class KreatorWebsite(http.Controller):
             'course_ids': course.course_ids, 'student_line_ids': course.student_line_ids, 'faq_ids': course.faq_ids,
             'h4': course.h4, 'c11': course.c11, 'image1': course.image1, 'course_id': course.id, 'course': course,
             'product_template_id': course.product_id.product_tmpl_id.id, 'product_id': course.product_id.id,
-            'price1': course.price1, 'price2': course.price2, 'num_to_word': {1: 'One', 2: 'Two', 3: 'Three',
+            'price1': course.regular_price, 'price2': course.sales_price, 'num_to_word': {1: 'One', 2: 'Two', 3: 'Three',
                                                                               4: 'Four', 5: 'Five', 6: 'Six',
                                                                               7: 'Seven', 8: 'Eight', 9: 'Nine'}
         }

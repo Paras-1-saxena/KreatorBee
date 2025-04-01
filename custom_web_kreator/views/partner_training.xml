@@ -298,7 +298,7 @@
                                     src="/custom_web_kreator/static/src/nev-icon.svg"
                             />
                             <!-- Logo -->
-                            <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 109px;"/>
+                            <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 160px;"/>
                             <!-- Menu-->
                             <div class="d-lg-flex d-none gap-4">
                                 <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
@@ -519,7 +519,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-8" id="video_data">
+                                <div class="col-12" id="video_data">
 
                                 </div>
                             </div>

@@ -100,7 +100,7 @@
                                     src="/custom_web_kreator/static/src/nev-icon.svg"
                             />
                             <!-- Logo -->
-                            <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 109px;"/>
+                            <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 160px;"/>
 
                             <div class="d-lg-flex d-none gap-4">
                                 <div
@@ -224,8 +224,12 @@
                                                 <a>
                                                     <img
                                                             t-att-src="image_data_uri(course.image_1920) if course.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'"
-                                                            alt="Course Image" class="rounded"
+                                                            alt="Course Image" class="rounded d-none d-md-block"
                                                             style="width: 100%; height: 250px; display: block; margin: 0 auto;"/>
+                                                    <img
+                                                            t-att-src="image_data_uri(course.image_1920) if course.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'"
+                                                            alt="Course Image" class="rounded d-block d-md-none"
+                                                            style="width: 125px; height: 170px; display: block; margin: 0 auto;"/>
                                                 </a>
                                             </div>
                                             <div class="p-3 row">

@@ -17,6 +17,13 @@ class PartnerCommission(models.Model):
     name = fields.Char(string="Commission Plan")
     rate = fields.Float(string="Rate", required=True)
     line_ids = fields.One2many('partner.commission.line', 'commission_id', string="Commission Lines")
+
+    @api.constrains('name')
+    def id_constrains(self):
+        obj = self.env['partner.commission'].search([
+            ('id', '!=', self.id)])
+        if obj:
+            raise ValidationError('You cannot create more than one commission')
     
 
 class PartnerCommissionLine(models.Model):
@@ -35,6 +42,13 @@ class DirectCommission(models.Model):
     name = fields.Char(string="Commission Plan")
     rate = fields.Float(string="Rate", required=True)
     line_ids = fields.One2many('direct.commission.line', 'commission_id', string="Commission Lines")
+
+    @api.constrains('name')
+    def id_constrains(self):
+        obj = self.env['direct.commission'].search([
+            ('id', '!=', self.id)])
+        if obj:
+            raise ValidationError('You cannot create more than one commission')
 
 class DirectCommissionLine(models.Model):
     _name = 'direct.commission.line'

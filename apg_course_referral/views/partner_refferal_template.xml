@@ -8,7 +8,8 @@
                 <!-- title -->
                 <title>Kreator Bee | Sales</title>
                 <!-- external css -->
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+                <link rel="stylesheet"
+                      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
                 <link rel="stylesheet" href="/custom_web_kreator/static/src/css/custom_styl.css"/>
                 <!-- bootstrap css -->
                 <link
@@ -390,7 +391,7 @@
                                     src="/custom_web_kreator/static/src/nev-icon.svg"
                             />
                             <!-- Logo -->
-                            <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 109px;"/>
+                            <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 160px;"/>
                             <!-- Menu-->
                             <div class="d-lg-flex d-none gap-4">
                                 <div
@@ -469,7 +470,7 @@
                                         <li>
                                             <a href="/partner/kyc">
                                                 <i class="ri-checkbox-blank-circle-line"></i>
-                                                kyc
+                                                KYC
                                             </a>
                                         </li>
                                         <li>
@@ -630,7 +631,8 @@
                                                 <option value="" selected="selected">e.g. Select Course</option>
                                                 <t t-if="payment_referral_id">
                                                     <t t-foreach="product_cart_ids or []" t-as="course">
-                                                        <option t-att-value="course.id" t-att-selected="course.id == payment_referral_id.course_id.id">
+                                                        <option t-att-value="course.id"
+                                                                t-att-selected="course.id == payment_referral_id.course_id.id">
                                                             <t t-esc="course.name"/>
                                                         </option>
                                                     </t>
@@ -643,11 +645,13 @@
                                                     </t>
                                                 </t>
                                             </select>
-                                            <select id="payment_partner_id" name="payment_partner_id" required="required">
+                                            <select id="payment_partner_id" name="payment_partner_id"
+                                                    required="required">
                                                 <option value="" selected="selected">e.g. Select Customer</option>
                                                 <t t-if="payment_referral_id">
                                                     <t t-foreach="partner_ids or []" t-as="partner">
-                                                        <option t-att-value="partner.id" t-att-selected="partner.id == payment_referral_id.order_id.partner_id.id">
+                                                        <option t-att-value="partner.id"
+                                                                t-att-selected="partner.id == payment_referral_id.order_id.partner_id.id">
                                                             <t t-esc="partner.name"/>
                                                         </option>
                                                     </t>
@@ -659,7 +663,7 @@
                                                         </option>
                                                     </t>
                                                 </t>
-                                                
+
                                             </select>
                                             <select id="payment_expiry_time" name="payment_expiry_time">
                                                 <option value="5_minutes">5 minutes</option>
@@ -669,14 +673,16 @@
                                             </select>
                                             <label>Generated Link</label>
                                             <t t-if="payment_referral_id">
-                                                <input type="text" id="generated_payment_link" readonly="readonly" t-att-value="payment_referral_id.generated_url"/>
+                                                <input type="text" id="generated_payment_link" readonly="readonly"
+                                                       t-att-value="payment_referral_id.generated_url"/>
                                             </t>
                                             <t t-else="">
                                                 <input type="text" id="generated_payment_link" readonly="readonly"/>
                                             </t>
-                                            
+
                                             <button type="submit" class="mr-5" style="width: 70%">Generate Link</button>
-                                            <a type="button" class="fa fa-copy" id="payment_copy_icon" style="cursor: pointer;margin-left: 10px;color: black;"/>
+                                            <a type="button" class="fa fa-copy" id="payment_copy_icon"
+                                               style="cursor: pointer;margin-left: 10px;color: black;"/>
 
                                             <!-- <a type="button" class="btn btn-warning mr-5"
                                                id="generatePaymentLinkButton">Generate Link</a>
@@ -685,16 +691,18 @@
                                             <!-- <button class="mr-5">Generate Link</button><i class="fa fa-copy" style="cursor: pointer;margin-left: 10px;"></i> -->
                                         </div>
                                         <script>
-                                            document.getElementById("payment_copy_icon").addEventListener("click", function () {
-                                                const copyButton = document.getElementById('payment_copy_icon');  // Copy button ID
-                                                const fieldTextElement = document.getElementById('generated_payment_link');
-                                                const fieldText = fieldTextElement.value.trim();
-                                                navigator.clipboard.writeText(fieldText).then(() =&gt; {
-                                                    alert("Referral link copied");
-                                                }).catch(err =&gt; {
-                                                    console.error('Failed to copy:', err);
-                                                    alert("Failed to copy the Referral link.");
-                                                });
+                                            document.getElementById("payment_copy_icon").addEventListener("click",
+                                            function () {
+                                            const copyButton = document.getElementById('payment_copy_icon'); // Copy
+                                            button ID
+                                            const fieldTextElement = document.getElementById('generated_payment_link');
+                                            const fieldText = fieldTextElement.value.trim();
+                                            navigator.clipboard.writeText(fieldText).then(() =&gt; {
+                                            alert("Referral link copied");
+                                            }).catch(err =&gt; {
+                                            console.error('Failed to copy:', err);
+                                            alert("Failed to copy the Referral link.");
+                                            });
                                             });
 
                                         </script>

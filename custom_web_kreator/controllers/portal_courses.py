@@ -1562,7 +1562,7 @@ class PortalMyCourses(http.Controller):
                 bank_id = kwargs.get('bank_id')
                 print("bank_name", bank_id)
                 if bank_id:
-                    bank = request.env['res.partner.bank'].sudo().search([('id', '=', bank_id)], limit=1)
+                    bank = request.env['res.partner.bank'].sudo().search([('bank_id', '=', int(bank_id))])
                     if bank:
                         partner_values['bank_id'] = bank.id  # Assign the bank_id to the partner record
                     else:
@@ -1580,7 +1580,7 @@ class PortalMyCourses(http.Controller):
                 if upi_mobile_number:
                     partner_values['upi_mobile_number'] = upi_mobile_number
 
-                upload_file = kwargs.get('upload_file')
+                upload_file = kwargs.get('bank_file')
                 if upload_file:
                     try:
                         file_data = upload_file.read()

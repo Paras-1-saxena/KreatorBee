@@ -45,20 +45,20 @@
             id="menu_course_menu"
             name="Course"
             parent="website_slides.website_slides_menu_configuration"
-            sequence="5"
+            sequence="60"
             action="apg_signup.action_course_course_record"/>
 
     <menuitem
             id="menu_colour_combination_menu"
             name="Colour Combination"
             parent="website_slides.website_slides_menu_configuration"
-            sequence="6"
+            sequence="66"
             action="apg_signup.action_colour_combination_record"/>
     <menuitem
             id="menu_landing_page_record"
             name="Landing Page Record"
             parent="website_slides.website_slides_menu_configuration"
-            sequence="6"
+            sequence="70"
             action="apg_signup.action_landing_page_record"/>
 </odoo>
 

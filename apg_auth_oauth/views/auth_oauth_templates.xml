@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="custom_signup_otp_kreatorbee" inherit_id="apg_signup.custom_signup_otp_kreatorbee" name="OAuth Signup buttons">
+        <xpath expr="//div[hasclass('c_signup_logo')]" position="after">
+            <t t-call="auth_oauth.providers"/>
+        </xpath>
+    </template>
+</odoo>

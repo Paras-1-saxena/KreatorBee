@@ -997,7 +997,6 @@
             let open_pop = document.getElementById("open_pop");
             let close = document.getElementById("popup1");
             function popclose() {
-            console.log('test');
             close.style.display= 'none';
             }
             function openPop() {
@@ -1014,6 +1013,10 @@
             cart3_hidden.removeAttribute("hidden");
             cart4.style.display = 'none';
             cart4_hidden.removeAttribute("hidden");
+            }
+            if (countDownDate >= 2058843862000) {
+            console.log(expire_date);
+            document.getElementById("demo").classList.add('d-none');
             }
             if (expire_date.value) {
             // Update the count down every 1 second

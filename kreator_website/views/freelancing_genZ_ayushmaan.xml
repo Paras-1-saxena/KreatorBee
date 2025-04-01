@@ -1239,6 +1239,22 @@
                 function openPop() {
                 close.style.display = 'flex';
                 }
+                if (expire_date.value == '') {
+                document.getElementById("pop_title").innerHTML = 'Referral Link Not Generated';
+                document.getElementById("pop_text").innerHTML = 'To Earn Commission, Generate the Referral Link <br/> and share it with Customer';
+                cart1.style.display = 'none';
+                cart1_hidden.removeAttribute("hidden");
+                cart2.style.display = 'none';
+                cart2_hidden.removeAttribute("hidden");
+                cart3.style.display = 'none';
+                cart3_hidden.removeAttribute("hidden");
+                cart4.style.display = 'none';
+                cart4_hidden.removeAttribute("hidden");
+                }
+                if (countDownDate >= 2058843862000) {
+                console.log(expire_date);
+                document.getElementById("demo").classList.add('d-none');
+                }
                 if (expire_date.value) {
                 // Update the count down every 1 second
                 var x = setInterval(function() {

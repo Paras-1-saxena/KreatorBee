@@ -45,7 +45,7 @@
                                     src="/custom_web_kreator/static/src/nev-icon.svg"
                             />
                             <!-- Logo -->
-                            <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 109px;"/>
+                            <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 160px;"/>
                             <!-- Menu-->
                             <div class="d-lg-flex d-none gap-4">
                                 <div
@@ -124,7 +124,7 @@
                                         <li>
                                             <a href="/partner/kyc">
                                                 <i class="ri-checkbox-blank-circle-line"></i>
-                                                kyc
+                                                KYC
                                             </a>
                                         </li>
                                         <li>
@@ -208,7 +208,6 @@
 
 
                             <section class="sales-data my-5">
-                                <t t-if="data">
                                     <div class="d-flex justify-content-center align-items-center">
                                         <div class="total-sales-card p-4 d-flex flex-column justify-content-center align-items-center">
                                             <h2>Total Sales</h2>
@@ -283,20 +282,19 @@
                                             </div>
                                         </div>
                                     </div>
-                                </t>
-                                <t t-if="not data">
-                                    <div class="row justify-content-center">
-                                        <div class="col-lg-5 col-md-5 col-sm-11">
-                                            <img class="img-fluid" src="/custom_web_kreator/static/src/no_data.svg" atl="No Data"/>
-                                        </div>
-                                        <div class="col-12 text-center fs-4">
-                                            <span style="background-color:#fff5c6;" class="shadow px-3 py-2 mb-5 rounded">
-                                                No sales data available. Data will appear once sales are recorded.
-                                            </span>
+<!--                                <t t-if="not data">-->
+<!--                                    <div class="row justify-content-center">-->
+<!--                                        <div class="col-lg-5 col-md-5 col-sm-11">-->
+<!--                                            <img class="img-fluid" src="/custom_web_kreator/static/src/no_data.svg" atl="No Data"/>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-12 text-center fs-4">-->
+<!--                                            <span style="background-color:#fff5c6;" class="shadow px-3 py-2 mb-5 rounded">-->
+<!--                                                No sales data available. Data will appear once sales are recorded.-->
+<!--                                            </span>-->
 
-                                        </div>
-                                    </div>
-                                </t>
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </t>-->
                             </section>
                         </main>
                     </div>
