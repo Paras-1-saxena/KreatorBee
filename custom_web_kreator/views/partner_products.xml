@@ -329,10 +329,10 @@
                             <!--                                </t>-->
                             <!--                            </section>-->
 
-                            <section class="row g-4 my-4">
+                            <section class="row justify-content-around g-4 my-4">
                                 <t t-foreach="product_cart" t-as="cart">
-                                    <div class="col-lg-6 col-12">
-                                        <div class="product d-flex">
+                                    <div class="col-lg-5 col-12">
+                                        <div class="product row">
                                             <div class="col-5">
                                                 <a>
                                                     <img
@@ -345,61 +345,116 @@
                                                             style="width: 125px; height: 170px; display: block; margin: 0 auto;"/>
                                                 </a>
                                             </div>
-                                            <div class="p-3 row">
-                                                <p class="fs-3">
-                                                    <t t-esc="cart.name"/>
-                                                </p>
-
-                                                <div class="d-flex gap-4 align-items-center">
-                                                    <p>By
-                                                        <t t-esc="cart.user_id.name"/>
+                                            <div class="col-7">
+                                                <div class="p-3 row">
+                                                    <p class="fs-3">
+                                                        <t t-esc="cart.name"/>
                                                     </p>
-                                                    <!--                                                    <p>-->
-                                                    <!--                                                        <i class="ri-star-fill"></i>-->
-                                                    <!--                                                        <i class="ri-star-fill"></i>-->
-                                                    <!--                                                        <i class="ri-star-fill"></i>-->
-                                                    <!--                                                        <i class="ri-star-fill"></i>-->
-                                                    <!--                                                        <i class="ri-star-fill"></i>-->
-                                                    <!--                                                        <span>5.0</span>-->
-                                                    <!--                                                    </p>-->
+
+                                                    <div class="d-flex gap-4 align-items-center">
+                                                        <p>By
+                                                            <t t-esc="cart.user_id.name"/>
+                                                        </p>
+                                                        <!--                                                    <p>-->
+                                                        <!--                                                        <i class="ri-star-fill"></i>-->
+                                                        <!--                                                        <i class="ri-star-fill"></i>-->
+                                                        <!--                                                        <i class="ri-star-fill"></i>-->
+                                                        <!--                                                        <i class="ri-star-fill"></i>-->
+                                                        <!--                                                        <i class="ri-star-fill"></i>-->
+                                                        <!--                                                        <span>5.0</span>-->
+                                                        <!--                                                    </p>-->
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-6 d-none d-md-block">
+                                                            <div>
+                                                                <b>Price</b>
+                                                            </div>
+                                                            ₹
+                                                            <t t-esc="cart.sales_price"/>
+                                                        </div>
+                                                        <div class="col-6 d-none d-md-block">
+                                                            <div>
+                                                                <b>Commission</b>
+                                                            </div>
+                                                            ₹
+                                                            <t t-esc="cart.partner_commission"/>
+                                                        </div>
+                                                        <div class="col-12 col-md-6  d-none d-md-block">
+                                                            <a href="/partner-referral">
+                                                                <button class="btn1"
+                                                                        style="width: 100%; height: auto; font-size: 12px;">
+                                                                    Generate Affiliate Link
+                                                                </button>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 my-2 my-md-0  d-none d-md-block">
+                                                            <!-- ELSE show the "Add to My List" form -->
+                                                            <form method="post" action="/remove/partner/myproducts">
+                                                                <input type="hidden" name="csrf_token"
+                                                                       t-att-value="request.csrf_token()"/>
+                                                                <input type="hidden" id="cartCourseID"
+                                                                       name="cartCourseID"
+                                                                       readonly="readonly"
+                                                                       t-att-value="cart.course_id.id"/>
+                                                                <input type="hidden" id="cartPartnerID"
+                                                                       name="cartPartnerID"
+                                                                       readonly="readonly"
+                                                                       t-att-value="cart.partner_id.id"/>
+                                                                <button type="submit" href="/partner-referral"
+                                                                        class="btn1"
+                                                                        style="width: 100%; height: auto; font-size: 12px;">
+                                                                    Remove
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-12">
                                                 <div class="row">
-                                                    <div class="col-6">
-                                                        <div><b>Price</b></div>
-                                                        ₹
-                                                        <t t-esc="cart.sales_price"/>
+                                                        <div class="col-6 d-block d-md-none">
+                                                            <div>
+                                                                <b>Price</b>
+                                                            </div>
+                                                            ₹
+                                                            <t t-esc="cart.sales_price"/>
+                                                        </div>
+                                                        <div class="col-6 d-block d-md-none">
+                                                            <div>
+                                                                <b>Commission</b>
+                                                            </div>
+                                                            ₹
+                                                            <t t-esc="cart.partner_commission"/>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 d-block d-md-none">
+                                                            <a href="/partner-referral">
+                                                                <button class="btn1"
+                                                                        style="width: 100%; height: auto; font-size: 12px;">
+                                                                    Generate Affiliate Link
+                                                                </button>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 my-2 my-md-0 d-block d-md-none">
+                                                            <!-- ELSE show the "Add to My List" form -->
+                                                            <form method="post" action="/remove/partner/myproducts">
+                                                                <input type="hidden" name="csrf_token"
+                                                                       t-att-value="request.csrf_token()"/>
+                                                                <input type="hidden" id="cartCourseID"
+                                                                       name="cartCourseID"
+                                                                       readonly="readonly"
+                                                                       t-att-value="cart.course_id.id"/>
+                                                                <input type="hidden" id="cartPartnerID"
+                                                                       name="cartPartnerID"
+                                                                       readonly="readonly"
+                                                                       t-att-value="cart.partner_id.id"/>
+                                                                <button type="submit" href="/partner-referral"
+                                                                        class="btn1"
+                                                                        style="width: 100%; height: auto; font-size: 12px;">
+                                                                    Remove
+                                                                </button>
+                                                            </form>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-6">
-                                                        <div><b>Commission</b></div>
-                                                        ₹
-                                                        <t t-esc="cart.partner_commission"/>
-                                                    </div>
-                                                    <div class="col-12 col-md-6">
-                                                        <a href="/partner-referral">
-                                                            <button class="btn1"
-                                                                    style="width: 100%; height: auto; font-size: 12px;">
-                                                                Generate Affiliate Link
-                                                            </button>
-                                                        </a>
-                                                    </div>
-                                                    <div class="col-12 col-md-6 my-2 my-md-0">
-                                                        <!-- ELSE show the "Add to My List" form -->
-                                                        <form method="post" action="/remove/partner/myproducts">
-                                                            <input type="hidden" name="csrf_token"
-                                                                   t-att-value="request.csrf_token()"/>
-                                                            <input type="hidden" id="cartCourseID" name="cartCourseID"
-                                                                   readonly="readonly"
-                                                                   t-att-value="cart.course_id.id"/>
-                                                            <input type="hidden" id="cartPartnerID" name="cartPartnerID"
-                                                                   readonly="readonly"
-                                                                   t-att-value="cart.partner_id.id"/>
-                                                            <button type="submit" href="/partner-referral" class="btn1"
-                                                               style="width: 100%; height: auto; font-size: 12px;">
-                                                                Remove
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>

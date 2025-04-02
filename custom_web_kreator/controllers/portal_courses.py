@@ -3088,6 +3088,7 @@ class PortalMyCourses(http.Controller):
                     'course_id': course_id,
                     'course_name': course.name,
                     'promote_url': promote_url,
+                    'file_name': course.promotional_material_ids.filtered(lambda pm: pm.id == material_id).promotional_attachment_name,
                     'back': back
                 }
                 return request.render('custom_web_kreator.promotional_consume', values)

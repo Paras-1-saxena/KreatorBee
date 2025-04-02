@@ -458,7 +458,7 @@
                                     <table class="table table--alternate">
                                         <thead>
                                             <tr>
-                                                <th>Name</th>
+<!--                                                <th>Name</th>-->
                                                 <th>File Name</th>
                                                 <th>Action</th>
                                             </tr>
@@ -466,9 +466,9 @@
                                         <tbody>
                                             <t t-foreach="promotional_materials" t-as="material">
                                                 <tr>
-                                                    <td>
-                                                        <t t-esc="course.name"/>
-                                                    </td>
+<!--                                                    <td>-->
+<!--                                                        <t t-esc="course.name"/>-->
+<!--                                                    </td>-->
                                                     <td>
                                                         <t t-esc="material.promotional_attachment_name or 'N/A'"/>
                                                     </td>
