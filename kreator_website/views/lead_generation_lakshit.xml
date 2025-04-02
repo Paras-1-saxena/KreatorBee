@@ -232,7 +232,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 pe-md-5 d-block d-md-none">
+                        <div class="col-12 col-md-5 d-flex justify-content-center align-items-center mt-4 mt-md-0 d-flex d-md-none">
+                            <div class="bg-kreator-yellow-900 d-flex justify-content-center align-items-center rounded-50"
+                                 style="border: 5px solid black; box-shadow: 15px 15px black;
+                width: 400px;; max-width: 500px; height: auto;">
+                                <img src="/kreator_website/static/src/img/lead1.png"
+                                     style="transform: scaleX(-1); width: 100%; max-width: 100%; height: auto; border-radius: 46px;"
+                                     alt="section14" class="object-fit-contain img-fluid"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 pe-md-5 d-block d-md-none mt-4 mt-md-0">
                             <div class="d-flex px-3 gap-4 flex-column text-center text-md-start">
                                 <span class="fs-40 fs-md-60 jost-bold">
                                     Lead Generation
@@ -269,7 +278,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-md-5 d-flex justify-content-center align-items-center mt-4 mt-md-0">
+                        <div class="col-12 col-md-5 d-flex justify-content-center align-items-center mt-4 mt-md-0 d-none d-md-flex">
                             <div class="bg-kreator-yellow-900 d-flex justify-content-center align-items-center rounded-50"
                                  style="border: 5px solid black; box-shadow: 15px 15px black;
                 width: 400px;; max-width: 500px; height: auto;">
@@ -375,18 +384,18 @@
                                     <em class="text-kreator-yellow-900 times_font fs-64">Course.</em>
                                 </strong>
                             </h2>
-                            <div class="d-flex justify-content-center flex-column gap-3">
+                            <div class="d-flex justify-content-center flex-column gap-3 fs-5">
                                 <p>
                                     This course is designed to help businesses and individuals master lead generation,
                                     from understanding the fundamentals to advanced platform-specific techniques.
                                 </p>
                                 <p>
-                                    <strong class="text-kreator-yellow-900">
+                                    <strong class="text-kreator-yellow-900 fs-5">
                                         Whether you are a beginner or an experienced marketer, this course will equip
                                         you with actionable strategies to boost your lead-generation efforts.
                                     </strong>
                                 </p>
-                                <p>
+                                <p class="fs-5">
                                     Learn how to attract, engage, and convert high-quality leads using various digital
                                     platforms and strategies.
                                 </p>
@@ -670,11 +679,11 @@
                                 About
                                 <em class="text-kreator-yellow-900">Me</em>
                             </h2>
-                            <p style="font-size: 16px; line-height: 1.6;">
-                                <span class="text-kreator-yellow-900">
-                                    Lakshit Sethia is a proactive student at the Indian Institute of Technology,
-                                    Guwahati, specializing in Electronics and Communication Engineering.
-                                </span>
+                            <p style="font-size: 20px; line-height: 1.6; width: 95%; margin-left: 10px;">
+                                <span>
+                                    Lakshit Sethia
+                                </span><span>is a proactive student at the Indian Institute of Technology,
+                                    Guwahati, specializing in Electronics and Communication Engineering.</span>
                                 <br/>
                                 He serves as the Branch Representative for the ECE department, demonstrating leadership
                                 and commitment to his peers.

@@ -689,7 +689,7 @@
             </div>
 
             <div id="section_6" class="container px-4 py-5">
-                <div class="row aboutme_section d-flex flex-wrap align-items-center justify-content-between">
+                <div class="row aboutme_section d-flex flex-wrap align-items-center justify-content-left">
                     <div class="col-md-4 col-12 d-flex flex-column gap-3 align-items-center text-center">
                         <div style="font-size: 45px; padding: 20px; font-weight: bold;">
                             About
@@ -699,15 +699,18 @@
                              class="img-fluid rounded-3" style="max-width: 300px; object-fit: cover;"/>
                     </div>
 
-                    <div class="col-md-8 col-12 text-center py-3">
-                        <div style="font-size: 22px; font-weight: bold;">
+                    <div class="col-md-6 col-12 text-left py-3">
+                        <div style="font-size: 30px; font-weight: bold;">
                             <span style="color: #FFC107;">
-                                Founder of Growth Rocket, a 7-figure social media agency specializing in content
+                                Founder of Growth Rocket,
+                            </span>
+                            <span>
+                                a 7-figure social media agency specializing in content
                                 strategy and brand growth.
                             </span>
                         </div>
                         <div class="text-muted"
-                             style="font-family: 'Futura Md BT'; font-size: 18px; font-weight: 400; margin-top: 10px;">
+                             style=" font-size: 18px; font-weight: 400; margin-top: 10px;">
                             I have built an audience of over 1 million followers across Instagram and YouTube by
                             creating high-impact, viral finance content. Through strategic collaborations with top
                             brands like Poker Baazi, Paytm, and WeWork, I have delivered content strategies and
@@ -734,7 +737,7 @@
                             </div>
                         </div>
 
-                        <div class="d-flex justify-content-center gap-3 mt-4">
+                        <div class="d-flex justify-content-left gap-3 mt-4">
                             <t t-if="m5">
                                 <a t-att-href="m5" target="_blank">
                                     <img width="32" height="32" src="/kreator_website/static/src/img/instagram.svg"

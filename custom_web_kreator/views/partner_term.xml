@@ -252,7 +252,7 @@
                             <!-- product filter -->
                             <div class="my-4 text-center d-block d-md-none">
                                 <span class="fs-4">
-                                    <b>Term &amp; Conditions</b>
+                                    <b>KreatorBee Rules and Regulations</b>
                                 </span>
                             </div>
                             <div class="content-containter my-4">
@@ -260,63 +260,33 @@
                                 <!-- Form Section -->
                                 <div class="form-container">
                                     <div class="form-content">
-                                        <h3>1. Introduction</h3>
-                                        <p>Welcome to the KreatorBee.com Affiliate Program. By signing up as an
-                                            affiliate, you agree to comply with the following terms and conditions.
-                                            Please read them carefully before participating.
-                                        </p>
-                                        <h3>2. Definitions</h3>
-                                        <p>
-                                            <ul>
-                                                <li>
-                                                    <b>Affiliate:</b> An individual or entity that promotes KreatorBee.com's
-                                                    products or services in exchange for commissions.
-                                                </li>
-                                                <li>
-                                                    <b>Merchant:</b> KreatorBee.com, the provider of products or services.
-                                                </li>
-                                                <li>
-                                                    <b>Commission:</b> The payment earned by the Affiliate for referred sales
-                                                    or leads.
-                                                </li>
-                                            </ul>
-                                        </p>
-                                        <h3>3. Eligibility</h3>
-                                        <p>
-                                            To join the Affiliate Program, you must:
-                                            <ul>
-                                                <li>
-                                                    Be at least 18 years old.
-                                                </li>
-                                                <li>
-                                                    Possess a valid PAN (Permanent Account Number) and GSTIN (Goods and Services Tax Identification Number) if applicable.
-                                                </li>
-                                                <li>
-                                                    Own and operate a website, blog, or platform that complies with Indian laws and KreatorBee.com's standards.
-                                                </li>
-                                            </ul>
-                                        </p>
-                                        <h3>4. Affiliate Responsibilities</h3>
-                                        <p>
-                                            As an Affiliate, you agree to:
-                                            <ul>
-                                                <li>
-                                                    Promote KreatorBee.com's products or services ethically and legally.
-                                                </li>
-                                                <li>
-                                                    Avoid misleading advertising and ensure all claims are truthful and substantiated.
-                                                </li>
-                                                <li>
-                                                    Comply with the Information Technology Act, 2000, the Consumer Protection Act, 2019, and ASCI guidelines.
-                                                </li>
-                                                <li>
-                                                    Disclose your affiliate relationship as required by law.
-                                                </li>
-                                                <li>
-                                                    Refrain from bidding on keywords containing KreatorBee.com's trademark or variations thereof without prior approval.
-                                                </li>
-                                            </ul>
-                                        </p>
+                                        <b>Bee Partners act as affiliates who promote and sell courses created by the Creators.</b>
+                                        <ul class="mt-4">
+                                            <li>
+                                                <b>Ethical Marketing:</b> All promotions must be honest and free from spam, false claims, or deceptive tactics.
+                                            </li>
+                                            <li>
+                                                <b>Transparency:</b> Course details must be accurately presented without misrepresentation or false promises. No placement guarantees should be implied.
+                                            </li>
+                                            <li>
+                                                <b>Strict Compliance:</b> Any instance of mis-selling will result in immediate and permanent removal from the platform.
+                                            </li>
+                                            <li>
+                                                <b>Professional Conduct:</b> All consumer interactions must be polite, respectful, and professional.
+                                            </li>
+                                            <li>
+                                                <b>Commission Structure:</b> Payouts will be based on successful course sales as per KreatorBee’s policies.
+                                            </li>
+                                            <li>
+                                                <b>Zero Tolerance for Fraud:</b> Any fraudulent activities, including fake referrals or sales manipulation, will lead to instant termination.
+                                            </li>
+                                            <li>
+                                                <b>Brand Integrity:</b> Partners must adhere to KreatorBee’s branding guidelines and must not falsely represent the company.
+                                            </li>
+                                            <li>
+                                                <b>Open Communication:</b> KreatorBee reserves the right to contact partners as needed.
+                                            </li>
+                                        </ul>
                                     </div>
                                     <div class="image-container d-none d-md-flex">
                                         <img src="/custom_web_kreator/static/src/Term-Condition.png"
