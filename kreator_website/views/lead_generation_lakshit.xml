@@ -59,9 +59,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between bg-black d-none d-md-flex" style="position: fixed; width: 100vw; z-index: 1;">
+            <div class="row justify-content-between bg-black d-none d-md-flex mt-1" style="position: fixed; width: 98vw; z-index: 1; margin-left: 10px; border-radius: 15px;">
                 <div class="col-10 col-md-3">
-                    <p class="py-4 px-4 fs-4" style="color: #FFCD00;">
+                    <p class="pt-4 px-4 fs-4" style="color: #FFCD00;">
                         <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
                         <b>Lead Generation</b>
                     </p>
@@ -73,7 +73,7 @@
                 </div>
                 <div class="col-12 col-md-5">
                     <div class="row justify-content-end">
-                        <div class="col-8 col-md-6 my-4 fs-4">
+                        <div class="col-8 col-md-7 mt-4 fs-4">
                             INR
                             <span class="text-decoration-line-through">
                                 <t t-esc="price1"/>
@@ -105,9 +105,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between bg-black d-none d-md-flex" style="width: 100vw;">
+            <div class="row justify-content-between bg-black d-none d-md-flex mt-1" style="width: 98vw; margin-left: 10px; border-radius: 15px;">
                 <div class="col-10 col-md-3">
-                    <p class="py-4 px-4 fs-4" style="color: #FFCD00;">
+                    <p class="pt-4 px-4 fs-4" style="color: #FFCD00;">
                         <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
                         <b>Lead Generation</b>
                     </p>
@@ -119,7 +119,7 @@
                 </div>
                 <div class="col-12 col-md-5">
                     <div class="row justify-content-end">
-                        <div class="col-8 col-md-6 my-4 fs-4">
+                        <div class="col-8 col-md-7 mt-4 fs-4">
                             INR
                             <span class="text-decoration-line-through">
                                 <t t-esc="price1"/>
@@ -151,7 +151,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between bg-black d-flex d-md-none" style="position: fixed; width: 104vw; z-index: 1;">
+            <div class="row justify-content-between bg-black d-flex d-md-none mt-1" style="position: fixed; width: 96vw; z-index: 1; margin-left: 8px; border-radius: 15px;">
                 <div class="col-3 col-md-2">
                     <p id="demores" class="fs-4 my-4 blink_me text-center">
 
@@ -171,7 +171,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between bg-black d-flex d-md-none" style="width: 104vw; z-index: 1;">
+            <div class="row justify-content-between bg-black d-flex d-md-none mt-1" style="width: 96vw; z-index: 1; margin-left: 8px; border-radius: 15px;">
                 <div class="col-3 col-md-2">
                     <p id="demores" class="fs-4 my-4 blink_me">
 

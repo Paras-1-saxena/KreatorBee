@@ -169,7 +169,7 @@
                                     <a class='text-center'>
                                         <i class="ri-movie-line"></i>
                                         <p>
-                                            Training Video 1
+                                            Onboarding Video 1
                                         </p>
                                     </a>
                                 </div>
@@ -179,7 +179,7 @@
                                     <a class='text-center'>
                                         <i class="ri-movie-line"></i>
                                         <p>
-                                            Training Video 2
+                                            Onboarding Video 2
                                         </p>
                                     </a>
                                 </div>
@@ -189,7 +189,7 @@
                                     <a class='text-center'>
                                         <i class="ri-movie-line"></i>
                                         <p>
-                                            Training Video 3
+                                            Onboarding Video 3
                                         </p>
                                     </a>
                                 </div>
@@ -283,11 +283,13 @@
                                         <t t-esc="request.env.user.name"/>
                                     </h1>
                                     <div class="d-flex gap-3 align-items-center">
-                                        <a href="#"
+                                        <a
+                                                href="https://wa.me/+919289384910" target="_blank"
                                         >
                                             <img
-                                                    src="/custom_web_kreator/static/src/Whatsapp.png"/>
-                                            +1234567890
+                                                    src="/custom_web_kreator/static/src/Whatsapp.png"
+                                            />
+                                            +91 9289384910
                                         </a>
                                     </div>
                                 </div>
@@ -297,40 +299,54 @@
                                 <div class="row justify-content-around border1 rounded text-center">
                                     <t t-if="agreement == 'agree'">
                                         <div class="col-lg-6 col-md-6 col-sm-12">
-                                            <img src="/custom_web_kreator/static/src/thankyou.png" class="img-fluid" alt="Welcome Icon"/>
+                                            <img src="/custom_web_kreator/static/src/thankyou.png" class="img-fluid"
+                                                 alt="Welcome Icon"/>
                                             <h1>Thank You for Joining the Bee Partner Program!</h1>
-<!--                                            <h5>Here are the next steps:</h5>-->
-<!--                                            <h6>-->
-<!--                                                <span class="highlight">Account Review (Up to 24 Hours):</span>-->
-<!--                                                Our team will review your application, and you'll receive a notification once approved.-->
-<!--                                            </h6>-->
-<!--                                            <h6>-->
-<!--                                                <span class="highlight">After Approval:</span>-->
-<!--                                                Gain access to your unique Bee Partner links and start promoting top courses.-->
-<!--                                            </h6>-->
-<!--                                            <h6>We appreciate your patience and look forward to helping you maximize your earnings-->
-<!--                                            </h6>-->
+                                            <h4>Our Customer Support team will get in touch with you for your upcoming
+                                                Trainings
+                                            </h4>
+                                            <!--                                            <h5>Here are the next steps:</h5>-->
+                                            <!--                                            <h6>-->
+                                            <!--                                                <span class="highlight">Account Review (Up to 24 Hours):</span>-->
+                                            <!--                                                Our team will review your application, and you'll receive a notification once approved.-->
+                                            <!--                                            </h6>-->
+                                            <!--                                            <h6>-->
+                                            <!--                                                <span class="highlight">After Approval:</span>-->
+                                            <!--                                                Gain access to your unique Bee Partner links and start promoting top courses.-->
+                                            <!--                                            </h6>-->
+                                            <!--                                            <h6>We appreciate your patience and look forward to helping you maximize your earnings-->
+                                            <!--                                            </h6>-->
                                         </div>
                                     </t>
-<!--                                    <t t-else="">-->
-<!--                                        <div class="col-6">-->
+                                    <!--                                    <t t-else="">-->
+                                    <!--                                        <div class="col-6">-->
 
 
-<!--                                            <img src="/custom_web_kreator/static/src/thankyou.png" class="img-fluid" alt="Welcome Icon"/>-->
-<!--                                            <h1>Thank You for Joining the Bee Partner Program!</h1>-->
+                                    <!--                                            <img src="/custom_web_kreator/static/src/thankyou.png" class="img-fluid" alt="Welcome Icon"/>-->
+                                    <!--                                            <h1>Thank You for Joining the Bee Partner Program!</h1>-->
 
 
-<!--                                            <p>-->
-<!--                                                Our team will contact you within 24 hours, or you can reach us directly-->
-<!--                                                at-->
-<!--                                                0120-4162586.-->
-<!--                                            </p>-->
-<!--                                            <p>Sorry to hear that you do not agree with our terms and conditions.</p>-->
-<!--                                        </div>-->
-<!--                                    </t>-->
-                                    <div class="col-12 p-2">
+                                    <!--                                            <p>-->
+                                    <!--                                                Our team will contact you within 24 hours, or you can reach us directly-->
+                                    <!--                                                at-->
+                                    <!--                                                0120-4162586.-->
+                                    <!--                                            </p>-->
+                                    <!--                                            <p>Sorry to hear that you do not agree with our terms and conditions.</p>-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </t>-->
+                                    <div class="col-12 p-2 my-3">
                                         <div class="row justify-content-around">
-                                            <div class="col-lg-4 col-md-4 col-sm-10">
+                                            <div class="col-col-lg-4 col-md-4 col-sm-10 rounded" style="border: 1px solid black;">
+                                                <a href="https://whatsapp.com/channel/0029Vb9AgyDHwXbAFQJjuT1F" target="_blank">
+                                                    <span class="fs-5">Click here &amp; Follow the Kreator Bee Partners channel on WhatsApp</span>
+                                                    <img
+                                                    src="/custom_web_kreator/static/src/Whatsapp.png"
+                                            />
+                                                </a>
+                                            </div>
+                                            <div class="col-12"></div>
+                                            <div class="col-lg-4 col-md-4 col-sm-10 my-3">
+                                                <div class="fs-5 p-2">Click below to earn a rewarding 60% commission on every sale!</div>
                                                 <a href="/partner/product" class="custom-btn h5">
                                                     Start Promoting Now
                                                 </a>

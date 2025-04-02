@@ -378,11 +378,13 @@
                                                  src="/custom_web_kreator/static/src/play.png"
                                             />
                                         </a>
-                                        <a href="#"
+                                        <a
+                                                href="https://wa.me/+919289384910" target="_blank"
                                         >
                                             <img
-                                                    src="/custom_web_kreator/static/src/Whatsapp.png"/>
-                                            +1234567890
+                                                    src="/custom_web_kreator/static/src/Whatsapp.png"
+                                            />
+                                            +91 9289384910
                                         </a>
                                     </div>
                                 </div>

@@ -3190,7 +3190,7 @@ class PortalMyCourses(http.Controller):
     def partner_video_one(self, **kwargs):
         # Render the data page template
         iframe = Markup(
-            '<iframe src="https://player.vimeo.com/video/1068061920?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh; title="PART 1"></iframe>')
+            '<iframe src="https://player.vimeo.com/video/1071659872?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh;" title="Onboarding Video 1"></iframe>')
         return http.request.render('custom_web_kreator.partner_video1', {'iframe': iframe})
 
     @http.route('/partner-video2', type='http', auth='user', website=True)
