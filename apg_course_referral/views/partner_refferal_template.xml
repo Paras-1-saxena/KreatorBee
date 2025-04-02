@@ -693,12 +693,11 @@
                                         <script>
                                             document.getElementById("payment_copy_icon").addEventListener("click",
                                             function () {
-                                            const copyButton = document.getElementById('payment_copy_icon'); // Copy
-                                            button ID
+                                            const copyButton = document.getElementById('payment_copy_icon'); // Copy button ID
                                             const fieldTextElement = document.getElementById('generated_payment_link');
                                             const fieldText = fieldTextElement.value.trim();
                                             navigator.clipboard.writeText(fieldText).then(() =&gt; {
-                                            alert("Referral link copied");
+                                            alert("Payment link copied");
                                             }).catch(err =&gt; {
                                             console.error('Failed to copy:', err);
                                             alert("Failed to copy the Referral link.");

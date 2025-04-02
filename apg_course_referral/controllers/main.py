@@ -189,7 +189,7 @@ class ReferralController(http.Controller):
         if kwargs.get('success') == 'Success':
             payment_referral_id = request.env['apg.course.referral'].sudo().search([('id', '=', kwargs.get('payment_referral_id'))])
             values = {
-                'course_ids': course_ids,
+                'product_cart_ids': course_ids,
                 'partner_ids': partner_ids,
                 'payment_referral_id': payment_referral_id,
 
