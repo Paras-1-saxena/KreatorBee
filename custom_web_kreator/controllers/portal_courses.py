@@ -3197,14 +3197,14 @@ class PortalMyCourses(http.Controller):
     def partner_video_two(self, **kwargs):
         # Render the data page template
         iframe = Markup(
-            '<iframe src="https://player.vimeo.com/video/1068093187?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh; title="PART 2"></iframe>')
+            '<iframe src="https://player.vimeo.com/video/1071755214?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh;" title="Onboarding Video 2"></iframe>')
         return http.request.render('custom_web_kreator.partner_video2', {'iframe': iframe})
 
     @http.route('/partner-video3', type='http', auth='user', website=True)
     def partner_video_three(self, **kwargs):
         # Render the data page template
         iframe = Markup(
-            '<iframe src="https://player.vimeo.com/video/1068087104?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh; title="PART 3"></iframe>')
+            '<iframe src="https://player.vimeo.com/video/1071754776?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh;" title="Onboarding Video 3"></iframe>')
         return http.request.render('custom_web_kreator.partner_video3', {'iframe': iframe})
 
     @http.route('/partner-term', type='http', auth='public', website=True)

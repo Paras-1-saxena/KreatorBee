@@ -3,6 +3,7 @@
 <odoo>
     <template id="web_layout_pixel" name="website_pixel_integration" inherit_id="web.layout">
         <xpath expr="//head" position="inside">
+            <meta name="msvalidate.01" content="297D5F50B7CBD2C689C412FD0043CCD7" />
             <meta name="facebook-domain-verification" content="gquh2blrsego3n2x0f629e1ks3uc5x" />
             <meta name="facebook-domain-verification" content="i6sb8lrh3vww9n1ayl9oj0t2b9tayh" />
             <script>
