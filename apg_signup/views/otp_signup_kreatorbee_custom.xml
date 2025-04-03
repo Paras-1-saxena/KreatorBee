@@ -1,5 +1,5 @@
 <odoo>
-    <template id="otp_signup_kreator_bee_custom" name="Sign up">
+    <template id="otp_signup_Kreator_bee_custom" name="Sign up">
         <style>
             input[type=number] {
             -moz-appearance: textfield;
@@ -14,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <t t-call="website.layout">
             <div id="wrap" class="row justify-content-around" style="background-color: #FFD000;">
-                <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="col-lg-4 col-md-4 col-sm-12" id="main_signup">
                     <div class="o-cust-signup">
                         <form role="form" method="post" name="login" class="o-cust-signup-form"
                               enctype="multipart/form-data">
@@ -153,17 +153,23 @@
                                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/> -->
                                         <div class="otp-inputs">
                                             <input type="number" maxlength="1" class="otp-input f14" id="otp_1"
-                                                   name="otp_1" oninput="if(this.value.length > 1) this.value = this.value.slice(0, 1);"/>
+                                                   name="otp_1"
+                                                   oninput="if(this.value.length > 1) this.value = this.value.slice(0, 1);"/>
                                             <input type="number" maxlength="1" class="otp-input f14" id="otp_2"
-                                                   name="otp_2" oninput="if(this.value.length > 1) this.value = this.value.slice(0, 1);"/>
+                                                   name="otp_2"
+                                                   oninput="if(this.value.length > 1) this.value = this.value.slice(0, 1);"/>
                                             <input type="number" maxlength="1" class="otp-input f14" id="otp_3"
-                                                   name="otp_3" oninput="if(this.value.length > 1) this.value = this.value.slice(0, 1);"/>
+                                                   name="otp_3"
+                                                   oninput="if(this.value.length > 1) this.value = this.value.slice(0, 1);"/>
                                             <input type="number" maxlength="1" class="otp-input f14" id="otp_4"
-                                                   name="otp_4" oninput="if(this.value.length > 1) this.value = this.value.slice(0, 1);"/>
+                                                   name="otp_4"
+                                                   oninput="if(this.value.length > 1) this.value = this.value.slice(0, 1);"/>
                                             <input type="number" maxlength="1" class="otp-input f14" id="otp_5"
-                                                   name="otp_5" oninput="if(this.value.length > 1) this.value = this.value.slice(0, 1);"/>
+                                                   name="otp_5"
+                                                   oninput="if(this.value.length > 1) this.value = this.value.slice(0, 1);"/>
                                             <input type="number" maxlength="1" class="otp-input f14" id="otp_6"
-                                                   name="otp_6" oninput="if(this.value.length > 1) this.value = this.value.slice(0, 1);"/>
+                                                   name="otp_6"
+                                                   oninput="if(this.value.length > 1) this.value = this.value.slice(0, 1);"/>
                                             <a role="button" id="get_otp" class="otp-verify">Verify</a>
                                         </div>
                                     </div>
@@ -175,7 +181,7 @@
 
                                 <div id="div_signup" class="o-cust-signup-button" style="display: none;">
                                     <div class="mb-2 o-cust-div" style="margin-top: 20px !important;">
-                                        <button type="submit" class="btn btn-primary"
+                                        <button type="submit" class="btn btn-primary" onclick="waitingPage()"
                                                 id="submit_button _onSubmit_cus" style="width:100%;">Sign up
                                         </button>
                                     </div>
@@ -202,11 +208,32 @@
                             <div class="o_login_auth"/>
                         </div>
                     </div>
-
-
+                </div>
+            </div>
+            <div class="row d-none justify-content-around" id="signup_waiting">
+                <div class="col-10 col-md-4">
+                    <dotlottie-player
+                            src="https://lottie.host/c58d84ed-1980-4f34-9678-aec0484a91fd/3Ra3iWgYV2.lottie"
+                            background="transparent"
+                            speed="1"
+                            style="width: 100%; height: auto" loop='true' autoplay='true'></dotlottie-player>
+                </div>
+                <div class="col-12 text-center mb-4">
+                    <span class="fs-4"><u>Please Wait while we are setting up your profile</u></span>
                 </div>
             </div>
         </t>
+        <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module">
+        </script>
+        <script>
+            function waitingPage() {
+            const main_section = document.getElementById('main_signup');
+            const waiting_section = document.getElementById('signup_waiting');
+            main_section.classList.add('d-none');
+            signup_waiting.classList.remove('d-none');
+            signup_waiting.classList.add('d-flex');
+            }
+        </script>
     </template>
     <!-- Pop-up template -->
     <template id="popup_template" name="Responsive Popup">

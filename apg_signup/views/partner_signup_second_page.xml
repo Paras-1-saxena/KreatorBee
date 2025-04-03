@@ -6,7 +6,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             <t t-call="website.layout">
                 <div id="wrap" class="oe_structure oe_empty" style="background-color: #FFD000;">
-                    <div class="container">
+                    <div class="container" id="main_signup">
                         <div class="o-cust-signup" style="max-width: 673px !important;">
                             <form action="/sign-up/about/update" method="post" name="signup_details"
                                   class="o-cust-signup-details-form" enctype="multipart/form-data">
@@ -125,7 +125,8 @@
                                 <!-- Submit Button -->
                                 <div id="div_registration_btn mt-5">
                                     <div class="text-center mt-4">
-                                        <button type="submit" class="btn btn-primary o-cust-reg-button">Complete
+                                        <button type="submit" class="btn btn-primary o-cust-reg-button"
+                                                onclick="waitingPage()">Complete
                                             Registration
                                         </button>
                                     </div>
@@ -134,7 +135,35 @@
                         </div>
                     </div>
                 </div>
+                <div class="row d-none justify-content-around" id="signup_waiting">
+                    <div class="col-10 col-md-4">
+                        <dotlottie-player
+                                src="https://lottie.host/a8888e57-58b0-4af5-a1fa-f06d80dccb6f/k0qb5XCOoR.lottie"
+                                background="transparent"
+                                speed="1"
+                                style="width: 100%; height: auto"
+                                loop='true'
+                                autoplay='true'
+                        ></dotlottie-player>
+                    </div>
+                    <div class="col-12 text-center mb-4">
+                        <span class="fs-4">
+                            <u>Please Wait While we set up you Dashboard</u>
+                        </span>
+                    </div>
+                </div>
             </t>
+            <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module">
+            </script>
+            <script>
+                function waitingPage() {
+                const main_section = document.getElementById('main_signup');
+                const waiting_section = document.getElementById('signup_waiting');
+                main_section.classList.add('d-none');
+                signup_waiting.classList.remove('d-none');
+                signup_waiting.classList.add('d-flex');
+                }
+            </script>
         </template>
     </data>
 </odoo>
