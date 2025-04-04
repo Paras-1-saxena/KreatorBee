@@ -123,7 +123,7 @@
                         <div id="o_signin_div" class="text-center pt-3 f14">
                             <span>
                                 Don't have an account?
-                                <a t-attf-href="/web/signup" class="o-link" role="button">Signup</a>
+                                <a t-attf-href="/web/signup?user_type=partner" class="o-link" role="button">Signup</a>
                             </span>
                         </div>
                     </form>
