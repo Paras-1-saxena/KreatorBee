@@ -81,9 +81,9 @@ class OtpLoginHome(Home):
                                                                                    'login': qcontext["login"],
                                                                                    'otp_no': 1})
                     else:
-                        raise MissingError(_("Failed to send OTP:",data['reason']))
+                        raise ValidationError(_("Failed to send OTP:",data['reason']))
                 except Exception as e:
-                    raise MissingError(_("An error occurred:",str(e)))
+                    raise ValidationError(_("An error occurred:",str(e)))
                 return response
 
         else:

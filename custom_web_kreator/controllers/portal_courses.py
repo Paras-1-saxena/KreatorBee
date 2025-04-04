@@ -14,7 +14,8 @@ from psycopg2 import IntegrityError
 from odoo import http, SUPERUSER_ID
 from odoo.addons.website.controllers.form import WebsiteForm
 from odoo.addons.base.models.ir_qweb_fields import nl2br, nl2br_enclose
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
+import requests
 
 
 class PortalMyCourses(http.Controller):
@@ -198,6 +199,39 @@ class PortalMyCourses(http.Controller):
     #     # Render the data page template
     #     return http.request.render('custom_web_kreator.kyc_page_template')
 
+    @http.route('/ifsc/verification', type='http', auth='public', website=True, methods=['GET', 'POST'], csrf=False)
+    def ifsc_verification(self, **kwargs):
+        ifsc = kwargs.get('ifsc')
+        bank_id = request.env['res.bank'].sudo().search([('bic', '=', ifsc)])
+        bank = bank_id.name
+        branch = bank_id.street
+        if not bank_id:
+            url = f"https://ifsc.razorpay.com/{ifsc}"
+            headers = {
+                'Content-Type': 'application/json',
+                'Authorization': '••••••'
+            }
+            response = requests.request("GET", url,)
+            if response.status_code == 200:
+                response = json.loads(response.text)
+                bank_id = request.env['res.bank'].sudo().create({'name': response.get('BANK'), 'bic': ifsc,
+                                                                 'phone': response.get('CONTACT'),
+                                                                 'street': response.get('BRANCH'),
+                                                                 'street2': response.get('ADDRESS')})
+                bank = bank_id.name
+                branch = bank_id.street
+            else:
+                return request.make_response(
+                    data=json.dumps({'response': "failed", 'bank': bank, 'branch': branch}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=200
+                )
+        return request.make_response(
+            data=json.dumps({'response': "success", 'bank': bank, 'branch':branch}),
+            headers=[('Content-Type', 'application/json')],
+            status=200
+        )
+
     @http.route('/creator/kyc', type='http', auth='public', website=True, methods=['GET', 'POST'])
     def nkyc_page(self, **kwargs):
         # Fetch the current user and their partner record
@@ -337,17 +371,18 @@ class PortalMyCourses(http.Controller):
                 account_holder_name = kwargs.get('account_holder_name')
                 account_holder_number = kwargs.get('account_number')
                 ifsc_code = kwargs.get('ifsc_code')
-                bank_id = kwargs.get('bank_id')
                 print("bank_id", bank_id)
+                act_bank = request.env['res.bank'].sudo().search([('bic', '=', ifsc_code)])
 
                 # Search for the bank record using the bank_name
                 if bank_id:
-                    bank = request.env['res.partner.bank'].sudo().search([('id', '=', bank_id)], limit=1)
+                    bank = request.env['res.partner.bank'].sudo().search([('bank_id', '=', act_bank)], limit=1)
                     if bank:
                         partner_values['bank_id'] = bank.id  # Assign the bank_id to the partner record
                     else:
                         # Handle case where bank with the provided name is not found
-                        print("Bank with name not found.")
+                        bank = request.env['res.partner.bank'].sudo().create({'acc_number': account_holder_number,
+                                                                       'bank_id': act_bank.id})
                         # return request.render('custom_web_kreator.error_page_template', {
                         #     'error': f"Bank with name {bank_name} not found."
                         # })
@@ -425,14 +460,15 @@ class PortalMyCourses(http.Controller):
                 'account_holder_name': partner.Account_holder_name,
                 'account_number': partner.Account_holder_number,
                 'bank_id': bank_id if bank_id else '',  # This will render the bank's name in the template
-                'ifsc_code': partner.ifsc_code,
+                'ifsc_code': bank_id.bank_id.bic,
                 'upi_mobile_number': partner.upi_mobile_number,
                 'bank_file': bank_file,
                 'pan_number': partner.pan_card_number,
                 'pan_name': partner.pan_card_name,
                 'pan_file': pan_file,
                 'state_selection': partner.state_selection,
-
+                'bank': bank_id.bank_id.name,
+                'branch': bank_id.bank_id.street
             }
             return request.render('custom_web_kreator.nkyc_page_template', values)
         else:
@@ -1439,7 +1475,6 @@ class PortalMyCourses(http.Controller):
                 # return request.render('custom_web_kreator.nkyc_partner_template', {
                 #     'error': "You do not have permission to update this information. Only 'partner' users can update."
                 # })
-
             if request.httprequest.method == 'POST':
                 # Fetch the form data from the POST request
                 full_name = kwargs.get('full_name')
@@ -1559,18 +1594,23 @@ class PortalMyCourses(http.Controller):
                 account_holder_number = kwargs.get('account_number')
                 ifsc_code = kwargs.get('ifsc_code')
                 upi_mobile_number = kwargs.get('upi_mobile_number')
-                bank_id = kwargs.get('bank_id')
-                print("bank_name", bank_id)
-                if bank_id:
-                    bank = request.env['res.partner.bank'].sudo().search([('bank_id', '=', int(bank_id))])
+                act_bank = request.env['res.bank'].sudo().search([('bic', '=', ifsc_code)])
+                if act_bank:
+                    bank = request.env['res.partner.bank'].sudo().search([('bank_id', '=', act_bank.id)], limit=1)
                     if bank:
                         partner_values['bank_id'] = bank.id  # Assign the bank_id to the partner record
                     else:
                         # Handle case where bank with the provided name is not found
-                        print("Bank with name not found.")
-                        # return request.render('custom_web_kreator.error_page_template', {
-                        #     'error': f"Bank with name {bank_name} not found."
-                        # })
+                        if bank_id:
+                            bank_id.sudo().unlink()
+                            request._cr.commit()
+                        bank = request.env['res.partner.bank'].sudo().create({'acc_number': account_holder_number,
+                                                                          'bank_id': act_bank.id,
+                                                                              'partner_id': partner.id})
+                        partner_values['bank_id'] = bank.id
+                    # return request.render('custom_web_kreator.error_page_template', {
+                    #     'error': f"Bank with name {bank_name} not found."
+                    # })
                 if account_holder_name:
                     partner_values['Account_holder_name'] = account_holder_name
                 if account_holder_number:
@@ -1639,18 +1679,21 @@ class PortalMyCourses(http.Controller):
                 'document': partner.select_document,
                 'document_number': document_number,
                 'document_name': document_name,
+                'selected_document': selected_document,
                 "file_upload_front": file_upload_front,
                 "file_upload_back": file_upload_back,
                 'account_holder_name': partner.Account_holder_name,
                 'account_number': partner.Account_holder_number,
                 'bank_id': bank_id if bank_id else '',  # This will render the bank's name in the template
-                'ifsc_code': partner.ifsc_code,
+                'ifsc_code': bank_id[0].bank_id.bic if bank_id else '',
                 'upi_mobile_number': partner.upi_mobile_number,
                 'bank_file': bank_file,
                 'pan_number': partner.pan_card_number,
                 'pan_name': partner.pan_card_name,
                 'pan_file': pan_file,
                 'state_selection': partner.state_selection,
+                'bank': bank_id[0].bank_id.name if bank_id else '',
+                'branch': bank_id[0].bank_id.street if bank_id else ''
             }
             return http.request.render('custom_web_kreator.nkyc_partner_template', values)
         else:
