@@ -617,12 +617,16 @@
                                             />
                                         </a>
                                         <a
-                                                href="https://wa.me/+919289384910" target="_blank"
+                                                href="https://wa.me/+919289384910" target="_blank" class="text-center"
                                         >
                                             <img
                                                     src="/custom_web_kreator/static/src/Whatsapp.png"
                                             />
                                             +91 9289384910
+                                            <br/>
+                                            <div style="font-size: 10px;">
+                                                9:30 AM to 6:00 PM (Except Sundays)
+                                            </div>
                                         </a>
                                     </div>
                                 </div>
@@ -790,7 +794,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <label for="upload-front">Upload Front Side
+                                            <label for="upload-front">Upload Front Side (Upto 2MB)
                                                 <span style="color: red;">*</span>
                                             </label>
                                             <t t-if="file_upload_front">
@@ -827,7 +831,7 @@
 
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="upload-back">Upload Back Side
+                                            <label for="upload-back">Upload Back Side (Upto 2MB)
                                                 <span style="color: red;">*</span>
                                             </label>
                                             <t t-if="file_upload_back">
@@ -949,7 +953,7 @@
                                                    required="required"/>
                                         </div>
                                         <div class="col-md-4 mt-2">
-                                            <label for="bank-upload">Upload File
+                                            <label for="bank-upload">Upload File (Upto 2MB)
                                                 <span style="color: red;">*</span>
                                             </label>
                                             <t t-if="partner_id.upload_file">
@@ -988,7 +992,7 @@
                                                    required="required"/>
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="pan-upload">Upload PAN Card File
+                                            <label for="pan-upload">Upload PAN Card File (Upto 2MB)
                                                 <span style="color: red;">*</span>
                                             </label>
                                             <t t-if="partner_id.pan_card_file">

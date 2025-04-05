@@ -431,12 +431,16 @@
                                             />
                                         </a>
                                         <a
-                                                href="https://wa.me/+919289384910" target="_blank"
+                                                href="https://wa.me/+919289384910" target="_blank" class="text-center"
                                         >
                                             <img
                                                     src="/custom_web_kreator/static/src/Whatsapp.png"
                                             />
                                             +91 9289384910
+                                            <br/>
+                                            <div style="font-size: 10px;">
+                                                9:30 AM to 6:00 PM (Except Sundays)
+                                            </div>
                                         </a>
                                     </div>
                                 </div>
