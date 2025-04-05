@@ -3152,6 +3152,7 @@ class PortalMyCourses(http.Controller):
                 query = kwargs.get('query')
                 support_ticket = request.env['helpdesk.ticket'].sudo().create({'name': 'test', 'description':
                     query, 'team_id': team_id.id, 'partner_id': partner.id, 'partner_phone': partner.mobile})
+                support_ticket.description = query
                 return request.make_response(
                     data=json.dumps({'response': "success", 'ticket_id': f' Partner Support {support_ticket.id}'}),
                     headers=[('Content-Type', 'application/json')],
@@ -3167,6 +3168,7 @@ class PortalMyCourses(http.Controller):
                 query = kwargs.get('query')
                 support_ticket = request.env['helpdesk.ticket'].sudo().create({'name': 'test', 'description':
                     query, 'team_id': team_id.id, 'partner_id': partner.id, 'partner_phone': partner.mobile})
+                support_ticket.description = query
                 return request.make_response(
                     data=json.dumps({'response': "success", 'ticket_id': f'Customer Support {support_ticket.id}'}),
                     headers=[('Content-Type', 'application/json')],

@@ -6,11 +6,12 @@ from odoo.http import request
 import datetime as datetime
 import pytz
 
+
 class KreatorWebsite(http.Controller):
 
     @http.route('/gquh2blrsego3n2x0f629e1ks3uc5x.html', auth='public', website=True)
     def main_test(self, **kwargs):
-        test='a'
+        test = 'a'
         return request.redirect('/kreator_website/static/src/html/gquh2blrsego3n2x0f629e1ks3uc5x.html')
 
     @http.route('/landing/page/1', auth='public', website=True)
@@ -47,11 +48,11 @@ class KreatorWebsite(http.Controller):
     def video_editing_ayushman(self, **kwargs):
         course = request.env['slide.channel'].sudo().search([('id', '=', kwargs.get('course_id'))])
         values = self.fetch_values(**kwargs)
-        intro_video = Markup('''<iframe src="https://player.vimeo.com/video/1067332531?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                                    frameborder="0"
-                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-                                    style="width:100%;height:40vh; border-radius: 25px;"
-                                    title="problem"></iframe>''')
+
+        intro_video = Markup(
+            '''<iframe src="https://player.vimeo.com/video/1072780225?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0"
+             allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              style="width:100%;height:40vh; border-radius: 25px;" title="Course Info"></iframe>''')
         values.update({'intro_video': intro_video})
         return request.render("kreator_website.video_editing_ayushman", values)
 
@@ -96,9 +97,10 @@ class KreatorWebsite(http.Controller):
             'course_ids': course.course_ids, 'student_line_ids': course.student_line_ids, 'faq_ids': course.faq_ids,
             'h4': course.h4, 'c11': course.c11, 'image1': course.image1, 'course_id': course.id, 'course': course,
             'product_template_id': course.product_id.product_tmpl_id.id, 'product_id': course.product_id.id,
-            'price1': course.regular_price, 'price2': course.sales_price, 'num_to_word': {1: 'One', 2: 'Two', 3: 'Three',
-                                                                              4: 'Four', 5: 'Five', 6: 'Six',
-                                                                              7: 'Seven', 8: 'Eight', 9: 'Nine'}
+            'price1': course.regular_price, 'price2': course.sales_price,
+            'num_to_word': {1: 'One', 2: 'Two', 3: 'Three',
+                            4: 'Four', 5: 'Five', 6: 'Six',
+                            7: 'Seven', 8: 'Eight', 9: 'Nine'}
         }
         expiry_time = kwargs.get('course_name')
         if expiry_time:
