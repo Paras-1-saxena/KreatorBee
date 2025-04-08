@@ -965,6 +965,7 @@
                                             <t t-if="not partner_id.upload_file">
                                                 <input type="file" id="bank-upload" name="bank_file"
                                                        class="form-control"/>
+                                                <p style="font-size: 12px;">Upload Cancel Cheque/Passbook/Bank Statement</p>
                                             </t>
                                         </div>
                                     </div>

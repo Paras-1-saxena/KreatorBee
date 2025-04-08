@@ -9,7 +9,8 @@
         'views/video_editing_ayushman.xml',
         'views/freelancing_employees_ayushman.xml',
         'views/freelancing_genZ_ayushmaan.xml',
-        'views/lead_generation_lakshit.xml'
+        'views/lead_generation_lakshit.xml',
+        'views/paras_affiliate_marketing_basic.xml'
     ],
     "assets": {
         "web._assets_frontend_helpers": [

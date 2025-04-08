@@ -1,0 +1,1368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <template id="affiliate_marketing_basic_paras">
+        <head>
+            <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+            <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap"
+                  rel="stylesheet"/>
+        </head>
+        <t t-call="website.layout">
+            <style>.navbar{ display: none !important;} .o_footer{ display: none !important;}
+                .popup {
+                display: none;
+                position: fixed;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                justify-content: center;
+                align-items: center;
+                z-index: 1;
+                }
+                .popup-content {
+                background: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                text-align: center;
+                }
+                .popup:target {
+                display: flex;
+                }
+                .blink_me {
+                animation: blinker 1s linear infinite;
+                }
+
+                @keyframes blinker {
+                50% {
+                opacity: 0;
+                }
+                }
+
+                .manrope_bold {
+                font-family: "Manrope", sans-serif;
+                font-optical-sizing: auto;
+                font-weight: 800;
+                font-style: normal;
+                }
+
+                .manrope_medium {
+                font-family: "Manrope", sans-serif;
+                font-optical-sizing: auto;
+                font-weight: 500;
+                font-style: normal;
+                }
+
+                .accordion2 {
+                width: 100%;
+                background-color: white;
+                border-radius: 8px;
+                overflow: hidden;
+                }
+
+                .accordion-item2 {
+                padding-bottom: 12px;
+                }
+
+                .accordion-header2 {
+                background-color: white;
+                color: black;
+                padding-top: 15px;
+                padding-bottom: 15px;
+                cursor: pointer;
+                text-align: center;
+                border: 1px solid;
+                }
+
+                .accordion-header2 img {
+                width: 15px;
+                transition: transform 0.3s ease;
+                }
+
+                .accordion-content2 {
+                display: none;
+                padding: 15px;
+                background-color: #D4EBFF;
+                color: black;
+                font-size: 18px;
+                }
+
+                .active .accordion-content2 {
+                display: flex;
+                justify-content: center;
+                }
+
+                .active .accordion-item2 {
+                background-color: #D4EBFF;
+                }
+
+                .active .accordion-header2 img {
+                transform: rotate(270deg);
+                }
+                .sec_faq-item1 {
+                border: none;
+                z-index: 999;
+                padding-bottom: 12px;
+                }
+
+                .sec_faq-header1 {
+                margin-bottom: 0px !important;
+                }
+                .sec_faq-button1 {
+                color: black;
+                font-size: 18px;
+                font-weight: bold;
+                padding: 15px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                border-radius: 28.088px;
+                border: 0.624px solid #191A23;
+                background: #FF6363;
+                box-shadow: 0px 3.121px 0px 0px #191A23;
+                }
+                .sec_faq-button1.collapsed {
+                background-color: #f5f5f5;
+                }
+                .sec_faq-button1:not(.collapsed) {
+                background-color: #048AFF;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+                color: white;
+                }
+                .sec_faq-body1 {
+                background-color: #048AFF;
+                border-radius: 0 0 28.088px 28.088px;
+                padding: 15px;
+                border: 0.624px solid #191A23;
+                border-top: 0;
+                color: white;
+                }
+                .sec_28_part-number {
+                font-size: 22px;
+                font-weight: bold;
+                margin-right: 10px;
+                }
+            </style>
+            <a href="#popup1" class="dropdown-item" style="color: #fff; text-decoration: none;" hidden="hidden"
+               id="open_pop">
+            </a>
+            <div id="popup1" class="popup">
+                <div class="popup-content">
+                    <h2 id="pop_title">Link Expired</h2>
+
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="mb-4">
+                        <span id="pop_text">
+                            The link you are using is expired now. Please connect with your Bee Partner to get a new
+                            link.
+                        </span>
+                    </div>
+
+                    <div class="text-end mt-2" id="close" onclick="popclose()">
+                        <a href="#" style="display: inline-block; margin-top: 10px; padding:
+                               5px 10px; background-color: #dc3545; color: #fff; text-decoration:
+                               none; border-radius: 3px;">Close
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between bg-black d-none d-md-flex mt-1"
+                 style="position: fixed; width: 98vw; z-index: 1; margin-left: 10px; border-radius: 15px;">
+                <div class="col-10 col-md-3">
+                    <p class="pt-4 px-4 fs-4" style="color: white;">
+                        <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
+                        <b>Affiliate Marketing</b>
+                    </p>
+                </div>
+                <div class="col-3 col-md-2">
+                    <p id="demo" class="fs-4 my-4 blink_me">
+
+                    </p>
+                </div>
+                <div class="col-12 col-md-5">
+                    <div class="row justify-content-end">
+                        <div class="col-8 col-md-7 mt-4 fs-4">
+                            <span style="color: 048AFF;">
+                                INR
+                            </span>
+                            <span style="text-decoration: line-through;text-decoration-color: red;">
+                                <t t-esc="price1"/>
+                            </span>
+                            /
+                            <span style="color: 048AFF;">
+                                <t t-esc="price2"/>
+                            </span>
+                            (Excl. Tax)
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="add_to_cart_button my-2" id="cart1">
+                                <form action="/shop/cart/update" method="POST">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                    <button type="submit"
+                                            class="btn fw-bold text-white rounded shadow-sm mt-3"
+                                            style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3);">
+                                        Enroll Now
+                                    </button>
+                                    <div id="product_option_block"></div>
+                                </form>
+                            </div>
+                            <div class="add_to_cart_button my-2" hidden="hidden" id="cart1_hidden">
+                                <a class="btn fw-bold text-white rounded shadow-sm mt-3"
+                                   style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3);"
+                                   onclick="openPop()">
+                                    Enroll Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between bg-black d-none d-md-flex mt-1"
+                 style="width: 98vw; margin-left: 10px; border-radius: 15px;">
+                <div class="col-10 col-md-3">
+                    <p class="pt-4 px-4 fs-4" style="color: white;">
+                        <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
+                        <b>Affiliate Marketing</b>
+                    </p>
+                </div>
+                <div class="col-3 col-md-2">
+                    <p id="demo" class="fs-4 my-4 blink_me">
+
+                    </p>
+                </div>
+                <div class="col-12 col-md-5">
+                    <div class="row justify-content-end">
+                        <div class="col-8 col-md-7 mt-4 fs-4">
+                            <span style="color: 048AFF;">
+                                INR
+                            </span>
+                            <span class="text-decoration-line-through">
+                                <t t-esc="price1"/>
+                            </span>
+                            /
+                            <t t-esc="price2"/>
+                            (Excl. Tax)
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="add_to_cart_button my-2" id="cart1">
+                                <form action="/shop/cart/update" method="POST">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                    <button type="submit"
+                                            class="btn fw-bold text-white rounded shadow-sm mt-3"
+                                            style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3);">
+                                        Enroll Now
+                                    </button>
+                                    <div id="product_option_block"></div>
+                                </form>
+                            </div>
+                            <div class="add_to_cart_button my-2" hidden="hidden" id="cart1_hidden">
+                                <a class="btn fw-bold text-white rounded shadow-sm mt-3"
+                                   style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3);"
+                                   onclick="openPop()">
+                                    Enroll Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--            hero section-->
+            <div class="mt-3 row justify-content-center display-1 d-none d-md-flex manrope_bold"
+                 style="background-color: #EBEBEB; width: 98vw; margin-left: 10px; border-radius: 25px;">
+                <div class="col-6">
+                    <div class="text-end">
+                        <span style="color: 048AFF;">
+                            Affiliate
+                        </span>
+                        <span>
+                            Marketing
+                        </span>
+                    </div>
+                    <div class="text-end">
+                        <span>
+                            Millionaire
+                        </span>
+                        <span style="color: 048AFF;">
+                            Program
+                        </span>
+                    </div>
+                </div>
+                <div class="col-1 mt-3">
+                    <img src="/kreator_website/static/src/img/am_1.svg"/>
+                </div>
+                <div class="row justify-content-center mt-3">
+                    <div class="col-8">
+                        <t t-esc="intro_video"/>
+                        <script src="https://player.vimeo.com/api/player.js"></script>
+                    </div>
+                </div>
+                <div class="col-6 col-md-2">
+                    <div class="add_to_cart_button my-2" id="cart1">
+                        <form action="/shop/cart/update" method="POST">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                            <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                            <button type="submit"
+                                    class="btn fw-bold text-white shadow-sm mt-3 fs-4"
+                                    style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3); border-radius: 10px; margin-left: 80px;">
+                                Enroll Now
+                            </button>
+                            <div id="product_option_block"></div>
+                        </form>
+                    </div>
+                    <div class="add_to_cart_button my-2" hidden="hidden" id="cart1_hidden">
+                        <a class="btn fw-bold text-white shadow-sm mt-3 fs-4"
+                           style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3); border-radius: 10px; margin-left: 80px;"
+                           onclick="openPop()">
+                            Enroll Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 row h2 d-flex d-md-none manrope_bold"
+                 style="background-color: #EBEBEB; width: 98vw; margin-left: 6px; border-radius: 25px;">
+                <div class="col-9 p-0">
+                    <div class="text-end">
+                        <span style="color: 048AFF;">
+                            Affiliate
+                        </span>
+                        <span>
+                            Marketing
+                        </span>
+                    </div>
+                    <div class="text-end">
+                        <span>
+                            Millionaire
+                        </span>
+                        <span style="color: 048AFF;">
+                            Program
+                        </span>
+                    </div>
+                </div>
+                <div class="col-2 p-0">
+                    <img src="/kreator_website/static/src/img/am_1.svg" style="width: 70px; height: 70px;"/>
+                </div>
+                <div class="row justify-content-end">
+                    <div class="col-11">
+                        <t t-esc="intro_video_mobile"/>
+                        <script src="https://player.vimeo.com/api/player.js"></script>
+                    </div>
+                </div>
+                <div class="col-10 col-md-2">
+                    <div class="add_to_cart_button" id="cart1">
+                        <form action="/shop/cart/update" method="POST">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                            <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                            <button type="submit"
+                                    class="btn fw-bold text-white rounded shadow-sm mt-3 fs-5"
+                                    style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3); border-radius: 10px; margin-left: 30vw;">
+                                Enroll Now
+                            </button>
+                            <div id="product_option_block"></div>
+                        </form>
+                    </div>
+                    <div class="add_to_cart_button " hidden="hidden" id="cart1_hidden">
+                        <a class="btn fw-bold text-white rounded shadow-sm mt-3 fs-5"
+                           style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3); border-radius: 10px; margin-left: 30vw;"
+                           onclick="openPop()">
+                            Enroll Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!--            live QnA Advance-->
+            <t t-if="course_type == 'advance'">
+                <div class="mt-3 d-flex justify-content-center"
+                     style="width: 98vw; margin-left: 8px; border-radius: 25px; background-image: linear-gradient(#048AFF, #66B6FE, #5BB2FF);">
+                    <div class="p-2 p-md-4 manrope_bold display-5 display-md-4 mt-4 mt-md-3 text-center">
+                        <span>4 LIVE</span>
+                        <span style="background: white; border-radius: 8px; padding-left: 4px; padding-right: 1px; margin-right: 2px;">QnA
+                        </span>
+                        <span>SESSIONS BY</span>
+                        <span style="background: white; border-radius: 8px; padding-left: 4px; padding-right: 4px;">
+                            PARAS
+                            SAXENA
+                        </span>
+                    </div>
+                    <div class="d-none d-md-flex">
+                        <img src="/kreator_website/static/src/img/QA.svg" class="img-fluid"
+                             style="height: 150px; width: 150px;"/>
+                    </div>
+                    <div class="d-flex d-md-none">
+                        <img src="/kreator_website/static/src/img/QA.svg" class="img-fluid"
+                             style="height: 170px; width: 250px; position: relative;"/>
+                    </div>
+                </div>
+            </t>
+
+            <!--            crash course intermediate -->
+            <t t-if="course_type in ['intermediate', 'advance']">
+                <div class="mt-3 row justify-content-center d-none d-md-flex manrope_bold p-3"
+                     style="width: 98vw; margin-left: 10px; border-radius: 25px;">
+                    <div class="col-12 fs-2 text-center">
+                        Crash Courses
+                    </div>
+                    <div class="d-flex justify-content-around mt-4">
+                        <div>
+                            <div class="card" style="width: 18rem; background-color: #EBEBEB;">
+                                <img src="/kreator_website/static/src/img/carsh.png" class="card-img-top" alt="..."/>
+                                <div class="card-body bg-black">
+                                    <h5 class="card-title text-center manrope-medium h4" style="color: #048AFF;">Mobile
+                                        Video Editing
+                                    </h5>
+                                    <p class="card-text">
+                                        <ul class="text-white h5">
+                                            <li>
+                                                Subpart 1
+                                            </li>
+                                            <li>
+                                                Subpart 2
+                                            </li>
+                                            <li>
+                                                Subpart 3
+                                            </li>
+                                            <li>
+                                                Subpart 4
+                                            </li>
+                                        </ul>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="card" style="width: 18rem; background-color: #EBEBEB;">
+                                <img src="/kreator_website/static/src/img/carsh.png" class="card-img-top" alt="..."/>
+                                <div class="card-body bg-black">
+                                    <h5 class="card-title text-center manrope-medium h4" style="color: #048AFF;">Meta
+                                        Ads
+                                    </h5>
+                                    <p class="card-text">
+                                        <ul class="text-white h5">
+                                            <li>
+                                                Subpart 1
+                                            </li>
+                                            <li>
+                                                Subpart 2
+                                            </li>
+                                            <li>
+                                                Subpart 3
+                                            </li>
+                                            <li>
+                                                Subpart 4
+                                            </li>
+                                        </ul>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="card" style="width: 18rem; background-color: #EBEBEB;">
+                                <img src="/kreator_website/static/src/img/carsh.png" class="card-img-top" alt="..."/>
+                                <div class="card-body bg-black">
+                                    <h5 class="card-title text-center manrope-medium h4" style="color: #048AFF;">Sales
+                                    </h5>
+                                    <p class="card-text">
+                                        <ul class="text-white h5">
+                                            <li>
+                                                Subpart 1
+                                            </li>
+                                            <li>
+                                                Subpart 2
+                                            </li>
+                                            <li>
+                                                Subpart 3
+                                            </li>
+                                            <li>
+                                                Subpart 4
+                                            </li>
+                                        </ul>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="card" style="width: 18rem; background-color: #EBEBEB;">
+                                <img src="/kreator_website/static/src/img/carsh.png" class="card-img-top" alt="..."/>
+                                <div class="card-body bg-black">
+                                    <h5 class="card-title text-center manrope-medium h4" style="color: #048AFF;">Viral
+                                        Your
+                                        Reel
+                                    </h5>
+                                    <p class="card-text">
+                                        <ul class="text-white h5">
+                                            <li>
+                                                Subpart 1
+                                            </li>
+                                            <li>
+                                                Subpart 2
+                                            </li>
+                                            <li>
+                                                Subpart 3
+                                            </li>
+                                            <li>
+                                                Subpart 4
+                                            </li>
+                                        </ul>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center d-flex justify-content-center d-md-none mt-4">
+                    <span class="h1 manrope_bold">
+                        Crash Courses
+                    </span>
+                </div>
+                <div class="mt-4 d-flex h2 d-md-none manrope_bold justify-content-center"
+                     style="width: 98vw; margin-left: 6px; border-radius: 25px;">
+                    <div>
+                        <div id="carouselExample" class="carousel slide" data-bs-interval="5000" data-bs-touch="true"
+                             data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div>
+                                        <div class="card" style="width: 17rem; background-color: #EBEBEB;">
+                                            <img src="/kreator_website/static/src/img/carsh.png" class="card-img-top"
+                                                 alt="..."/>
+                                            <div class="card-body bg-black">
+                                                <h5 class="card-title text-center manrope-medium h4"
+                                                    style="color: #048AFF;">Mobile Video Editing
+                                                </h5>
+                                                <p class="card-text">
+                                                    <ul class="text-white h5">
+                                                        <li>
+                                                            Subpart 1
+                                                        </li>
+                                                        <li>
+                                                            Subpart 2
+                                                        </li>
+                                                        <li>
+                                                            Subpart 3
+                                                        </li>
+                                                        <li>
+                                                            Subpart 4
+                                                        </li>
+                                                    </ul>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="card" style="width: 17rem; background-color: #EBEBEB;">
+                                        <img src="/kreator_website/static/src/img/carsh.png" class="card-img-top"
+                                             alt="..."/>
+                                        <div class="card-body bg-black">
+                                            <h5 class="card-title text-center manrope-medium h4"
+                                                style="color: #048AFF;">
+                                                Meta Ads
+                                            </h5>
+                                            <p class="card-text">
+                                                <ul class="text-white h5">
+                                                    <li>
+                                                        Subpart 1
+                                                    </li>
+                                                    <li>
+                                                        Subpart 2
+                                                    </li>
+                                                    <li>
+                                                        Subpart 3
+                                                    </li>
+                                                    <li>
+                                                        Subpart 4
+                                                    </li>
+                                                </ul>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="card" style="width: 17rem; background-color: #EBEBEB;">
+                                        <img src="/kreator_website/static/src/img/carsh.png" class="card-img-top"
+                                             alt="..."/>
+                                        <div class="card-body bg-black">
+                                            <h5 class="card-title text-center manrope-medium h4"
+                                                style="color: #048AFF;">
+                                                Sales
+                                            </h5>
+                                            <p class="card-text">
+                                                <ul class="text-white h5">
+                                                    <li>
+                                                        Subpart 1
+                                                    </li>
+                                                    <li>
+                                                        Subpart 2
+                                                    </li>
+                                                    <li>
+                                                        Subpart 3
+                                                    </li>
+                                                    <li>
+                                                        Subpart 4
+                                                    </li>
+                                                </ul>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="card" style="width: 17rem; background-color: #EBEBEB;">
+                                        <img src="/kreator_website/static/src/img/carsh.png" class="card-img-top"
+                                             alt="..."/>
+                                        <div class="card-body bg-black">
+                                            <h5 class="card-title text-center manrope-medium h4"
+                                                style="color: #048AFF;">
+                                                Viral Your Reel
+                                            </h5>
+                                            <p class="card-text">
+                                                <ul class="text-white h5">
+                                                    <li>
+                                                        Subpart 1
+                                                    </li>
+                                                    <li>
+                                                        Subpart 2
+                                                    </li>
+                                                    <li>
+                                                        Subpart 3
+                                                    </li>
+                                                    <li>
+                                                        Subpart 4
+                                                    </li>
+                                                </ul>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                                    data-bs-slide="prev" style="margin-left: -37px;">
+                                <!--                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+                                <i class="ri-arrow-left-wide-line text-black"></i>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                                    data-bs-slide="next" style="margin-right: -37px;">
+                                <!--                            <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+                                <i class="ri-arrow-right-wide-fill text-black"></i>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+<!--                    <script>-->
+<!--                        $('.carousel').on('touchstart', function(event){-->
+<!--                        const xClick = event.originalEvent.touches[0].pageX;-->
+<!--                        $(this).one('touchmove', function(event){-->
+<!--                        const xMove = event.originalEvent.touches[0].pageX;-->
+<!--                        const sensitivityInPx = 5;-->
+
+<!--                        if( Math.floor(xClick - xMove) > sensitivityInPx ){-->
+<!--                        $(this).carousel('next');-->
+<!--                        }-->
+<!--                        else if( Math.floor(xClick - xMove)-->
+<!--                        &lt;-->
+<!--                        -sensitivityInPx ){-->
+<!--                        $(this).carousel('prev');-->
+<!--                        }-->
+<!--                        });-->
+<!--                        $(this).on('touchend', function(){-->
+<!--                        $(this).off('touchmove');-->
+<!--                        });-->
+<!--                        });-->
+<!--                    </script>-->
+                </div>
+            </t>
+
+
+            <!--            What's in the course-->
+
+            <div class="mt-3 row justify-content-center" style="width: 98vw; margin-left: 10px; border-radius: 25px;">
+                <div class="col-12 col-md-6 manrope_bold text-center display-6">
+                    <span>What's in the Course</span>
+                    <span>
+                        <img src="/kreator_website/static/src/img/Graduation_Book.svg" class="img-fluid"
+                             style="width: 80px; height: 80px;"/>
+                    </span>
+                </div>
+                <div class="col-12 col-md-8 mt-4">
+                    <div class="w-100">
+                        <div class="accordion2">
+                            <div class="accordion-item2">
+                                <div class="accordion-header2 row g-0">
+                                    <div class="col-11 manrope_bold fs-5">
+                                        Module 1: THE FOUNDATION
+                                    </div>
+                                    <div class="col-1">
+                                        <img src="/kreator_website/static/src/img/Vector.svg"
+                                             alt="Arrow"/>
+                                    </div>
+                                </div>
+                                <div class="accordion-content2 manrope_medium">
+                                    <ul>
+                                        <li>
+                                            The Millionaire Mindset
+                                        </li>
+                                        <li>
+                                            The Millionaire Lifestyle
+                                        </li>
+                                        <li>
+                                            The Millionaire Clarity
+                                        </li>
+                                        <li>
+                                            The Millionaire Belief System
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-item2">
+                                <div class="accordion-header2 row g-0">
+                                    <div class="col-11 manrope_bold fs-5">
+                                        Module 2: THE BLUEPRINT
+                                    </div>
+                                    <div class="col-1">
+                                        <img src="/kreator_website/static/src/img/Vector.svg"
+                                             alt="Arrow"/>
+                                    </div>
+                                </div>
+                                <div class="accordion-content2">
+                                    <ul>
+                                        <li>
+                                            Introduction to Affiliate Marketing
+                                        </li>
+                                        <li>
+                                            Identifying Profitable Niches
+                                        </li>
+                                        <li>
+                                            Strategic Affiliate Program Selection
+                                        </li>
+                                        <li>
+                                            How Affiliate Marketing Universe Works
+                                        </li>
+                                        <li>
+                                            Essentials Core Skills Required
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-item2">
+                                <div class="accordion-header2 row g-0">
+                                    <div class="col-11 manrope_bold fs-5">
+                                        Module 3: THE ENGINE
+                                    </div>
+                                    <div class="col-1">
+                                        <img src="/kreator_website/static/src/img/Vector.svg"
+                                             alt="Arrow"/>
+                                    </div>
+                                </div>
+                                <div class="accordion-content2">
+                                    <ul>
+                                        <li>
+                                            Warm-Up before Execution
+                                        </li>
+                                        <li>
+                                            Building Your Initial Marketing Platforms
+                                        </li>
+                                        <li>
+                                            Content Marketing Strategies
+                                        </li>
+                                        <li>
+                                            Leveraging Social Media for Lead Generation
+                                        </li>
+                                        <li>
+                                            Unlock the Power of Strategic Closing Techniques
+                                        </li>
+                                        <li>
+                                            Building Momentum and Consistency in Execution
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-item2">
+                                <div class="accordion-header2 row g-0 ">
+                                    <div class="col-11 manrope_bold fs-5">
+                                        Module 4: THE ACCELERATOR
+                                    </div>
+                                    <div class="col-1">
+                                        <img src="/kreator_website/static/src/img/Vector.svg"
+                                             alt="Arrow"/>
+                                    </div>
+                                </div>
+                                <div class="accordion-content2">
+                                    <ul>
+                                        <li>
+                                            Setting Up Basic Automation Workflows
+                                        </li>
+                                        <li>
+                                            Strategic Delegation and Outsourcing
+                                        </li>
+                                        <li>
+                                            Diversifying Income Streams within Affiliate Marketing
+                                        </li>
+                                        <li>
+                                            Understanding the Power of Systems and Processes
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="accordion-item2">
+                                <div class="accordion-header2 row g-0">
+                                    <div class="col-11 manrope_bold fs-5">
+                                        Module 5: THE ROADMAP
+                                    </div>
+                                    <div class="col-1">
+                                        <img src="/kreator_website/static/src/img/Vector.svg"
+                                             alt="Arrow"/>
+                                    </div>
+                                </div>
+                                <div class="accordion-content2">
+                                    <ul>
+                                        <li>
+                                            From Side Hustle to Sustainable Career
+                                        </li>
+                                        <li>
+                                            Anticipating Common Challenges and Obstacles
+                                        </li>
+                                        <li>
+                                            Developing Strategies for Overcoming Setbacks
+                                        </li>
+                                        <li>
+                                            Ethical Considerations and Building Trust
+                                        </li>
+                                        <li>
+                                            Summary
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            document.querySelectorAll(".accordion-header2").forEach(header => {
+                            header.addEventListener("click", function () {
+                            const currentActive = document.querySelector(".accordion-item2.active");
+                            if (currentActive &amp;&amp; currentActive !== this.parentElement) {
+                            currentActive.classList.remove("active");
+                            }
+                            this.parentElement.classList.toggle("active");
+                            });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+            <!--            Our Reviews-->
+
+            <div class="mt-3 row justify-content-center display-1 d-none d-md-flex manrope_bold p-3"
+                 style="background-color: #EBEBEB; width: 98vw; margin-left: 10px; border-radius: 25px;">
+                <div class="col-12 fs-2 text-center">
+                    Our Reviews
+                    <br/>
+                    <img src="/kreator_website/static/src/img/reviews_arrow.svg" class="img-fluid"/>
+                </div>
+                <div class="d-flex justify-content-around mt-4">
+                    <div>
+                        <iframe width="300px;" height="300px;"
+                                src="https://www.youtube.com/embed/WMIHrn2Fpjw?rel=0&amp;modestbranding=1&amp;showinfo=0"
+                                frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                    </div>
+                    <div>
+                        <iframe width="300px;" height="300px;"
+                                src="https://www.youtube.com/embed/q0XBkfOa_UQ?rel=0&amp;modestbranding=1&amp;showinfo=0"
+                                frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                    </div>
+                    <div>
+                        <iframe width="300px;" height="300px;"
+                                src="https://www.youtube.com/embed/p1mSfyZBkxE?rel=0&amp;modestbranding=1&amp;showinfo=0"
+                                frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                    </div>
+                    <div>
+                        <iframe width="300px;" height="300px;"
+                                src="https://www.youtube.com/embed/qXjJfUp8xVo?rel=0&amp;modestbranding=1&amp;showinfo=0"
+                                frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-around" style="margin-top: 30px;">
+                    <div>
+                        <iframe width="300px;" height="300px;"
+                                src="https://www.youtube.com/embed/UcWDpLWWrt0?rel=0&amp;modestbranding=1&amp;showinfo=0"
+                                frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                    </div>
+                    <div>
+                        <iframe width="300px;" height="300px;"
+                                src="https://www.youtube.com/embed/xRf3QQRNUKY?rel=0&amp;modestbranding=1&amp;showinfo=0"
+                                frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                    </div>
+                    <div>
+                        <iframe width="300px;" height="300px;"
+                                src="https://www.youtube.com/embed/dmHANCL5vYw?rel=0&amp;modestbranding=1&amp;showinfo=0"
+                                frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                    </div>
+                    <div>
+                        <iframe width="300px;" height="300px;"
+                                src="https://www.youtube.com/embed/dfi7wZlsDxU?rel=0&amp;modestbranding=1&amp;showinfo=0"
+                                frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="mt-4 row h2 d-md-none manrope_bold justify-content-center"
+                 style="background-color: #EBEBEB; width: 98vw; margin-left: 6px; border-radius: 25px;">
+                <div class="col-12 fs-2 text-center">
+                    Our Reviews
+                    <br/>
+                    <img src="/kreator_website/static/src/img/reviews_arrow.svg" class="img-fluid"/>
+                </div>
+                <div class="col-10">
+                    <div id="carouselExample" class="carousel slide" data-bs-interval="5000" data-bs-touch="true"
+                         data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <iframe width="300px;" height="300px;"
+                                        src="https://www.youtube.com/embed/WMIHrn2Fpjw?rel=0&amp;modestbranding=1&amp;showinfo=0"
+                                        frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                            </div>
+                            <div class="carousel-item">
+                                <iframe width="300px;" height="300px;"
+                                        src="https://www.youtube.com/embed/q0XBkfOa_UQ?rel=0&amp;modestbranding=1&amp;showinfo=0"
+                                        frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                            </div>
+                            <div class="carousel-item">
+                                <iframe width="300px;" height="300px;"
+                                        src="https://www.youtube.com/embed/p1mSfyZBkxE?rel=0&amp;modestbranding=1&amp;showinfo=0"
+                                        frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                            </div>
+                            <div class="carousel-item">
+                                <iframe width="300px;" height="300px;"
+                                        src="https://www.youtube.com/embed/qXjJfUp8xVo?rel=0&amp;modestbranding=1&amp;showinfo=0"
+                                        frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                            </div>
+                            <div class="carousel-item">
+                                <iframe width="300px;" height="300px;"
+                                        src="https://www.youtube.com/embed/UcWDpLWWrt0?rel=0&amp;modestbranding=1&amp;showinfo=0"
+                                        frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                            </div>
+                            <div class="carousel-item">
+                                <iframe width="300px;" height="300px;"
+                                        src="https://www.youtube.com/embed/xRf3QQRNUKY?rel=0&amp;modestbranding=1&amp;showinfo=0"
+                                        frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                            </div>
+                            <div class="carousel-item">
+                                <iframe width="300px;" height="300px;"
+                                        src="https://www.youtube.com/embed/dmHANCL5vYw?rel=0&amp;modestbranding=1&amp;showinfo=0"
+                                        frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                            </div>
+                            <div class="carousel-item">
+                                <iframe width="300px;" height="300px;"
+                                        src="https://www.youtube.com/embed/dfi7wZlsDxU?rel=0&amp;modestbranding=1&amp;showinfo=0"
+                                        frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                                data-bs-slide="prev" style="margin-left: -37px;">
+                            <!--                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+                            <i class="ri-arrow-left-wide-line text-black"></i>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                                data-bs-slide="next" style="margin-right: -37px;">
+                            <!--                            <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+                            <i class="ri-arrow-right-wide-fill text-black"></i>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+                <script>
+                    $('.carousel').on('touchstart', function(event){
+                    const xClick = event.originalEvent.touches[0].pageX;
+                    $(this).one('touchmove', function(event){
+                    const xMove = event.originalEvent.touches[0].pageX;
+                    const sensitivityInPx = 5;
+
+                    if( Math.floor(xClick - xMove) > sensitivityInPx ){
+                    $(this).carousel('next');
+                    }
+                    else if( Math.floor(xClick - xMove)
+                    &lt;
+                    -sensitivityInPx ){
+                    $(this).carousel('prev');
+                    }
+                    });
+                    $(this).on('touchend', function(){
+                    $(this).off('touchmove');
+                    });
+                    });
+                </script>
+            </div>
+
+
+            <!--            faq-->
+
+            <div class="mt-3 row justify-content-center manrope_bold p-3 text-center"
+                 style="background-color: black; width: 98vw; margin-left: 10px; border-radius: 25px; margin-bottom: 10px;">
+                <span class="text-white h1">Frequently Asked Questions</span>
+                <div class="col-11 col-md-10">
+                    <div t-attf-class="accordion1 mt-4 p-1" id="sec_28_courseAccordion1"
+                         style="width: 100%;">
+                        <!-- Part 1 -->
+                        <div class="manrope_bold sec_faq-item1" id="sec_28_part1" style="width: 100%;">
+                            <h2 class="manrope_bold sec_faq-header1" id="sec_28_headingOne"
+                                style="width: 100%;">
+                                <button class="manrope_bold sec_faq-button1" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#sec_28_collapseOne"
+                                        aria-expanded="true" aria-controls="sec_19_collapseOne"
+                                        style="width: 100%;">
+                                    <span>
+                                        <span class="manrope_bold sec_28_part-number">Q1 :</span>
+                                        <span class="fs-4">What is affiliate marketing, and how does it work?</span>
+                                    </span>
+                                    <img src="/kreator_website/static/src/img/minus.svg"
+                                         class="manrope_bold sec_28_icon sec_28_toggle-icon" id="sec_28_iconOne"/>
+                                </button>
+                            </h2>
+                            <div id="sec_28_collapseOne" class="accordion-collapse1 collapse show"
+                                 aria-labelledby="sec_28_headingOne" data-bs-parent="#sec_28_courseAccordion1">
+                                <div class="manrope_medium sec_faq-body1">
+                                    Affiliate marketing is a performance-based business model where you earn a
+                                    commission by promoting other people’s or companies’ products. When someone
+                                    purchases through your unique affiliate link, you receive a percentage of the
+                                    sale—without having to handle inventory, customer service, or product delivery.
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Part 2 -->
+                        <div class="manrope_bold sec_faq-item1" id="sec_28_part2">
+                            <h2 class="manrope_bold sec_faq-header1" id="sec_28_headingTwo">
+                                <button class="manrope_bold sec_faq-button1 collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#sec_28_collapseTwo"
+                                        aria-expanded="false" aria-controls="sec_28_collapseTwo">
+                                    <span>
+                                        <span class="manrope_bold sec_28_part-number">Q 2 :</span>
+                                        <span class="fs-4">Who is this program for?</span>
+                                    </span>
+                                    <img src="/kreator_website/static/src/img/plus.svg"
+                                         class="manrope_bold sec_28_icon sec_28_toggle-icon" id="sec_28_iconTwo"/>
+                                </button>
+                            </h2>
+                            <div id="sec_28_collapseTwo" class="accordion-collapse1 collapse"
+                                 aria-labelledby="sec_28_headingTwo" data-bs-parent="#sec_28_courseAccordion1">
+                                <div class="manrope_medium sec_faq-body1">
+                                    This program is perfect for beginners, side hustlers, and anyone looking to build a
+                                    passive income stream online. Whether you're a student, working professional, or
+                                    stay-at-home parent, if you're eager to learn and take action, this program is for
+                                    you.
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Part 3 -->
+                        <div class="manrope_bold sec_faq-item1" id="sec_28_part3">
+                            <h2 class="manrope_bold sec_faq-header1" id="sec_28_headingThree">
+                                <button class="manrope_bold sec_faq-button1 collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#sec_28_collapseThree"
+                                        aria-expanded="false" aria-controls="sec_28_collapseThree">
+                                    <span>
+                                        <span class="manrope_bold sec_28_part-number">Q 3 :</span>
+                                        <span class="fs-4">Do I need any technical skills or experience to get
+                                            started?
+                                        </span>
+                                    </span>
+                                    <img src="/kreator_website/static/src/img/plus.svg"
+                                         class="manrope_bold sec_28_icon sec_28_toggle-icon" id="sec_28_iconThree"/>
+                                </button>
+                            </h2>
+                            <div id="sec_28_collapseThree" class="accordion-collapse1 collapse"
+                                 aria-labelledby="sec_28_headingThree" data-bs-parent="#sec_28_courseAccordion1">
+                                <div class="manrope_medium sec_faq-body1">
+                                    Not at all! The content is designed for complete beginners. You'll be guided
+                                    step-by-step, with everything explained in a simple, easy-to-understand way—no prior
+                                    knowledge or tech expertise required.
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Part 4 -->
+                        <div class="manrope_bold sec_faq-item1" id="sec_28_part4">
+                            <h2 class="manrope_bold sec_faq-header1" id="sec_28_headingFour">
+                                <button class="manrope_bold sec_faq-button1 collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#sec_28_collapseFour"
+                                        aria-expanded="false" aria-controls="sec_28_collapseFour">
+                                    <span>
+                                        <span class="manrope_bold sec_28_part-number">Q 4 :</span>
+                                        <span class="fs-4">How long does it take to see results?</span>
+                                    </span>
+                                    <img src="/kreator_website/static/src/img/plus.svg"
+                                         class="manrope_bold sec_28_icon sec_28_toggle-icon" id="sec_28_iconFour"/>
+                                </button>
+                            </h2>
+                            <div id="sec_28_collapseFour" class="accordion-collapse1 collapse"
+                                 aria-labelledby="sec_28_headingFour" data-bs-parent="#sec_28_courseAccordion1">
+                                <div class="manrope_medium sec_faq-body1">
+                                    This depends on your consistency and effort. While some people start seeing results
+                                    within weeks, others may take longer. It's important to treat it like a real
+                                    business—what you put in is what you get out.
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Part 5 -->
+                        <div class="manrope_bold sec_faq-item1" id="sec_28_part5">
+                            <h2 class="manrope_bold sec_faq-header1" id="sec_28_headingFive">
+                                <button class="manrope_bold sec_faq-button1 collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#sec_28_collapseFive"
+                                        aria-expanded="false" aria-controls="sec_28_collapseFive">
+                                    <span>
+                                        <span class="manrope_bold sec_28_part-number">Q 5 :</span>
+                                        <span class="fs-4">What kind of support is available if I get stuck?</span>
+                                    </span>
+                                    <img src="/kreator_website/static/src/img/plus.svg"
+                                         class="manrope_bold sec_28_icon sec_28_toggle-icon" id="sec_28_iconFive"/>
+                                </button>
+                            </h2>
+                            <div id="sec_28_collapseFive" class="accordion-collapse1 collapse"
+                                 aria-labelledby="sec_28_headingFive" data-bs-parent="#sec_28_courseAccordion1">
+                                <div class="manrope_medium sec_faq-body1">
+                                    You’ll have access to a supportive community, live Q&amp;A sessions, and dedicated
+                                    resources to help you through any challenges. You're never alone on this journey.
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Part 6 -->
+                        <div class="manrope_bold sec_faq-item1" id="sec_28_part6">
+                            <h2 class="manrope_bold sec_faq-header1" id="sec_28_headingSix">
+                                <button class="manrope_bold sec_faq-button1 collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#sec_28_collapseSix"
+                                        aria-expanded="false" aria-controls="sec_28_collapseSix">
+                                    <span>
+                                        <span class="manrope_bold sec_28_part-number">Q 6 :</span>
+                                        <span class="fs-4">Are there different levels of the course available?
+                                        </span>
+                                    </span>
+                                    <img src="/kreator_website/static/src/img/plus.svg"
+                                         class="manrope_bold sec_28_icon sec_28_toggle-icon" id="sec_28_iconSix"/>
+                                </button>
+                            </h2>
+                            <div id="sec_28_collapseSix" class="accordion-collapse1 collapse"
+                                 aria-labelledby="sec_28_headingSix" data-bs-parent="#sec_28_courseAccordion1">
+                                <div class="manrope_medium sec_faq-body1">
+                                    Yes! We offer three tiers: Basic, Intermediate, and Advanced. You can start with the
+                                    level that suits you best, and if you wish to upgrade later, you can simply pay the
+                                    difference to unlock the next level of content—no need to repurchase the full
+                                    course.
+                                </div>
+                            </div>
+                        </div>
+                        <!--                            part 7 -->
+                        <div class="manrope_bold sec_faq-item1" id="sec_28_part7">
+                            <h2 class="manrope_bold sec_faq-header1" id="sec_28_headingSeven">
+                                <button class="manrope_bold sec_faq-button1 collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#sec_28_collapseSeven"
+                                        aria-expanded="false" aria-controls="sec_28_collapseSeven">
+                                    <span>
+                                        <span class="manrope_bold sec_28_part-number">Q 7 :</span>
+                                        <span class="fs-4">Can I do this from anywhere in the world?</span>
+                                    </span>
+                                    <img src="/kreator_website/static/src/img/plus.svg"
+                                         class="manrope_bold sec_28_icon sec_28_toggle-icon" id="sec_28_iconSeven"/>
+                                </button>
+                            </h2>
+                            <div id="sec_28_collapseSeven" class="accordion-collapse1 collapse"
+                                 aria-labelledby="sec_28_headingSeven" data-bs-parent="#sec_28_courseAccordion1">
+                                <div class="manrope_medium sec_faq-body1">
+                                    Absolutely. Affiliate marketing is a global opportunity. As long as you have an
+                                    internet connection and a willingness to learn, you can build your affiliate
+                                    business from anywhere.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                    let sec_faqButtons1 = document.querySelectorAll(".sec_faq-button1");
+
+                    sec_faqButtons1.forEach(button => {
+                    button.addEventListener("click", function () {
+                    let icon = this.querySelector(".sec_28_toggle-icon");
+                    let isCollapsed = this.classList.contains("collapsed");
+
+                    // Reset all icons to "plus"
+                    sec_faqButtons1.forEach(btn => {
+                    let btnIcon = btn.querySelector(".sec_28_toggle-icon");
+                    btnIcon.src = "/kreator_website/static/src/img/plus.svg";
+                    });
+
+                    // Change icon based on state
+                    if (isCollapsed) {
+                    icon.src = "/kreator_website/static/src/img/minus.svg";
+                    } else {
+                    icon.src = "/kreator_website/static/src/img/plus.svg";
+                    }
+                    });
+                    });
+
+                    // Handle Bootstrap's accordion events for toggling icons
+                    document.querySelectorAll('.accordion-collapse1').forEach(collapse => {
+                    collapse.addEventListener('shown.bs.collapse', function () {
+                    let button = this.previousElementSibling.querySelector('.sec_faq-button1');
+                    let icon = button.querySelector(".sec_28_toggle-icon");
+                    icon.src = "/kreator_website/static/src/img/minus.svg"; // Set to minus when opened
+                    });
+
+                    collapse.addEventListener('hidden.bs.collapse', function () {
+                    let button = this.previousElementSibling.querySelector('.sec_faq-button1');
+                    let icon = button.querySelector(".sec_28_toggle-icon");
+                    icon.src = "/kreator_website/static/src/img/plus.svg"; // Set to plus when closed
+                    });
+                    });
+                    });
+                </script>
+            </div>
+
+            <!--            only for mobile-->
+
+            <div style="height: 50px;" class="d-block d-md-none"></div>
+            <!--            mobile bottom banner-->
+            <div class="row justify-content-between d-flex d-md-none mt-1 fixed-bottom p-2"
+                 style="z-index: 1; background-color: 370000;">
+                <div class="col-8">
+                    <div class="row">
+                        <div class="col-12 col-md-6 my-2">
+                            <span style="color: 048AFF;">
+                                ₹
+                            </span>
+                            <span style="text-decoration: line-through; text-decoration-color: red;" class="text-white">
+                                <t t-esc="price1"/>
+                            </span>
+                            <span class="text-white">
+                                /
+                            </span>
+                            <span style="color: 048AFF;">
+                                <t t-esc="price2"/>
+                                (Excl. Tax)
+                            </span>
+                        </div>
+                    </div>
+                    <p id="demores" class="fs-4 my-4 blink_me text-center">
+
+                    </p>
+                </div>
+                <div class="col-4">
+                    <div class="add_to_cart_button" id="cart1">
+                        <form action="/shop/cart/update" method="POST">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                            <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                            <button type="submit"
+                                    class="btn text-white shadow-sm mt-3"
+                                    style="background-color: 048AFF; font-size: 10px; border-radius: 10px;">
+                                Enroll Now
+                            </button>
+                            <div id="product_option_block"></div>
+                        </form>
+                    </div>
+                    <div class="add_to_cart_button" hidden="hidden" id="cart1_hidden">
+                        <a class="btn text-white shadow-sm mt-3"
+                           style="background-color: 048AFF; font-size: 10px; border-radius: 10px;"
+                           onclick="openPop()">
+                            Enroll Now
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </t>
+        <script
+                src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"
+        ></script>
+        <!--        <script>-->
+        <!--            // Set the date we're counting down to-->
+        <!--            const cart1 = document.getElementById("cart1");-->
+        <!--            const cart2 = document.getElementById("cart2");-->
+        <!--            const cart3 = document.getElementById("cart3");-->
+        <!--            const cart1_hidden = document.getElementById("cart1_hidden");-->
+        <!--            const cart2_hidden = document.getElementById("cart2_hidden");-->
+        <!--            const cart3_hidden = document.getElementById("cart3_hidden");-->
+        <!--            const cart4 = document.getElementById("cart4");-->
+        <!--            const cart4_hidden = document.getElementById("cart4_hidden");-->
+        <!--            const expire_date = document.getElementById("expired");-->
+        <!--            var countDownDate = new Date(expire_date.value).getTime();-->
+        <!--            let open_pop = document.getElementById("open_pop");-->
+        <!--            let close = document.getElementById("popup1");-->
+        <!--            function popclose() {-->
+        <!--            close.style.display= 'none';-->
+        <!--            }-->
+        <!--            function openPop() {-->
+        <!--            close.style.display = 'flex';-->
+        <!--            }-->
+        <!--            if (expire_date.value == '') {-->
+        <!--            document.getElementById("pop_title").innerHTML = 'Referral Link Not Generated';-->
+        <!--            document.getElementById("pop_text").innerHTML = 'To Earn Commission, Generate the Referral Link<br/>and-->
+        <!--            share it with Customer';-->
+        <!--            cart1.style.display = 'none';-->
+        <!--            cart1_hidden.removeAttribute("hidden");-->
+        <!--            cart2.style.display = 'none';-->
+        <!--            cart2_hidden.removeAttribute("hidden");-->
+        <!--            cart3.style.display = 'none';-->
+        <!--            cart3_hidden.removeAttribute("hidden");-->
+        <!--            cart4.style.display = 'none';-->
+        <!--            cart4_hidden.removeAttribute("hidden");-->
+        <!--            }-->
+        <!--            if (countDownDate >= 2058843862000) {-->
+        <!--            console.log(expire_date);-->
+        <!--            document.getElementById("demo").classList.add('d-none');-->
+        <!--            document.getElementById("demores").classList.add('d-none');-->
+        <!--            }-->
+        <!--            if (expire_date.value) {-->
+        <!--            // Update the count down every 1 second-->
+        <!--            var x = setInterval(function() {-->
+
+        <!--            // Get today's date and time-->
+        <!--            var now = new Date().getTime();-->
+
+        <!--            // Find the distance between now and the count down date-->
+        <!--            var distance = countDownDate - now;-->
+
+        <!--            // Time calculations for days, hours, minutes and seconds-->
+        <!--            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));-->
+        <!--            var seconds = Math.floor((distance % (1000 * 60)) / 1000);-->
+
+        <!--            // Display the result in the element with id="demo"-->
+        <!--            document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s " + "Left";-->
+        <!--            document.getElementById("demores").innerHTML = minutes + "m " + seconds + "s " + "Left";-->
+
+        <!--            // If the count down is finished, write some text-->
+        <!--            if (distance &lt; 30936){-->
+        <!--            document.getElementById("demo").classList.add("text-danger");-->
+        <!--            document.getElementById("demores").classList.add("text-danger");-->
+        <!--            }-->
+        <!--            if (distance &lt; 0) {-->
+        <!--            clearInterval(x);-->
+        <!--            document.getElementById("demo").innerHTML = "LINK EXPIRED";-->
+        <!--            document.getElementById("demores").innerHTML = "LINK EXPIRED";-->
+        <!--            cart1.style.display = 'none';-->
+        <!--            cart1_hidden.removeAttribute("hidden");-->
+        <!--            cart2.style.display = 'none';-->
+        <!--            cart2_hidden.removeAttribute("hidden");-->
+        <!--            cart3.style.display = 'none';-->
+        <!--            cart3_hidden.removeAttribute("hidden");-->
+        <!--            cart4.style.display = 'none';-->
+        <!--            cart4_hidden.removeAttribute("hidden");-->
+        <!--            document.getElementById("demo").classList.remove('blink_me');-->
+        <!--            document.getElementById("demores").classList.remove('blink_me');-->
+        <!--            }-->
+        <!--            }, 1000);-->
+        <!--            }-->
+        <!--        </script>-->
+    </template>
+</odoo>

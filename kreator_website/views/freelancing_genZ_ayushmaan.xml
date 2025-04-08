@@ -656,7 +656,9 @@
                                             aria-expanded="false" aria-controls="sec_28_collapseSix">
                                         <span>
                                             <span class="space_gro sec_28_part-number">Module 6 :</span>
-                                            <span class="fs-4">Discovery Call &amp; Payment Mastery (Best way to pitch your services)</span>
+                                            <span class="fs-4">Discovery Call &amp; Payment Mastery (Best way to pitch
+                                                your services)
+                                            </span>
                                         </span>
                                         <img src="/kreator_website/static/src/img/plus.svg"
                                              class="space_gro sec_28_icon sec_28_toggle-icon" id="sec_28_iconSix"/>
@@ -937,138 +939,125 @@
 
                 </div>
             </div>
-            <div id="section_31" class="lato_font container mt-5 p-5"
-                 style="border-radius: 34.796px; background: #FFD9B8; width: 100vw;">
+            <div id="section_31" class="lato_font container mt-5 p-2"
+                 style="border-radius: 34.796px; width: 100vw;">
 
-                <div class="d-flex flex-column justify-content-center gap-5">
+                <div class="d-flex flex-column justify-content-center gap-2">
                     <div class="d-flex justify-content-center align-items-center ibm_plex">
-                        <span class="fw-bold" style="font-size: 45px;">
+                        <span class="fw-bold text-center" style="font-size: 45px;">
                             From Our
                             <span class="text-k-pinkish-orange">Students</span>
                         </span>
                     </div>
-                    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="w-60" style="width: 60%; min-width: 320px;">
-                                    <div class="d-flex justify-content-start gap-2">
-                                        <div class="w-100">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="69"
-                                                 viewBox="0 0 70 69"
-                                                 fill="none">
-                                                <circle cx="35.309" cy="34.5248" r="34.3988" fill="#FF5555"/>
-                                                <path
-                                                        d="M30.9009 21.4434L32.5269 24.4384C31.6141 25.7304 30.7583 27.1692 29.9595 28.7548C29.2179 30.3404 28.79 31.9847 28.6759 33.6878L33.3827 34.5686V44.6989H20.2891V37.4756C20.2891 33.306 21.2304 29.9586 23.1132 27.4334C25.053 24.8495 27.6489 22.8528 30.9009 21.4434ZM47.8457 21.4434L49.4717 24.4384C48.5588 25.7304 47.703 27.1692 46.9043 28.7548C46.1626 30.3404 45.7347 31.9847 45.6206 33.6878L50.3275 34.5686V44.6989H37.2338V37.4756C37.2338 33.306 38.1752 29.9586 40.0579 27.4334C41.9977 24.8495 44.5936 22.8528 47.8457 21.4434Z"
-                                                        fill="white"/>
-                                            </svg>
-                                        </div>
-
-                                        <div class="d-flex flex-column gap-5">
-                                            <span class="ibm_plex mt-5"
-                                                  style="font-size: 16px; text-align: left; display: block;">
-                                                I'm in my second year of college, and this course has been a
-                                                game-changer! It gave me a clear roadmap to start freelancing while
-                                                balancing my studies. The best part? I landed my first client within a
-                                                month of implementing the strategies!
-                                            </span>
-
-
-                                            <div class="d-flex gap-2 mt-3" style="align-items: center;">
-                                                <div class="d-flex flex-column align-items-center justify-content-center">
-                                                    <span class="ibm_plex text-k-orange" style="font-size: 18px;">
-                                                        – Ananya Rana
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
+                    <div class="row">
+                        <div class="col-12 col-md-1">
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="69"
+                                     viewBox="0 0 70 69"
+                                     fill="none">
+                                    <circle cx="35.309" cy="34.5248" r="34.3988" fill="#FF5555"/>
+                                    <path
+                                            d="M30.9009 21.4434L32.5269 24.4384C31.6141 25.7304 30.7583 27.1692 29.9595 28.7548C29.2179 30.3404 28.79 31.9847 28.6759 33.6878L33.3827 34.5686V44.6989H20.2891V37.4756C20.2891 33.306 21.2304 29.9586 23.1132 27.4334C25.053 24.8495 27.6489 22.8528 30.9009 21.4434ZM47.8457 21.4434L49.4717 24.4384C48.5588 25.7304 47.703 27.1692 46.9043 28.7548C46.1626 30.3404 45.7347 31.9847 45.6206 33.6878L50.3275 34.5686V44.6989H37.2338V37.4756C37.2338 33.306 38.1752 29.9586 40.0579 27.4334C41.9977 24.8495 44.5936 22.8528 47.8457 21.4434Z"
+                                            fill="white"/>
+                                </svg>
                             </div>
-                            <div class="carousel-item">
-                                <div class="w-60" style="width: 60%; min-width: 320px;">
-                                    <div class="d-flex justify-content-start gap-2">
-                                        <div class="w-100">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="69"
-                                                 viewBox="0 0 70 69"
-                                                 fill="none">
-                                                <circle cx="35.309" cy="34.5248" r="34.3988" fill="#FF5555"/>
-                                                <path
-                                                        d="M30.9009 21.4434L32.5269 24.4384C31.6141 25.7304 30.7583 27.1692 29.9595 28.7548C29.2179 30.3404 28.79 31.9847 28.6759 33.6878L33.3827 34.5686V44.6989H20.2891V37.4756C20.2891 33.306 21.2304 29.9586 23.1132 27.4334C25.053 24.8495 27.6489 22.8528 30.9009 21.4434ZM47.8457 21.4434L49.4717 24.4384C48.5588 25.7304 47.703 27.1692 46.9043 28.7548C46.1626 30.3404 45.7347 31.9847 45.6206 33.6878L50.3275 34.5686V44.6989H37.2338V37.4756C37.2338 33.306 38.1752 29.9586 40.0579 27.4334C41.9977 24.8495 44.5936 22.8528 47.8457 21.4434Z"
-                                                        fill="white"/>
-                                            </svg>
-                                        </div>
-
-                                        <div class="d-flex flex-column gap-5">
-                                            <span class="ibm_plex mt-5"
-                                                  style="font-size: 16px; text-align: left; display: block;">
-                                                No Fluff, Just Actionable Steps, I’ve watched tons of freelancing videos
-                                                online, but nothing comes close to this course. It breaks down
-                                                freelancing in a super simple way, with actual steps to get clients and
-                                                make money. If you're serious about freelancing, don’t waste time
-                                                elsewhere—just take this!
-                                            </span>
-
-
-                                            <div class="d-flex gap-2 mt-3" style="align-items: center;">
-                                                <div class="d-flex flex-column align-items-center justify-content-center">
-                                                    <span class="ibm_plex text-k-orange" style="font-size: 18px;">
-                                                        – Karan
+                        </div>
+                        <div class="col-12 col-md-7 rounded pt-3">
+                            <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div style="width: 90%; min-width: 320px;">
+                                            <div class="d-flex justify-content-start gap-2">
+                                                <div class="d-flex flex-column gap-5">
+                                                    <span class="ibm_plex mt-2"
+                                                          style="font-size: 20px; text-align: left; display: block;">
+                                                        I'm in my second year of college, and this course has been a
+                                                        game-changer! It gave me a clear roadmap to start freelancing
+                                                        while
+                                                        balancing my studies. The best part? I landed my first client
+                                                        within a
+                                                        month of implementing the strategies!
                                                     </span>
+
+
+                                                    <div class="d-flex gap-2 mt-3" style="align-items: center;">
+                                                        <div class="d-flex flex-column align-items-center justify-content-center">
+                                                            <span class="ibm_plex text-k-orange"
+                                                                  style="font-size: 18px;">
+                                                                – Ananya Rana
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                                 </div>
+
                                             </div>
                                         </div>
-
                                     </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="w-60" style="width: 60%; min-width: 320px;">
-                                    <div class="d-flex justify-content-start gap-2">
-                                        <div class="w-100">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="69"
-                                                 viewBox="0 0 70 69"
-                                                 fill="none">
-                                                <circle cx="35.309" cy="34.5248" r="34.3988" fill="#FF5555"/>
-                                                <path
-                                                        d="M30.9009 21.4434L32.5269 24.4384C31.6141 25.7304 30.7583 27.1692 29.9595 28.7548C29.2179 30.3404 28.79 31.9847 28.6759 33.6878L33.3827 34.5686V44.6989H20.2891V37.4756C20.2891 33.306 21.2304 29.9586 23.1132 27.4334C25.053 24.8495 27.6489 22.8528 30.9009 21.4434ZM47.8457 21.4434L49.4717 24.4384C48.5588 25.7304 47.703 27.1692 46.9043 28.7548C46.1626 30.3404 45.7347 31.9847 45.6206 33.6878L50.3275 34.5686V44.6989H37.2338V37.4756C37.2338 33.306 38.1752 29.9586 40.0579 27.4334C41.9977 24.8495 44.5936 22.8528 47.8457 21.4434Z"
-                                                        fill="white"/>
-                                            </svg>
-                                        </div>
-
-                                        <div class="d-flex flex-column gap-5">
-                                            <span class="ibm_plex mt-5"
-                                                  style="font-size: 16px; text-align: left; display: block;">
-                                                I used to do part-time jobs for extra cash, but this course showed me
-                                                that freelancing is way better. Now, I work on my own terms and earn
-                                                more than I did working shifts at a café. If you want financial
-                                                independence in college, this is the best place to start!
-                                            </span>
-
-
-                                            <div class="d-flex gap-2 mt-3" style="align-items: center;">
-                                                <div class="d-flex flex-column align-items-center justify-content-center">
-                                                    <span class="ibm_plex text-k-orange" style="font-size: 18px;">
-                                                        - Umang Sharma
+                                    <div class="carousel-item">
+                                        <div class="w-60" style="width: 90%; min-width: 320px;">
+                                            <div class="d-flex justify-content-start gap-2">
+                                                <div class="d-flex flex-column gap-5">
+                                                    <span class="ibm_plex mt-2"
+                                                          style="font-size: 20px; text-align: left; display: block;">
+                                                        No Fluff, Just Actionable Steps, I’ve watched tons of
+                                                        freelancing videos
+                                                        online, but nothing comes close to this course. It breaks down
+                                                        freelancing in a super simple way, with actual steps to get
+                                                        clients and
+                                                        make money. If you're serious about freelancing, don’t waste
+                                                        time
+                                                        elsewhere—just take this!
                                                     </span>
+
+
+                                                    <div class="d-flex gap-2 mt-3" style="align-items: center;">
+                                                        <div class="d-flex flex-column align-items-center justify-content-center">
+                                                            <span class="ibm_plex text-k-orange"
+                                                                  style="font-size: 18px;">
+                                                                – Karan
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                                 </div>
+
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="w-60" style="width: 90%; min-width: 320px;">
+                                            <div class="d-flex justify-content-start gap-2">
 
+                                                <div class="d-flex flex-column gap-5">
+                                                    <span class="ibm_plex mt-2"
+                                                          style="font-size: 20px; text-align: left; display: block;">
+                                                        I used to do part-time jobs for extra cash, but this course
+                                                        showed me
+                                                        that freelancing is way better. Now, I work on my own terms and
+                                                        earn
+                                                        more than I did working shifts at a café. If you want financial
+                                                        independence in college, this is the best place to start!
+                                                    </span>
+
+
+                                                    <div class="d-flex gap-2 mt-3" style="align-items: center;">
+                                                        <div class="d-flex flex-column align-items-center justify-content-center">
+                                                            <span class="ibm_plex text-k-orange"
+                                                                  style="font-size: 18px;">
+                                                                - Umang Sharma
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
-                                data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
-                                data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+                        <div class="col-12 col-md-4 d-none d-md-flex" style="margin-top: -30px;">
+                            <img src="/kreator_website/static/src/img/review_sec.png" class="img-fluid"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1106,7 +1095,8 @@
                                         </div>
                                         <div class="faq-card rounded-2" onclick="toggleFAQ(this)">
                                             <div class="faq-header">
-                                                <span style="width: 80%">Will I be able to complete this<br/>course along with my classes?
+                                                <span style="width: 80%">Will I be able to complete this<br/>course
+                                                    along with my classes?
                                                 </span>
                                                 <div class="icon">+</div>
                                             </div>
@@ -1122,7 +1112,8 @@
                                     <div class="d-flex flex-column gap-3 ibm-plex">
                                         <div class="faq-card rounded-2" onclick="toggleFAQ(this)">
                                             <div class="faq-header">
-                                                <span style="width: 80%">Will I get a certificate after this course?</span>
+                                                <span style="width: 80%">Will I get a certificate after this course?
+                                                </span>
                                                 <div class="icon">+</div>
                                             </div>
                                             <div class="faq-body">
@@ -1134,7 +1125,8 @@
 
                                         <div class="faq-card rounded-2" onclick="toggleFAQ(this)">
                                             <div class="faq-header">
-                                                <span style="width: 80%">What if I have doubts and questions<br/>during this course?
+                                                <span style="width: 80%">What if I have doubts and questions<br/>during
+                                                    this course?
                                                 </span>
                                                 <div class="icon">+</div>
                                             </div>
