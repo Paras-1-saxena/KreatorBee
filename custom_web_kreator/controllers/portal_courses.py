@@ -1308,7 +1308,7 @@ class PortalMyCourses(http.Controller):
             # Get the logged-in user
             current_user = request.env.user
             partner = current_user.partner_id
-
+            show_upgrade = False
             courses = []
 
             # Check if the user is of type 'customer'
@@ -1326,7 +1326,7 @@ class PortalMyCourses(http.Controller):
                     courses = request.env['slide.channel'].sudo().search(
                         [('name', 'in', product_names)]
                     )
-                    show_upgrade = False
+
                     upgrade_courses = request.env['slide.channel'].sudo().search(
                         [('name', 'in', product_names), ('is_upgradable', '=', True)]
                     )
