@@ -200,48 +200,54 @@
                         <div class="col-6 col-md-3">
                             <t t-if="course_type == 'intermediate'">
                                 <div class="add_to_cart_button my-2" id="cart1">
-                                <form action="/shop/cart/update?option=intermediate" method="POST">
-                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
-                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
-                                    <button type="submit"
-                                            class="btn fw-bold text-white rounded shadow-sm mt-3"
-                                            style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3);">
-                                        Enroll Now
-                                    </button>
-                                    <div id="product_option_block"></div>
-                                </form>
-                            </div>
+                                    <form action="/shop/cart/update?option=intermediate" method="POST">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="product_template_id"
+                                               t-att-value="product_template_id"/>
+                                        <input type="hidden" class="product_id" name="product_id"
+                                               t-att-value="product_id"/>
+                                        <button type="submit"
+                                                class="btn fw-bold text-white rounded shadow-sm mt-3"
+                                                style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3);">
+                                            Enroll Now
+                                        </button>
+                                        <div id="product_option_block"></div>
+                                    </form>
+                                </div>
                             </t>
                             <t t-if="course_type == 'advance'">
                                 <div class="add_to_cart_button my-2" id="cart1">
-                                <form action="/shop/cart/update?option=advance" method="POST">
-                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
-                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
-                                    <button type="submit"
-                                            class="btn fw-bold text-white rounded shadow-sm mt-3"
-                                            style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3);">
-                                        Enroll Now
-                                    </button>
-                                    <div id="product_option_block"></div>
-                                </form>
-                            </div>
+                                    <form action="/shop/cart/update?option=advance" method="POST">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="product_template_id"
+                                               t-att-value="product_template_id"/>
+                                        <input type="hidden" class="product_id" name="product_id"
+                                               t-att-value="product_id"/>
+                                        <button type="submit"
+                                                class="btn fw-bold text-white rounded shadow-sm mt-3"
+                                                style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3);">
+                                            Enroll Now
+                                        </button>
+                                        <div id="product_option_block"></div>
+                                    </form>
+                                </div>
                             </t>
                             <t t-if="course_type == 'basic'">
                                 <div class="add_to_cart_button my-2" id="cart1">
-                                <form action="/shop/cart/update?option=basic" method="POST">
-                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
-                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
-                                    <button type="submit"
-                                            class="btn fw-bold text-white rounded shadow-sm mt-3"
-                                            style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3);">
-                                        Enroll Now
-                                    </button>
-                                    <div id="product_option_block"></div>
-                                </form>
-                            </div>
+                                    <form action="/shop/cart/update?option=basic" method="POST">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="product_template_id"
+                                               t-att-value="product_template_id"/>
+                                        <input type="hidden" class="product_id" name="product_id"
+                                               t-att-value="product_id"/>
+                                        <button type="submit"
+                                                class="btn fw-bold text-white rounded shadow-sm mt-3"
+                                                style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3);">
+                                            Enroll Now
+                                        </button>
+                                        <div id="product_option_block"></div>
+                                    </form>
+                                </div>
                             </t>
                             <div class="add_to_cart_button my-2" hidden="hidden" id="cart1_hidden">
                                 <a class="btn fw-bold text-white rounded shadow-sm mt-3"
@@ -449,7 +455,8 @@
                     <div class="d-flex justify-content-around mt-4">
                         <div>
                             <div class="card" style="width: 18rem; background-color: #EBEBEB;">
-                                <img src="/kreator_website/static/src/img/carsh.png" class="card-img-top" alt="..."/>
+                                <img src="/kreator_website/static/src/img/Mobile Video Editing.png" class="card-img-top"
+                                     alt="..."/>
                                 <div class="card-body bg-black">
                                     <h5 class="card-title text-center manrope-medium h4" style="color: #048AFF;">Mobile
                                         Video Editing
@@ -457,16 +464,16 @@
                                     <p class="card-text">
                                         <ul class="text-white h5">
                                             <li>
-                                                Capcut Edit
+                                                Capcut
                                             </li>
                                             <li>
-                                                Life Time Access
+                                                Transitions in video Editing
                                             </li>
                                             <li>
-                                                1 Live QnA Session Monthly
+                                                Add Caption by Blink App
                                             </li>
                                             <li>
-                                                Language: Hinglish
+                                                Velocity Editing
                                             </li>
                                         </ul>
                                     </p>
@@ -475,7 +482,7 @@
                         </div>
                         <div>
                             <div class="card" style="width: 18rem; background-color: #EBEBEB;">
-                                <img src="/kreator_website/static/src/img/carsh.png" class="card-img-top" alt="..."/>
+                                <img src="/kreator_website/static/src/img/Meta Ads.png" class="card-img-top" alt="..."/>
                                 <div class="card-body bg-black">
                                     <h5 class="card-title text-center manrope-medium h4" style="color: #048AFF;">
                                         Advanced Meta
@@ -484,16 +491,16 @@
                                     <p class="card-text">
                                         <ul class="text-white h5">
                                             <li>
-                                                Advanced Crash Course
+                                                Setting Up Pixel
                                             </li>
                                             <li>
-                                                Life Time Access
+                                                Generating Leads via Website
                                             </li>
                                             <li>
-                                                1 Live QnA Session Monthly
+                                                Type of Audience
                                             </li>
                                             <li>
-                                                Language: Hinglish
+                                                Setup Retargeting Campaigns
                                             </li>
                                         </ul>
                                     </p>
@@ -502,23 +509,26 @@
                         </div>
                         <div>
                             <div class="card" style="width: 18rem; background-color: #EBEBEB;">
-                                <img src="/kreator_website/static/src/img/carsh.png" class="card-img-top" alt="..."/>
+                                <img src="/kreator_website/static/src/img/Sales.png" class="card-img-top" alt="..."/>
                                 <div class="card-body bg-black">
                                     <h5 class="card-title text-center manrope-medium h4" style="color: #048AFF;">Sales
                                     </h5>
                                     <p class="card-text">
                                         <ul class="text-white h5">
                                             <li>
-                                                Sales Crash Course
+                                                Quality of Leads
                                             </li>
                                             <li>
-                                                Life Time Access
+                                                Building Users
                                             </li>
                                             <li>
-                                                1 Live QnA Session Monthly
+                                                Presenting Offers
                                             </li>
                                             <li>
-                                                Language: Hinglish
+                                                Closing of Sale
+                                            </li>
+                                            <li>
+                                                Upselling and maximizing revenue
                                             </li>
                                         </ul>
                                     </p>
@@ -527,7 +537,8 @@
                         </div>
                         <div>
                             <div class="card" style="width: 18rem; background-color: #EBEBEB;">
-                                <img src="/kreator_website/static/src/img/carsh.png" class="card-img-top" alt="..."/>
+                                <img src="/kreator_website/static/src/img/Viral Your Reel.png" class="card-img-top"
+                                     alt="..."/>
                                 <div class="card-body bg-black">
                                     <h5 class="card-title text-center manrope-medium h4" style="color: #048AFF;">Viral
                                         Your
@@ -536,16 +547,16 @@
                                     <p class="card-text">
                                         <ul class="text-white h5">
                                             <li>
-                                                Viral Your Reels
+                                                Understanding Viral Reels
                                             </li>
                                             <li>
-                                                Life Time Access
+                                                Crafting Viral-Worthy Content
                                             </li>
                                             <li>
-                                                1 Live QnA Session Monthly
+                                                Optimization for Virality
                                             </li>
                                             <li>
-                                                Language: Hinglish
+                                                Engagement and Community Building
                                             </li>
                                         </ul>
                                     </p>
@@ -569,7 +580,8 @@
                                 <div class="carousel-item active">
                                     <div>
                                         <div class="card" style="width: 17rem; background-color: #EBEBEB;">
-                                            <img src="/kreator_website/static/src/img/carsh.png" class="card-img-top"
+                                            <img src="/kreator_website/static/src/img/Mobile Video Editing.png"
+                                                 class="card-img-top"
                                                  alt="..."/>
                                             <div class="card-body bg-black">
                                                 <h5 class="card-title text-center manrope-medium h4"
@@ -578,16 +590,16 @@
                                                 <p class="card-text">
                                                     <ul class="text-white h5">
                                                         <li>
-                                                            Capcut Edit
+                                                            Capcut
                                                         </li>
                                                         <li>
-                                                            Life Time Access
+                                                            Transitions in video Editing
                                                         </li>
                                                         <li>
-                                                            1 Live QnA Session Monthly
+                                                            Add Caption by Blink App
                                                         </li>
                                                         <li>
-                                                            Language: Hinglish
+                                                            Velocity Editing
                                                         </li>
                                                     </ul>
                                                 </p>
@@ -597,7 +609,7 @@
                                 </div>
                                 <div class="carousel-item">
                                     <div class="card" style="width: 17rem; background-color: #EBEBEB;">
-                                        <img src="/kreator_website/static/src/img/carsh.png" class="card-img-top"
+                                        <img src="/kreator_website/static/src/img/Meta Ads.png" class="card-img-top"
                                              alt="..."/>
                                         <div class="card-body bg-black">
                                             <h5 class="card-title text-center manrope-medium h4"
@@ -607,16 +619,16 @@
                                             <p class="card-text">
                                                 <ul class="text-white h5">
                                                     <li>
-                                                        Advanced Crash Course
+                                                        Setting Up Pixel
                                                     </li>
                                                     <li>
-                                                        Life Time Access
+                                                        Generating Leads via Website
                                                     </li>
                                                     <li>
-                                                        1 Live QnA Session Monthly
+                                                        Type of Audience
                                                     </li>
                                                     <li>
-                                                        Language: Hinglish
+                                                        Setup Retargeting Campaigns
                                                     </li>
                                                 </ul>
                                             </p>
@@ -625,7 +637,7 @@
                                 </div>
                                 <div class="carousel-item">
                                     <div class="card" style="width: 17rem; background-color: #EBEBEB;">
-                                        <img src="/kreator_website/static/src/img/carsh.png" class="card-img-top"
+                                        <img src="/kreator_website/static/src/img/Sales.png" class="card-img-top"
                                              alt="..."/>
                                         <div class="card-body bg-black">
                                             <h5 class="card-title text-center manrope-medium h4"
@@ -635,16 +647,16 @@
                                             <p class="card-text">
                                                 <ul class="text-white h5">
                                                     <li>
-                                                        Sales Crash Course
+                                                        Quality of Leads
                                                     </li>
                                                     <li>
-                                                        Life Time Access
+                                                        Building Users
                                                     </li>
                                                     <li>
-                                                        1 Live QnA Session Monthly
+                                                        Presenting Offers
                                                     </li>
                                                     <li>
-                                                        Language: Hinglish
+                                                        Upselling and maximizing revenue
                                                     </li>
                                                 </ul>
                                             </p>
@@ -653,7 +665,8 @@
                                 </div>
                                 <div class="carousel-item">
                                     <div class="card" style="width: 17rem; background-color: #EBEBEB;">
-                                        <img src="/kreator_website/static/src/img/carsh.png" class="card-img-top"
+                                        <img src="/kreator_website/static/src/img/Viral Your Reel.png"
+                                             class="card-img-top"
                                              alt="..."/>
                                         <div class="card-body bg-black">
                                             <h5 class="card-title text-center manrope-medium h4"
@@ -663,16 +676,16 @@
                                             <p class="card-text">
                                                 <ul class="text-white h5">
                                                     <li>
-                                                        Viral Your Reels
+                                                        Understanding Viral Reels
                                                     </li>
                                                     <li>
-                                                        Life Time Access
+                                                        Crafting Viral-Worthy Content
                                                     </li>
                                                     <li>
-                                                        1 Live QnA Session Monthly
+                                                        Optimization for Virality
                                                     </li>
                                                     <li>
-                                                        Language: Hinglish
+                                                        Engagement and Community Building
                                                     </li>
                                                 </ul>
                                             </p>
