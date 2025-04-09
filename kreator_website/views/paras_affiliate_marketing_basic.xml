@@ -198,8 +198,9 @@
                             (Excl. Tax)
                         </div>
                         <div class="col-6 col-md-3">
-                            <div class="add_to_cart_button my-2" id="cart1">
-                                <form action="/shop/cart/update" method="POST">
+                            <t t-if="course_type == 'intermediate'">
+                                <div class="add_to_cart_button my-2" id="cart1">
+                                <form action="/shop/cart/update?option=intermediate" method="POST">
                                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                     <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
                                     <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
@@ -211,6 +212,37 @@
                                     <div id="product_option_block"></div>
                                 </form>
                             </div>
+                            </t>
+                            <t t-if="course_type == 'advance'">
+                                <div class="add_to_cart_button my-2" id="cart1">
+                                <form action="/shop/cart/update?option=advance" method="POST">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                    <button type="submit"
+                                            class="btn fw-bold text-white rounded shadow-sm mt-3"
+                                            style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3);">
+                                        Enroll Now
+                                    </button>
+                                    <div id="product_option_block"></div>
+                                </form>
+                            </div>
+                            </t>
+                            <t t-if="course_type == 'basic'">
+                                <div class="add_to_cart_button my-2" id="cart1">
+                                <form action="/shop/cart/update?option=basic" method="POST">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                    <button type="submit"
+                                            class="btn fw-bold text-white rounded shadow-sm mt-3"
+                                            style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3);">
+                                        Enroll Now
+                                    </button>
+                                    <div id="product_option_block"></div>
+                                </form>
+                            </div>
+                            </t>
                             <div class="add_to_cart_button my-2" hidden="hidden" id="cart1_hidden">
                                 <a class="btn fw-bold text-white rounded shadow-sm mt-3"
                                    style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3);"
@@ -350,8 +382,9 @@
                 <div class="col-2 p-0">
                     <img src="/kreator_website/static/src/img/am_1.svg" style="width: 70px; height: 70px;"/>
                 </div>
-                <div class="row justify-content-end">
-                    <div class="col-11">
+                <div class="row justify-content-end my-2">
+                    <div class="col-11"
+                         style="border-radius: 25px; background-image: linear-gradient(#048AFF, #66B6FE, #5BB2FF);">
                         <t t-esc="intro_video_mobile"/>
                         <script src="https://player.vimeo.com/api/player.js"></script>
                     </div>
@@ -386,7 +419,8 @@
                      style="width: 98vw; margin-left: 8px; border-radius: 25px; background-image: linear-gradient(#048AFF, #66B6FE, #5BB2FF);">
                     <div class="p-2 p-md-4 manrope_bold display-5 display-md-4 mt-4 mt-md-3 text-center">
                         <span>4 LIVE</span>
-                        <span style="background: white; border-radius: 8px; padding-left: 4px; padding-right: 1px; margin-right: 2px;">QnA
+                        <span style="background: white; border-radius: 8px; padding-left: 4px; padding-right: 1px; margin-right: 2px;">
+                            QnA
                         </span>
                         <span>SESSIONS BY</span>
                         <span style="background: white; border-radius: 8px; padding-left: 4px; padding-right: 4px;">
@@ -423,16 +457,16 @@
                                     <p class="card-text">
                                         <ul class="text-white h5">
                                             <li>
-                                                Subpart 1
+                                                Capcut Edit
                                             </li>
                                             <li>
-                                                Subpart 2
+                                                Life Time Access
                                             </li>
                                             <li>
-                                                Subpart 3
+                                                1 Live QnA Session Monthly
                                             </li>
                                             <li>
-                                                Subpart 4
+                                                Language: Hinglish
                                             </li>
                                         </ul>
                                     </p>
@@ -443,22 +477,23 @@
                             <div class="card" style="width: 18rem; background-color: #EBEBEB;">
                                 <img src="/kreator_website/static/src/img/carsh.png" class="card-img-top" alt="..."/>
                                 <div class="card-body bg-black">
-                                    <h5 class="card-title text-center manrope-medium h4" style="color: #048AFF;">Meta
+                                    <h5 class="card-title text-center manrope-medium h4" style="color: #048AFF;">
+                                        Advanced Meta
                                         Ads
                                     </h5>
                                     <p class="card-text">
                                         <ul class="text-white h5">
                                             <li>
-                                                Subpart 1
+                                                Advanced Crash Course
                                             </li>
                                             <li>
-                                                Subpart 2
+                                                Life Time Access
                                             </li>
                                             <li>
-                                                Subpart 3
+                                                1 Live QnA Session Monthly
                                             </li>
                                             <li>
-                                                Subpart 4
+                                                Language: Hinglish
                                             </li>
                                         </ul>
                                     </p>
@@ -474,16 +509,16 @@
                                     <p class="card-text">
                                         <ul class="text-white h5">
                                             <li>
-                                                Subpart 1
+                                                Sales Crash Course
                                             </li>
                                             <li>
-                                                Subpart 2
+                                                Life Time Access
                                             </li>
                                             <li>
-                                                Subpart 3
+                                                1 Live QnA Session Monthly
                                             </li>
                                             <li>
-                                                Subpart 4
+                                                Language: Hinglish
                                             </li>
                                         </ul>
                                     </p>
@@ -501,16 +536,16 @@
                                     <p class="card-text">
                                         <ul class="text-white h5">
                                             <li>
-                                                Subpart 1
+                                                Viral Your Reels
                                             </li>
                                             <li>
-                                                Subpart 2
+                                                Life Time Access
                                             </li>
                                             <li>
-                                                Subpart 3
+                                                1 Live QnA Session Monthly
                                             </li>
                                             <li>
-                                                Subpart 4
+                                                Language: Hinglish
                                             </li>
                                         </ul>
                                     </p>
@@ -525,9 +560,9 @@
                         Crash Courses
                     </span>
                 </div>
-                <div class="mt-4 d-flex h2 d-md-none manrope_bold justify-content-center"
+                <div class="mt-4 row h2 d-md-none manrope_bold justify-content-center"
                      style="width: 98vw; margin-left: 6px; border-radius: 25px;">
-                    <div>
+                    <div class="col-10">
                         <div id="carouselExample" class="carousel slide" data-bs-interval="5000" data-bs-touch="true"
                              data-bs-ride="carousel">
                             <div class="carousel-inner">
@@ -543,16 +578,16 @@
                                                 <p class="card-text">
                                                     <ul class="text-white h5">
                                                         <li>
-                                                            Subpart 1
+                                                            Capcut Edit
                                                         </li>
                                                         <li>
-                                                            Subpart 2
+                                                            Life Time Access
                                                         </li>
                                                         <li>
-                                                            Subpart 3
+                                                            1 Live QnA Session Monthly
                                                         </li>
                                                         <li>
-                                                            Subpart 4
+                                                            Language: Hinglish
                                                         </li>
                                                     </ul>
                                                 </p>
@@ -567,21 +602,21 @@
                                         <div class="card-body bg-black">
                                             <h5 class="card-title text-center manrope-medium h4"
                                                 style="color: #048AFF;">
-                                                Meta Ads
+                                                Advance Meta Ads
                                             </h5>
                                             <p class="card-text">
                                                 <ul class="text-white h5">
                                                     <li>
-                                                        Subpart 1
+                                                        Advanced Crash Course
                                                     </li>
                                                     <li>
-                                                        Subpart 2
+                                                        Life Time Access
                                                     </li>
                                                     <li>
-                                                        Subpart 3
+                                                        1 Live QnA Session Monthly
                                                     </li>
                                                     <li>
-                                                        Subpart 4
+                                                        Language: Hinglish
                                                     </li>
                                                 </ul>
                                             </p>
@@ -600,16 +635,16 @@
                                             <p class="card-text">
                                                 <ul class="text-white h5">
                                                     <li>
-                                                        Subpart 1
+                                                        Sales Crash Course
                                                     </li>
                                                     <li>
-                                                        Subpart 2
+                                                        Life Time Access
                                                     </li>
                                                     <li>
-                                                        Subpart 3
+                                                        1 Live QnA Session Monthly
                                                     </li>
                                                     <li>
-                                                        Subpart 4
+                                                        Language: Hinglish
                                                     </li>
                                                 </ul>
                                             </p>
@@ -628,16 +663,16 @@
                                             <p class="card-text">
                                                 <ul class="text-white h5">
                                                     <li>
-                                                        Subpart 1
+                                                        Viral Your Reels
                                                     </li>
                                                     <li>
-                                                        Subpart 2
+                                                        Life Time Access
                                                     </li>
                                                     <li>
-                                                        Subpart 3
+                                                        1 Live QnA Session Monthly
                                                     </li>
                                                     <li>
-                                                        Subpart 4
+                                                        Language: Hinglish
                                                     </li>
                                                 </ul>
                                             </p>
@@ -659,35 +694,35 @@
                             </button>
                         </div>
                     </div>
-<!--                    <script>-->
-<!--                        $('.carousel').on('touchstart', function(event){-->
-<!--                        const xClick = event.originalEvent.touches[0].pageX;-->
-<!--                        $(this).one('touchmove', function(event){-->
-<!--                        const xMove = event.originalEvent.touches[0].pageX;-->
-<!--                        const sensitivityInPx = 5;-->
+                    <!--                    <script>-->
+                    <!--                        $('.carousel').on('touchstart', function(event){-->
+                    <!--                        const xClick = event.originalEvent.touches[0].pageX;-->
+                    <!--                        $(this).one('touchmove', function(event){-->
+                    <!--                        const xMove = event.originalEvent.touches[0].pageX;-->
+                    <!--                        const sensitivityInPx = 5;-->
 
-<!--                        if( Math.floor(xClick - xMove) > sensitivityInPx ){-->
-<!--                        $(this).carousel('next');-->
-<!--                        }-->
-<!--                        else if( Math.floor(xClick - xMove)-->
-<!--                        &lt;-->
-<!--                        -sensitivityInPx ){-->
-<!--                        $(this).carousel('prev');-->
-<!--                        }-->
-<!--                        });-->
-<!--                        $(this).on('touchend', function(){-->
-<!--                        $(this).off('touchmove');-->
-<!--                        });-->
-<!--                        });-->
-<!--                    </script>-->
+                    <!--                        if( Math.floor(xClick - xMove) > sensitivityInPx ){-->
+                    <!--                        $(this).carousel('next');-->
+                    <!--                        }-->
+                    <!--                        else if( Math.floor(xClick - xMove)-->
+                    <!--                        &lt;-->
+                    <!--                        -sensitivityInPx ){-->
+                    <!--                        $(this).carousel('prev');-->
+                    <!--                        }-->
+                    <!--                        });-->
+                    <!--                        $(this).on('touchend', function(){-->
+                    <!--                        $(this).off('touchmove');-->
+                    <!--                        });-->
+                    <!--                        });-->
+                    <!--                    </script>-->
                 </div>
             </t>
 
 
             <!--            What's in the course-->
 
-            <div class="mt-3 row justify-content-center" style="width: 98vw; margin-left: 10px; border-radius: 25px;">
-                <div class="col-12 col-md-6 manrope_bold text-center display-6">
+            <div class="mt-4 row justify-content-center" style="width: 98vw; margin-left: 10px; border-radius: 25px;">
+                <div class="col-12 col-md-6 manrope_bold text-center display-6 mt-4">
                     <span>What's in the Course</span>
                     <span>
                         <img src="/kreator_website/static/src/img/Graduation_Book.svg" class="img-fluid"
@@ -699,7 +734,7 @@
                         <div class="accordion2">
                             <div class="accordion-item2">
                                 <div class="accordion-header2 row g-0">
-                                    <div class="col-11 manrope_bold fs-5">
+                                    <div class="col-11 manrope_bold fs-4">
                                         Module 1: THE FOUNDATION
                                     </div>
                                     <div class="col-1">
@@ -708,7 +743,7 @@
                                     </div>
                                 </div>
                                 <div class="accordion-content2 manrope_medium">
-                                    <ul>
+                                    <ul class="h4">
                                         <li>
                                             The Millionaire Mindset
                                         </li>
@@ -726,7 +761,7 @@
                             </div>
                             <div class="accordion-item2">
                                 <div class="accordion-header2 row g-0">
-                                    <div class="col-11 manrope_bold fs-5">
+                                    <div class="col-11 manrope_bold fs-4">
                                         Module 2: THE BLUEPRINT
                                     </div>
                                     <div class="col-1">
@@ -735,7 +770,7 @@
                                     </div>
                                 </div>
                                 <div class="accordion-content2">
-                                    <ul>
+                                    <ul class="h4">
                                         <li>
                                             Introduction to Affiliate Marketing
                                         </li>
@@ -756,7 +791,7 @@
                             </div>
                             <div class="accordion-item2">
                                 <div class="accordion-header2 row g-0">
-                                    <div class="col-11 manrope_bold fs-5">
+                                    <div class="col-11 manrope_bold fs-4">
                                         Module 3: THE ENGINE
                                     </div>
                                     <div class="col-1">
@@ -765,7 +800,7 @@
                                     </div>
                                 </div>
                                 <div class="accordion-content2">
-                                    <ul>
+                                    <ul class="h4">
                                         <li>
                                             Warm-Up before Execution
                                         </li>
@@ -789,7 +824,7 @@
                             </div>
                             <div class="accordion-item2">
                                 <div class="accordion-header2 row g-0 ">
-                                    <div class="col-11 manrope_bold fs-5">
+                                    <div class="col-11 manrope_bold fs-4">
                                         Module 4: THE ACCELERATOR
                                     </div>
                                     <div class="col-1">
@@ -798,7 +833,7 @@
                                     </div>
                                 </div>
                                 <div class="accordion-content2">
-                                    <ul>
+                                    <ul class="h4">
                                         <li>
                                             Setting Up Basic Automation Workflows
                                         </li>
@@ -816,7 +851,7 @@
                             </div>
                             <div class="accordion-item2">
                                 <div class="accordion-header2 row g-0">
-                                    <div class="col-11 manrope_bold fs-5">
+                                    <div class="col-11 manrope_bold fs-4">
                                         Module 5: THE ROADMAP
                                     </div>
                                     <div class="col-1">
@@ -825,7 +860,7 @@
                                     </div>
                                 </div>
                                 <div class="accordion-content2">
-                                    <ul>
+                                    <ul class="h4">
                                         <li>
                                             From Side Hustle to Sustainable Career
                                         </li>
@@ -925,7 +960,7 @@
                     <img src="/kreator_website/static/src/img/reviews_arrow.svg" class="img-fluid"/>
                 </div>
                 <div class="col-10">
-                    <div id="carouselExample" class="carousel slide" data-bs-interval="5000" data-bs-touch="true"
+                    <div id="carouselreview" class="carousel slide" data-bs-interval="5000" data-bs-touch="true"
                          data-bs-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
@@ -969,22 +1004,20 @@
                                         frameborder="0" allowfullscreen="allowfullscreen"></iframe>
                             </div>
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselreview"
                                 data-bs-slide="prev" style="margin-left: -37px;">
-                            <!--                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
                             <i class="ri-arrow-left-wide-line text-black"></i>
                             <span class="visually-hidden">Previous</span>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselreview"
                                 data-bs-slide="next" style="margin-right: -37px;">
-                            <!--                            <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
                             <i class="ri-arrow-right-wide-fill text-black"></i>
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
                 </div>
                 <script>
-                    $('.carousel').on('touchstart', function(event){
+                    $('#carouselreview').on('touchstart', function(event){
                     const xClick = event.originalEvent.touches[0].pageX;
                     $(this).one('touchmove', function(event){
                     const xMove = event.originalEvent.touches[0].pageX;

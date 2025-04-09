@@ -96,7 +96,7 @@ class KreatorWebsite(http.Controller):
         intro_video_mobile = Markup('''<iframe src="https://player.vimeo.com/video/1068746592?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
                          frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
                           style="width:100%; height:30vh; title="Promotional  gen-z-"></iframe>''')
-        values.update({'intro_video': intro_video, 'intro_video_mobile': intro_video_mobile})
+        values.update({'intro_video': intro_video, 'intro_video_mobile': intro_video_mobile, 'course_type': 'basic'})
         return request.render("kreator_website.affiliate_marketing_basic_paras", values)
 
     @http.route('/landing/page/11', auth='public', website=True)
@@ -109,7 +109,10 @@ class KreatorWebsite(http.Controller):
         intro_video_mobile = Markup('''<iframe src="https://player.vimeo.com/video/1068746592?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
                              frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
                               style="width:100%; height:30vh; title="Promotional  gen-z-"></iframe>''')
-        values.update({'intro_video': intro_video, 'intro_video_mobile': intro_video_mobile, 'course_type': 'intermediate'})
+        stage_id = course.upgrade_stage_ids.filtered(lambda us: us.name == 'intermediate')
+        partner_course_ids = request.env.user.partner_id.slide_channel_ids.product_id.ids
+        price2 = sum([sc.list_price for sc in stage_id.product_ids if sc.id not in partner_course_ids])
+        values.update({'intro_video': intro_video, 'intro_video_mobile': intro_video_mobile, 'course_type': 'intermediate', 'price1': 20000, 'price2': price2})
         return request.render("kreator_website.affiliate_marketing_basic_paras", values)
 
     @http.route('/landing/page/12', auth='public', website=True)
@@ -121,8 +124,14 @@ class KreatorWebsite(http.Controller):
                       style="width:100%; height:68vh; title="Promotional  gen-z-"></iframe>''')
         intro_video_mobile = Markup('''<iframe src="https://player.vimeo.com/video/1068746592?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
                              frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-                              style="width:100%; height:30vh; title="Promotional  gen-z-"></iframe>''')
-        values.update({'intro_video': intro_video, 'intro_video_mobile': intro_video_mobile, 'course_type': 'advance'})
+                              style="width:100%; height:25vh; title="Promotional  gen-z-"></iframe>''')
+        stage_id = course.upgrade_stage_ids.filtered(lambda us: us.name == 'advance')
+        partner_course_ids = request.env.user.partner_id.slide_channel_ids.product_id.ids
+        price2 = sum([sc.list_price for sc in stage_id.product_ids if sc.id not in partner_course_ids])
+        values.update(
+            {'intro_video': intro_video, 'intro_video_mobile': intro_video_mobile, 'course_type': 'intermediate',
+             'price1': 20000, 'price2': price2})
+        values.update({'intro_video': intro_video, 'intro_video_mobile': intro_video_mobile, 'course_type': 'advance', 'price1': 20000, 'price2': price2})
         return request.render("kreator_website.affiliate_marketing_basic_paras", values)
 
     def fetch_values(self, **kwargs):

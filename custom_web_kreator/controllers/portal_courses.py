@@ -1265,6 +1265,39 @@ class PortalMyCourses(http.Controller):
     #     # Render the data page template
     #     return http.request.render('custom_web_kreator.customer_courses')
 
+    @http.route('/upgrade/options', type='http', auth='public', website=True, csrf=False)
+    def upgradeTo(self, **kwargs):
+        course_id = request.env['slide.channel'].browse(int(kwargs.get('course_id')))
+        stage_id = course_id.upgrade_stage_ids.filtered(lambda us: us.name == 'intermediate')
+        partner_course_ids = request.env.user.partner_id.slide_channel_ids.product_id.ids
+        products_to_add = [sc.id for sc in stage_id.product_ids if sc.id not in partner_course_ids]
+        show_upgrade = True if products_to_add else False
+
+        return request.make_response(
+            data=json.dumps({'response': "success", 'upgrade_to': 'intermediate' if show_upgrade else 'advance'}),
+            headers=[('Content-Type', 'application/json')],
+            status=200
+        )
+
+    @http.route('/open/referral', type='http', auth='public', website=True, csrf=False)
+    def upgradeOptions(self, **kwargs):
+        course_id = request.env['slide.channel'].browse(int(kwargs.get('course_id')))
+        type = kwargs.get('type')
+        current_user = request.env.user
+        partner = current_user.partner_id
+        sale_orders = request.env['sale.order'].sudo().search(
+            [('partner_id', '=', partner.id), ('state', 'in', ['sale'])])
+        order_line = sale_orders.order_line.filtered(lambda ol: ol.product_id.id == course_id.product_id.id)
+        stage_id = course_id.upgrade_stage_ids.filtered(lambda us: us.name == type)
+        referral_id = request.env['apg.course.referral'].sudo().create({
+            'course_id': course_id.id,
+            'partner_id': order_line.partner_commission_partner_id.id,
+            'stage_id': stage_id.id,
+            'expiry_time': 315360000,
+        })
+        referal_link = referral_id.generate_referral_link()
+        return request.redirect(referal_link)
+
     @http.route('/customer/mycourses', type='http', auth='public', website=True)
     def customer_courses(self, **kwargs):
         user = request.env.user
@@ -1293,10 +1326,19 @@ class PortalMyCourses(http.Controller):
                     courses = request.env['slide.channel'].sudo().search(
                         [('name', 'in', product_names)]
                     )
+                    show_upgrade = False
+                    upgrade_courses = request.env['slide.channel'].sudo().search(
+                        [('name', 'in', product_names), ('is_upgradable', '=', True)]
+                    )
+                    if upgrade_courses:
+                        stage_id = upgrade_courses.upgrade_stage_ids.filtered(lambda us: us.name == 'advance')
+                        partner_course_ids = request.env.user.partner_id.slide_channel_ids.product_id.ids
+                        products_to_add = [sc.id for sc in stage_id.product_ids if sc.id not in partner_course_ids]
+                        show_upgrade = True if products_to_add else False
 
             # Render the data page template
             return request.render('custom_web_kreator.customer_courses', {
-                'courses': courses
+                'courses': courses, 'show_upgrade': show_upgrade
             })
         else:
             raise NotFound()
@@ -1360,10 +1402,15 @@ class PortalMyCourses(http.Controller):
 
             added_course_ids = request.env['my.product.cart'].sudo().search([
                 ('partner_id', '=', partner.id)
-            ]).course_id.ids
-            domain = [('state', '=', 'published')]  # Base domain to filter published courses
+            ]).course_id.ids # Base domain to filter published courses
+            upgrade_domain = [('state', '=', 'published'), ('is_upgradable', '=', True), ('not_display', '=', False)]
+            upgrade_course = request.env['slide.channel'].sudo().search(upgrade_domain)
+            if current_user.id in upgrade_course.user_ids.ids:
+                domain = [('state', '=', 'published'), ('not_display', '=', False)]
+            else:
+                domain = [('state', '=', 'published'), ('is_upgradable', '=', False), ('not_display', '=', False)]
 
-            # If a specific course is selected, show only that course
+                # If a specific course is selected, show only that course
             if selected_course_id:
                 domain.append(('id', '=', int(selected_course_id)))
 

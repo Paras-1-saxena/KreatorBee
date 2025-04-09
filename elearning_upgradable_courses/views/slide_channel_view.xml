@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Inherit the slide.channel form view -->
+        <record id="view_slide_channel_form_upgradable" model="ir.ui.view">
+            <field name="name">slide.channel.form.upgradable</field>
+            <field name="model">slide.channel</field>
+            <field name="inherit_id" ref="website_slides.view_slide_channel_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('oe_title')]" position="after">
+                    <group>
+                        <group>
+                            <field name="is_upgradable" widget="boolean_toggle"/>
+                            <field name="not_display" widget="boolean_toggle"/>
+                            <field name="user_ids" invisible="not is_upgradable" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//page[@name='content']" position="after">
+                    <page name="Upgrade_Stage" string="Upgrade Stage" invisible="not is_upgradable">
+                        <field name="upgrade_stage_ids">
+                            <list editable="bottom">
+                                <field name="name"/>
+                                <field name="product_ids" widget="many2many_tags"/>
+                                <field name="landing_page_record_id"/>
+                                <field name="image_banner"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page name="Upgrade_options" string="Upgrade Options" invisible="not is_upgradable">
+                        <field name="upgrade_option_ids">
+                            <list editable="bottom">
+                                <field name="from_stage" domain="[('channel_id', '=', channel_id)]"/>
+                                <field name="to_statge" domain="[('channel_id', '=', channel_id)]"/>
+                                <field name="product_id"/>
+                            </list>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='slide_ids']/list/field[@name='is_category']" position="after">
+                    <field name="upgrade_stage_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_slide_slide_form_upgradable" model="ir.ui.view">
+            <field name="name">slide.slide.form.upgradable</field>
+            <field name="model">slide.slide</field>
+            <field name="inherit_id" ref="website_slides.view_slide_slide_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='document']" position="inside">
+                    <group>
+                        <group>
+                            <field name="upgrade_stage_id" domain="[('channel_id', '=', channel_id)]" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

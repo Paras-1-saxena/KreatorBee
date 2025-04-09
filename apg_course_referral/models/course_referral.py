@@ -20,6 +20,7 @@ class CourseReferral(models.Model):
     generated_url = fields.Char(string="Generated URL")
     payment_link = fields.Char(string="Payment Link")
     order_id  = fields.Many2one('sale.order', string="Sale Order", ondelete="cascade")
+    stage_id = fields.Many2one('slide.channel.upgrade.stage')
     
     def generate_referral_link(self):
         key1 = self.env['ir.config_parameter'].sudo().get_param('apg_course_referral.apg_encryption_key')
@@ -29,11 +30,13 @@ class CourseReferral(models.Model):
         partner_id = str(self.partner_id.id)
         course_url = str(self.website_url)
         expiry_time = int(time.time()) + int(self.expiry_time)
-        data = f"{course_id}|{partner_id}|{course_url}|{expiry_time}"
+        stage_id = str(self.stage_id.id)
+        data = f"{course_id}|{partner_id}|{course_url}|{expiry_time}|{stage_id}"
         encrypted_bytes = cipher_suite.encrypt(data.encode('utf-8'))
         encrypted_token = base64.urlsafe_b64encode(encrypted_bytes).decode('utf-8')
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         self.generated_url = f"{base_url}/referral/{encrypted_token}"
+        return self.generated_url
         # return f"{base_url}/referral/{encrypted_token}"
 
     def generate_payment_link(self,order=False,partner_name=False,partner_email=False):

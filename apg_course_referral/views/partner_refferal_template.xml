@@ -559,7 +559,8 @@
                                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                         <div class="link-box">
                                             <label>Referral Link</label>
-                                            <select id="course_id" name="course_id" required="required">
+                                            <select id="course_id" name="course_id" required="required"
+                                                    onchange="getOption()">
                                                 <option value="" selected="selected">e.g. Select Product</option>
                                                 <t t-if="referral_id">
                                                     <t t-foreach="product_cart_ids or []" t-as="course">
@@ -577,6 +578,40 @@
                                                     </t>
                                                 </t>
                                             </select>
+                                            <select id="stage_id" name="stage_id" required="required"
+                                                    style="display: none">
+                                            </select>
+                                            <script>
+                                                function getOption() {
+                                                let course_id = document.getElementById('course_id').value
+                                                fetch('/check/upgrade?course_id=' + course_id, {
+                                                method: "POST",
+                                                headers: {
+                                                "Content-Type": "application/json",
+                                                },
+                                                'body': JSON.stringify({'params': {'course': query}})
+                                                })
+                                                .then(response =&gt; response.json())
+                                                .then(data =&gt; {
+
+                                                if (data['response'] == 'yes') {
+                                                let option = ''
+                                                for (let k in data['upgrade_options']) {
+                                                option += '&lt;option value="' + k + '"&gt;' + data['upgrade_options'][k] + "&lt;/option&gt;"
+                                                }
+                                                console.log(option)
+                                                let stage_id = document.getElementById('stage_id')
+                                                stage_id.style.display = 'block';
+                                                stage_id.innerHTML = option;
+                                                stage_id.setAttribute("required", "required");
+                                                } else {
+                                                stage_id.style.display = 'none';
+                                                stage_id.removeAttribute("required");
+                                                }
+                                                })
+
+                                                }
+                                            </script>
                                             <select id="expiry_time" name="expiry_time">
                                                 <option value="5_minutes">5 minutes</option>
                                                 <option value="15_minutes">15 minutes</option>

@@ -3,6 +3,7 @@ from cryptography.fernet import Fernet
 import base64
 import logging
 import werkzeug
+from reportlab.lib.pagesizes import elevenSeventeen
 from werkzeug.urls import url_encode
 import requests
 import time
@@ -172,6 +173,22 @@ class ReferralController(http.Controller):
 
         # return http.request.render('apg_course_referral.nreferral_link_page', values)
 
+    @http.route('/check/upgrade', type='http', auth='public', website=True, csrf=False)
+    def checkUpgrade(self, **kwargs):
+        course_id = request.env['slide.channel'].sudo().search([('id', '=', int(kwargs.get('course_id')))]) if kwargs.get('course_id') else False
+        if course_id and course_id.is_upgradable:
+            upgrade_options = {stage.id: stage.name for stage in course_id.upgrade_stage_ids}
+            return request.make_response(
+                data=json.dumps({'response': "yes", 'upgrade_options': upgrade_options}),
+                headers=[('Content-Type', 'application/json')],
+                status=200
+            )
+        else:
+            return request.make_response(
+                data=json.dumps({'response': "No"}),
+                headers=[('Content-Type', 'application/json')],
+                status=200
+            )
 
     @http.route('/partner-referral', type='http', auth='public', website=True)
     def partner_referral(self, **kwargs):
@@ -213,6 +230,7 @@ class ReferralController(http.Controller):
                 referral_id = request.env['apg.course.referral'].sudo().create({
                     'course_id':course_id.id,
                     'partner_id': partner_id.id,
+                    'stage_id': int(kwargs.get('stage_id')) if kwargs.get('stage_id') else False,
                     'expiry_time': expireOn,
                     })
                 referral_id.generate_referral_link()
@@ -325,7 +343,7 @@ class ReferralController(http.Controller):
         encryption_key = request.env['ir.config_parameter'].sudo().get_param('apg_course_referral.apg_encryption_key').encode('utf-8')  # 32-byte key
         try:
             decrypted_data = self.decrypt_data(token, encryption_key)
-            course_id, partner_id, course_url, expiry_time = decrypted_data.split('|')
+            course_id, partner_id, course_url, expiry_time, stage_id = decrypted_data.split('|')
             request.session['referral_course'] = course_id
             request.session['referral_partner'] = partner_id
             current_time = int(time.time())
@@ -348,7 +366,11 @@ class ReferralController(http.Controller):
             }
             encrypt_expiry = [f"{x}{''.join(random.choices(string.ascii_letters + string.digits, k=2))}" for x in str(expiry_time)]
             encrypt_expiry = ''.join(encrypt_expiry)
-            course_url = f"{course_url}&course_name={encrypt_expiry}"
+            if stage_id != 'False':
+                stage_id = request.env['slide.channel.upgrade.stage'].browse(int(stage_id))
+                course_url = f"{request.env['ir.config_parameter'].sudo().get_param('web.base.url')}/landing/page/{stage_id.landing_page_record_id.lading_id}?course_id={int(course_id)}&course_name={encrypt_expiry}"
+            else:
+                course_url = f"{course_url}&course_name={encrypt_expiry}"
             return request.redirect(course_url)
         except Exception as e:
             return "Invalid or expired referral link."

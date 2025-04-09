@@ -352,7 +352,23 @@
                                                 </a>
                                             </div>
                                             <div class="col-7">
-                                                <div class="p-3 row">
+                                                <div class="p-2 row">
+                                                    <p class="text-center">
+                                                        <t t-if="cart.course_id.is_upgradable">
+                                                            <span style="color: red; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;"
+                                                                  class="p-2 h4 d-none d-md-block">
+                                                                <i class="ri-star-line"></i>
+                                                                Upgradable Course
+                                                                <i class="ri-star-line"></i>
+                                                            </span>
+                                                            <span style="color: red; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; font-size: 14px;"
+                                                                  class="p-2 d-block d-md-none">
+                                                                <i class="ri-star-line"></i>
+                                                                Upgradable Course
+                                                                <i class="ri-star-line"></i>
+                                                            </span>
+                                                        </t>
+                                                    </p>
                                                     <p class="fs-3">
                                                         <t t-esc="cart.name"/>
                                                     </p>
@@ -418,49 +434,49 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="row">
-                                                        <div class="col-6 d-block d-md-none">
-                                                            <div>
-                                                                <b>Price</b>
-                                                            </div>
-                                                            ₹
-                                                            <t t-esc="cart.sales_price"/>
+                                                    <div class="col-6 d-block d-md-none">
+                                                        <div>
+                                                            <b>Price</b>
                                                         </div>
-                                                        <div class="col-6 d-block d-md-none">
-                                                            <div>
-                                                                <b>Commission</b>
-                                                            </div>
-                                                            ₹
-                                                            <t t-esc="cart.partner_commission"/>
-                                                        </div>
-                                                        <div class="col-12 col-md-6 d-block d-md-none">
-                                                            <a href="/partner-referral">
-                                                                <button class="btn1"
-                                                                        style="width: 100%; height: auto; font-size: 12px;">
-                                                                    Generate Affiliate Link
-                                                                </button>
-                                                            </a>
-                                                        </div>
-                                                        <div class="col-12 col-md-6 my-2 my-md-0 d-block d-md-none">
-                                                            <!-- ELSE show the "Add to My List" form -->
-                                                            <form method="post" action="/remove/partner/myproducts">
-                                                                <input type="hidden" name="csrf_token"
-                                                                       t-att-value="request.csrf_token()"/>
-                                                                <input type="hidden" id="cartCourseID"
-                                                                       name="cartCourseID"
-                                                                       readonly="readonly"
-                                                                       t-att-value="cart.course_id.id"/>
-                                                                <input type="hidden" id="cartPartnerID"
-                                                                       name="cartPartnerID"
-                                                                       readonly="readonly"
-                                                                       t-att-value="cart.partner_id.id"/>
-                                                                <button type="submit" href="/partner-referral"
-                                                                        class="btn1"
-                                                                        style="width: 100%; height: auto; font-size: 12px;">
-                                                                    Remove
-                                                                </button>
-                                                            </form>
-                                                        </div>
+                                                        ₹
+                                                        <t t-esc="cart.sales_price"/>
                                                     </div>
+                                                    <div class="col-6 d-block d-md-none">
+                                                        <div>
+                                                            <b>Commission</b>
+                                                        </div>
+                                                        ₹
+                                                        <t t-esc="cart.partner_commission"/>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 d-block d-md-none">
+                                                        <a href="/partner-referral">
+                                                            <button class="btn1"
+                                                                    style="width: 100%; height: auto; font-size: 12px;">
+                                                                Generate Affiliate Link
+                                                            </button>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-12 col-md-6 my-2 my-md-0 d-block d-md-none">
+                                                        <!-- ELSE show the "Add to My List" form -->
+                                                        <form method="post" action="/remove/partner/myproducts">
+                                                            <input type="hidden" name="csrf_token"
+                                                                   t-att-value="request.csrf_token()"/>
+                                                            <input type="hidden" id="cartCourseID"
+                                                                   name="cartCourseID"
+                                                                   readonly="readonly"
+                                                                   t-att-value="cart.course_id.id"/>
+                                                            <input type="hidden" id="cartPartnerID"
+                                                                   name="cartPartnerID"
+                                                                   readonly="readonly"
+                                                                   t-att-value="cart.partner_id.id"/>
+                                                            <button type="submit" href="/partner-referral"
+                                                                    class="btn1"
+                                                                    style="width: 100%; height: auto; font-size: 12px;">
+                                                                Remove
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

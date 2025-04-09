@@ -6,7 +6,7 @@
     'author': 'Apagen solutions',
     'website': 'https://www.apagen.com',
     'category': 'website',
-    'depends': ['base', 'website', 'contacts', 'web', 'website_sale_slides', 'website_slides', 'custom_web_kreator', 'apg_signup', 'apg_sale_commission', 'payment_instamojo_checkout'],  # List of dependent modules
+    'depends': ['base', 'website', 'contacts', 'web', 'website_sale_slides', 'website_slides', 'custom_web_kreator', 'apg_signup', 'apg_sale_commission', 'payment_instamojo_checkout', 'elearning_upgradable_courses'],  # List of dependent modules
     'data': [
         'security/ir.model.access.csv',
         'views/course_referral_view.xml',
