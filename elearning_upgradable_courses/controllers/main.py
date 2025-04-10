@@ -3,6 +3,9 @@ from odoo import http, _
 from odoo.exceptions import AccessDenied, AccessError, UserError, ValidationError
 from odoo.http import request, route
 from odoo.tools.json import scriptsafe as json_scriptsafe
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class WebsiteSaleCustom(WebsiteSale):
 
@@ -28,11 +31,11 @@ class WebsiteSaleCustom(WebsiteSale):
                 int(ptav_data['value']) for ptav_data in no_variants_attribute_values_data
             ]
 
-        user = request.env.user
-        public_user_id = request.website.user_id.id  # Get the public user ID
-        if user.id == public_user_id:  # if current user is public user
-            # Store the current product URL to return after signup
-            return request.redirect("/shop/cart")
+        # user = request.env.user
+        # public_user_id = request.website.user_id.id  # Get the public user ID
+        # if user.id == public_user_id:  # if current user is public user
+        #     # Store the current product URL to return after signup
+        #     return request.redirect("/shop/cart")
 
         if kwargs.get('option'):
             sale_order.order_line.unlink()

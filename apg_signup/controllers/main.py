@@ -412,7 +412,7 @@ class WebsiteSale(payment_portal.PaymentPortal):
         if user.id == public_user_id and order and order.order_line:  # if current user is public user
             # Store the current product URL to return after signup
             current_url = request.httprequest.referrer
-            request.session['redirect_after_signup'] = current_url
+            request.session['redirect_after_signup'] = '/shop/cart'
             return request.redirect('/web/signup?user_type=customer')
 
         if user.id != public_user_id and order and order.order_line:
