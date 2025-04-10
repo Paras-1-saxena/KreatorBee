@@ -1286,7 +1286,7 @@
                                 ₹
                             </span>
                             <span style="text-decoration: line-through; text-decoration-color: red;" class="text-white">
-                                <t t-esc="price1"/>
+                                <t t-esc="price2 + 5000"/>
                             </span>
                             <span class="text-white">
                                 /
