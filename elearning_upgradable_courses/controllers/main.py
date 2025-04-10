@@ -27,6 +27,13 @@ class WebsiteSaleCustom(WebsiteSale):
             no_variant_attribute_value_ids = [
                 int(ptav_data['value']) for ptav_data in no_variants_attribute_values_data
             ]
+
+        user = request.env.user
+        public_user_id = request.website.user_id.id  # Get the public user ID
+        if user.id == public_user_id:  # if current user is public user
+            # Store the current product URL to return after signup
+            return request.redirect("/shop/cart")
+
         if kwargs.get('option'):
             sale_order.order_line.unlink()
             course = request.env['slide.channel'].search([('product_id', '=', int(product_id))])
@@ -55,4 +62,5 @@ class WebsiteSaleCustom(WebsiteSale):
             )
 
         request.session['website_sale_cart_quantity'] = sale_order.cart_quantity
+
         return request.redirect("/shop/cart")
