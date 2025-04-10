@@ -1302,19 +1302,51 @@
                     </p>
                 </div>
                 <div class="col-4">
-                    <div class="add_to_cart_button" id="cart1">
-                        <form action="/shop/cart/update" method="POST">
-                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                            <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
-                            <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
-                            <button type="submit"
-                                    class="btn text-white shadow-sm mt-3"
-                                    style="background-color: 048AFF; font-size: 10px; border-radius: 10px;">
-                                Enroll Now
-                            </button>
-                            <div id="product_option_block"></div>
-                        </form>
-                    </div>
+                    <t t-if="course_type == 'intermediate'">
+                        <div class="add_to_cart_button" id="cart1">
+                            <form action="/shop/cart/update?option=intermediate" method="POST">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                <button type="submit"
+                                        class="btn text-white shadow-sm mt-3"
+                                        style="background-color: 048AFF; font-size: 10px; border-radius: 10px;">
+                                    Enroll Now
+                                </button>
+                                <div id="product_option_block"></div>
+                            </form>
+                        </div>
+                    </t>
+                    <t t-if="course_type == 'Advanced'">
+                        <div class="add_to_cart_button" id="cart1">
+                            <form action="/shop/cart/update?option=Advanced" method="POST">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                <button type="submit"
+                                        class="btn text-white shadow-sm mt-3"
+                                        style="background-color: 048AFF; font-size: 10px; border-radius: 10px;">
+                                    Enroll Now
+                                </button>
+                                <div id="product_option_block"></div>
+                            </form>
+                        </div>
+                    </t>
+                    <t t-if="course_type == 'basic'">
+                        <div class="add_to_cart_button" id="cart1">
+                            <form action="/shop/cart/update?option=basic" method="POST">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
+                                <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                <button type="submit"
+                                        class="btn text-white shadow-sm mt-3"
+                                        style="background-color: 048AFF; font-size: 10px; border-radius: 10px;">
+                                    Enroll Now
+                                </button>
+                                <div id="product_option_block"></div>
+                            </form>
+                        </div>
+                    </t>
                     <div class="add_to_cart_button" hidden="hidden" id="cart1_hidden">
                         <a class="btn text-white shadow-sm mt-3"
                            style="background-color: 048AFF; font-size: 10px; border-radius: 10px;"
