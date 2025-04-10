@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="payment_status_message_update" inherit_id="payment.payment_status">
+            <xpath expr="//div[@t-if='payment_not_found']" position="replace">
+                <div t-if="payment_not_found" class="text-center">
+                    <p>Your Payment is Being Processed!</p>
+                    <p>
+                        Thank you for your purchase. Your payment has been successfully received and is currently under
+                        verification.
+                        This may take up to
+                        <b>10 minutes.</b>
+                    </p>
+                    <p>Once verified, your course access will be activated and made available to you.
+                        You’ll receive a confirmation email shortly.
+                        If you have any questions, feel free to reach out to us at <b>support@kreatorbee.com</b> or contact us
+                        via <b>Call/WhatsApp at +91 92893 84910.</b>
+                    </p>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

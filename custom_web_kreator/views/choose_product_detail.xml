@@ -325,7 +325,7 @@
                                             <p>
                                                 <strong>Course Name:</strong>
                                                 <span t-esc="course.name"/>
-                                                (<span t-esc="stage.name"></span>)
+                                                (<span t-esc="stage.name" style="text-transform: capitalize;"></span>)
                                             </p>
                                             <p>
                                                 <strong>Creator&#39;s Name:</strong>

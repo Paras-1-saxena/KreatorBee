@@ -1274,7 +1274,7 @@ class PortalMyCourses(http.Controller):
         show_upgrade = True if products_to_add else False
 
         return request.make_response(
-            data=json.dumps({'response': "success", 'upgrade_to': 'intermediate' if show_upgrade else 'advance'}),
+            data=json.dumps({'response': "success", 'upgrade_to': 'intermediate' if show_upgrade else 'Advanced'}),
             headers=[('Content-Type', 'application/json')],
             status=200
         )
@@ -1331,7 +1331,7 @@ class PortalMyCourses(http.Controller):
                         [('name', 'in', product_names), ('is_upgradable', '=', True)]
                     )
                     if upgrade_courses:
-                        stage_id = upgrade_courses.upgrade_stage_ids.filtered(lambda us: us.name == 'advance')
+                        stage_id = upgrade_courses.upgrade_stage_ids.filtered(lambda us: us.name == 'Advanced')
                         partner_course_ids = request.env.user.partner_id.slide_channel_ids.product_id.ids
                         products_to_add = [sc.id for sc in stage_id.product_ids if sc.id not in partner_course_ids]
                         show_upgrade = True if products_to_add else False

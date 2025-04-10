@@ -198,10 +198,10 @@
                                 if (data['response'] == 'success') {
                                 console.log('done');
                                 let option = ''
-                                option += '&lt;a class="p-2 my-2" style="border: 1px solid black; border-radius: 10px;" href="/open/referral?type=advance&amp;course_id=' + course_id + '"&gt;upgrade to Advance &lt;a&gt;'
                                 if (data['upgrade_to'] == 'intermediate') {
-                                option += '&lt;a class="p-2 my-2" style="border: 1px solid black; border-radius: 10px;" href="/open/referral?type=intermediate&amp;course_id=' + course_id + '&gt;upgrade to Intermediate&lt;a&gt;'
+                                option += '&lt;br/&gt;&lt;a class="p-2 my-2 h3" style="border: 1px solid black; border-radius: 10px; background-color: #048AFF;" href="/open/referral?type=intermediate&amp;course_id=' + course_id + '"&gt;Upgrade to Intermediate&lt;a&gt;&lt;br/&gt;&lt;br/&gt;'
                                 }
+                                option += '&lt;br/&gt;&lt;a class="p-2 my-2 h3" style="border: 1px solid black; border-radius: 10px; background-color: #048AFF;" href="/open/referral?type=Advanced&amp;course_id=' + course_id + '"&gt;Upgrade to Advanced &lt;a&gt; &lt;br/&gt;&lt;br/&gt;'
                                 upgrade.innerHTML = option;
                                 pop.click();
                                 } else {
