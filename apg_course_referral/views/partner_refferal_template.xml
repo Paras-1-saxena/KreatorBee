@@ -579,7 +579,7 @@
                                                 </t>
                                             </select>
                                             <select id="stage_id" name="stage_id" required="required"
-                                                    style="display: none">
+                                                    style="display: none; text-transform: capitalize;">
                                             </select>
                                             <script>
                                                 function getOption() {
@@ -597,7 +597,7 @@
                                                 if (data['response'] == 'yes') {
                                                 let option = ''
                                                 for (let k in data['upgrade_options']) {
-                                                option += '&lt;option value="' + k + '"&gt;' + data['upgrade_options'][k] + "&lt;/option&gt;"
+                                                option += '&lt;option style="text-transform: capitalize;" value="' + k + '"&gt;' + data['upgrade_options'][k] + "&lt;/option&gt;"
                                                 }
                                                 console.log(option)
                                                 let stage_id = document.getElementById('stage_id')
