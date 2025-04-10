@@ -189,7 +189,7 @@
                                 INR
                             </span>
                             <span style="text-decoration: line-through;text-decoration-color: red;">
-                                <t t-esc="price1"/>
+                                <t t-esc="price2 + 5000"/>
                             </span>
                             /
                             <span style="color: 048AFF;">
