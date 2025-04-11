@@ -943,14 +943,12 @@
                                         </div>
                                         <div class="col-md-4 mt-2">
                                             <label for="upi-number">UPI Mobile Number
-                                                <span style="color: red;">*</span>
                                             </label>
                                             <input type="text" id="upi-number" name="upi_mobile_number"
                                                    class="form-control"
                                                    placeholder="Enter UPI Mobile Number" t-att-value="upi_mobile_number"
                                                    pattern="[0-9]{10}"
-                                                   title="Mobile number must be exactly 10 digits"
-                                                   required="required"/>
+                                                   title="Mobile number must be exactly 10 digits"/>
                                         </div>
                                         <div class="col-md-4 mt-2">
                                             <label for="bank-upload">Upload File (Upto 2MB)
@@ -1045,8 +1043,8 @@
                                     let branch = document.getElementById("branch");
                                     let acc_no = document.getElementById("account-number");
                                     let re_acc_no = document.getElementById("re-account-number");
-                                    if (acc_no.value != re_acc_no.value) {
-                                    alert("Account Numbers Not Matched");
+                                    if (re_acc_no.value == '' || acc_no.value == '' || acc_no.value != re_acc_no.value) {
+                                    alert("Account Numbers Not Matched or Empty");
                                     }
                                     if (ifsc.value == '') {
                                     alert("Please Enter IFSC Code");
@@ -1123,7 +1121,7 @@
                                     'document-number',
                                     'document-name', 'upload-front', 'upload-back', 'account-holder-name',
                                     'account-number',
-                                    'ifsc-code', 'bank-upload', 'upi-number', 'pan-number', 'pan-name',
+                                    'ifsc-code', 'bank-upload', 'pan-number', 'pan-name',
                                     'pan-upload'];
 
                                     requiredFields.forEach(function(fieldId) {

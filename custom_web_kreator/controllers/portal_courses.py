@@ -1690,7 +1690,7 @@ class PortalMyCourses(http.Controller):
                     else:
                         # Handle case where bank with the provided name is not found
                         if bank_id:
-                            bank_id.sudo().unlink()
+                            bank_id.filtered(lambda bi: bi.partner_id.id == partner.id).sudo().unlink()
                             request._cr.commit()
                         bank = request.env['res.partner.bank'].sudo().create({'acc_number': account_holder_number,
                                                                           'bank_id': act_bank.id,
@@ -1773,15 +1773,15 @@ class PortalMyCourses(http.Controller):
                 'account_holder_name': partner.Account_holder_name,
                 'account_number': partner.Account_holder_number,
                 'bank_id': bank_id if bank_id else '',  # This will render the bank's name in the template
-                'ifsc_code': bank_id[0].bank_id.bic if bank_id else '',
+                'ifsc_code': bank_id.filtered(lambda bi: bi.partner_id.id == partner.id).bank_id.bic if bank_id else '',
                 'upi_mobile_number': partner.upi_mobile_number,
                 'bank_file': bank_file,
                 'pan_number': partner.pan_card_number,
                 'pan_name': partner.pan_card_name,
                 'pan_file': pan_file,
                 'state_selection': partner.state_selection,
-                'bank': bank_id[0].bank_id.name if bank_id else '',
-                'branch': bank_id[0].bank_id.street if bank_id else ''
+                'bank': bank_id.filtered(lambda bi: bi.partner_id.id == partner.id).bank_id.name if bank_id else '',
+                'branch': bank_id.filtered(lambda bi: bi.partner_id.id == partner.id).bank_id.street if bank_id else ''
             }
             tutorial_video = Markup("""
                         <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
