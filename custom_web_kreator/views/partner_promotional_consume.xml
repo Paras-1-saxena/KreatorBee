@@ -425,12 +425,12 @@
                                                 t-esc="request.env.user.name"/>
                                     </h1>
                                     <div class="d-flex gap-3 align-items-center">
-                                        <a href="#"
-                                        >Tutorial
-                                            <img class="ms-1"
-                                                 src="/custom_web_kreator/static/src/play.png"
-                                            />
-                                        </a>
+<!--                                        <a href="#"-->
+<!--                                        >Tutorial-->
+<!--                                            <img class="ms-1"-->
+<!--                                                 src="/custom_web_kreator/static/src/play.png"-->
+<!--                                            />-->
+<!--                                        </a>-->
                                         <a
                                                 href="https://wa.me/+919289384910" target="_blank" class="text-center"
                                         >

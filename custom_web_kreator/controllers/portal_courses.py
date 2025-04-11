@@ -567,6 +567,12 @@ class PortalMyCourses(http.Controller):
                 'data_state': data_state,
                 'xml_label_state': xml_label_state
             }
+            tutorial_video = Markup("""
+            <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+             frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              style="width:60vw;;height:40vh;" title="Sales+Product"></iframe>
+            """)
+            commission_data.update({'tutorial_video': tutorial_video})
             # Render the data page template
             return http.request.render('custom_web_kreator.Npartner', commission_data)
         else:
@@ -720,8 +726,14 @@ class PortalMyCourses(http.Controller):
                     print("Courses:", courses)
 
             # Render the data page template
+            tutorial_video = Markup("""
+                                                        <iframe src="https://player.vimeo.com/video/1073823881?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                                         frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                                          style="width:60vw;height:40vh;" title="Promote+Community+MyCourses"></iframe>
+                                                                    """)
             return request.render('custom_web_kreator.nmy_courses_partner', {
-                'courses': courses
+                'courses': courses,
+                'tutorial_video': tutorial_video
             })
         else:
             raise NotFound()
@@ -765,10 +777,16 @@ class PortalMyCourses(http.Controller):
                     'achievement_amount': achievement_amount,  # Achieved amount for this partner
                     'target_amount': target.target_amount,  # Total target amount
                 })
+            tutorial_video = Markup("""
+                                                <iframe src="https://player.vimeo.com/video/1073823881?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                                 frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                                  style="width:60vw;height:40vh;" title="Promote+Community+MyCourses"></iframe>
+                                                            """)
 
             values = {
                 'targets': target_data,
-                'currency_id': request.env.company.currency_id
+                'currency_id': request.env.company.currency_id,
+                'tutorial_video': tutorial_video
             }
 
             # Render the template with prepared data
@@ -794,10 +812,16 @@ class PortalMyCourses(http.Controller):
                 ('state', '=', 'published'),
                 ('promotional_material_ids', '!=', False)  # Filters only those courses with promotional materials
             ], order='name asc')
+            tutorial_video = Markup("""
+                                    <iframe src="https://player.vimeo.com/video/1073823881?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                     frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                      style="width:60vw;height:40vh;" title="Promote+Community+MyCourses"></iframe>
+                                                """)
 
             # Render the template and pass the filtered courses
             return request.render('custom_web_kreator.npromote', {
-                'promotional_courses': promotional_courses
+                'promotional_courses': promotional_courses,
+                'tutorial_video': tutorial_video
             })
         else:
             raise NotFound()
@@ -934,7 +958,12 @@ class PortalMyCourses(http.Controller):
                 'end_date': end_date,  # Pass the end date
                 # 'visitors': visitors,  # Pass the visitor data
             }
-
+            tutorial_video = Markup("""
+                        <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                         frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                          style="width:60vw;;height:40vh;" title="Sales+Product"></iframe>
+                        """)
+            context.update({'tutorial_video': tutorial_video})
             return request.render('custom_web_kreator.partner_lead', context)
         else:
             raise NotFound()
@@ -1423,12 +1452,18 @@ class PortalMyCourses(http.Controller):
             courses = request.env['slide.channel'].sudo().search(domain)
             total_courses = len(courses)  # Get total count after filtering
             # for course in courses:
+            tutorial_video = Markup("""
+                                    <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                     frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                      style="width:60vw;;height:40vh;" title="Sales+Product"></iframe>
+                                    """)
 
             return request.render('custom_web_kreator.choose_product', {
                 'courses': courses,
                 'total_courses': total_courses,
                 'search_query': search_query,  # Pass search query to maintain input value
                 'added_course_ids': added_course_ids,
+                'tutorial_video': tutorial_video
             })
         else:
             raise NotFound()
@@ -1484,6 +1519,12 @@ class PortalMyCourses(http.Controller):
                 'product_cart': product_cart_ids,
                 'currency_id': request.env.company.currency_id
             }
+            tutorial_video = Markup("""
+                                    <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                     frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                      style="width:60vw;;height:40vh;" title="Sales+Product"></iframe>
+                                    """)
+            values.update({'tutorial_video': tutorial_video})
             return http.request.render('custom_web_kreator.partner_product', values)
         else:
             raise NotFound()
@@ -1742,6 +1783,12 @@ class PortalMyCourses(http.Controller):
                 'bank': bank_id[0].bank_id.name if bank_id else '',
                 'branch': bank_id[0].bank_id.street if bank_id else ''
             }
+            tutorial_video = Markup("""
+                        <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                         frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                          style="width:60vw;;height:40vh;" title="Sales+Product"></iframe>
+                        """)
+            values.update({'tutorial_video': tutorial_video})
             return http.request.render('custom_web_kreator.nkyc_partner_template', values)
         else:
             raise NotFound()
@@ -1783,9 +1830,15 @@ class PortalMyCourses(http.Controller):
                 domain.append(('name', 'ilike', search_query))  # Filter by course name
 
             loyalty_ids = request.env['loyalty.program'].sudo().search(domain, order='create_date desc')
+            tutorial_video = Markup("""
+                                                <iframe src="https://player.vimeo.com/video/1073823881?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                                 frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                                  style="width:60vw;height:40vh;" title="Promote+Community+MyCourses"></iframe>
+                                                            """)
             values = {
                 'loyalty_ids': loyalty_ids,
                 'currency_id': request.env.company.currency_id,
+                'tutorial_video': tutorial_video,
                 'search_query': search_query  # Pass search query to maintain input value
             }
             return http.request.render('custom_web_kreator.coupon_offers_page', values)
@@ -1811,10 +1864,16 @@ class PortalMyCourses(http.Controller):
                 ]).course_id.ids
 
             currency = course.currency_id
+            tutorial_video = Markup("""
+                                                <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                                 frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                                  style="width:60vw;;height:40vh;" title="Sales+Product"></iframe>
+                                                """)
             return request.render('custom_web_kreator.choose_product_detail', {
                 'course': course,  # Pass course details to template
                 'currency_name': currency.name if currency else 'INR',
                 'added_course_ids': added_course_ids,
+                'tutorial_video': tutorial_video
             })
         else:
             raise NotFound()
@@ -2889,7 +2948,7 @@ class PortalMyCourses(http.Controller):
                     'total_commission': sum(line.partner_commission_amount for line in lines),
                 }
             for data in grouped_data:
-                lines = orders_lines.search([('partner_commission_partner_id', '=', data.id)])
+                lines = orders_lines.filtered( lambda ol: ol.partner_commission_partner_id.id == data.id)
                 leaderboard.append({
                     'partner_name': data.name,
                     'total_commission': sum(line.partner_commission_amount for line in lines),
@@ -2899,6 +2958,12 @@ class PortalMyCourses(http.Controller):
                 'leaderboard': leaderboard,
                 'currency_id': request.env.company.currency_id
             }
+            tutorial_video = Markup("""
+                        <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                         frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                          style="width:60vw;;height:40vh;" title="Sales+Product"></iframe>
+                        """)
+            values.update({'tutorial_video': tutorial_video})
             # Render the data page template
             return http.request.render('custom_web_kreator.partner_leaderboard_page', values)
         else:
@@ -2918,8 +2983,14 @@ class PortalMyCourses(http.Controller):
             )
             print("training_courses", training_courses)
             # Render the template and pass the courses
+            tutorial_video = Markup("""
+                                                <iframe src="https://player.vimeo.com/video/1073823881?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                                 frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                                  style="width:60vw;height:40vh;" title="Promote+Community+MyCourses"></iframe>
+                                                            """)
             return request.render('custom_web_kreator.partner_training', {
-                'training_courses': training_courses
+                'training_courses': training_courses,
+                'tutorial_video': tutorial_video
             })
         else:
             raise NotFound()
@@ -2940,11 +3011,16 @@ class PortalMyCourses(http.Controller):
         for material in course.promotional_material_ids:
             open_links.update({material.id: Markup(
                 f'<a href="/partner/promotional-material/consume?course_id={course.id}&amp;material_id={material.id}"class="btn btn-warning mt-3 mb-1">Open Link</a>')})
-
+        tutorial_video = Markup("""
+                                            <iframe src="https://player.vimeo.com/video/1073823881?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                             frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                              style="width:60vw;height:40vh;" title="Promote+Community+MyCourses"></iframe>
+                                                        """)
         return request.render('custom_web_kreator.promotional_detail', {
             'course': course,
             'open_links': open_links,
-            'promotional_materials': course.promotional_material_ids
+            'promotional_materials': course.promotional_material_ids,
+            'tutorial_video': tutorial_video
         })
 
     @http.route('/download_attachment/<int:material_id>', type='http', auth='public')

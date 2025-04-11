@@ -18,6 +18,7 @@ from odoo.service import security
 from odoo.tools.translate import _
 import pytz
 import re
+from markupsafe import Markup
 
 class ForumSection(http.Controller):
 
@@ -141,7 +142,12 @@ class ForumSection(http.Controller):
                 #     } for comment in comments
                 # ],
             })
-        values = {'post_ids': post_data, 'user_type': user_type, 'partner_type': partner_type}
+        tutorial_video = Markup("""
+                                                    <iframe src="https://player.vimeo.com/video/1073823881?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                                     frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                                      style="width:60vw;height:40vh;" title="Promote+Community+MyCourses"></iframe>
+                                                                """)
+        values = {'post_ids': post_data, 'user_type': user_type, 'partner_type': partner_type, 'tutorial_video': tutorial_video}
         return http.request.render('apg_social_media.fbpostforum_partner', values)
 
     @http.route('/partner/community/creator', type='http', auth='public', website=True)
@@ -202,7 +208,12 @@ class ForumSection(http.Controller):
                 #     } for comment in comments
                 # ],
             })
-        values = {'post_ids': post_data, 'user_type': user_type, 'partner_type': partner_type}
+        tutorial_video = Markup("""
+                                                    <iframe src="https://player.vimeo.com/video/1073823881?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                                     frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                                      style="width:60vw;height:40vh;" title="Promote+Community+MyCourses"></iframe>
+                                                                """)
+        values = {'post_ids': post_data, 'user_type': user_type, 'partner_type': partner_type, 'tutorial_video': tutorial_video}
         return http.request.render('apg_social_media.fbpostforum_partner', values)
 
     @http.route('/partner/community/updates', type='http', auth='public', website=True)
@@ -263,7 +274,12 @@ class ForumSection(http.Controller):
                 #     } for comment in comments
                 # ],
             })
-        values = {'post_ids': post_data, 'user_type': user_type, 'partner_type': partner_type}
+        tutorial_video = Markup("""
+                                                    <iframe src="https://player.vimeo.com/video/1073823881?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                                     frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                                      style="width:60vw;height:40vh;" title="Promote+Community+MyCourses"></iframe>
+                                                                """)
+        values = {'post_ids': post_data, 'user_type': user_type, 'partner_type': partner_type, 'tutorial_video': tutorial_video}
         return http.request.render('apg_social_media.fbpostforum_partner', values)
 
     # Partner Community Menu URLS END

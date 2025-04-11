@@ -186,7 +186,7 @@
                                     </h1>
                                     <div class="d-flex gap-3 align-items-center">
                                         <a
-                                                href="/tutorial"
+                                                href="#popup_tutorial"
                                         >
                                             Tutorial
                                             <img

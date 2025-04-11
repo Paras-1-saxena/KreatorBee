@@ -23,6 +23,7 @@ from odoo.service import security
 from odoo.tools.translate import _
 import random
 import string
+from markupsafe import Markup
 
 class ReferralController(http.Controller):
     @http.route('/creator/referral', type='http', auth='public', website=True)
@@ -244,6 +245,12 @@ class ReferralController(http.Controller):
             'product_cart_ids': course_ids,
             'partner_ids': partner_ids,
         }
+        tutorial_video = Markup("""
+                    <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                     frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                      style="width:60vw;;height:40vh;" title="Sales+Product"></iframe>
+                    """)
+        values.update({'tutorial_video': tutorial_video})
         # Render the data page template
         return http.request.render('apg_course_referral.partner_referral_link_page', values)
 

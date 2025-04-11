@@ -546,7 +546,7 @@
                                                 t-esc="request.env.user.name"/>
                                     </h1>
                                     <div class="d-flex gap-3 align-items-center">
-                                        <a href="#"
+                                        <a href="#popup_tutorial"
                                         >Tutorial
                                             <img class="ms-1"
                                                  src="/custom_web_kreator/static/src/play.png"

@@ -510,7 +510,7 @@
                                                 t-esc="request.env.user.name"/>
                                     </h1>
                                     <div class="d-flex gap-3 align-items-center">
-                                        <a href="#"
+                                        <a href="#popup_tutorial"
                                         >Tutorial
                                             <img class="ms-1"
                                                  src="/custom_web_kreator/static/src/play.png"
@@ -547,13 +547,13 @@
                             <!-- Leaderboard Content -->
                             <div class="leaderboard-container my-4">
                                 <!-- Leaderboard List -->
-                                <div class="row">
+                                <div class="row justify-content-around">
                                     <div class="col-lg-8 col-md-8 col-sm-11">
-                                        <div class="leaderboard-list">
+                                        <div class="leaderboard-list shadow p-3 mb-5 bg-body-tertiary rounded">
                                             <h3>(Last 30 Days)</h3>
                                             <t t-if="leaderboard">
                                                 <t t-foreach="leaderboard" t-as="data">
-                                                    <div class="entry">
+                                                    <div class="entry mt-1 rounded-pill" style="background-color: #fff5c6;">
                                                         <span class="rank">
                                                             <img src="/custom_web_kreator/static/src/price1.png"
                                                                  alt="User 1"/>
@@ -572,22 +572,26 @@
                                             </t>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 d-none d-md-block">
-                                        <div class="user-stats">
+                                    <div class="col-lg-3 col-md-4 d-none d-md-block">
+                                        <div class="row justify-content-center text-center">
                                             <t t-foreach="leaderboard[:3]" t-as="data">
-                                                <img src="/custom_web_kreator/static/src/user2.png" alt="User"/>
-                                                <p class="username">
-                                                    <t t-esc="data['partner_name']"/>
-                                                </p>
-                                                <div class="stats-row">
-                                                    <div class="stat-item">
+                                                <div class="row shadow p-3 mb-5 bg-body-tertiary rounded justify-content-center text-center">
+                                                    <div class="col-4">
+                                                        <img src="/custom_web_kreator/static/src/user2.png" alt="User"
+                                                             class="img-fluid" style="border-radius: 60px;"/>
+                                                    </div>
+                                                    <p class="username">
+                                                        <t t-esc="data['partner_name']"/>
+                                                    </p>
+                                                    <div class="12"></div>
+                                                    <div class="col-6 stat-item">
                                                         <p>EARNINGS</p>
                                                         <span>
                                                             <span t-esc="currency_id.symbol"/>
                                                             <t t-esc="'%.2f' % data['total_commission']"/>
                                                         </span>
                                                     </div>
-                                                    <div class="stat-item">
+                                                    <div class="col-6 stat-item">
                                                         <p>RANKING</p>
                                                         <span>#
                                                             <t t-esc="data_index + 1"/>
