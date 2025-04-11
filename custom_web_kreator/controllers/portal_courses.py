@@ -3309,31 +3309,74 @@ class PortalMyCourses(http.Controller):
         if partner.user_type in ['internal_user', 'partner']:
             try:
                 ved_no = kwargs.get('video_no')
-                if int(ved_no) == 1:
-                    video_data = Markup('''
-                    <iframe src="https://player.vimeo.com/video/1068061920?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh; title="PART 1"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
-                    ''')
-                    next_vid = Markup('''
-                    <a onclick="openVideo(2)" class="border1 rounded p-2" style="background-color:#ffc107; cursor:pointer;">
-                                        Next
-                                        <i class="ri-arrow-right-line"></i>
-                                    </a>
-                    ''')
-                if int(ved_no) == 2:
-                    video_data = Markup('''
-                    <iframe src="https://player.vimeo.com/video/1068093187?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh; title="PART 2"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
-                    ''')
-                    next_vid = Markup('''
-                                        <a onclick="openVideo(3)" class="border1 rounded p-2" style="background-color:#ffc107; cursor:pointer;">
-                                                            Next
-                                                            <i class="ri-arrow-right-line"></i>
-                                                        </a>
-                                        ''')
-                if int(ved_no) == 3:
-                    video_data = Markup('''
-                    <iframe src="https://player.vimeo.com/video/1068087104?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh; title="PART 3"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
-                    ''')
-                    next_vid = ''
+                if kwargs.get('type') == '0-100':
+                    if int(ved_no) == 1:
+                        video_data = Markup('''
+                        <iframe src="https://player.vimeo.com/video/1068061920?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh; title="PART 1"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
+                        ''')
+                        next_vid = Markup('''
+                        <a onclick="openVideo(2, '0-100')" class="border1 rounded p-2" style="background-color:#ffc107; cursor:pointer;">
+                                            Next
+                                            <i class="ri-arrow-right-line"></i>
+                                        </a>
+                        ''')
+                    if int(ved_no) == 2:
+                        video_data = Markup('''
+                        <iframe src="https://player.vimeo.com/video/1068093187?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh; title="PART 2"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
+                        ''')
+                        next_vid = Markup('''
+                                            <a onclick="openVideo(3, '0-100')" class="border1 rounded p-2" style="background-color:#ffc107; cursor:pointer;">
+                                                                Next
+                                                                <i class="ri-arrow-right-line"></i>
+                                                            </a>
+                                            ''')
+                    if int(ved_no) == 3:
+                        video_data = Markup('''
+                        <iframe src="https://player.vimeo.com/video/1068087104?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh; title="PART 3"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
+                        ''')
+                        next_vid = ''
+                if kwargs.get('type') == 'onboarding':
+                    if int(ved_no) == 1:
+                        video_data = Markup('''
+                        <iframe src="https://player.vimeo.com/video/1071659872?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh;" title="Onboarding Video 1"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
+                        ''')
+                        next_vid = Markup('''
+                        <a onclick="openVideo(2, 'onboarding')" class="border1 rounded p-2" style="background-color:#ffc107; cursor:pointer;">
+                                            Next
+                                            <i class="ri-arrow-right-line"></i>
+                                        </a>
+                        ''')
+                    if int(ved_no) == 2:
+                        video_data = Markup('''
+                        <iframe src="https://player.vimeo.com/video/1071755214?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh;" title="Onboarding Video 2"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
+                        ''')
+                        next_vid = Markup('''
+                                            <a onclick="openVideo(3, 'onboarding')" class="border1 rounded p-2" style="background-color:#ffc107; cursor:pointer;">
+                                                                Next
+                                                                <i class="ri-arrow-right-line"></i>
+                                                            </a>
+                                            ''')
+                    if int(ved_no) == 3:
+                        video_data = Markup('''
+                        <iframe src="https://player.vimeo.com/video/1071754776?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh;" title="Onboarding Video 3"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
+                        ''')
+                        next_vid = ''
+                if kwargs.get('type') == 'zerotoo':
+                    if int(ved_no) == 1:
+                        video_data = Markup('''
+                        <iframe src="https://player.vimeo.com/video/1074543899?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh;" title="Paras 9th April"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
+                        ''')
+                        next_vid = Markup('''
+                        <a onclick="openVideo(2, 'zerotoo')" class="border1 rounded p-2" style="background-color:#ffc107; cursor:pointer;">
+                                            Next
+                                            <i class="ri-arrow-right-line"></i>
+                                        </a>
+                        ''')
+                    if int(ved_no) == 2:
+                        video_data = Markup('''
+                        <iframe src="https://player.vimeo.com/video/1074588242?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh;" title="10th April 2025"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
+                        ''')
+                        next_vid = ''
                 return request.make_response(
                     data=json.dumps({'response': "success", 'video_data': video_data, 'next_but': next_vid}),
                     headers=[('Content-Type', 'application/json')],

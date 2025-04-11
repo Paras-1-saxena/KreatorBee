@@ -449,22 +449,46 @@
                             <div class="row my-4" id="main_section">
                                 <div class="col-12 col-md-4">
                                     <div class="card text-center p-3">
+                                        <img src="/custom_web_kreator/static/src/onboarding.png"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                            Onboarding Tutorials
+                                        </h6>
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openDetail('onboarding')">View Now
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="card text-center p-3">
                                         <img src="/custom_web_kreator/static/src/0-100.png"
                                              alt="Course Thumbnail" class="rounded mb-3"
                                              style="width: 100%; height: 250px;"/>
                                         <h6 class="mt-3">
-                                            0 to 100
+                                            0 to 100 Training
                                         </h6>
                                         <a class="btn btn-warning mt-3 mb-1" onclick="openDetail('0-100')">View Now
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="card text-center p-3">
+                                        <img src="/custom_web_kreator/static/src/0-1.png"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                            0 to 1 Training
+                                        </h6>
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openDetail('zerotoo')">View Now
                                         </a>
                                     </div>
                                 </div>
                             </div>
 
 
-                            <div class="row my-4 justify-content-around d-none" id="course_detail">
+                            <div class="row my-4 justify-content-around d-none" id="zerotoh">
                                 <div class="col-12 my-4">
-                                    <a onclick="backMain()" class="border1 rounded p-2"
+                                    <a onclick="backMain('0-100')" class="border1 rounded p-2"
                                        style="background-color:#ffc107; cursor:pointer;">
                                         Back
                                         <i class="ri-arrow-left-fill"></i>
@@ -472,14 +496,12 @@
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <div class="card text-center p-3">
-
                                         <img src="/custom_web_kreator/static/src/0-100_part1.png"
                                              alt="Course Thumbnail" class="rounded mb-3"
                                              style="width: 100%; height: 250px;"/>
                                         <h6 class="mt-3">
-                                            Video 1
                                         </h6>
-                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('1')">View Training
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('1', '0-100')">View Training
                                         </a>
                                     </div>
                                 </div>
@@ -490,9 +512,8 @@
                                              alt="Course Thumbnail" class="rounded mb-3"
                                              style="width: 100%; height: 250px;"/>
                                         <h6 class="mt-3">
-                                            Video 2
                                         </h6>
-                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('2')">View Training
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('2', '0-100')">View Training
                                         </a>
                                     </div>
                                 </div>
@@ -502,9 +523,90 @@
                                              alt="Course Thumbnail" class="rounded mb-3"
                                              style="width: 100%; height: 250px;"/>
                                         <h6 class="mt-3">
-                                            Video 3
                                         </h6>
-                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('3')">View Training
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('3', '0-100')">View Training
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row my-4 justify-content-around d-none" id="onboarding">
+                                <div class="col-12 my-4">
+                                    <a onclick="backMain('onboarding')" class="border1 rounded p-2"
+                                       style="background-color:#ffc107; cursor:pointer;">
+                                        Back
+                                        <i class="ri-arrow-left-fill"></i>
+                                    </a>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="card text-center p-3">
+                                        <img src="/custom_web_kreator/static/src/onboardingpart1.png"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                            About KreatorBee
+                                        </h6>
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('1', 'onboarding')">View Training
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="card text-center p-3">
+
+                                        <img src="/custom_web_kreator/static/src/onboardingpart2.png"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                            Sale and Product Walkthrough
+                                        </h6>
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('2', 'onboarding')">View Training
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="card text-center p-3">
+                                        <img src="/custom_web_kreator/static/src/onboardingpart3.png"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                            Promote, Community and My Courses Walkthrough
+                                        </h6>
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('3', 'onboarding')">View Training
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row my-4 justify-content-around d-none" id="zerotoo">
+                                <div class="col-12 my-4">
+                                    <a onclick="backMain('zerotoo')" class="border1 rounded p-2"
+                                       style="background-color:#ffc107; cursor:pointer;">
+                                        Back
+                                        <i class="ri-arrow-left-fill"></i>
+                                    </a>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="card text-center p-3">
+                                        <img src="/custom_web_kreator/static/src/0-1part1.png"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                            9th April 2025 Live Session Recording
+                                        </h6>
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('1', 'zerotoo')">View Training
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="card text-center p-3">
+
+                                        <img src="/custom_web_kreator/static/src/0-1part2.png"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                            10th April 2025 Live Session Recording
+                                        </h6>
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('2', 'zerotoo')">View Training
                                         </a>
                                     </div>
                                 </div>
@@ -514,7 +616,7 @@
                                 <div class="col-12">
                                     <div class="row my-4 justify-content-between">
                                         <div class="col-4 col-md-1">
-                                            <a onclick="backDetail()" class="border1 rounded p-2"
+                                            <a class="border1 rounded p-2" id="consume_back"
                                                style="background-color:#ffc107; cursor:pointer;">
                                                 Back
                                                 <i class="ri-arrow-left-fill"></i>
@@ -534,24 +636,57 @@
                     </div>
                     <script>
                         const main = document.getElementById("main_section");
-                        const detail = document.getElementById("course_detail");
+                        const zerotoh = document.getElementById("zerotoh");
+                        const onboarding = document.getElementById("onboarding");
+                        const zerotoo = document.getElementById("zerotoo");
+                        const consume_back = document.getElementById("consume_back");
                         const consume = document.getElementById("course_consume");
                         const vid_data = document.getElementById("video_data");
                         const next_vid = document.getElementById("next_vid");
                         function openDetail(course_id) {
-                        main.classList.add("d-none");
-                        detail.classList.remove("d-none");
+                        if (course_id == '0-100'){
+                            main.classList.add("d-none");
+                            zerotoh.classList.remove("d-none");
                         }
-                        function backMain() {
-                        detail.classList.add("d-none");
-                        main.classList.remove("d-none");
+                        if (course_id == 'onboarding'){
+                            main.classList.add("d-none");
+                            onboarding.classList.remove("d-none");
                         }
-                        function backDetail() {
-                        consume.classList.add("d-none");
-                        detail.classList.remove("d-none")
+                        if (course_id == 'zerotoo'){
+                            main.classList.add("d-none");
+                            zerotoo.classList.remove("d-none");
                         }
-                        function openVideo(course_no) {
-                        fetch('/partner/training/video?video_no=' + course_no, {
+                        }
+                        function backMain(type) {
+                        if (type == '0-100'){
+                            zerotoh.classList.add("d-none");
+                            main.classList.remove("d-none");
+                        }
+                        if (type == 'onboarding'){
+                            onboarding.classList.add("d-none");
+                            main.classList.remove("d-none");
+                        }
+                        if (type == 'zerotoo'){
+                            zerotoo.classList.add("d-none");
+                            main.classList.remove("d-none");
+                        }
+                        }
+                        function backDetail(type) {
+                        if (type == '0-100'){
+                            consume.classList.add("d-none");
+                            zerotoh.classList.remove("d-none")
+                        }
+                        if (type == 'onboarding'){
+                            consume.classList.add("d-none");
+                            onboarding.classList.remove("d-none")
+                        }
+                        if (type == 'zerotoo'){
+                            consume.classList.add("d-none");
+                            zerotoo.classList.remove("d-none")
+                        }
+                        }
+                        function openVideo(course_no, type) {
+                        fetch('/partner/training/video?video_no=' + course_no + '&amp;type=' + type, {
                         method: "POST",
                         headers: {
                         "Content-Type": "application/json",
@@ -567,9 +702,24 @@
                         if (data['next_but'] == '') {
                         next_vid.innerHTML = '';
                         }
-                        vid_data.innerHTML = data['video_data'];
-                        detail.classList.add("d-none");
-                        consume.classList.remove("d-none");
+                        if (type == '0-100') {
+                            vid_data.innerHTML = data['video_data'];
+                            zerotoh.classList.add("d-none");
+                            consume.classList.remove("d-none");
+                            consume_back.setAttribute('onclick', "backDetail('0-100')");
+                        }
+                        if (type == 'onboarding') {
+                            vid_data.innerHTML = data['video_data'];
+                            onboarding.classList.add("d-none");
+                            consume.classList.remove("d-none");
+                            consume_back.setAttribute('onclick', "backDetail('onboarding')");
+                        }
+                        if (type == 'zerotoo') {
+                            vid_data.innerHTML = data['video_data'];
+                            zerotoo.classList.add("d-none");
+                            consume.classList.remove("d-none");
+                            consume_back.setAttribute('onclick', "backDetail('zerotoo')");
+                        }
                         } else {
                         alert('Error');
                         }

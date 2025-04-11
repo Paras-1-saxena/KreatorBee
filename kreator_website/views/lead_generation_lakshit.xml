@@ -1091,7 +1091,7 @@
             }
             if (expire_date.value == '') {
             document.getElementById("pop_title").innerHTML = 'Referral Link Not Generated';
-            document.getElementById("pop_text").innerHTML = 'To Earn Commission, Generate the Referral Link<br/>and share it with Customer <br/> <br/> <a href="/partner-referral" class="h3" target="_blank">Generate Link Now</a>';
+            document.getElementById("pop_text").innerHTML = 'To Earn Commission, Generate the Referral Link<br/>and share it with Customer <br/> <br/> <a href="/partner-referral" class="h3 rounded-pill p-2" style="background-color: #fff5c6; color: #8f7400;" target="_blank">Generate Link Now</a>';
             cart1.style.display = 'none';
             cart1_hidden.removeAttribute("hidden");
             cart2.style.display = 'none';
