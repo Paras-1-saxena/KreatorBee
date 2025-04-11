@@ -672,17 +672,21 @@
                         }
                         }
                         function backDetail(type) {
+                        let vid_data_inner = vid_data.innerHTML;
                         if (type == '0-100'){
                             consume.classList.add("d-none");
-                            zerotoh.classList.remove("d-none")
+                            zerotoh.classList.remove("d-none");
+                            vid_data.innerHTML = vid_data_inner;
                         }
                         if (type == 'onboarding'){
                             consume.classList.add("d-none");
                             onboarding.classList.remove("d-none")
+                            vid_data.innerHTML = vid_data_inner;
                         }
                         if (type == 'zerotoo'){
                             consume.classList.add("d-none");
                             zerotoo.classList.remove("d-none")
+                            vid_data.innerHTML = vid_data_inner;
                         }
                         }
                         function openVideo(course_no, type) {
