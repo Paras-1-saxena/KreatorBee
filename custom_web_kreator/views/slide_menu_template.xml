@@ -251,13 +251,15 @@
                 <div class="popup-content" style="background-color: #fff5c6;">
                     <h2>Tutorial</h2>
                     <t t-if="tutorial_video">
-                        <t t-esc="tutorial_video"/>
+                        <div id="tutorial_section">
+                            <t t-esc="tutorial_video"/>
+                        </div>
                         <script src="https://player.vimeo.com/api/player.js"></script>
                     </t>
                     <div class="text-end mt-2">
                         <a href="#" style="display: inline-block; margin-top: 10px; padding:
                                5px 10px; background-color: #dc3545; color: #fff; text-decoration:
-                               none; border-radius: 3px;" id="close_query">Close
+                               none; border-radius: 3px;" id="close_tutorial" onclick="stopVideo()">Close
                         </a>
                     </div>
                 </div>
@@ -323,6 +325,12 @@
                 }
                 }
 
+                }
+
+                function stopVideo() {
+                let video_section = document.getElementById("tutorial_section");
+                let data = video_section.innerHTML;
+                video_section.innerHTML = data;
                 }
             </script>
         </template>
