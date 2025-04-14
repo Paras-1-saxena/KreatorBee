@@ -1381,7 +1381,7 @@ class PortalMyCourses(http.Controller):
         if partner.user_type in ['internal_user', 'customer']:
             # Fetch courses where is_training_course is True and sort them alphabetically by name
             recommended_courses = request.env['slide.channel'].sudo().search(
-                [('state', '=', 'published')],
+                [('state', '=', 'published'), ('not_display', '=', False)],
                 order='name asc'
             )
 

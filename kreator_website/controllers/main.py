@@ -5,6 +5,7 @@ from odoo import http
 from odoo.http import request
 import datetime as datetime
 import pytz
+import json
 
 
 class KreatorWebsite(http.Controller):
@@ -164,3 +165,48 @@ class KreatorWebsite(http.Controller):
                 "%b %d, %Y %H:%M:%S")
             value.update({'expired': expiry_date})
         return value
+
+    @http.route('/lead/submission', auth='public', website=True, csrf=False)
+    def captureLead(self, **kwargs):
+        name, email, phno = kwargs.get('name', False), kwargs.get('email', False), int(kwargs.get('phno')) if kwargs.get('phno') else False
+        if request.env['crm.lead'].sudo().search_count(['|', ('email_from', '=', email), ('phone', '=', phno)]):
+            success_message = 'We’ve received your details successfully. We’ll get in touch with you soon.'
+            request.session['data_submitted'] = 'yes'
+        else:
+            request.env['crm.lead'].sudo().create({'name': name, 'email_from': email, 'phone': phno})
+            success_message = 'We’ve received your details successfully. We’ll get in touch with you soon.'
+            request.session['data_submitted'] = 'yes'
+        return request.make_response(
+            data=json.dumps({'response': "success", 'message': success_message}),
+            headers=[('Content-Type', 'application/json')],
+            status=200
+        )
+
+    @http.route('/preview/video', auth='public', website=True, csrf=False)
+    def videoPreview(self, **kwargs):
+        landing, video = int(kwargs.get('landing')), int(kwargs.get('video'))
+        video = self.preview_vide_fetch(landing, video)
+        if request.session.get('data_submitted') == 'yes':
+            return request.make_response(
+                data=json.dumps({'response': "success", 'video': video, 'submitted': 'yes'}),
+                headers=[('Content-Type', 'application/json')],
+                status=200
+            )
+        else:
+            return request.make_response(
+                data=json.dumps({'response': "success", 'submitted': 'no', 'video': video}),
+                headers=[('Content-Type', 'application/json')],
+                status=200
+            )
+
+    def preview_vide_fetch(self, landing, video):
+        if landing == 9 and video == 1:
+            return Markup('''<iframe src="https://player.vimeo.com/video/1067319595?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+             frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              style="width:80vw;height:60vh;" title="Lesson 01 Creator Bee.mp4"></iframe>
+               <script src="https://player.vimeo.com/api/player.js"></script>''')
+        if landing == 9 and video == 2:
+            return Markup('''<iframe src="https://player.vimeo.com/video/1067425388?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+             frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              style="width:80vw;height:60vh;" title="Lesson 02 - Types of Lead Generation"></iframe>
+                      <script src="https://player.vimeo.com/api/player.js"></script>''')

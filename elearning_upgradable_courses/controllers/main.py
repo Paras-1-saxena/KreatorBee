@@ -37,8 +37,8 @@ class WebsiteSaleCustom(WebsiteSale):
         #     # Store the current product URL to return after signup
         #     return request.redirect("/shop/cart")
 
+        sale_order.order_line.unlink()
         if kwargs.get('option'):
-            sale_order.order_line.unlink()
             course = request.env['slide.channel'].search([('product_id', '=', int(product_id))])
             stage_id = course.upgrade_stage_ids.filtered(lambda us: us.name == kwargs.get('option'))
             partner_course_ids = request.env.user.partner_id.slide_channel_ids.product_id.ids

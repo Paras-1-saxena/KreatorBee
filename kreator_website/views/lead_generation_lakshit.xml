@@ -59,7 +59,41 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between bg-black d-none d-md-flex mt-1" style="position: fixed; width: 98vw; z-index: 1; margin-left: 10px; border-radius: 15px;">
+            <div id="popupLead" class="popup" style="z-index: 100;">
+                <div class="popup-content">
+                    <div class="text-end mb-2 h5 d-flex justify-content-between">
+                        <div id="lead_title" class="h3">Want to Learn More?</div>
+                        <div style="cursor: pointer;" onclick="closeLead()"><i class="ri-close-line"></i></div>
+                    </div>
+                    <span id="sub_title">
+                        <h5>Get Early Access &amp; Exclusive Updates!</h5>
+                    </span>
+                    <h5 id="info"></h5>
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="mb-4">
+                        <div id="lead_form" class="text-center rounded">
+                            <br/>
+                            <label for="name" style="margin-right: 10px;"><b>Full Name:</b></label>
+                            <input type="text" id="name" name="name" style="border-radius: 10px;" placeholder="Enter Your Name" required="required"/>
+                            <br/>
+                            <br/>
+                            <label for="email" style="margin-right: 10px;"><b>Email Add:</b></label>
+                            <input type="email" id="email" name="email" style="border-radius: 10px;" placeholder="Enter Your Email" required="required"/>
+                            <br/><br/>
+                            <label for="phno" style="margin-right: 10px;"><b>Phone No.:</b></label>
+                            <input type="number" id="phno" name="phno" style="border-radius: 10px;" placeholder="Enter Your Phone Number" required="required" oninput="if(this.value.length > 10) this.value = this.value.slice(0, 10);"/>
+                            <br/>
+                            <br/>
+                            <div class="text-center">
+                                <input type="submit" value="Submit" style="border-radius: 10px; background-color: #FFCD00" class="h4" onclick="submitLead()"/>
+                            </div>
+                        </div>
+                        <div id="lead_video"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between bg-black d-none d-md-flex mt-1"
+                 style="position: fixed; width: 98vw; z-index: 1; margin-left: 10px; border-radius: 15px;">
                 <div class="col-10 col-md-3">
                     <p class="pt-4 px-4 fs-4" style="color: #FFCD00;">
                         <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
@@ -105,7 +139,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between bg-black d-none d-md-flex mt-1" style="width: 98vw; margin-left: 10px; border-radius: 15px;">
+            <div class="row justify-content-between bg-black d-none d-md-flex mt-1"
+                 style="width: 98vw; margin-left: 10px; border-radius: 15px;">
                 <div class="col-10 col-md-3">
                     <p class="pt-4 px-4 fs-4" style="color: #FFCD00;">
                         <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
@@ -151,7 +186,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between bg-black d-flex d-md-none mt-1" style="position: fixed; width: 96vw; z-index: 1; margin-left: 8px; border-radius: 15px;">
+            <div class="row justify-content-between bg-black d-flex d-md-none mt-1"
+                 style="position: fixed; width: 96vw; z-index: 1; margin-left: 8px; border-radius: 15px;">
                 <div class="col-3 col-md-2">
                     <p id="demores" class="fs-4 my-4 blink_me text-center">
 
@@ -171,7 +207,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between bg-black d-flex d-md-none mt-1" style="width: 96vw; z-index: 1; margin-left: 8px; border-radius: 15px;">
+            <div class="row justify-content-between bg-black d-flex d-md-none mt-1"
+                 style="width: 96vw; z-index: 1; margin-left: 8px; border-radius: 15px;">
                 <div class="col-3 col-md-2">
                     <p id="demores" class="fs-4 my-4 blink_me">
 
@@ -202,7 +239,7 @@
                                     Lead Generation
                                 </span>
                                 <span class="fs-3 fs-md-5 w-100 pe-md-5">
-                                    Unlock the secrets of effective lead generation with KreatorBee’s expert-driven
+                                    Unlock the secrets of effective lead generation with Laksit Sethia's expert-driven
                                     course. Learn how to attract, engage, and convert high-quality leads using various
                                     digital platforms and strategies.
                                 </span>
@@ -503,7 +540,7 @@
                                      aria-labelledby="sec_19_headingOne" data-bs-parent="#sec_19_courseAccordion1">
                                     <div class="space_gro sec_19_accordion-body1">
                                         Learn the fundamentals of lead generation, its importance, and how it drives
-                                        business growth.
+                                        business growth. <br class="d-block d-md-none"/> <br class="d-block d-md-none"/><spna class="rounded p-2" style="border: 1px solid black; margin-left: 40px; cursor:pointer;" onclick="openPreview('9', '1')">Preview <i class="ri-arrow-right-s-fill"></i></spna>
                                     </div>
                                 </div>
                             </div>
@@ -525,7 +562,7 @@
                                      aria-labelledby="sec_19_headingTwo" data-bs-parent="#sec_19_courseAccordion1">
                                     <div class="space_gro sec_19_accordion-body1">
                                         <p>Explore different lead generation methods, including inbound and outbound
-                                            strategies.
+                                            strategies. <br class="d-block d-md-none"/> <br class="d-block d-md-none"/><spna class="rounded p-2" style="border: 1px solid black; margin-left: 40px; cursor:pointer;" onclick="openPreview('9', '2')">Preview <i class="ri-arrow-right-s-fill"></i></spna>
                                         </p>
                                     </div>
                                 </div>
@@ -682,8 +719,10 @@
                             <p style="font-size: 20px; line-height: 1.6; width: 95%; margin-left: 10px;">
                                 <span>
                                     Lakshit Sethia
-                                </span><span>is a proactive student at the Indian Institute of Technology,
-                                    Guwahati, specializing in Electronics and Communication Engineering.</span>
+                                </span>
+                                <span>is a proactive student at the Indian Institute of Technology,
+                                    Guwahati, specializing in Electronics and Communication Engineering.
+                                </span>
                                 <br/>
                                 He serves as the Branch Representative for the ECE department, demonstrating leadership
                                 and commitment to his peers.
@@ -1083,11 +1122,118 @@
             var countDownDate = new Date(expire_date.value).getTime();
             let open_pop = document.getElementById("open_pop");
             let close = document.getElementById("popup1");
+            const lead_pop = document.getElementById('popupLead');
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const phno = document.getElementById('phno');
+            const info = document.getElementById('info');
+            const lead_title = document.getElementById('lead_title');
+            const sub_title = document.getElementById('sub_title');
+            const lead_form = document.getElementById('lead_form');
+            const lead_video = document.getElementById('lead_video');
+
+            function openPreview(landing, video) {
+            fetch('/preview/video?landing=' + landing +'&amp;video=' + video, {
+                            method: 'POST',
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                    if (data['response'] == 'success') {
+                                        if (data['submitted'] == 'no') {
+                                        info.innerHTML = 'Please Enter your details to view the video';
+                                        lead_title.innerHTML = 'Preview';
+                                        sub_title.innerHTML = '';
+                                        lead_form.style.display = 'block';
+                                        lead_video.innerHTML = data['video'];
+                                        lead_video.style.display = 'none';
+                                        lead_form.style.width = '50vw';
+                                        lead_form.style.height = '50vh';
+                                        lead_form.style.paddingTop = '80px';
+                                        lead_form.style.border = '1px solid black';
+                                        lead_form.style.backgroundImage = "url('/kreator_website/static/src/img/blur_video.png')";
+                                        }
+                                        if (data['submitted'] == 'yes') {
+                                        info.innerHTML = '';
+                                        lead_title.innerHTML = 'Preview';
+                                        sub_title.innerHTML = '';
+                                        lead_form.style.display = 'none';
+                                        lead_video.style.display = 'block';
+                                        lead_video.innerHTML = data['video'];
+                                        }
+                                        openLead()
+                                        } else {
+                                            alert('Failed to Capture response');
+                                        }
+                                        })
+                            .catch(error => console.error('Fetch Error:', error));
+            }
+
+            let count = 10;
+            const timer = setInterval(function() {
+            count--;
+            if (count === 0) {
+            clearInterval(timer);
+            openLead('yes', 'no')
+            }
+            }, 1000);
+
+            function openLead(timer, video) {
+            openLead()
+            }
+            var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            function submitLead() {
+            if (name.value == '') {
+            info.innerHTML = '&lt;p class="text-danger" &gt;Name should not Be Empty!&lt;/p&gt;';
+            return;
+            }
+            else if (email.value == '' || re.test(email.value) == false) {
+            info.innerHTML = '&lt;p class="text-danger" &gt;Wrong or Empty Empty!&lt;/p&gt;';
+            return;
+            }
+            else if (phno.value == '' || phno.value.length != 10) {
+            info.innerHTML = '&lt;p class="text-danger" &gt;Please Enter 10 Digit Phone Number&lt;/p&gt;';
+            return;
+            }
+            else {
+            fetch('/lead/submission?name=' + name.value +'&amp;email=' + email.value + '&amp;phno=' + phno.value, {
+                            method: 'POST',
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                            if (data['response']) {
+                                console.log(lead_video.innerHTML)
+                                if (lead_video.innerHTML == '') {
+                                        info.innerHTML = '&lt;p class="text-success" &gt;'+ data['message'] +'&lt;/p&gt;';
+                                        lead_title.innerHTML = 'Thank You for Showing Your Interest!';
+                                        sub_title.innerHTML = '';
+                                        lead_form.style.display = 'none';
+                                }
+                                if (lead_video.innerHTML != '') {
+                                        lead_form.style.display = 'none';
+                                        lead_video.style.display = 'block';
+                                }
+                            } else {
+                            alert('Failed to Capture response');
+                            }
+                            })
+                            .catch(error => console.error('Fetch Error:', error));
+                            }
+            }
+
             function popclose() {
             close.style.display= 'none';
             }
             function openPop() {
             close.style.display = 'flex';
+            }
+
+            function closeLead() {
+            lead_pop.style.display= 'none';
+            lead_vid = lead_video.innerHTML;
+            lead_video.innerHTML = lead_vid;
+            }
+            function openLead() {
+            lead_pop.style.display = 'flex';
             }
             if (expire_date.value == '') {
             document.getElementById("pop_title").innerHTML = 'Referral Link Not Generated';
