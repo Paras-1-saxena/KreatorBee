@@ -210,3 +210,23 @@ class KreatorWebsite(http.Controller):
              frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
               style="width:80vw;height:60vh;" title="Lesson 02 - Types of Lead Generation"></iframe>
                       <script src="https://player.vimeo.com/api/player.js"></script>''')
+        if landing == 6 and video == 1:
+            return Markup('''<iframe src="https://player.vimeo.com/video/1067332188?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+             frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              style="width:80vw;height:60vh;"" title="L1"></iframe>
+                      <script src="https://player.vimeo.com/api/player.js"></script>''')
+        if landing == 6 and video == 2:
+            return Markup('''<iframe src="https://player.vimeo.com/video/1067327437?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+             frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              style="width:80vw;height:60vh;" title="L2"></iframe>
+                      <script src="https://player.vimeo.com/api/player.js"></script>''')
+        if landing == 8 and video == 1:
+            return Markup('''<iframe src="https://player.vimeo.com/video/1068787340?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+             frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              style="width:80vw;height:60vh;" title="Module-1.1"></iframe>
+                      <script src="https://player.vimeo.com/api/player.js"></script>''')
+        if landing == 8 and video == 2:
+            return Markup('''<iframe src="https://player.vimeo.com/video/1068777332?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+             frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              style="width:80vw;height:60vh;" title="Module 1.2"></iframe>
+                      <script src="https://player.vimeo.com/api/player.js"></script>''')

@@ -10,6 +10,7 @@ import pprint
 from odoo import http
 from odoo.http import request
 _logger = logging.getLogger(__name__)
+import time
 
 class InstamojoCheckoutController(http.Controller):
     _return_url = '/payment/instamojo/return'
@@ -20,6 +21,7 @@ class InstamojoCheckoutController(http.Controller):
         reference = post.get('reference',False)
         if reference:
             tx = request.env['payment.transaction'].sudo().search([('reference', '=', reference)], limit=1)
+            time.sleep(2)
             data = tx.provider_id._get_payment_status(post)
             data.update({'tx':tx})
             _logger.info('Instamojo: entering form_feedback with post data %s', pprint.pformat(data))

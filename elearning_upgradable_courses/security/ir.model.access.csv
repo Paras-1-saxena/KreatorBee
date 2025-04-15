@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_slide_channel_upgrade_stage,access.slide.channel.upgrade.stage,model_slide_channel_upgrade_stage,,1,1,1,1
 access_slide_channel_upgrade_option,access.slide.channel.upgrade.option,model_slide_channel_upgrade_option,,1,1,1,1
+access_unblock_list,access.unblock.list,model_website_custom_unblocked_third_party_domains,,1,1,1,1
