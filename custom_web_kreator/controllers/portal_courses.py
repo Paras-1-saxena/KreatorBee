@@ -240,20 +240,14 @@ class PortalMyCourses(http.Controller):
 
         # Check if the user is an Internal User or Creator
         if partner.user_type in ['internal_user', 'creator']:
-            bank_id = False
-
-            # Check if the user_type of the partner is 'creator'
-            if partner.user_type != 'creator':
-                print("You do not have permission to update this information. Only 'creator' users can update.")
-                # return request.render('custom_web_kreator.error_page_template', {
-                #     'error': "You do not have permission to update this information. Only 'creator' users can update."
-                # })
-            # Basic Details and document
             bank_id = request.env['res.partner.bank'].sudo().search([])
+            # Check if the user_type of the partner is 'creator'
+            if partner.user_type != 'partner':
+                print("You do not have permission to update this information. Only 'Partner' users can update.")
+                # return request.render('custom_web_kreator.nkyc_partner_template', {
+                #     'error': "You do not have permission to update this information. Only 'partner' users can update."
+                # })
             if request.httprequest.method == 'POST':
-                user = request.env.user
-                partner = user.partner_id
-
                 # Fetch the form data from the POST request
                 full_name = kwargs.get('full_name')
                 email = kwargs.get('email')
@@ -371,22 +365,24 @@ class PortalMyCourses(http.Controller):
                 account_holder_name = kwargs.get('account_holder_name')
                 account_holder_number = kwargs.get('account_number')
                 ifsc_code = kwargs.get('ifsc_code')
-                print("bank_id", bank_id)
+                upi_mobile_number = kwargs.get('upi_mobile_number')
                 act_bank = request.env['res.bank'].sudo().search([('bic', '=', ifsc_code)])
-
-                # Search for the bank record using the bank_name
-                if bank_id:
-                    bank = request.env['res.partner.bank'].sudo().search([('bank_id', '=', act_bank)], limit=1)
+                if act_bank:
+                    bank = request.env['res.partner.bank'].sudo().search([('bank_id', '=', act_bank.id)], limit=1)
                     if bank:
                         partner_values['bank_id'] = bank.id  # Assign the bank_id to the partner record
                     else:
                         # Handle case where bank with the provided name is not found
+                        if bank_id:
+                            bank_id.filtered(lambda bi: bi.partner_id.id == partner.id).sudo().unlink()
+                            request._cr.commit()
                         bank = request.env['res.partner.bank'].sudo().create({'acc_number': account_holder_number,
-                                                                       'bank_id': act_bank.id})
-                        # return request.render('custom_web_kreator.error_page_template', {
-                        #     'error': f"Bank with name {bank_name} not found."
-                        # })
-                upi_mobile_number = kwargs.get('upi_mobile_number')
+                                                                              'bank_id': act_bank.id,
+                                                                              'partner_id': partner.id})
+                        partner_values['bank_id'] = bank.id
+                    # return request.render('custom_web_kreator.error_page_template', {
+                    #     'error': f"Bank with name {bank_name} not found."
+                    # })
                 if account_holder_name:
                     partner_values['Account_holder_name'] = account_holder_name
                 if account_holder_number:
@@ -396,7 +392,7 @@ class PortalMyCourses(http.Controller):
                 if upi_mobile_number:
                     partner_values['upi_mobile_number'] = upi_mobile_number
 
-                upload_file = kwargs.get('upload_file')
+                upload_file = kwargs.get('bank_file')
                 if upload_file:
                     try:
                         file_data = upload_file.read()
@@ -425,22 +421,22 @@ class PortalMyCourses(http.Controller):
             pan_file = ''
             if selected_document:
                 # Dynamically fetch the number and name fields
-                if selected_document == 'voter_identity_card':
-                    document_number = getattr(partner, f"voter_identity_number", '')
-                    document_name = getattr(partner, f"voter_identity_name", '')
-                    file_upload_front = getattr(partner, f"voter_identity_front", '')
-                    file_upload_back = getattr(partner, f"voter_identity_back", '')
-                else:
-                    document_number = getattr(partner, f"{selected_document}_number", '')
-                    document_name = getattr(partner, f"{selected_document}_name", '')
-                    file_upload_front = getattr(partner, f"{selected_document}_front", '')
-                    file_upload_back = getattr(partner, f"{selected_document}_back", '')
+                document_number = getattr(partner, f"{selected_document}_number", '')
+                document_name = getattr(partner, f"{selected_document}_name", '')
+                file_upload_front = getattr(partner, f"{selected_document}_front", None)
+                file_upload_back = getattr(partner, f"{selected_document}_back", None)
 
-                # Convert binary fields to base64 strings for use in templates
                 if file_upload_front:
                     file_upload_front = base64.b64encode(file_upload_front).decode('utf-8')
+                else:
+                    print("No data for file_upload_front")
+                    file_upload_front = ''
+
                 if file_upload_back:
                     file_upload_back = base64.b64encode(file_upload_back).decode('utf-8')
+                else:
+                    print("No data for file_upload_back")
+                    file_upload_back = ''
 
             if partner.upload_file:
                 bank_file = base64.b64encode(partner.upload_file).decode('utf-8')
@@ -455,22 +451,29 @@ class PortalMyCourses(http.Controller):
                 'document': partner.select_document,
                 'document_number': document_number,
                 'document_name': document_name,
-                'file_upload_front': file_upload_front,
-                'file_upload_back': file_upload_back,
+                'selected_document': selected_document,
+                "file_upload_front": file_upload_front,
+                "file_upload_back": file_upload_back,
                 'account_holder_name': partner.Account_holder_name,
                 'account_number': partner.Account_holder_number,
                 'bank_id': bank_id if bank_id else '',  # This will render the bank's name in the template
-                'ifsc_code': bank_id.bank_id.bic,
+                'ifsc_code': bank_id.filtered(lambda bi: bi.partner_id.id == partner.id).bank_id.bic if bank_id else '',
                 'upi_mobile_number': partner.upi_mobile_number,
                 'bank_file': bank_file,
                 'pan_number': partner.pan_card_number,
                 'pan_name': partner.pan_card_name,
                 'pan_file': pan_file,
                 'state_selection': partner.state_selection,
-                'bank': bank_id.bank_id.name,
-                'branch': bank_id.bank_id.street
+                'bank': bank_id.filtered(lambda bi: bi.partner_id.id == partner.id).bank_id.name if bank_id else '',
+                'branch': bank_id.filtered(lambda bi: bi.partner_id.id == partner.id).bank_id.street if bank_id else ''
             }
-            return request.render('custom_web_kreator.nkyc_page_template', values)
+            tutorial_video = Markup("""
+                                <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                 frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                  style="width:60vw;;height:40vh;" title="Sales+Product"></iframe>
+                                """)
+            values.update({'tutorial_video': tutorial_video})
+            return http.request.render('custom_web_kreator.nkyc_page_template', values)
         else:
             raise NotFound()
 
@@ -724,6 +727,14 @@ class PortalMyCourses(http.Controller):
                         [('name', 'in', product_names)]
                     )
                     print("Courses:", courses)
+                    upgrade_courses = request.env['slide.channel'].sudo().search(
+                        [('name', 'in', product_names), ('is_upgradable', '=', True)]
+                    )
+                    if upgrade_courses:
+                        stage_id = upgrade_courses.upgrade_stage_ids.filtered(lambda us: us.name == 'Advanced')
+                        partner_course_ids = request.env.user.partner_id.slide_channel_ids.product_id.ids
+                        products_to_add = [sc.id for sc in stage_id.product_ids if sc.id not in partner_course_ids]
+                        show_upgrade = True if products_to_add else False
 
             # Render the data page template
             tutorial_video = Markup("""
@@ -733,7 +744,8 @@ class PortalMyCourses(http.Controller):
                                                                     """)
             return request.render('custom_web_kreator.nmy_courses_partner', {
                 'courses': courses,
-                'tutorial_video': tutorial_video
+                'tutorial_video': tutorial_video,
+                'show_upgrade': show_upgrade
             })
         else:
             raise NotFound()
