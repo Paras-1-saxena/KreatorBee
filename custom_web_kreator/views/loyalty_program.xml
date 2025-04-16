@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+    <record id="loyalty_program_view_inherit" model="ir.ui.view">
+            <field name="name">loyalty.program</field>
+            <field name="model">loyalty.program</field>
+            <field name="inherit_id" ref="loyalty.loyalty_program_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="before">
+                    <group>
+                        <group>
+                            <field name="referral_product_id"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+</odoo>

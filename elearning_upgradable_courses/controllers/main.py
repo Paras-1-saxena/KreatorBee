@@ -38,6 +38,7 @@ class WebsiteSaleCustom(WebsiteSale):
         #     return request.redirect("/shop/cart")
 
         sale_order.order_line.unlink()
+        request.session['coupon_status'] = ''
         if kwargs.get('option'):
             course = request.env['slide.channel'].search([('product_id', '=', int(product_id))])
             stage_id = course.upgrade_stage_ids.filtered(lambda us: us.name == kwargs.get('option'))

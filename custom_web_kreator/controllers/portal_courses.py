@@ -884,6 +884,7 @@ class PortalMyCourses(http.Controller):
         description = kwargs.get('description', '')
         date_from = kwargs.get('from_date', '')
         date_to = kwargs.get('to_date', '')
+        course_product_id = int(kwargs.get('course'))
         # Step 1: Handle discount field
         discount_record = request.env['discount.discount'].sudo().search([('id', '=', discount)], limit=1)
 
@@ -925,8 +926,29 @@ class PortalMyCourses(http.Controller):
             'duration_id': duration_record.id,
             'date_from': date_from,
             'date_to': date_to,
+            'referral_product_id': course_product_id
         })
         return request.redirect('/creator/offers')
+
+    @http.route('/course/discount/apply', type='http', auth="user", website=True)
+    def courseDiscountApply(self, **kwargs):
+        order = request.website.sale_get_order()
+        promo = kwargs.get('promo')
+        if promo:
+            coupon = request.env['loyalty.program'].sudo().search([('name', '=', promo), ('date_to', '>=', datetime.now().date())], limit=1)
+            if coupon:
+                if not [line.discount for line in order.order_line if line.discount > 0.0]:
+                    coupon_discount = coupon.discount_id.name
+                    order_line = order.order_line.filtered(lambda ol: ol.product_template_id.id == coupon.referral_product_id.id)
+                    discount_percentage = (coupon_discount/order_line.price_unit)*100
+                    order_line.discount = discount_percentage
+                    request.session['coupon_status'] = 'success'
+                else:
+                    request.session['coupon_status'] = 'warning'
+                return request.redirect('/shop/payment')
+            else:
+                request.session['coupon_status'] = 'failed'
+                return request.redirect('/shop/payment')
 
     @http.route('/partner/lead', type='http', auth="user", website=True)
     def partner_lead(self, **kwargs):

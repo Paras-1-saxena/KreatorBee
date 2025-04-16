@@ -8,7 +8,7 @@
     'author': 'Your Name',
     'website': 'https://yourwebsite.com',
     'depends': ['website', 'web', 'apg_js', 'website_slides', 'website_sale_slides', 'apg_elearning', 'website_sale',
-                'crm', 'mail'],
+                'crm', 'mail', 'loyalty'],
     'data': [
         'security/ir.model.access.csv',
         # 'views/get_started.xml',
@@ -79,6 +79,7 @@
         'views/partner_welcome.xml',
         'views/payment_page_cart.xml',
         'views/partner_promotional_consume.xml',
+        'views/loyalty_program.xml',
         # 'views/blog_post_views.xml',
         'data/email_templates.xml'
     ],
