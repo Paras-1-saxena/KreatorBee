@@ -597,7 +597,7 @@
                                                 <div
                                                         class="d-flex flex-column align-items-center justify-content-center"
                                                 >
-                                                    <h3>COURSE NAME</h3>
+                                                    <p class="h3"><t t-esc="loyalty.referral_product_id.name"/></p>
                                                     <h4>
                                                         <span t-field="currency_id.name"/>
                                                         <t
@@ -632,7 +632,7 @@
                                                 <div
                                                         class="curve-second d-flex align-items-center justify-content-left"
                                                 >
-                                                    <a><i class="ri-file-copy-line ri-lg ps-2"></i></a>
+                                                    <a onclick="copyCode(this)" style="cursor: pointer;"><i class="ri-file-copy-line ri-lg ps-2"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -644,6 +644,17 @@
 
                     <!-- External Script -->
                     <script src="/custom_web_kreator/static/src/js/script.js"></script>
+                    <script>
+                        function copyCode(el) {
+                            var full_text = el.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML.replace('\n', '').trim();
+                        navigator.clipboard.writeText(full_text).then(() =&gt; {
+                                        alert("Code Copied");
+                                        }).catch(err =&gt; {
+                                        console.error('Failed to copy:', err);
+                                        alert("Failed to copy the Referral link.");
+                                        });
+                        }
+                    </script>
                     <!-- bootstrap script -->
                     <script
                             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

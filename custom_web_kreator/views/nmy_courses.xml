@@ -267,11 +267,11 @@
                                                         </h6>
                                                     </a>
                                                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                                                        <a t-att-href="'/creator/edit-landing-page?course_id=' + str(course.id)"
-                                                           class="btn btn-warning mt-3 mb-1" style="font-size: 14px;">
-                                                            Edit
-                                                            Landing page
-                                                        </a>
+<!--                                                        <a t-att-href="'/creator/edit-landing-page?course_id=' + str(course.id)"-->
+<!--                                                           class="btn btn-warning mt-3 mb-1" style="font-size: 14px;">-->
+<!--                                                            Edit-->
+<!--                                                            Landing page-->
+<!--                                                        </a>-->
                                                         <a t-att-href="'/web#id=%d&amp;model=slide.channel&amp;view_type=form' % course.id"
                                                            class="btn btn-warning mt-3 mb-1" style="font-size: 14px;">
                                                             Edit
@@ -349,13 +349,13 @@
 
                                                 </div>
                                                 <div style="display: flex; justify-content: space-around; align-items: center;">
-                                                        <a t-att-href="'/creator/edit-landing-page?course_id=' + str(course.id)"
-                                                           class="btn btn-warning mt-3 mb-1" style="font-size: 14px;">
-                                                            Edit
-                                                            Landing page
-                                                        </a>
+<!--                                                        <a t-att-href="'/creator/edit-landing-page?course_id=' + str(course.id)"-->
+<!--                                                           class="btn btn-warning mt-3 mb-1" style="font-size: 14px;">-->
+<!--                                                            Edit-->
+<!--                                                            Landing page-->
+<!--                                                        </a>-->
                                                         <a t-att-href="'/web#id=%d&amp;model=slide.channel&amp;view_type=form' % course.id"
-                                                           class="btn btn-warning mt-3 mb-1" style="font-size: 14px;">
+                                                           class="btn btn-warning mt-3 mb-1" style="font-size: 14px; width: 80%;">
                                                             Edit
                                                             Course
                                                         </a>

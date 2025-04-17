@@ -153,20 +153,20 @@ class PortalMyCourses(http.Controller):
         # Check if the user is an Internal User or Creator
         if partner.user_type in ['internal_user', 'creator']:
             orders_lines = request.env['sale.order.line'].sudo().search(
-                [('is_commission', '=', True), ('state', '=', 'sale'), ('partner_commission_partner_id', '!=', False)])
-            order_lines = sorted(orders_lines, key=attrgetter('partner_commission_partner_id'))
+                [('is_commission', '=', True), ('state', '=', 'sale'), ('direct_commission_partner_id', '!=', False)])
+            order_lines = sorted(orders_lines, key=attrgetter('direct_commission_partner_id'))
             # Group by commission partner ID
             grouped_data = {}
             leaderboard = []
-            for partner, lines in groupby(order_lines, key=attrgetter('partner_commission_partner_id')):
+            for partner, lines in groupby(order_lines, key=attrgetter('direct_commission_partner_id')):
                 grouped_data[partner] = {
-                    'total_commission': sum(line.partner_commission_amount for line in lines),
+                    'total_commission': sum(line.direct_commission_amount for line in lines),
                 }
             for data in grouped_data:
-                lines = orders_lines.search([('partner_commission_partner_id', '=', data.id)])
+                lines = orders_lines.filtered(lambda ol: ol.direct_commission_partner_id.id == data.id)
                 leaderboard.append({
                     'partner_name': data.name,
-                    'total_commission': sum(line.partner_commission_amount for line in lines),
+                    'total_commission': sum(line.direct_commission_amount for line in lines),
                 })
             leaderboard = sorted(leaderboard, key=lambda x: x['total_commission'], reverse=True)
             values = {
@@ -1268,6 +1268,7 @@ class PortalMyCourses(http.Controller):
             direct_commission_today = partner_commission_today = commission_today = 0.0
             direct_commission_last_7_days = partner_commission_last_7_days = commission_last_7_days = 0.0
             direct_commission_last_30_days = partner_commission_last_30_days = commission_last_30_days = 0.0
+            labels_state, data_state, labels, data = 0,0,0,0
 
             if product_ids:
                 # Fetch order lines with commissions
@@ -1296,6 +1297,29 @@ class PortalMyCourses(http.Controller):
                         direct_commission_last_30_days += line.direct_commission_amount
                         partner_commission_last_30_days += line.partner_commission_amount
 
+                filter_date = datetime.now() - timedelta(days=30)
+                order_lines = orders_obj.sudo().search([
+                    ('is_commission', '=', True),
+                    ('state', '=', 'sale'),
+                    ('direct_commission_partner_id', '=', partner.id),
+                    ('create_date', '>=', filter_date),
+                    ('product_id', 'in', product_ids)
+                ])
+                courses_data = {pid.name: sum([pamount.direct_commission_amount for pamount in
+                                               order_lines.filtered(lambda ol: ol.product_id.id == pid.id)]) for pid in
+                                order_lines.product_id}
+                sorted_courses = {k: v for k, v in sorted(courses_data.items(), key=lambda item: item[1], reverse=True)}
+                labels = list(sorted_courses.keys())[:5]
+                data = list(sorted_courses.values())[:5]
+                courses_data_state = {pid.name: sum([pamount.direct_commission_amount for pamount in
+                                                     order_lines.filtered(
+                                                         lambda ol: ol.order_partner_id.state_id.id == pid.id)]) for pid in
+                                      order_lines.order_partner_id.state_id}
+                sorted_courses_state = {k: v for k, v in
+                                        sorted(courses_data_state.items(), key=lambda item: item[1], reverse=True)}
+                labels_state = list(sorted_courses_state.keys())[:5]
+                data_state = list(sorted_courses_state.values())[:5]
+
             # Prepare data for rendering or JSON response
             commission_data = {
                 'commission': {
@@ -1315,7 +1339,11 @@ class PortalMyCourses(http.Controller):
                     'today': partner_commission_today,
                     'last_7_days': partner_commission_last_7_days,
                     'last_30_days': partner_commission_last_30_days
-                }
+                },
+                'state_labels': labels_state,
+                'state_data': data_state,
+                'course_labels': labels,
+                'course_data': data,
             }
             # Render the data page template
             return http.request.render('custom_web_kreator.master_income_data', commission_data)
