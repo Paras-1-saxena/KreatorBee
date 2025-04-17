@@ -3,9 +3,16 @@
     <template id="video_editing_ayushman">
         <head>
             <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+            <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap"
+                  rel="stylesheet"/>
         </head>
         <t t-call="website.layout">
             <style>.navbar{ display: none !important;} .o_footer{ display: none !important;}
+                main {
+                background-image: linear-gradient(#000110, #000220, #000431, #00043B, #00084C, #000B6C, #140B82, #310889, #560095, #38006F)!important;
+                }
                 .popup {
                 display: none;
                 position: fixed;
@@ -58,9 +65,10 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between bg-black d-none d-md-flex mt-1" style="position: fixed; width: 98vw; z-index: 1; margin-left: 10px; border-radius: 15px;">
+            <t t-call="kreator_website.get_leads"/>
+            <div class="row justify-content-between d-none d-md-flex mt-1" style="position: fixed; width: 98vw; z-index: 1; margin-left: 10px; border-radius: 15px; background-color: #FFFFFF; opacity: 0.95;">
                 <div class="col-10 col-md-3">
-                    <p class="pt-4 px-4 fs-4" style="color: #FFCD00;">
+                    <p class="pt-4 px-4 fs-3" style="color: #FFCD00;">
                         <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
                         <b>Video Editing</b>
                     </p>
@@ -88,14 +96,16 @@
                                     <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
                                     <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
                                     <button type="submit"
-                                            class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3">
+                                            class="btn fw-bold text-white rounded shadow-sm mt-3"
+                                    style="background-color: #A000FF!important;">
                                         Enroll Now
                                     </button>
                                     <div id="product_option_block"></div>
                                 </form>
                             </div>
                             <div class="add_to_cart_button my-2" hidden="hidden" id="cart1_hidden">
-                                <a class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3"
+                                <a class="btn fw-bold text-white rounded shadow-sm mt-3"
+                                   style="background-color: #A000FF;"
                                    onclick="openPop()">
                                     Enroll Now
                                 </a>
@@ -104,7 +114,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between bg-black d-none d-md-flex mt-1" style="width: 98vw; margin-left: 10px; border-radius: 15px;">
+            <div class="row justify-content-between bg-black d-none d-md-flex mt-1" style="width: 98vw; margin-left: 10px; border-radius: 15px; background-color: #FFFFFF; opacity: 0.95;">
                 <div class="col-10 col-md-3">
                     <p class="pt-4 px-4 fs-4" style="color: #FFCD00;">
                         <input type="hidden" name="expired" t-att-value="expired" id="expired"/>
@@ -134,14 +144,16 @@
                                     <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
                                     <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
                                     <button type="submit"
-                                            class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3">
+                                            class="btn fw-bold text-white rounded shadow-sm mt-3"
+                                    style="background-color: #A000FF!important;">
                                         Enroll Now
                                     </button>
                                     <div id="product_option_block"></div>
                                 </form>
                             </div>
                             <div class="add_to_cart_button my-2" hidden="hidden" id="cart1_hidden">
-                                <a class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3"
+                                <a class="btn fw-bold text-white rounded shadow-sm mt-3"
+                                   style="background-color: #A000FF!important;"
                                    onclick="openPop()">
                                     Enroll Now
                                 </a>
@@ -191,7 +203,7 @@
                 </div>
             </div>
             <div id="section_1" class="container px-3" style="margin-top: 20px;">
-                <div class="row d-flex justify-content-around align-items-center rounded-50 bg-black mx-2 mx-md-0">
+                <div class="row d-flex justify-content-around align-items-center mx-2 mx-md-0" style="background-image: url('/kreator_website/static/src/img/video_hero.svg'); background-size:cover; border-radius: 25px; box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);">
                     <!-- Text Section -->
                     <div class="col-lg-4 col-md-6 col-12 p-4 d-flex d-md-none">
                         <img src="/kreator_website/static/src/img/video1.jpg"
@@ -202,11 +214,11 @@
                     <div class="col-lg-5 col-md-6 col-12 text-center text-md-start py-4">
                         <div class="d-flex flex-column justify-content-center gap-4">
                             <span>
-                                <span class="text-kreator-yellow-900" style="font-size: 4.2rem;">
+                                <span class="manrope_bold" style="font-size: 4.2rem; color: #A000FF;">
                                     Video Editing
                                 </span>
                             </span>
-                            <div>
+                            <div class="manrope_medium text-white">
                                 <p class="fs-5">
                                     The Ultimate Beginner-Friendly Video Editing Cohort to Kickstart Your Freelance
                                     Career
@@ -229,7 +241,8 @@
                                     <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
                                     <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
                                     <button type="submit"
-                                            class="btn btn-kreator-yellow-900 fw-bold text-black px-4 py-2 rounded shadow-sm mt-3">
+                                            class="btn fw-bold text-white px-4 py-2 rounded shadow-sm mt-3"
+                                    style="background-color: #A000FF!important;">
                                         Enroll Now
                                     </button>
 
@@ -237,7 +250,8 @@
                                 </form>
                             </div>
                             <div class="add_to_cart_button my-2" hidden="hidden" id="cart2_hidden">
-                                <div class="btn btn-kreator-yellow-900 fw-bold text-black rounded shadow-sm mt-3"
+                                <div class="btn fw-bold text-white rounded shadow-sm mt-3"
+                                     style="background-color: #A000FF!important;"
                                      onclick="openPop()">
                                     Enroll Now
                                 </div>
@@ -448,7 +462,7 @@
                                 </div>
                                 <div class="accordion-body1 p-3">
                                     <i class="ri-checkbox-fill"></i>
-                                    <span class="fs-4">Introduction</span>
+                                    <span class="fs-4">Introduction</span><br class="d-block d-md-none"/> <br class="d-block d-md-none"/><span class="rounded p-1" style="border: 1px solid white; margin-left: 40px; cursor:pointer;" onclick="openPreview('6', '1')">Preview <i class="ri-arrow-right-s-fill"></i></span>
                                     <ul class="fs-6">
                                         <li>
                                             Introduction to course and what to expect
@@ -464,7 +478,7 @@
                                         </li>
                                     </ul>
                                     <i class="ri-checkbox-fill"></i>
-                                    <span class="fs-4">Community</span>
+                                    <span class="fs-4">Community</span><br class="d-block d-md-none"/> <br class="d-block d-md-none"/><span class="rounded p-1" style="border: 1px solid white; margin-left: 40px; cursor:pointer;" onclick="openPreview('2', '1')">Preview <i class="ri-arrow-right-s-fill"></i></span>
                                     <ul class="fs-6">
                                         <li>
                                             Launching our community of video editors
