@@ -178,12 +178,22 @@ class ReferralController(http.Controller):
     def checkUpgrade(self, **kwargs):
         course_id = request.env['slide.channel'].sudo().search([('id', '=', int(kwargs.get('course_id')))]) if kwargs.get('course_id') else False
         if course_id and course_id.is_upgradable:
-            upgrade_options = {stage.id: stage.name for stage in course_id.upgrade_stage_ids}
-            return request.make_response(
-                data=json.dumps({'response': "yes", 'upgrade_options': upgrade_options}),
-                headers=[('Content-Type', 'application/json')],
-                status=200
-            )
+            upgrade_options = {}
+            for stage in course_id.upgrade_stage_ids:
+                if not [False for prd in stage.product_ids.ids if prd not in request.env.user.partner_id.slide_channel_ids.product_id.ids] or (request.env.user.id in course_id.user_ids.ids):
+                    upgrade_options.update({stage.id: stage.name})
+            if upgrade_options:
+                return request.make_response(
+                    data=json.dumps({'response': "yes", 'upgrade_options': upgrade_options}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=200
+                )
+            else:
+                return request.make_response(
+                    data=json.dumps({'response': "No"}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=200
+                )
         else:
             return request.make_response(
                 data=json.dumps({'response': "No"}),

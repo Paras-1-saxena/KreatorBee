@@ -8,6 +8,8 @@ class SlideChannel(models.Model):
     upgrade_option_ids = fields.One2many(comodel_name='slide.channel.upgrade.option', inverse_name='channel_id')
     user_ids = fields.Many2many('res.users', string='Users')
     not_display = fields.Boolean(string='Not Show')
+    is_paid = fields.Boolean(string='Is Paid ?')
+    partner_redirect = fields.Boolean(string='Redirect to Partner ?')
 
 class SlideSlide(models.Model):
     _inherit = 'slide.slide'

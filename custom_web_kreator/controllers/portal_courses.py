@@ -497,6 +497,9 @@ class PortalMyCourses(http.Controller):
         user = request.env.user
         partner = user.partner_id  # Get related partner
 
+        if not partner.partner_term_accepted:
+            return request.redirect('/master-partner')
+
         # Check if the user is an Internal User or Creator
         if partner.user_type in ['internal_user', 'partner']:
             current_user = request.env.user
@@ -1380,14 +1383,17 @@ class PortalMyCourses(http.Controller):
             [('partner_id', '=', partner.id), ('state', 'in', ['sale'])])
         order_line = sale_orders.order_line.filtered(lambda ol: ol.product_id.id == course_id.product_id.id)
         stage_id = course_id.upgrade_stage_ids.filtered(lambda us: us.name == type)
-        referral_id = request.env['apg.course.referral'].sudo().create({
-            'course_id': course_id.id,
-            'partner_id': order_line.partner_commission_partner_id.id,
-            'stage_id': stage_id.id,
-            'expiry_time': 315360000,
-        })
-        referal_link = referral_id.generate_referral_link()
-        return request.redirect(referal_link)
+        if order_line.partner_commission_partner_id.id:
+            referral_id = request.env['apg.course.referral'].sudo().create({
+                'course_id': course_id.id,
+                'partner_id': order_line.partner_commission_partner_id.id,
+                'stage_id': stage_id.id,
+                'expiry_time': 315360000,
+            })
+            referal_link = referral_id.generate_referral_link()
+            return request.redirect(referal_link)
+        else:
+            return request.redirect(f'/landing/page/{stage_id.landing_page_record_id.lading_id}?course_id={course_id.id}')
 
     @http.route('/customer/mycourses', type='http', auth='public', website=True)
     def customer_courses(self, **kwargs):
@@ -1494,12 +1500,12 @@ class PortalMyCourses(http.Controller):
             added_course_ids = request.env['my.product.cart'].sudo().search([
                 ('partner_id', '=', partner.id)
             ]).course_id.ids # Base domain to filter published courses
-            upgrade_domain = [('state', '=', 'published'), ('is_upgradable', '=', True), ('not_display', '=', False)]
-            upgrade_course = request.env['slide.channel'].sudo().search(upgrade_domain)
-            if current_user.id in upgrade_course.user_ids.ids:
-                domain = [('state', '=', 'published'), ('not_display', '=', False)]
-            else:
-                domain = [('state', '=', 'published'), ('is_upgradable', '=', False), ('not_display', '=', False)]
+            # upgrade_domain = [('state', '=', 'published'), ('is_upgradable', '=', True), ('not_display', '=', False)]
+            # upgrade_course = request.env['slide.channel'].sudo().search(upgrade_domain)
+            # if current_user.id in upgrade_course.user_ids.ids:
+            #     domain = [('state', '=', 'published'), ('not_display', '=', False)]
+            # else:
+            domain = [('state', '=', 'published'), ('not_display', '=', False)]
 
                 # If a specific course is selected, show only that course
             if selected_course_id:
@@ -3487,6 +3493,8 @@ class PortalMyCourses(http.Controller):
 
     @http.route('/submit-terms', type='http', auth='public', website=True, methods=['POST'])
     def submit_terms(self, **post):
+        user = request.env.user
+        partner = user.partner_id
         agreement_value = request.params.get('agreement')
 
         if agreement_value not in ['agree', 'disagree']:
@@ -3494,6 +3502,8 @@ class PortalMyCourses(http.Controller):
 
         # Store the agreement value in session
         request.session['agreement'] = agreement_value
+        if agreement_value == 'agree':
+            partner.partner_term_accepted = True
 
         if agreement_value == 'disagree':
             # Create a lead in crm.lead
