@@ -9,6 +9,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='user_type']" position="after">
                 <field name="partner_term_accepted" widget="boolean_toggle"/>
+                <field name="early_sign_in" widget="boolean_toggle"/>
             </xpath>
         </field>
     </record>

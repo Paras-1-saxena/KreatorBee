@@ -499,6 +499,9 @@ class PortalMyCourses(http.Controller):
 
         if not partner.partner_term_accepted:
             return request.redirect('/master-partner')
+        premium_course = request.env['slide.channel'].sudo().search([('is_mandate', '=', True)], limit=1)
+        if premium_course.id not in request.env.user.partner_id.channel_ids.ids:
+            return request.redirect('/partner-welcome')
 
         # Check if the user is an Internal User or Creator
         if partner.user_type in ['internal_user', 'partner']:
@@ -3518,9 +3521,13 @@ class PortalMyCourses(http.Controller):
     @http.route('/partner-welcome', type='http', auth='public', website=True)
     def partner_welcome(self, **kwargs):
         # Render the data page template
-
+        course_avl = False
+        premium_course = request.env['slide.channel'].sudo().search([('is_mandate', '=', True)], limit=1)
+        if premium_course.id in request.env.user.partner_id.channel_ids.ids:
+            course_avl = True
         agreement = request.session.get('agreement', 'No Selection')
-        return http.request.render('custom_web_kreator.partner_welcome', {'agreement': agreement})
+        return http.request.render('custom_web_kreator.partner_welcome', {'agreement': agreement,
+                                                                          'course_avl': course_avl, 'course': premium_course})
 
     @http.route('/get_video_url', type='json', auth="public", website=True)
     def get_video_url(self):

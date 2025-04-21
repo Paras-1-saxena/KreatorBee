@@ -39,8 +39,18 @@ class WebsiteSaleCustom(WebsiteSale):
 
         sale_order.order_line.unlink()
         request.session['coupon_status'] = ''
+        course = request.env['slide.channel'].search([('product_id', '=', int(product_id))])
+        coupon_id = course.referral_coupon_id
+        if coupon_id and request.session.get('referral_partner') and (course.id not in request.env.user.partner_id.channel_ids.ids):
+            sale_order._cart_update(
+                product_id=coupon_id.id,
+                add_qty=add_qty,
+                set_qty=set_qty,
+                product_custom_attribute_values=product_custom_attribute_values,
+                no_variant_attribute_value_ids=no_variant_attribute_value_ids,
+                **kwargs
+            )
         if kwargs.get('option'):
-            course = request.env['slide.channel'].search([('product_id', '=', int(product_id))])
             stage_id = course.upgrade_stage_ids.filtered(lambda us: us.name == kwargs.get('option'))
             partner_course_ids = request.env.user.partner_id.slide_channel_ids.product_id.ids
             products_to_add = [sc.id for sc in stage_id.product_ids if sc.id not in partner_course_ids]

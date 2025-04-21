@@ -17,6 +17,8 @@
                         <group>
                             <field name="is_paid" widget="boolean_toggle"/>
                             <field name="partner_redirect" widget="boolean_toggle"/>
+                            <field name="referral_coupon_id"/>
+                            <field name="is_mandate" widget="boolean_toggle"/>
                         </group>
                     </group>
                 </xpath>

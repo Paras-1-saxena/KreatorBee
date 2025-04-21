@@ -102,6 +102,8 @@ class KreatorWebsite(http.Controller):
           style="width:100%; height:30vh;" title="Affiliate Marketing Millionaire Program Basic"></iframe>
         """)
         values.update({'intro_video': intro_video, 'intro_video_mobile': intro_video_mobile, 'course_type': 'basic'})
+        if request.session.get('referral_partner'):
+            values.update({'price2': values.get('price2')-1000})
         return request.render("kreator_website.affiliate_marketing_basic_paras", values)
 
     @http.route('/landing/page/11', auth='public', website=True)
@@ -117,6 +119,8 @@ class KreatorWebsite(http.Controller):
         stage_id = course.upgrade_stage_ids.filtered(lambda us: us.name == 'intermediate')
         partner_course_ids = request.env.user.partner_id.slide_channel_ids.product_id.ids
         price2 = sum([sc.list_price for sc in stage_id.product_ids if sc.id not in partner_course_ids])
+        if request.session.get('referral_partner'):
+            price2 = price2 - 1000 if price2 > 1000 else price2
         values.update(
             {'intro_video': intro_video, 'intro_video_mobile': intro_video_mobile, 'course_type': 'intermediate',
              'price1': 20000, 'price2': price2})
@@ -135,6 +139,8 @@ class KreatorWebsite(http.Controller):
         stage_id = course.upgrade_stage_ids.filtered(lambda us: us.name == 'Advanced')
         partner_course_ids = request.env.user.partner_id.slide_channel_ids.product_id.ids
         price2 = sum([sc.list_price for sc in stage_id.product_ids if sc.id not in partner_course_ids])
+        if request.session.get('referral_partner'):
+            price2 = price2 - 1000 if price2 > 1000 else price2
         values.update(
             {'intro_video': intro_video, 'intro_video_mobile': intro_video_mobile, 'course_type': 'intermediate',
              'price1': 20000, 'price2': price2})

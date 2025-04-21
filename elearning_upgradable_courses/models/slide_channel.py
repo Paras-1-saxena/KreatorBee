@@ -1,4 +1,5 @@
-from odoo import api, fields, models, exceptions,_
+from odoo import api, fields, models, exceptions, _
+
 
 class SlideChannel(models.Model):
     _inherit = 'slide.channel'
@@ -9,7 +10,10 @@ class SlideChannel(models.Model):
     user_ids = fields.Many2many('res.users', string='Users')
     not_display = fields.Boolean(string='Not Show')
     is_paid = fields.Boolean(string='Is Paid ?')
-    partner_redirect = fields.Boolean(string='Redirect to Partner ?')
+    partner_redirect = fields.Boolean(string='Redirect to Partner ?',
+                                      help="Purchasing this course will redirect to creating a partner account instead of Customer")
+    referral_coupon_id = fields.Many2one(comodel_name='product.product', string='Referral Coupon', help="if applicable a Discount Code is automatically Applicable to the Order Line")
+    is_mandate = fields.Boolean(string='Is Mandate', help="User Needs to buy this course to Start the Affiliate Journey")
 
 class SlideSlide(models.Model):
     _inherit = 'slide.slide'
@@ -28,7 +32,7 @@ class SlideChannelUpgradeStage(models.Model):
 
 
 class SlideChannelUpgradeOption(models.Model):
-    _name= 'slide.channel.upgrade.option'
+    _name = 'slide.channel.upgrade.option'
     _description = "Slide Channel Upgrade Options"
 
     name = fields.Char(string="Options")
@@ -36,4 +40,3 @@ class SlideChannelUpgradeOption(models.Model):
     from_stage = fields.Many2one(comodel_name='slide.channel.upgrade.stage')
     to_statge = fields.Many2one(comodel_name='slide.channel.upgrade.stage')
     channel_id = fields.Many2one(comodel_name='slide.channel', string='Channel')
-
