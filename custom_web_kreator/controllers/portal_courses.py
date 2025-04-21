@@ -709,6 +709,8 @@ class PortalMyCourses(http.Controller):
 
             courses = []
 
+            show_upgrade = False
+
             # Check if the user is of type 'customer'
             if partner.user_type in ['partner', 'internal_user']:
                 # Fetch sale orders linked to the customer
