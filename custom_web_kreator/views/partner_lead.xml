@@ -336,38 +336,38 @@
                                         <table>
                                             <thead>
                                                 <tr>
-                                                    <th>NAME</th>
-                                                    <th>FIRST CONNECTION</th>
-                                                    <th>LAST CONNECTION</th>
-                                                    <th>VISITS</th>
-                                                    <th>PAGES</th>
+                                                    <th>Date</th>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
+                                                    <th>Phone Number</th>
+                                                    <th>Course Name</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <t t-foreach="sale_orders" t-as="order">
+                                                <t t-foreach="visitors" t-as="order">
                                                     <tr>
                                                         <td>
-                                                            <t t-esc="order.partner_id.name"/>
+                                                            <t
+                                                                    t-esc="order.create_date.strftime('%Y-%m-%d %H:%M:%S')"/>
                                                         </td>
                                                         <td>
-                                                            <t t-if="order.partner_id.email">
+                                                            <t t-esc="order.name"/>
+                                                        </td>
+                                                        <td>
+                                                            <t t-if="order.email_from">
                                                                 <a
-                                                                        t-att-href="'mailto:' + order.partner_id.email">
+                                                                        t-att-href="'mailto:' + order.email_from">
                                                                     <t
-                                                                            t-esc="order.partner_id.email"/>
+                                                                            t-esc="order.email_from"/>
                                                                 </a>
                                                             </t>
                                                             <t t-else="">No Email</t>
                                                         </td>
                                                         <td>
-                                                            <t t-esc="order.partner_id.phone"/>
+                                                            <t t-esc="order.phone"/>
                                                         </td>
                                                         <td>
-                                                            <t t-esc="order.state"/>
-                                                        </td>
-                                                        <td>
-                                                            <t
-                                                                    t-esc="order.date_order.strftime('%Y-%m-%d %H:%M:%S')"/>
+                                                            <t t-esc="order.description"/>
                                                         </td>
                                                     </tr>
                                                 </t>

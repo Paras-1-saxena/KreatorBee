@@ -179,7 +179,8 @@ class KreatorWebsite(http.Controller):
             success_message = 'We’ve received your details successfully. We’ll get in touch with you soon.'
             request.session['data_submitted'] = 'yes'
         else:
-            request.env['crm.lead'].sudo().create({'name': name, 'email_from': email, 'phone': phno})
+            lead = request.env['crm.lead'].sudo().create({'name': name, 'email_from': email, 'phone': phno})
+            lead.description = kwargs.get('course_name')
             success_message = 'We’ve received your details successfully. We’ll get in touch with you soon.'
             request.session['data_submitted'] = 'yes'
         return request.make_response(

@@ -146,6 +146,7 @@
                 margin-right: 10px;
                 }
             </style>
+            <input type="hidden" id="course_name" name="state_selection" value="Affiliate Marketing Millionaire Program"/>
             <a href="#popup1" class="dropdown-item" style="color: #fff; text-decoration: none;" hidden="hidden"
                id="open_pop">
             </a>

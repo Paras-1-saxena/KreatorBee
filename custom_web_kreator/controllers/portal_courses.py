@@ -500,7 +500,7 @@ class PortalMyCourses(http.Controller):
         if not partner.partner_term_accepted:
             return request.redirect('/master-partner')
         premium_course = request.env['slide.channel'].sudo().search([('is_mandate', '=', True)], limit=1)
-        if premium_course.id not in request.env.user.partner_id.channel_ids.ids:
+        if not request.env.user.partner_id.early_sign_in and premium_course.id not in request.env.user.partner_id.channel_ids.ids:
             return request.redirect('/partner-welcome')
 
         # Check if the user is an Internal User or Creator
@@ -976,7 +976,7 @@ class PortalMyCourses(http.Controller):
                 end_date = datetime.strptime(end_date, '%Y-%m-%d')
 
             # Prepare the domain for filtering sales orders
-            domain = [('state', '!=', 'sale')]  # Only fetch orders that are not confirmed (state != 'sale')
+            domain = [('state', '!=', 'sale'), ()]  # Only fetch orders that are not confirmed (state != 'sale')
 
             if start_date and end_date:
                 domain.extend([
@@ -988,7 +988,8 @@ class PortalMyCourses(http.Controller):
             sale_orders = request.env['sale.order'].sudo().search(domain)
 
             # Fetch visitor data, no date filters for visitors
-            visitors = request.env['website.visitor'].sudo().search([])
+            new = request.env['crm.stage'].sudo().search([('name', '=', 'New')])
+            visitors = request.env['crm.lead'].sudo().search([('stage_id', '=', new.id), ('email_from', '!=', False), ('phone', '!=', False)])
 
             # Prepare the context to pass to the template
             context = {
@@ -996,7 +997,7 @@ class PortalMyCourses(http.Controller):
                 'sale_orders': sale_orders,  # Pass the filtered sale orders
                 'start_date': start_date,  # Pass the start date
                 'end_date': end_date,  # Pass the end date
-                # 'visitors': visitors,  # Pass the visitor data
+                'visitors': visitors,  # Pass the visitor data
             }
             tutorial_video = Markup("""
                         <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
