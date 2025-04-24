@@ -146,6 +146,7 @@
                 margin-right: 10px;
                 }
             </style>
+            <input type="hidden" id="course_name" name="state_selection" value="Affiliate Marketing Millionaire Program"/>
             <a href="#popup1" class="dropdown-item" style="color: #fff; text-decoration: none;" hidden="hidden"
                id="open_pop">
             </a>
@@ -190,11 +191,11 @@
                                 INR
                             </span>
                             <span style="text-decoration: line-through;text-decoration-color: red;">
-                                <t t-esc="price2 + 5000"/>
+                                <t t-esc="f'{price2 + 5000:.2f}'"/>
                             </span>
                             /
                             <span style="color: 048AFF;">
-                                <t t-esc="price2"/>
+                                <t t-esc="f'{price2:.2f}'"/>
                             </span>
                             (Excl. Tax)
                         </div>
@@ -759,10 +760,10 @@
                                 <div class="accordion-content2 manrope_medium">
                                     <ul class="h4">
                                         <li>
-                                            The Millionaire Mindset
+                                            The Millionaire Mindset <span class="rounded" style="padding: 2px; font-size: 10px; border: 1px solid black; margin-left: 20px; cursor:pointer;" onclick="openPreview('10', '1')">Preview <i class="ri-arrow-right-s-fill"></i></span>
                                         </li>
                                         <li>
-                                            The Millionaire Lifestyle
+                                            The Millionaire Lifestyle <span class="rounded" style="padding: 2px; font-size: 10px; border: 1px solid black; margin-left: 20px; cursor:pointer;" onclick="openPreview('10', '2')">Preview <i class="ri-arrow-right-s-fill"></i></span>
                                         </li>
                                         <li>
                                             The Millionaire Clarity
@@ -1287,13 +1288,13 @@
                                 ₹
                             </span>
                             <span style="text-decoration: line-through; text-decoration-color: red;" class="text-white">
-                                <t t-esc="price2 + 5000"/>
+                                <t t-esc="f'{price2 + 5000:.2f}'"/>
                             </span>
                             <span class="text-white">
                                 /
                             </span>
                             <span style="color: 048AFF;">
-                                <t t-esc="price2"/>
+                                <t t-esc="f'{price2:.2f}'"/>
                                 (Excl. Tax)
                             </span>
                         </div>

@@ -497,6 +497,12 @@ class PortalMyCourses(http.Controller):
         user = request.env.user
         partner = user.partner_id  # Get related partner
 
+        if not partner.partner_term_accepted:
+            return request.redirect('/master-partner')
+        premium_course = request.env['slide.channel'].sudo().search([('is_mandate', '=', True)], limit=1)
+        if not request.env.user.partner_id.early_sign_in and (premium_course.id not in request.env.user.partner_id.slide_channel_ids.ids):
+            return request.redirect('/partner-welcome')
+
         # Check if the user is an Internal User or Creator
         if partner.user_type in ['internal_user', 'partner']:
             current_user = request.env.user
@@ -972,7 +978,7 @@ class PortalMyCourses(http.Controller):
                 end_date = datetime.strptime(end_date, '%Y-%m-%d')
 
             # Prepare the domain for filtering sales orders
-            domain = [('state', '!=', 'sale')]  # Only fetch orders that are not confirmed (state != 'sale')
+            domain = [('state', '!=', 'sale'), ('partner_id', '!=', 4)]  # Only fetch orders that are not confirmed (state != 'sale')
 
             if start_date and end_date:
                 domain.extend([
@@ -984,7 +990,8 @@ class PortalMyCourses(http.Controller):
             sale_orders = request.env['sale.order'].sudo().search(domain)
 
             # Fetch visitor data, no date filters for visitors
-            visitors = request.env['website.visitor'].sudo().search([])
+            new = request.env['crm.stage'].sudo().search([('name', '=', 'New')])
+            visitors = request.env['crm.lead'].sudo().search([('stage_id', '=', new.id), ('email_from', '!=', False), ('phone', '!=', False)])
 
             # Prepare the context to pass to the template
             context = {
@@ -992,7 +999,7 @@ class PortalMyCourses(http.Controller):
                 'sale_orders': sale_orders,  # Pass the filtered sale orders
                 'start_date': start_date,  # Pass the start date
                 'end_date': end_date,  # Pass the end date
-                # 'visitors': visitors,  # Pass the visitor data
+                'visitors': visitors,  # Pass the visitor data
             }
             tutorial_video = Markup("""
                         <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
@@ -1382,14 +1389,17 @@ class PortalMyCourses(http.Controller):
             [('partner_id', '=', partner.id), ('state', 'in', ['sale'])])
         order_line = sale_orders.order_line.filtered(lambda ol: ol.product_id.id == course_id.product_id.id)
         stage_id = course_id.upgrade_stage_ids.filtered(lambda us: us.name == type)
-        referral_id = request.env['apg.course.referral'].sudo().create({
-            'course_id': course_id.id,
-            'partner_id': order_line.partner_commission_partner_id.id,
-            'stage_id': stage_id.id,
-            'expiry_time': 315360000,
-        })
-        referal_link = referral_id.generate_referral_link()
-        return request.redirect(referal_link)
+        if order_line.partner_commission_partner_id.id:
+            referral_id = request.env['apg.course.referral'].sudo().create({
+                'course_id': course_id.id,
+                'partner_id': order_line.partner_commission_partner_id.id,
+                'stage_id': stage_id.id,
+                'expiry_time': 315360000,
+            })
+            referal_link = referral_id.generate_referral_link()
+            return request.redirect(referal_link)
+        else:
+            return request.redirect(f'/landing/page/{stage_id.landing_page_record_id.lading_id}?course_id={course_id.id}')
 
     @http.route('/customer/mycourses', type='http', auth='public', website=True)
     def customer_courses(self, **kwargs):
@@ -1496,12 +1506,12 @@ class PortalMyCourses(http.Controller):
             added_course_ids = request.env['my.product.cart'].sudo().search([
                 ('partner_id', '=', partner.id)
             ]).course_id.ids # Base domain to filter published courses
-            upgrade_domain = [('state', '=', 'published'), ('is_upgradable', '=', True), ('not_display', '=', False)]
-            upgrade_course = request.env['slide.channel'].sudo().search(upgrade_domain)
-            if current_user.id in upgrade_course.user_ids.ids:
-                domain = [('state', '=', 'published'), ('not_display', '=', False)]
-            else:
-                domain = [('state', '=', 'published'), ('is_upgradable', '=', False), ('not_display', '=', False)]
+            # upgrade_domain = [('state', '=', 'published'), ('is_upgradable', '=', True), ('not_display', '=', False)]
+            # upgrade_course = request.env['slide.channel'].sudo().search(upgrade_domain)
+            # if current_user.id in upgrade_course.user_ids.ids:
+            #     domain = [('state', '=', 'published'), ('not_display', '=', False)]
+            # else:
+            domain = [('state', '=', 'published'), ('not_display', '=', False)]
 
                 # If a specific course is selected, show only that course
             if selected_course_id:
@@ -3489,6 +3499,8 @@ class PortalMyCourses(http.Controller):
 
     @http.route('/submit-terms', type='http', auth='public', website=True, methods=['POST'])
     def submit_terms(self, **post):
+        user = request.env.user
+        partner = user.partner_id
         agreement_value = request.params.get('agreement')
 
         if agreement_value not in ['agree', 'disagree']:
@@ -3496,6 +3508,8 @@ class PortalMyCourses(http.Controller):
 
         # Store the agreement value in session
         request.session['agreement'] = agreement_value
+        if agreement_value == 'agree':
+            partner.partner_term_accepted = True
 
         if agreement_value == 'disagree':
             # Create a lead in crm.lead
@@ -3510,9 +3524,13 @@ class PortalMyCourses(http.Controller):
     @http.route('/partner-welcome', type='http', auth='public', website=True)
     def partner_welcome(self, **kwargs):
         # Render the data page template
-
+        course_avl = False
+        premium_course = request.env['slide.channel'].sudo().search([('is_mandate', '=', True)], limit=1)
+        if premium_course.id in request.env.user.partner_id.slide_channel_ids.ids:
+            course_avl = True
         agreement = request.session.get('agreement', 'No Selection')
-        return http.request.render('custom_web_kreator.partner_welcome', {'agreement': agreement})
+        return http.request.render('custom_web_kreator.partner_welcome', {'agreement': agreement,
+                                                                          'course_avl': course_avl, 'course': premium_course})
 
     @http.route('/get_video_url', type='json', auth="public", website=True)
     def get_video_url(self):

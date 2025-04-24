@@ -39,50 +39,22 @@ class CourseReferral(models.Model):
         return self.generated_url
         # return f"{base_url}/referral/{encrypted_token}"
 
-    def generate_payment_link(self,order=False,partner_name=False,partner_email=False):
+    def generate_payment_link(self):
         """Creates a payment link for this sales order."""
-        return_url = '/payment/instamojo/return'
-        provider_id = self.env['payment.provider'].sudo().search([('code', '=', 'instamojo_checkout')])
-        if not provider_id:
-            raise exceptions.ValidationError(_("Payment provider not found."))
-
-        if not order:
-            raise exceptions.ValidationError(_("Order not found."))
-
-        tx_id = self.create_trasaction(order,provider_id)
-        print("Transaction Id: ", tx_id)
-        token = requests.post('https://api.instamojo.com/oauth2/token/', data={
-            'grant_type': 'client_credentials',
-            'client_id': provider_id.instamojo_client_id,
-            'client_secret': provider_id.instamojo_client_secret,
-        })
-        access_token = token.json()["access_token"]
-        headers = { 
-          "Authorization": f'Bearer {access_token}'
-        }
-        try:
-            website = self.env['website'].sudo().get_current_website()
-            base_url = website.get_base_url()
-        except:
-            base_url = self.get_base_url()
-
-        payload = {
-            "amount": order.amount_total,
-            "purpose": order.name,
-            "buyer_name": partner_name,
-            "email": partner_email,
-            'redirect_url': urls.url_join(base_url, return_url) + '?reference=%s' % order.name,
-            # "webhook": f"https://yourwebsite.com/payment/webhook",
-            "allow_repeated_payments": False
-        }
-        response = requests.post(
-            "https://api.instamojo.com/v2/payment_requests/",
-            data=payload,
-            headers=headers
-        )
-        if response.status_code == 201:
-            payment_data = response.json()
-            self.payment_link = payment_data['longurl']
+        key1 = self.env['ir.config_parameter'].sudo().get_param('apg_course_referral.apg_encryption_key')
+        key = key1.encode('utf-8')  # Same as in controller
+        cipher_suite = Fernet(key)
+        course_id = str(self.course_id.id)
+        partner_id = str(self.partner_id.id)
+        course_url = str(self.website_url)
+        expiry_time = int(time.time()) + int(self.expiry_time)
+        stage_id = str(self.stage_id.id)
+        data = f"{course_id}|{partner_id}|{course_url}|{expiry_time}|{stage_id}"
+        encrypted_bytes = cipher_suite.encrypt(data.encode('utf-8'))
+        encrypted_token = base64.urlsafe_b64encode(encrypted_bytes).decode('utf-8')
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        self.generated_url = f"{base_url}/payment/{encrypted_token}"
+        return self.generated_url
 
     def create_trasaction(self,order=False,provider=False):
         vals = {
