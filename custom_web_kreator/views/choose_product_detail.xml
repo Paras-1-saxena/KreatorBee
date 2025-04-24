@@ -343,7 +343,7 @@
                                                     </t>
                                                 </t>
                                                 <t t-else="">
-                                                    <form t-att-action="f'/shop/cart/update?option={stage.name}'"
+                                                    <form t-att-action="'/shop/cart/update?option=%s' % stage.name"
                                                       method="POST"
                                                       style="width: 40%;">
                                                     <input type="hidden" name="csrf_token"
