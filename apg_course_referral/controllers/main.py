@@ -33,7 +33,8 @@ class ReferralController(http.Controller):
         partner_ids = request.env['res.partner'].sudo().search([('user_type', '=', 'customer')])
         course_ids = request.env['slide.channel'].sudo().search([
             ('state', '=', 'published'),
-            ('create_uid', '=', user_id.id)
+            ('create_uid', '=', user_id.id),
+            ('not_display', '=', False)
             ])
         if kwargs.get('success') == 'Success':
             payment_referral_id = request.env['apg.course.referral'].sudo().search([('id', '=', kwargs.get('payment_referral_id'))])
@@ -82,95 +83,59 @@ class ReferralController(http.Controller):
     @http.route('/creator/payment/link', type='http', auth='public', website=True)
     def creator_payment_link(self, **kwargs):
         user_id = request.env.user
-        generated_by = user_id.partner_id
-        course_id = kwargs.get('payment_course_id')
-        partner_id = kwargs.get('payment_partner_id')
-        expiry_time = kwargs.get('payment_expiry_time')
-        try:
-            website = self.env['website'].sudo().get_current_website()
-            base_url = website.get_base_url()
-        except:
-            base_url = request.httprequest.host_url
-
-        payment_redirect_url = base_url+'payment/instamojo/redirect'
+        partner_id = user_id.partner_id
         course_ids = request.env['slide.channel'].sudo().search([
             ('state', '=', 'published'),
-            ('create_uid', '=', user_id.id)
-            ])
-        if not partner_id:
-            print("Please select Customer")
-        if not course_id:
-            print("Please select Course")
-        partner_id = request.env['res.partner'].sudo().search([('id', '=', partner_id)])
-        expireOn = False
-        current_time = int(time.time())
-        if expiry_time == '5_minutes':
-            expireOn = current_time + 300    # 5 minutes
-        elif expiry_time == '15_minutes':
-            expireOn = current_time + 900   # 15 minutes
-        elif expiry_time == '30_minutes':
-            expireOn = current_time + 1800   # 30 minutes
-        else:
-            expireOn = 315360000  # 10 years for unlimited
-        
-        product_id = request.env['slide.channel'].sudo().search([('id', '=', course_id)]).product_id
-        print("Product ID:",product_id)
-        order = request.env['sale.order'].sudo().create({
-            'partner_id': partner_id.id,
-            'partner_invoice_id': partner_id.id,
-            'partner_shipping_id': partner_id.id,
-            'order_line': [(0, 0, {
-                'product_id': product_id.id,
-                'name': product_id.name,
-                'product_uom_qty': 1,
-                'price_unit': product_id.list_price,
-                'partner_commission_partner_id':generated_by.id,
-            })],
-            # 'expiry_time': datetime.datetime.now() + datetime.timedelta(hours=1)
-        })
-        print("Order ID:",order)
-        print("Partner Name:",partner_id.name)
-        print("Partner Email:",partner_id.email)
-        referral_id = request.env['apg.course.referral'].sudo().create({
-            'course_id':course_id,
-            'partner_id': generated_by.id,
-            'expiry_time': expireOn,
-            'order_id': order.id,
-            })
-        print("Referral  ID:",referral_id)
-        partner_name = partner_id.name
-        partner_email = partner_id.email
-        referral_id.generate_payment_link(order,partner_name,partner_email)
-        
-        key1 = request.env['ir.config_parameter'].sudo().get_param('apg_course_referral.apg_encryption_key')
-
-        key = key1.encode('utf-8')  # Same as in controller
-        cipher_suite = Fernet(key)
-
-
-        if referral_id.payment_link:
+            ('create_uid', '=', user_id.id),
+            ('not_display', '=', False)
+        ])
+        if kwargs.get('success') == 'Success':
+            payment_referral_id = request.env['apg.course.referral'].sudo().search(
+                [('id', '=', kwargs.get('payment_referral_id'))])
             values = {
-                'payment_referral_id': referral_id.id,
-                'success': 'Success'  # Ensure 'success' has a valid value
+                'course_ids': course_ids,
+                'payment_referral_id': payment_referral_id,
+
             }
-
-            params = {
-                "order_id": order.id,
-                "payment_link_id": referral_id.id
-            }
-            params_json = json.dumps(params)  # Convert dictionary to JSON string
-            encrypted_bytes = cipher_suite.encrypt(params_json.encode('utf-8'))  # Encrypt JSON string
-            encrypted_token = encrypted_bytes.decode('utf-8')  # Convert bytes to string
-
-            full_url = f"{payment_redirect_url}?token={encrypted_token}"
-            print("Generated Encrypted URL:", full_url)  # Debug print
-            referral_id.sudo().write({'generated_url': full_url})
-
-            query_string = url_encode(values)
-            return request.redirect(f"/creator/referral?{query_string}")
-            # return request.redirect("/creator/referral?success=%d" % values)
-            # return {'success': True, 'message': 'Payment link generated successfully','referral_id':referral_id, 'course_ids': course_ids}
-        return request.redirect("/creator/referral?success=%s" % 'failed')
+            # Render the data page template
+            return http.request.render('apg_course_referral.nreferral_link_page', values)
+        if request.httprequest.method == 'POST':
+            course_id = kwargs.get('payment_course_id')
+            expiry_time = kwargs.get('payment_expiry_time')
+            expireOn = False
+            if expiry_time == '5_minutes':
+                expireOn = 300  # 5 minutes
+            elif expiry_time == '15_minutes':
+                expireOn = 900  # 15 minutes
+            elif expiry_time == '30_minutes':
+                expireOn = 1800  # 30 minutes
+            else:
+                expireOn = 315360000  # 10 years for unlimited
+            if course_id:
+                course_id = request.env['slide.channel'].sudo().search([('id', '=', course_id)])
+                referral_id = request.env['apg.course.referral'].sudo().create({
+                    'course_id': course_id.id,
+                    'partner_id': partner_id.id,
+                    'stage_id': int(kwargs.get('stage_id')) if kwargs.get('stage_id') else False,
+                    'expiry_time': expireOn,
+                })
+                referral_id.generate_payment_link()
+                values = {
+                    'course_ids': course_ids,
+                    'payment_referral_id': referral_id,
+                }
+                return http.request.render('apg_course_referral.nreferral_link_page', values)
+        values = {
+            'course_ids': course_ids,
+        }
+        tutorial_video = Markup("""
+                                    <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                     frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                      style="width:60vw;;height:40vh;" title="Sales+Product"></iframe>
+                                    """)
+        values.update({'tutorial_video': tutorial_video})
+        # Render the data page template
+        return http.request.render('apg_course_referral.nreferral_link_page', values)
 
         # return http.request.render('apg_course_referral.nreferral_link_page', values)
 
@@ -180,7 +145,7 @@ class ReferralController(http.Controller):
         if course_id and course_id.is_upgradable:
             upgrade_options = {}
             for stage in course_id.upgrade_stage_ids:
-                if not [False for prd in stage.product_ids.ids if prd not in request.env.user.partner_id.slide_channel_ids.product_id.ids] or (request.env.user.id in course_id.user_ids.ids):
+                if request.env.user.partner_id.user_type == 'creator' or not [False for prd in stage.product_ids.ids if prd not in request.env.user.partner_id.slide_channel_ids.product_id.ids] or (request.env.user.id in course_id.user_ids.ids):
                     upgrade_options.update({stage.id: stage.name})
             if upgrade_options:
                 return request.make_response(
@@ -207,7 +172,6 @@ class ReferralController(http.Controller):
         partner_id = user_id.partner_id
         course_ids = False
         courses = request.env['my.product.cart'].sudo().search([('partner_id', '=', partner_id.id)]).course_id.ids
-        print("product_cart_ids",courses)
         partner_ids = request.env['res.partner'].sudo().search([('user_type', '=', 'customer')])
         if courses:
             course_ids = request.env['slide.channel'].sudo().search([
@@ -268,90 +232,62 @@ class ReferralController(http.Controller):
     @http.route('/partner/payment/link', type='http', auth='public', website=True)
     def partner_payment_link(self, **kwargs):
         user_id = request.env.user
-        generated_by = user_id.partner_id
-        course_id = kwargs.get('payment_course_id')
-        partner_id = kwargs.get('payment_partner_id')
-        expiry_time = kwargs.get('payment_expiry_time')
-        try:
-            website = self.env['website'].sudo().get_current_website()
-            base_url = website.get_base_url()
-        except:
-            base_url = request.httprequest.host_url
-        payment_redirect_url = base_url+'payment/instamojo/redirect'
-        if not partner_id:
-            print("Please select Customer")
-        if not course_id:
-            print("Please select Course")
-        partner_id = request.env['res.partner'].sudo().search([('id', '=', partner_id)])
-        expireOn = False
-        if expiry_time == '5_minutes':
-            expireOn = 300    # 5 minutes
-        elif expiry_time == '15_minutes':
-            expireOn = 900   # 15 minutes
-        elif expiry_time == '30_minutes':
-            expireOn = 1800   # 30 minutes
-        else:
-            expireOn = 315360000  # 10 years for unlimited
-        
-        product_id = request.env['slide.channel'].sudo().search([('id', '=', course_id)]).product_id
-        print("Product ID:",product_id)
-        order = request.env['sale.order'].sudo().create({
-            'partner_id': partner_id.id,
-            'partner_invoice_id': partner_id.id,
-            'partner_shipping_id': partner_id.id,
-            'order_line': [(0, 0, {
-                'product_id': product_id.id,
-                'name': product_id.name,
-                'product_uom_qty': 1,
-                'price_unit': product_id.list_price,
-                'partner_commission_partner_id': generated_by.id,
-            })],
-            # 'expiry_time': datetime.datetime.now() + datetime.timedelta(hours=1)
-        })
-        print("Order ID:",order)
-        print("Partner Name:",partner_id.name)
-        print("Partner Email:",partner_id.email)
-        referral_id = request.env['apg.course.referral'].sudo().create({
-            'course_id':course_id,
-            'partner_id': generated_by.id,
-            'expiry_time': expireOn,
-            'order_id': order.id,
-            })
-        print("Referral  ID:",referral_id)
-        partner_name = partner_id.name
-        partner_email = partner_id.email
-        referral_id.generate_payment_link(order,partner_name,partner_email)
-        key1 = request.env['ir.config_parameter'].sudo().get_param('apg_course_referral.apg_encryption_key')
-
-        key = key1.encode('utf-8')  # Same as in controller
-        cipher_suite = Fernet(key)
-
-        if referral_id.payment_link:
+        partner_id = user_id.partner_id
+        course_ids = False
+        courses = request.env['my.product.cart'].sudo().search([('partner_id', '=', partner_id.id)]).course_id.ids
+        print("product_cart_ids", courses)
+        # partner_ids = request.env['res.partner'].sudo().search([('user_type', '=', 'customer')])
+        if courses:
+            course_ids = request.env['slide.channel'].sudo().search([
+                ('id', 'in', courses),
+                ('state', '=', 'published')
+            ])
+        if kwargs.get('success') == 'Success':
+            payment_referral_id = request.env['apg.course.referral'].sudo().search(
+                [('id', '=', kwargs.get('payment_referral_id'))])
             values = {
-                'payment_referral_id': referral_id.id,
-                'success': 'Success'  # Ensure 'success' has a valid value
+                'product_cart_ids': course_ids,
+                'payment_referral_id': payment_referral_id,
             }
-
-            params = {
-                "order_id": order.id,
-                "payment_link_id": referral_id.id
-            }
-            params = {
-                "order_id": order.id,
-                "payment_link_id": referral_id.id
-            }
-            params_json = json.dumps(params)  # Convert dictionary to JSON string
-            encrypted_bytes = cipher_suite.encrypt(params_json.encode('utf-8'))  # Encrypt JSON string
-            encrypted_token = encrypted_bytes.decode('utf-8')  # Convert bytes to string
-            full_url = f"{payment_redirect_url}?token={encrypted_token}"
-            
-            referral_id.sudo().write({'generated_url': full_url})
-
-            query_string = url_encode(values)
-            return request.redirect(f"/partner-referral?{query_string}")
-            # return request.redirect("/creator/referral?success=%d" % values)
-            # return {'success': True, 'message': 'Payment link generated successfully','referral_id':referral_id, 'course_ids': course_ids}
-        return request.redirect("/partner-referral?success=%s" % 'failed')
+            # Render the data page template
+            return http.request.render('apg_course_referral.partner_referral_link_page', values)
+        if request.httprequest.method == 'POST':
+            course_id = kwargs.get('payment_course_id')
+            expiry_time = kwargs.get('payment_expiry_time')
+            expireOn = False
+            if expiry_time == '5_minutes':
+                expireOn = 300  # 5 minutes
+            elif expiry_time == '15_minutes':
+                expireOn = 900  # 15 minutes
+            elif expiry_time == '30_minutes':
+                expireOn = 1800  # 30 minutes
+            else:
+                expireOn = 315360000  # 10 years for unlimited
+            if course_id:
+                course_id = request.env['slide.channel'].sudo().search([('id', '=', course_id)])
+                referral_id = request.env['apg.course.referral'].sudo().create({
+                    'course_id': course_id.id,
+                    'partner_id': partner_id.id,
+                    'stage_id': int(kwargs.get('stage_id')) if kwargs.get('stage_id') else False,
+                    'expiry_time': expireOn,
+                })
+                referral_id.generate_payment_link()
+                values = {
+                    'product_cart_ids': course_ids,
+                    'payment_referral_id': referral_id,
+                }
+                return http.request.render('apg_course_referral.partner_referral_link_page', values)
+        values = {
+            'product_cart_ids': course_ids,
+        }
+        tutorial_video = Markup("""
+                            <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                             frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                              style="width:60vw;;height:40vh;" title="Sales+Product"></iframe>
+                            """)
+        values.update({'tutorial_video': tutorial_video})
+        # Render the data page template
+        return http.request.render('apg_course_referral.partner_referral_link_page', values)
 
         # return http.request.render('apg_course_referral.nreferral_link_page', values)
 
@@ -389,6 +325,48 @@ class ReferralController(http.Controller):
             else:
                 course_url = f"{course_url}&course_name={encrypt_expiry}"
             return request.redirect(course_url)
+        except Exception as e:
+            return "Invalid or expired referral link."
+
+    @http.route(['/payment/<string:token>'], type='http', auth='public', website=True)
+    def payment_redirect(self, token, **kwargs):
+        if kwargs.get('wa'):
+            pass
+        if kwargs.get('zoom'):
+            pass
+        if kwargs.get('mail'):
+            pass
+        encryption_key = request.env['ir.config_parameter'].sudo().get_param(
+            'apg_course_referral.apg_encryption_key').encode('utf-8')  # 32-byte key
+        try:
+            decrypted_data = self.decrypt_data(token, encryption_key)
+            course_id, partner_id, course_url, expiry_time, stage_id = decrypted_data.split('|')
+            request.session['referral_course'] = course_id
+            request.session['referral_partner'] = partner_id
+            current_time = int(time.time())
+            product_id = request.env['slide.channel'].sudo().search([('id', '=', course_id)], limit=1).product_id.id
+            if current_time > int(expiry_time):
+                return '''
+                        <script>
+                            alert("This Payment link has expired.");
+                            setTimeout(function() {
+                                window.location.href = '/404';
+                            }, 1000);  // Redirect after 1 seconds
+                        </script>
+                    '''
+                # return request.redirect(course_url)
+            # Store expiry time in session for frontend validation
+            request.session['link_expiry_time'] = expiry_time
+            # Store access session
+            request.session['course_access'] = {
+                'course_id': int(course_id),
+                'partner_id': int(partner_id)
+            }
+            if stage_id != 'False':
+                stage_id = request.env['slide.channel.upgrade.stage'].browse(int(stage_id))
+                # course_url = f"{request.env['ir.config_parameter'].sudo().get_param('web.base.url')}/shop/cart/update/?course_id={int(course_id)}"
+                return odoo.addons.elearning_upgradable_courses.controllers.main.WebsiteSaleCustom.cart_update(self=False, product_id=product_id, **{'option': stage_id.name})
+            return odoo.addons.elearning_upgradable_courses.controllers.main.WebsiteSaleCustom.cart_update(self=False, product_id=product_id)
         except Exception as e:
             return "Invalid or expired referral link."
 

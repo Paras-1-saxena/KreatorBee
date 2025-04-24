@@ -82,6 +82,11 @@
                     .custom-button:hover {
                     background-color: #e6b800; /* Slightly darker yellow on hover */
                     }
+                    body {
+                    overflow: hidden;
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                    }
 
                 </style>
 
@@ -221,7 +226,7 @@
                                 </div>
                             </section>
                             <!-- product filter -->
-                            <section class="row g-4 my-4">
+                            <section class="row g-4 my-4 overflow-auto" style="height: 80%;">
                                 <t t-foreach="courses" t-as="course">
                                     <div class="col-lg-6 col-12">
                                         <div class="product d-flex">

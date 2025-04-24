@@ -41,7 +41,7 @@ class WebsiteSaleCustom(WebsiteSale):
         request.session['coupon_status'] = ''
         course = request.env['slide.channel'].search([('product_id', '=', int(product_id))])
         coupon_id = course.referral_coupon_id
-        if coupon_id and request.session.get('referral_partner') and (course.id not in request.env.user.partner_id.channel_ids.ids):
+        if coupon_id and request.session.get('referral_partner') and (course.id not in request.env.user.partner_id.slide_channel_ids.ids):
             sale_order._cart_update(
                 product_id=coupon_id.id,
                 add_qty=add_qty,

@@ -29,6 +29,11 @@
                     icon does not interfere with clicking the input */ font-size: 18px; /* Adjust the size of the
                     calendar
                     icon */ } }
+                    body {
+                    overflow: hidden;
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                    }
                 </style>
             </head>
 
@@ -171,7 +176,7 @@
                         <div class="backdrop d-none d-lg-none"></div>
 
                         <!-- Main Content -->
-                        <main class="flex-grow-1 p-4 overflow-auto">
+                        <main class="flex-grow-1 p-4">
 
                             <!-- Welcome Section -->
                             <section class="welcome">
@@ -210,8 +215,7 @@
                                 </div>
                             </section>
 
-
-                            <section class="sales-data my-5">
+                            <section class="sales-data my-5 overflow-auto" style="height: 80%;">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <div class="total-sales-card p-4 d-flex flex-column justify-content-center align-items-center">
                                         <h2>Total Sales</h2>

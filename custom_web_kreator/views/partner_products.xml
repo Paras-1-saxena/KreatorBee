@@ -82,8 +82,11 @@
                     .custom-button:hover {
                     background-color: #e6b800; /* Slightly darker yellow on hover */
                     }
-
-
+                    body {
+                    overflow: hidden;
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                    }
                 </style>
 
             </head>
@@ -335,7 +338,7 @@
                             <!--                                </t>-->
                             <!--                            </section>-->
 
-                            <section class="row justify-content-around g-4 my-4">
+                            <section class="row justify-content-around g-4 my-4 overflow-auto">
                                 <t t-foreach="product_cart" t-as="cart">
                                     <div class="col-lg-6 col-12">
                                         <div class="product row h-100" style="width: 98%">
@@ -389,39 +392,27 @@
                                                     </div>
                                                     <div class="row">
                                                         <t t-if="cart.course_id.is_upgradable">
-                                                            <div class="d-flex justify-content-between d-none d-md-flex">
-                                                                <div>
-                                                                    <div>
-                                                                        <b>Options</b>
-                                                                    </div>
-                                                                    <div>
-                                                                        <b>Price</b>
-                                                                    </div>
-                                                                    <div>
-                                                                        <b>Commission</b>
-                                                                    </div>
-                                                                </div>
-                                                                <t t-foreach="cart.course_id.upgrade_stage_ids"
-                                                                   t-as="stage">
-                                                                    <t t-if="not [False for prd in stage.product_ids.ids if prd not in request.env.user.partner_id.slide_channel_ids.product_id.ids] or (request.env.user.id in cart.course_id.user_ids.ids)">
-                                                                        <div class="text-center">
-                                                                            <div style="text-transform: capitalize;">
-                                                                                <b>
-                                                                                    <t t-esc="stage.name"/>
-                                                                                </b>
-                                                                            </div>
-                                                                            <div>
-                                                                                ₹
-                                                                                <span t-esc="sum([pid.list_price for pid in stage.product_ids])"/>
-                                                                            </div>
-                                                                            <div>
-                                                                                ₹
-                                                                                <span t-esc="sum([pid.list_price for pid in stage.product_ids])/100*60"/>
-                                                                            </div>
-                                                                        </div>
+                                                            <table class="table d-none d-md-table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Options</th>
+                                                                        <th scope="col">Price</th>
+                                                                        <th scope="col">Commission</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <t t-foreach="cart.course_id.upgrade_stage_ids"
+                                                                       t-as="stage">
+                                                                        <t t-if="not [False for prd in stage.product_ids.ids if prd not in request.env.user.partner_id.slide_channel_ids.product_id.ids] or (request.env.user.id in cart.course_id.user_ids.ids)">
+                                                                            <tr>
+                                                                                <th style="text-transform: capitalize;" scope="row"><t t-esc="stage.name"/></th>
+                                                                                <td>₹ <span t-esc="sum([pid.list_price for pid in stage.product_ids])"/></td>
+                                                                                <td>₹ <span t-esc="sum([pid.list_price for pid in stage.product_ids])/100*60"/></td>
+                                                                            </tr>
+                                                                        </t>
                                                                     </t>
-                                                                </t>
-                                                            </div>
+                                                                </tbody>
+                                                            </table>
                                                         </t>
                                                         <t t-else="">
                                                             <div class="col-6 d-none d-md-block">
@@ -473,39 +464,27 @@
                                             <div class="col-12">
                                                 <div class="row">
                                                     <t t-if="cart.course_id.is_upgradable">
-                                                        <div class="d-flex justify-content-between d-flex d-md-none">
-                                                            <div>
-                                                                <div>
-                                                                    <b>Options</b>
-                                                                </div>
-                                                                <div>
-                                                                    <b>Price</b>
-                                                                </div>
-                                                                <div>
-                                                                    <b>Commission</b>
-                                                                </div>
-                                                            </div>
-                                                            <t t-foreach="cart.course_id.upgrade_stage_ids"
-                                                               t-as="stage">
-                                                                <t t-if="not [False for prd in stage.product_ids.ids if prd not in request.env.user.partner_id.slide_channel_ids.product_id.ids] or (request.env.user.id in cart.course_id.user_ids.ids)">
-                                                                    <div class="text-center">
-                                                                        <div style="text-transform: capitalize;">
-                                                                            <b>
-                                                                                <t t-esc="stage.name"/>
-                                                                            </b>
-                                                                        </div>
-                                                                        <div>
-                                                                            ₹
-                                                                            <span t-esc="sum([pid.list_price for pid in stage.product_ids])"/>
-                                                                        </div>
-                                                                        <div>
-                                                                            ₹
-                                                                            <span t-esc="sum([pid.list_price for pid in stage.product_ids])/100*60"/>
-                                                                        </div>
-                                                                    </div>
-                                                                </t>
-                                                            </t>
-                                                        </div>
+                                                        <table class="table d-table d-md-none">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Options</th>
+                                                                        <th scope="col">Price</th>
+                                                                        <th scope="col">Commission</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <t t-foreach="cart.course_id.upgrade_stage_ids"
+                                                                       t-as="stage">
+                                                                        <t t-if="not [False for prd in stage.product_ids.ids if prd not in request.env.user.partner_id.slide_channel_ids.product_id.ids] or (request.env.user.id in cart.course_id.user_ids.ids)">
+                                                                            <tr>
+                                                                                <th style="text-transform: capitalize;" scope="row"><t t-esc="stage.name"/></th>
+                                                                                <td>₹ <span t-esc="sum([pid.list_price for pid in stage.product_ids])"/></td>
+                                                                                <td>₹ <span t-esc="sum([pid.list_price for pid in stage.product_ids])/100*60"/></td>
+                                                                            </tr>
+                                                                        </t>
+                                                                    </t>
+                                                                </tbody>
+                                                            </table>
                                                     </t>
                                                     <t t-else="">
                                                         <div class="col-6 d-block d-md-none">

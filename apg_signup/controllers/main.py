@@ -46,7 +46,11 @@ class AuthSignupHome(Home):
             if partner_id.user_type == 'creator':
                 return request.redirect('/master')
             elif partner_id.user_type == 'partner':
-                return request.redirect('/partner/income')
+                if redirect_url:
+                    del request.session['redirect_after_signup']  # Clear session value after use
+                    return request.redirect(redirect_url)
+                else:
+                    return request.redirect('/partner/income')
             elif partner_id.user_type == 'customer':
                 if redirect_url:
                     del request.session['redirect_after_signup']  # Clear session value after use
@@ -110,7 +114,11 @@ class AuthSignupHome(Home):
                         if user_sudo.partner_id.user_type == 'creator':
                             return request.redirect("sign-up/about?partner=%d" % user_sudo.partner_id)
                         elif user_sudo.partner_id.user_type == 'partner':
-                            return request.redirect("sign-up/about?partner=%d" % user_sudo.partner_id)
+                            if redirect_url:
+                                del request.session['redirect_after_signup']  # Clear session value after use
+                                return request.redirect(redirect_url)
+                            else:
+                                return request.redirect("sign-up/about?partner=%d" % user_sudo.partner_id)
                         elif user_sudo.partner_id.user_type == 'customer':
                             if redirect_url:
                                 del request.session['redirect_after_signup']  # Clear session value after use
@@ -414,7 +422,7 @@ class WebsiteSale(payment_portal.PaymentPortal):
             current_url = request.httprequest.referrer
             request.session['redirect_after_signup'] = '/shop/cart'
             if order.order_line.filtered(lambda ol: ol.product_id.channel_ids.partner_redirect):
-                return request.redirect('/web/signup?user_type=partner')
+                return request.redirect('/web/login')
             return request.redirect('/web/signup?user_type=customer')
 
         if user.id != public_user_id and order and order.order_line:

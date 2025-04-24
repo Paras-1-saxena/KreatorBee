@@ -89,6 +89,11 @@
                                         }  -->
                     /* No Border Between Tabs */ .tab-button:first-child { border-right: 1px solid #ddd; /* Add a
                     divider between buttons */ }
+                    body {
+                    overflow: hidden;
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                    }
                 </style>
             </head>
 
@@ -282,7 +287,7 @@
                             </div>
                             <div id="unverifiedOrdersTable">
                                 <div class="row">
-                                    <div class="col-lg-8 col-12 lead-table p-3">
+                                    <div class="col-lg-8 col-12 lead-table p-3 overflow-auto" style="height: 70vh;">
                                         <table>
                                             <thead>
                                                 <tr>
@@ -332,7 +337,7 @@
                             </div>
                             <div id="visitorsTable">
                                 <div class="row">
-                                    <div class="col-lg-8 col-12 lead-table p-3">
+                                    <div class="col-lg-8 col-12 lead-table p-3 overflow-auto" style="height: 70vh;">
                                         <table>
                                             <thead>
                                                 <tr>

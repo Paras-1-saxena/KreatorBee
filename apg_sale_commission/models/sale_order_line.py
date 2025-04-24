@@ -52,9 +52,10 @@ class SaleOrderLine(models.Model):
                     ('state', '=', 'published'),
                     ('product_id', '=', line.product_id.id)
                     ], limit=1)
+            specific_partner_commission = line.product_id.product_tmpl_id.specific_commission if line.product_id.product_tmpl_id.specific_commission > 0.0 else False
             if elearning_id:
                 if line.partner_commission_partner_id:
-                    line.partner_commission_amount = (line.price_subtotal * partner_commission_id.rate)/100
+                    line.partner_commission_amount = (line.price_subtotal * (specific_partner_commission if specific_partner_commission else partner_commission_id.rate))/100
                 line.direct_commission_amount = (line.price_subtotal * direct_commission_id.rate)/100
                 line.direct_commission_partner_id = elearning_id.create_uid.partner_id.id
                 # line.partner_commission_partner_id = elearning_id.create_uid.partner_id.id

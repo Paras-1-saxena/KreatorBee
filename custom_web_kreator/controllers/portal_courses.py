@@ -500,7 +500,7 @@ class PortalMyCourses(http.Controller):
         if not partner.partner_term_accepted:
             return request.redirect('/master-partner')
         premium_course = request.env['slide.channel'].sudo().search([('is_mandate', '=', True)], limit=1)
-        if not request.env.user.partner_id.early_sign_in and premium_course.id not in request.env.user.partner_id.channel_ids.ids:
+        if not request.env.user.partner_id.early_sign_in and (premium_course.id not in request.env.user.partner_id.slide_channel_ids.ids):
             return request.redirect('/partner-welcome')
 
         # Check if the user is an Internal User or Creator
@@ -976,7 +976,7 @@ class PortalMyCourses(http.Controller):
                 end_date = datetime.strptime(end_date, '%Y-%m-%d')
 
             # Prepare the domain for filtering sales orders
-            domain = [('state', '!=', 'sale'), ()]  # Only fetch orders that are not confirmed (state != 'sale')
+            domain = [('state', '!=', 'sale'), ('partner_id', '!=', 4)]  # Only fetch orders that are not confirmed (state != 'sale')
 
             if start_date and end_date:
                 domain.extend([
@@ -3524,7 +3524,7 @@ class PortalMyCourses(http.Controller):
         # Render the data page template
         course_avl = False
         premium_course = request.env['slide.channel'].sudo().search([('is_mandate', '=', True)], limit=1)
-        if premium_course.id in request.env.user.partner_id.channel_ids.ids:
+        if premium_course.id in request.env.user.partner_id.slide_channel_ids.ids:
             course_avl = True
         agreement = request.session.get('agreement', 'No Selection')
         return http.request.render('custom_web_kreator.partner_welcome', {'agreement': agreement,

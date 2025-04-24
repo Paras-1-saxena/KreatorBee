@@ -207,6 +207,16 @@ class KreatorWebsite(http.Controller):
             )
 
     def preview_vide_fetch(self, landing, video):
+        if landing == 10 and video == 1:
+            return Markup('''<iframe src="https://player.vimeo.com/video/1073917978?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+             frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              style="width:80vw;height:60vh;" title="Lesson 01 Creator Bee.mp4"></iframe>
+               <script src="https://player.vimeo.com/api/player.js"></script>''')
+        if landing == 10 and video == 2:
+            return Markup('''<iframe src="https://player.vimeo.com/video/1073918997?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+             frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              style="width:80vw;height:60vh;" title="Lesson 02 - Types of Lead Generation"></iframe>
+                      <script src="https://player.vimeo.com/api/player.js"></script>''')
         if landing == 9 and video == 1:
             return Markup('''<iframe src="https://player.vimeo.com/video/1067319595?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
              frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
