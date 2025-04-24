@@ -944,7 +944,7 @@ class PortalMyCourses(http.Controller):
         promo = kwargs.get('promo')
         if promo:
             coupon = request.env['loyalty.program'].sudo().search([('name', '=', promo), ('date_to', '>=', datetime.now().date())], limit=1)
-            if coupon:
+            if coupon and coupon.minimum_amount >= order.amount_untaxed:
                 if not [line.discount for line in order.order_line if line.discount > 0.0]:
                     coupon_discount = coupon.discount_id.name
                     order_line = order.order_line.filtered(lambda ol: ol.product_template_id.id == coupon.referral_product_id.id)

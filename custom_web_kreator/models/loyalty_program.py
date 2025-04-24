@@ -5,4 +5,5 @@ class MyProductCart(models.Model):
     _inherit = 'loyalty.program'
 
     referral_product_id = fields.Many2one(comodel_name='product.template')
+    minimum_amount = fields.Float(string="Minimum Amount")
 
