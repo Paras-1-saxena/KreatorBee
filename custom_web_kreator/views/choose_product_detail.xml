@@ -291,12 +291,17 @@
                                     <p>
                                         <strong>Price:</strong>
                                         <span t-esc="currency_name"/>
-                                        <span t-esc="course.sales_price"/>
+                                        <span t-esc="course.sales_price - 1000 if course.referral_coupon_id else 0"/>
                                     </p>
                                     <p>
                                         <strong>Commission:</strong>
                                         <span t-esc="currency_name"/>
-                                        <span t-esc="course.partner_commission"/>
+                                        <t t-if="course.is_upgradable">
+                                            <span t-esc="(course.sales_price - 1000 if course.referral_coupon_id else 0)/100*70"/>
+                                        </t>
+                                        <t t-else="">
+                                            <span t-esc="course.partner_commission"/>
+                                        </t>
                                     </p>
                                     <p>
                                         <strong>Course Description:</strong>
@@ -386,7 +391,7 @@
                                             <p>
                                                 <strong>Commission (upto) :</strong>
                                                 <span t-esc="currency_name"/>
-                                                <span t-esc="sum([pid.list_price for pid in stage.product_ids])/100*60"/>
+                                                <span t-esc="sum([pid.list_price for pid in stage.product_ids])/100*70"/>
                                             </p>
                                             <p>
                                                 <strong>Upgrade Price:</strong>

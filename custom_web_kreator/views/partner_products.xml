@@ -406,8 +406,8 @@
                                                                         <t t-if="not [False for prd in stage.product_ids.ids if prd not in request.env.user.partner_id.slide_channel_ids.product_id.ids] or (request.env.user.id in cart.course_id.user_ids.ids)">
                                                                             <tr>
                                                                                 <th style="text-transform: capitalize;" scope="row"><t t-esc="stage.name"/></th>
-                                                                                <td>₹ <span t-esc="sum([pid.list_price for pid in stage.product_ids])"/></td>
-                                                                                <td>₹ <span t-esc="sum([pid.list_price for pid in stage.product_ids])/100*60"/></td>
+                                                                                <td>₹ <span t-esc="sum([pid.list_price for pid in stage.product_ids]) - 1000"/></td>
+                                                                                <td>₹ <span t-esc="(sum([pid.list_price for pid in stage.product_ids])-1000)/100*70"/></td>
                                                                             </tr>
                                                                         </t>
                                                                     </t>
