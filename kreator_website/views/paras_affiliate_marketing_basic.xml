@@ -191,11 +191,11 @@
                                 INR
                             </span>
                             <span style="text-decoration: line-through;text-decoration-color: red;">
-                                <t t-esc="f'{price2 + 5000:.2f}'"/>
+                                <t t-esc="price2 + 5000"/>
                             </span>
                             /
                             <span style="color: 048AFF;">
-                                <t t-esc="f'{price2:.2f}'"/>
+                                <t t-esc="price2"/>
                             </span>
                             (Excl. Tax)
                         </div>
@@ -1288,13 +1288,13 @@
                                 ₹
                             </span>
                             <span style="text-decoration: line-through; text-decoration-color: red;" class="text-white">
-                                <t t-esc="f'{price2 + 5000:.2f}'"/>
+                                <t t-esc="price2"/>
                             </span>
                             <span class="text-white">
                                 /
                             </span>
                             <span style="color: 048AFF;">
-                                <t t-esc="f'{price2:.2f}'"/>
+                                <t t-esc="price2"/>
                                 (Excl. Tax)
                             </span>
                         </div>
