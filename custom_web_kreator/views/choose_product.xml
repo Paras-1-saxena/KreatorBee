@@ -245,18 +245,22 @@
                                             <div class="p-2 row">
                                                 <t t-if="course.is_paid">
                                                     <p class="text-end" style="margin-bottom: 0px;">
-                                                        <img src="/custom_web_kreator/static/src/paid2.png" style="width: 50px; height: 50px;" />
+                                                        <img src="/custom_web_kreator/static/src/paid2.png"
+                                                             style="width: 50px; height: 50px;"/>
                                                     </p>
                                                 </t>
                                                 <t t-else="">
                                                     <p class="text-end" style="margin-bottom: 0px;">
-                                                        <img src="/custom_web_kreator/static/src/free.svg" style="width: 40px; height: 40px;"/>
+                                                        <img src="/custom_web_kreator/static/src/free.svg"
+                                                             style="width: 40px; height: 40px;"/>
                                                     </p>
                                                 </t>
                                                 <p class="fs-3">
                                                     <t t-esc="course.name"/>
                                                     <t t-if="course.is_upgradable">
-                                                        <span style="color: red; font-size: 20px;">( Upgradable Course )</span>
+                                                        <span style="color: red; font-size: 20px;">( Upgradable Course
+                                                            )
+                                                        </span>
                                                     </t>
                                                 </p>
 
@@ -310,13 +314,12 @@
                                                     </t>
                                                     <t t-else="">
                                                         <div class="col-12 col-md-6 my-2 my-md-0">
-                                                            <a t-att-href="f'/partner/product-detail?course_id={course.id}'">
-                                                                <button type="submit" class="btn1"
-                                                                            style="width: 100%; height: auto; font-size: 12px;">
-                                                                        Add to My Product
-                                                                    </button>
+                                                            <a t-att-href="'/partner/product-detail?course_id=%s' % course.id">
+                                                                <button class="btn1"
+                                                                        style="width: 100%; height: auto; font-size: 12px;">
+                                                                    Add to My Product
+                                                                </button>
                                                             </a>
-
                                                         </div>
                                                     </t>
                                                 </div>
