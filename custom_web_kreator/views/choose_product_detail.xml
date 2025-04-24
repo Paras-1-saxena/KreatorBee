@@ -253,7 +253,7 @@
                                             </t>
                                         </t>
                                         <t t-else="">
-                                            <form action="/shop/cart/update" method="POST"
+                                            <form action="/shop/cart/update?promoted=true" method="POST"
                                                   style="width: 40%;">
                                                 <input type="hidden" name="csrf_token"
                                                        t-att-value="request.csrf_token()"/>
@@ -348,7 +348,7 @@
                                                     </t>
                                                 </t>
                                                 <t t-else="">
-                                                    <form t-att-action="'/shop/cart/update?option=%s' % stage.name"
+                                                    <form t-att-action="'/shop/cart/update?option=%s&amp;promoted=true' % stage.name"
                                                       method="POST"
                                                       style="width: 40%;">
                                                     <input type="hidden" name="csrf_token"

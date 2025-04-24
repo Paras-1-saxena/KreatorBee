@@ -25,6 +25,8 @@ import random
 import string
 from markupsafe import Markup
 
+_logger = logging.getLogger(__name__)
+
 class ReferralController(http.Controller):
     @http.route('/creator/referral', type='http', auth='public', website=True)
     def nreferral_page(self, **kwargs):
@@ -330,12 +332,7 @@ class ReferralController(http.Controller):
 
     @http.route(['/payment/<string:token>'], type='http', auth='public', website=True)
     def payment_redirect(self, token, **kwargs):
-        if kwargs.get('wa'):
-            pass
-        if kwargs.get('zoom'):
-            pass
-        if kwargs.get('mail'):
-            pass
+        link_tracker_obj = request.env['referral.tracker']
         encryption_key = request.env['ir.config_parameter'].sudo().get_param(
             'apg_course_referral.apg_encryption_key').encode('utf-8')  # 32-byte key
         try:
@@ -344,7 +341,7 @@ class ReferralController(http.Controller):
             request.session['referral_course'] = course_id
             request.session['referral_partner'] = partner_id
             current_time = int(time.time())
-            product_id = request.env['slide.channel'].sudo().search([('id', '=', course_id)], limit=1).product_id.id
+            channel_id = request.env['slide.channel'].sudo().search([('id', '=', course_id)], limit=1)
             if current_time > int(expiry_time):
                 return '''
                         <script>
@@ -362,12 +359,21 @@ class ReferralController(http.Controller):
                 'course_id': int(course_id),
                 'partner_id': int(partner_id)
             }
+            mode = kwargs.get('mode')
+            tracker_value = {}
             if stage_id != 'False':
                 stage_id = request.env['slide.channel.upgrade.stage'].browse(int(stage_id))
+                tracker_value.update({'variant': stage_id.name})
                 # course_url = f"{request.env['ir.config_parameter'].sudo().get_param('web.base.url')}/shop/cart/update/?course_id={int(course_id)}"
-                return odoo.addons.elearning_upgradable_courses.controllers.main.WebsiteSaleCustom.cart_update(self=False, product_id=product_id, **{'option': stage_id.name})
-            return odoo.addons.elearning_upgradable_courses.controllers.main.WebsiteSaleCustom.cart_update(self=False, product_id=product_id)
+                action = odoo.addons.elearning_upgradable_courses.controllers.main.WebsiteSaleCustom.cart_update(self=False, product_id=channel_id.product_id.id, **{'option': stage_id.name})
+            else:
+                action = odoo.addons.elearning_upgradable_courses.controllers.main.WebsiteSaleCustom.cart_update(self=False, product_id=channel_id.product_id.id)
+            if mode:
+                tracker_value.update({'name': mode, 'course': channel_id.name})
+                link_tracker_obj.sudo().create(tracker_value)
+            return action
         except Exception as e:
+            _logger.info(f"{'*'*50} {e}")
             return "Invalid or expired referral link."
 
     @http.route('/payment/instamojo/redirect', type='http', auth='public', website=True)
