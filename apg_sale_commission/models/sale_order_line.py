@@ -32,10 +32,10 @@ class SaleOrderLine(models.Model):
     @api.depends('product_id','price_subtotal','partner_commission_partner_id')
     def _compute_commission(self):
         elearning_id = False
-        self.partner_commission_amount = False
-        self.direct_commission_amount = False
-        self.direct_commission_partner_id = False
-        self.is_commission = False
+        # self.partner_commission_amount = False
+        # self.direct_commission_amount = False
+        # self.direct_commission_partner_id = False
+        # self.is_commission = False
         partner_commission_id = self.env['partner.commission'].search([],order='create_date desc',  # Order by creation date, latest first
             limit=1
         )
@@ -48,6 +48,12 @@ class SaleOrderLine(models.Model):
             raise exceptions.ValidationError(_("Please configure Direct Commission"))
         # discounted_line = self.filtered(lambda ol: ol.discount > 0.0)
         for line in self:
+            if line.partner_commission_amount > 0.0:
+                line.partner_commission_amount = line.partner_commission_amount
+                line.direct_commission_amount = line.direct_commission_amount
+                line.direct_commission_partner_id = line.direct_commission_partner_id
+                line.is_commission = line.is_commission
+                continue
             if line.product_id:
                 elearning_id = self.env['slide.channel'].search([
                     ('state', '=', 'published'),
@@ -57,9 +63,8 @@ class SaleOrderLine(models.Model):
             if elearning_id or line.price_unit < 0.0:
                 total_discount = (line.price_unit / 100) * line.discount
                 if line.partner_commission_partner_id:
-                    # (line.price_subtotal + total_discount)
-                    line.partner_commission_amount = (line.price_subtotal * (specific_partner_commission if specific_partner_commission else partner_commission_id.rate))/100
-                line.direct_commission_amount = (line.price_subtotal* direct_commission_id.rate)/100
+                    line.partner_commission_amount = ((line.price_subtotal+total_discount) * (specific_partner_commission if specific_partner_commission else partner_commission_id.rate))/100
+                line.direct_commission_amount = ((line.price_subtotal+total_discount) * direct_commission_id.rate)/100
                 line.direct_commission_partner_id = elearning_id.create_uid.partner_id.id
                 # line.partner_commission_partner_id = elearning_id.create_uid.partner_id.id
                 line.is_commission = True
