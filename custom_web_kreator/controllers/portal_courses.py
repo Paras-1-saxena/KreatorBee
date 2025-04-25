@@ -945,6 +945,11 @@ class PortalMyCourses(http.Controller):
         if promo:
             coupon = request.env['loyalty.program'].sudo().search([('name', '=', promo), ('date_to', '>=', datetime.now().date())], limit=1)
             if coupon and order.amount_untaxed >= coupon.minimum_amount:
+                if coupon.limit_usage and coupon.max_usage > 1:
+                    coupon.max_usage -= 1
+                else:
+                    request.session['coupon_status'] = 'failed'
+                    return request.redirect('/shop/payment')
                 user_type = coupon.create_uid.partner_id.user_type
                 order.coupon_type = 'creator' if user_type == 'creator' else 'partner' if user_type == 'partner' else 'company'
                 if not [line.discount for line in order.order_line if line.discount > 0.0]:
