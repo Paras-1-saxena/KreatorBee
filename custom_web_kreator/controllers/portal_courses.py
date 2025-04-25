@@ -3023,6 +3023,8 @@ class PortalMyCourses(http.Controller):
                 }
             for data in grouped_data:
                 lines = orders_lines.filtered( lambda ol: ol.partner_commission_partner_id.id == data.id)
+                if data.id == 1158:
+                    continue
                 leaderboard.append({
                     'partner_name': data.name,
                     'total_commission': sum(line.partner_commission_amount for line in lines),
