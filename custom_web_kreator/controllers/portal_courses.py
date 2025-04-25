@@ -945,6 +945,8 @@ class PortalMyCourses(http.Controller):
         if promo:
             coupon = request.env['loyalty.program'].sudo().search([('name', '=', promo), ('date_to', '>=', datetime.now().date())], limit=1)
             if coupon and order.amount_untaxed >= coupon.minimum_amount:
+                user_type = coupon.create_uid.partner_id.user_type
+                order.coupon_type = 'creator' if user_type == 'creator' else 'partner' if user_type == 'partner' else 'company'
                 if not [line.discount for line in order.order_line if line.discount > 0.0]:
                     coupon_discount = coupon.discount_id.name
                     order_line = order.order_line.filtered(lambda ol: ol.product_template_id.id == coupon.referral_product_id.id)
@@ -3013,6 +3015,7 @@ class PortalMyCourses(http.Controller):
         if partner.user_type in ['internal_user', 'partner']:
             orders_lines = request.env['sale.order.line'].sudo().search(
                 [('is_commission', '=', True), ('state', '=', 'sale'), ('partner_commission_partner_id', '!=', False)])
+            orders_lines = orders_lines.filtered(lambda ol: ol.partner_commission_partner_id.id != ol.direct_commission_partner_id.id)
             order_lines = sorted(orders_lines, key=attrgetter('partner_commission_partner_id'))
             # Group by commission partner ID
             grouped_data = {}
@@ -3023,8 +3026,6 @@ class PortalMyCourses(http.Controller):
                 }
             for data in grouped_data:
                 lines = orders_lines.filtered( lambda ol: ol.partner_commission_partner_id.id == data.id)
-                if data.id in [1158, 1142]:
-                    continue
                 leaderboard.append({
                     'partner_name': data.name,
                     'total_commission': sum(line.partner_commission_amount for line in lines),
