@@ -32,10 +32,6 @@ class SaleOrderLine(models.Model):
     @api.depends('product_id','price_subtotal','partner_commission_partner_id')
     def _compute_commission(self):
         elearning_id = False
-        # self.partner_commission_amount = False
-        # self.direct_commission_amount = False
-        # self.direct_commission_partner_id = False
-        # self.is_commission = False
         partner_commission_id = self.env['partner.commission'].search([],order='create_date desc',  # Order by creation date, latest first
             limit=1
         )
@@ -68,6 +64,12 @@ class SaleOrderLine(models.Model):
                 line.direct_commission_partner_id = elearning_id.create_uid.partner_id.id
                 # line.partner_commission_partner_id = elearning_id.create_uid.partner_id.id
                 line.is_commission = True
+            else:
+                self.partner_commission_amount = False
+                self.direct_commission_amount = False
+                self.direct_commission_partner_id = False
+                self.is_commission = False
+
 
 class SaleTarget(models.Model):
     _name = 'sale.target'
