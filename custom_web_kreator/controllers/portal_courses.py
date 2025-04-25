@@ -3023,7 +3023,7 @@ class PortalMyCourses(http.Controller):
                 }
             for data in grouped_data:
                 lines = orders_lines.filtered( lambda ol: ol.partner_commission_partner_id.id == data.id)
-                if data.id == 1158:
+                if data.id in [1158, 1142]:
                     continue
                 leaderboard.append({
                     'partner_name': data.name,
