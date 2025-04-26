@@ -65,10 +65,10 @@ class SaleOrderLine(models.Model):
                 # line.partner_commission_partner_id = elearning_id.create_uid.partner_id.id
                 line.is_commission = True
             else:
-                self.partner_commission_amount = False
-                self.direct_commission_amount = False
-                self.direct_commission_partner_id = False
-                self.is_commission = False
+                line.partner_commission_amount = False
+                line.direct_commission_amount = False
+                line.direct_commission_partner_id = False
+                line.is_commission = False
 
 
 class SaleTarget(models.Model):
