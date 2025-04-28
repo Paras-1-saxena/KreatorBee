@@ -479,7 +479,7 @@ class WebsiteSale(payment_portal.PaymentPortal):
                 del request.session['referral_course']  # Clear session value after use
             if request.session.get('referral_partner'):
                 referral_partner = request.session.get('referral_partner')
-                del request.session['referral_partner']
+                # del request.session['referral_partner']
             if 'link_expiry_time' in request.session:
                 del request.session['link_expiry_time']  # Delete session key
             if 'course_access' in request.session:

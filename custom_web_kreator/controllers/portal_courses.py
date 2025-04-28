@@ -947,7 +947,7 @@ class PortalMyCourses(http.Controller):
             if coupon and order.amount_untaxed >= coupon.minimum_amount:
                 if coupon.limit_usage and coupon.max_usage > 1:
                     coupon.max_usage -= 1
-                else:
+                if coupon.limit_usage and coupon.max_usage <= 1:
                     request.session['coupon_status'] = 'failed'
                     return request.redirect('/shop/payment')
                 user_type = coupon.create_uid.partner_id.user_type
