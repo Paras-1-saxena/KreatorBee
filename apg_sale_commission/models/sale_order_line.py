@@ -44,12 +44,12 @@ class SaleOrderLine(models.Model):
             raise exceptions.ValidationError(_("Please configure Direct Commission"))
         # discounted_line = self.filtered(lambda ol: ol.discount > 0.0)
         for line in self:
-            # if line.partner_commission_amount > 0.0:
-            #     line.partner_commission_amount = line.partner_commission_amount
-            #     line.direct_commission_amount = line.direct_commission_amount
-            #     line.direct_commission_partner_id = line.direct_commission_partner_id
-            #     line.is_commission = line.is_commission
-            #     continue
+            if line.partner_commission_amount > 0.0:
+                line.partner_commission_amount = line.partner_commission_amount
+                line.direct_commission_amount = line.direct_commission_amount
+                line.direct_commission_partner_id = line.direct_commission_partner_id
+                line.is_commission = line.is_commission
+                continue
             if line.product_id:
                 elearning_id = self.env['slide.channel'].search([
                     ('state', '=', 'published'),
