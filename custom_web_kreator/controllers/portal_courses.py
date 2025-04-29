@@ -2,7 +2,7 @@
 from odoo import http, tools, _
 from odoo.http import request
 import base64
-from itertools import groupby
+from itertools import groupby, product
 from operator import attrgetter
 from datetime import date, datetime, timedelta
 import json
@@ -892,9 +892,28 @@ class PortalMyCourses(http.Controller):
         description = kwargs.get('description', '')
         date_from = kwargs.get('from_date', '')
         date_to = kwargs.get('to_date', '')
-        course_product_id = int(kwargs.get('course'))
+        course_product_id = request.env['slide.channel'].sudo().search([('id', '=', int(kwargs.get('course')))])
+
+        coupon = request.env['loyalty.program'].sudo().search(
+            [('name', '=', coupon_name), ('date_to', '>=', datetime.now().date())], limit=1)
+        if coupon:
+            request.session['fail_create_offer'] = 'Yes'
+            request.session['create_offer'] = 'Yes'
+            request.session['create_offer_message'] = 'Coupon Code Already Exist, Please Create a New One'
+            if request.env.user.partner_id.user_type== 'partner':
+                return request.redirect('/partner/offers')
+            return request.redirect('/creator/offers')
+
         # Step 1: Handle discount field
         discount_record = request.env['discount.discount'].sudo().search([('id', '=', discount)], limit=1)
+
+        if (course_product_id.product_id.list_price < 15000 and discount_record.name > 500) or (course_product_id.product_id.list_price > 15000 and discount_record.name > 1000):
+            request.session['fail_create_offer'] = 'Yes'
+            request.session['create_offer'] = 'Yes'
+            request.session['create_offer_message'] = "Allowed offer limit: 500 and less if Course price is less than 15000"
+            if request.env.user.partner_id.user_type== 'partner':
+                return request.redirect('/partner/offers')
+            return request.redirect('/creator/offers')
 
         # Step 2: Handle duration field
         if '_' in duration_value:
@@ -934,8 +953,10 @@ class PortalMyCourses(http.Controller):
             'duration_id': duration_record.id,
             'date_from': date_from,
             'date_to': date_to,
-            'referral_product_id': course_product_id
+            'referral_product_id': course_product_id.product_id.product_tmpl_id.id
         })
+        if request.env.user.partner_id.user_type == 'partner':
+            return request.redirect('/partner/offers')
         return request.redirect('/creator/offers')
 
     @http.route('/course/discount/apply', type='http', auth="user", website=True)
@@ -1894,6 +1915,10 @@ class PortalMyCourses(http.Controller):
 
     @http.route('/partner/offers', type='http', auth="public", website=True)
     def offers_coupon(self, **kwargs):
+        if request.session.get('create_offer') == 'Yes':
+            request.session['create_offer'] = 'No'
+        else:
+            request.session['fail_create_offer'] = 'No'
         user = request.env.user
         partner = user.partner_id  # Get related partner
 
@@ -1903,6 +1928,9 @@ class PortalMyCourses(http.Controller):
             domain = [('program_type', '=', 'promo_code'), ('date_to', '>=', date.today())]  # Base domain to filter Discount coupons
             selected_coupon_id = kwargs.get('coupon_id')  # Get selected coupon ID from reques
             # If a specific course is selected, show only that course
+            product_cart_ids = request.env['my.product.cart'].sudo().search([('partner_id', '=', partner.id)],
+                                                                            order='create_date desc')
+            discount_ids = request.env['discount.discount'].sudo().search([('name', '<=', 1000)])
 
             if selected_coupon_id:
                 domain.append(('id', '=', int(selected_coupon_id)))
@@ -1920,7 +1948,9 @@ class PortalMyCourses(http.Controller):
                 'loyalty_ids': loyalty_ids,
                 'currency_id': request.env.company.currency_id,
                 'tutorial_video': tutorial_video,
-                'search_query': search_query  # Pass search query to maintain input value
+                'search_query': search_query,
+                'product_ids': product_cart_ids.course_id,
+                'discount_ids': discount_ids
             }
             return http.request.render('custom_web_kreator.coupon_offers_page', values)
         else:

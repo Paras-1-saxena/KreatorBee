@@ -44,12 +44,12 @@ class SaleOrderLine(models.Model):
             raise exceptions.ValidationError(_("Please configure Direct Commission"))
         # discounted_line = self.filtered(lambda ol: ol.discount > 0.0)
         for line in self:
-            if line.partner_commission_amount > 0.0:
-                line.partner_commission_amount = line.partner_commission_amount
-                line.direct_commission_amount = line.direct_commission_amount
-                line.direct_commission_partner_id = line.direct_commission_partner_id
-                line.is_commission = line.is_commission
-                continue
+            # if line.partner_commission_amount > 0.0:
+            #     line.partner_commission_amount = line.partner_commission_amount
+            #     line.direct_commission_amount = line.direct_commission_amount
+            #     line.direct_commission_partner_id = line.direct_commission_partner_id
+            #     line.is_commission = line.is_commission
+            #     continue
             if line.product_id:
                 elearning_id = self.env['slide.channel'].search([
                     ('state', '=', 'published'),
@@ -57,13 +57,38 @@ class SaleOrderLine(models.Model):
                     ], limit=1)
             specific_partner_commission = line.product_id.product_tmpl_id.specific_commission if line.product_id.product_tmpl_id.specific_commission > 0.0 else 70.0 if line.price_unit < 0.0 else 0.0
             if elearning_id or line.price_unit < 0.0:
-                total_discount = (line.price_unit / 100) * line.discount
-                if line.partner_commission_partner_id:
-                    line.partner_commission_amount = ((line.price_subtotal+total_discount) * (specific_partner_commission if specific_partner_commission else partner_commission_id.rate))/100
-                line.direct_commission_amount = ((line.price_subtotal+total_discount) * direct_commission_id.rate)/100
-                line.direct_commission_partner_id = elearning_id.create_uid.partner_id.id
-                # line.partner_commission_partner_id = elearning_id.create_uid.partner_id.id
-                line.is_commission = True
+                coupon_type = line.order_id.coupon_type
+                if coupon_type == 'partner':
+                    total_discount = (line.price_unit / 100) * line.discount
+                    if line.partner_commission_partner_id:
+                        line.partner_commission_amount = (((line.price_subtotal + total_discount) * (specific_partner_commission if specific_partner_commission else partner_commission_id.rate)) / 100) - (total_discount*0.6)
+                    else:
+                        line.partner_commission_amount = 0.0
+                    line.direct_commission_amount = ((line.price_subtotal + total_discount) * (direct_commission_id.rate - ((specific_partner_commission if specific_partner_commission else partner_commission_id.rate) if line.partner_commission_partner_id else 0.0))) / 100
+                    line.direct_commission_partner_id = elearning_id.create_uid.partner_id.id
+                    # line.partner_commission_partner_id = elearning_id.create_uid.partner_id.id
+                    line.is_commission = True
+                elif coupon_type == 'creator':
+                    total_discount = (line.price_unit / 100) * line.discount
+                    if line.partner_commission_partner_id:
+                        line.partner_commission_amount = ((line.price_subtotal + total_discount) * (
+                            specific_partner_commission if specific_partner_commission else partner_commission_id.rate)) / 100
+                    else:
+                        line.partner_commission_amount = 0.0
+                    line.direct_commission_amount = (((line.price_subtotal + total_discount) * (direct_commission_id.rate - ((specific_partner_commission if specific_partner_commission else partner_commission_id.rate) if line.partner_commission_partner_id else 0.0))) / 100) - (total_discount * 0.6)
+                    line.direct_commission_partner_id = elearning_id.create_uid.partner_id.id
+                    # line.partner_commission_partner_id = elearning_id.create_uid.partner_id.id
+                    line.is_commission = True
+                else:
+                    total_discount = (line.price_unit / 100) * line.discount
+                    if line.partner_commission_partner_id:
+                        line.partner_commission_amount = ((line.price_subtotal+total_discount) * (specific_partner_commission if specific_partner_commission else partner_commission_id.rate))/100
+                    else:
+                        line.partner_commission_amount = 0.0
+                    line.direct_commission_amount = ((line.price_subtotal+total_discount) * (direct_commission_id.rate - ((specific_partner_commission if specific_partner_commission else partner_commission_id.rate) if line.partner_commission_partner_id else 0.0)))/100
+                    line.direct_commission_partner_id = elearning_id.create_uid.partner_id.id
+                    # line.partner_commission_partner_id = elearning_id.create_uid.partner_id.id
+                    line.is_commission = True
             else:
                 line.partner_commission_amount = False
                 line.direct_commission_amount = False
