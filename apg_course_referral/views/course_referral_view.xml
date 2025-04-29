@@ -46,11 +46,42 @@
             </p>
         </field>
     </record>
+
+    <record id="view_apg_course_referral_tracker_tree" model="ir.ui.view">
+        <field name="name">Referral Tracking Tree</field>
+        <field name="model">referral.tracker</field>
+        <field name="arch" type="xml">
+            <list string="Course Referral Tracking" editable="bottom">
+                <field name="name" readonly="1"/>
+                <field name="course" readonly="1"/>
+                <field name="variant" readonly="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_apg_course_referral_tracking" model="ir.actions.act_window">
+        <field name="name">Course Referral Tracking Action</field>
+        <field name="res_model">referral.tracker</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Content Tag
+            </p>
+        </field>
+    </record>
+
     <menuitem 
         id="website_slides_menu_apg_course_referral" 
         name="Course Referral"
         parent="website_slides.website_slides_menu_configuration"
         sequence="58"
         action="action_apg_course_referral"/>
+
+    <menuitem
+        id="website_slides_menu_apg_course_referral_tracking"
+        name="Course Referral Tracking"
+        parent="website_slides.website_slides_menu_configuration"
+        sequence="100"
+        action="action_apg_course_referral_tracking"/>
 </odoo>
 

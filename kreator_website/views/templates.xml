@@ -37,7 +37,7 @@
                         <div style="cursor: pointer;" onclick="closeLead()"><i class="ri-close-line"></i></div>
                     </div>
                     <span id="sub_title">
-                        <h5>Get Early Access &amp; Exclusive Updates!</h5>
+                        <h5>Get Early Access &amp; Exclusive benefits!</h5>
                     </span>
                     <h5 id="info"></h5>
                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
@@ -73,6 +73,7 @@
             const sub_title = document.getElementById('sub_title');
             const lead_form = document.getElementById('lead_form');
             const lead_video = document.getElementById('lead_video');
+            const course_name = document.getElementById('course_name');
 
             function openPreview(landing, video) {
             fetch('/preview/video?landing=' + landing +'&amp;video=' + video, {
@@ -137,7 +138,7 @@
             return;
             }
             else {
-            fetch('/lead/submission?name=' + name.value +'&amp;email=' + email.value + '&amp;phno=' + phno.value, {
+            fetch('/lead/submission?name=' + name.value +'&amp;email=' + email.value + '&amp;phno=' + phno.value + '&amp;course_name=' + course_name.value, {
                             method: 'POST',
                             })
                             .then(response => response.json())

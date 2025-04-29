@@ -102,6 +102,8 @@ class KreatorWebsite(http.Controller):
           style="width:100%; height:30vh;" title="Affiliate Marketing Millionaire Program Basic"></iframe>
         """)
         values.update({'intro_video': intro_video, 'intro_video_mobile': intro_video_mobile, 'course_type': 'basic'})
+        if request.session.get('referral_partner'):
+            values.update({'price2': values.get('price2')-1000})
         return request.render("kreator_website.affiliate_marketing_basic_paras", values)
 
     @http.route('/landing/page/11', auth='public', website=True)
@@ -117,6 +119,8 @@ class KreatorWebsite(http.Controller):
         stage_id = course.upgrade_stage_ids.filtered(lambda us: us.name == 'intermediate')
         partner_course_ids = request.env.user.partner_id.slide_channel_ids.product_id.ids
         price2 = sum([sc.list_price for sc in stage_id.product_ids if sc.id not in partner_course_ids])
+        if request.session.get('referral_partner'):
+            price2 = price2 - 1000 if price2 > 1000 else price2
         values.update(
             {'intro_video': intro_video, 'intro_video_mobile': intro_video_mobile, 'course_type': 'intermediate',
              'price1': 20000, 'price2': price2})
@@ -135,6 +139,8 @@ class KreatorWebsite(http.Controller):
         stage_id = course.upgrade_stage_ids.filtered(lambda us: us.name == 'Advanced')
         partner_course_ids = request.env.user.partner_id.slide_channel_ids.product_id.ids
         price2 = sum([sc.list_price for sc in stage_id.product_ids if sc.id not in partner_course_ids])
+        if request.session.get('referral_partner'):
+            price2 = price2 - 1000 if price2 > 1000 else price2
         values.update(
             {'intro_video': intro_video, 'intro_video_mobile': intro_video_mobile, 'course_type': 'intermediate',
              'price1': 20000, 'price2': price2})
@@ -143,6 +149,7 @@ class KreatorWebsite(http.Controller):
         return request.render("kreator_website.affiliate_marketing_basic_paras", values)
 
     def fetch_values(self, **kwargs):
+        request.session['data_submitted'] = 'No'
         course = request.env['slide.channel'].sudo().search([('id', '=', kwargs.get('course_id'))])
         value = {
             'main_heading': course.name, 'p2': course.p2, 'creator_name': course.creator_name,
@@ -173,7 +180,8 @@ class KreatorWebsite(http.Controller):
             success_message = 'We’ve received your details successfully. We’ll get in touch with you soon.'
             request.session['data_submitted'] = 'yes'
         else:
-            request.env['crm.lead'].sudo().create({'name': name, 'email_from': email, 'phone': phno})
+            lead = request.env['crm.lead'].sudo().create({'name': name, 'email_from': email, 'phone': phno})
+            lead.description = kwargs.get('course_name')
             success_message = 'We’ve received your details successfully. We’ll get in touch with you soon.'
             request.session['data_submitted'] = 'yes'
         return request.make_response(
@@ -200,6 +208,16 @@ class KreatorWebsite(http.Controller):
             )
 
     def preview_vide_fetch(self, landing, video):
+        if landing == 10 and video == 1:
+            return Markup('''<iframe src="https://player.vimeo.com/video/1073917141?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+             frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              style="width:80vw;height:60vh;" title="Lesson 01 Creator Bee.mp4"></iframe>
+               <script src="https://player.vimeo.com/api/player.js"></script>''')
+        if landing == 10 and video == 2:
+            return Markup('''<iframe src="https://player.vimeo.com/video/1073917978?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+             frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              style="width:80vw;height:60vh;" title="Lesson 02 - Types of Lead Generation"></iframe>
+                      <script src="https://player.vimeo.com/api/player.js"></script>''')
         if landing == 9 and video == 1:
             return Markup('''<iframe src="https://player.vimeo.com/video/1067319595?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
              frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"

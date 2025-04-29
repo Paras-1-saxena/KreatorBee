@@ -82,6 +82,11 @@
                     .custom-button:hover {
                     background-color: #e6b800; /* Slightly darker yellow on hover */
                     }
+                    body {
+                    overflow: hidden;
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                    }
 
                 </style>
 
@@ -221,7 +226,7 @@
                                 </div>
                             </section>
                             <!-- product filter -->
-                            <section class="row g-4 my-4">
+                            <section class="row g-4 my-4 overflow-auto" style="height: 80%;">
                                 <t t-foreach="courses" t-as="course">
                                     <div class="col-lg-6 col-12">
                                         <div class="product d-flex">
@@ -238,14 +243,25 @@
                                                 </a>
                                             </div>
                                             <div class="p-2 row">
-                                                <p class="text-center">
-                                                    <t t-if="course.is_upgradable">
-                                                        <span style="color: red; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;" class="p-2 h4 d-none d-md-block"><i class="ri-star-line"></i> Upgradable Course<i class="ri-star-line"></i></span>
-                                                        <span style="color: red; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; font-size: 14px;" class="p-2 d-block d-md-none"><i class="ri-star-line"></i> Upgradable Course<i class="ri-star-line"></i></span>
-                                                    </t>
-                                                </p>
+                                                <t t-if="course.is_paid">
+                                                    <p class="text-end" style="margin-bottom: 0px;">
+                                                        <img src="/custom_web_kreator/static/src/paid2.png"
+                                                             style="width: 50px; height: 50px;"/>
+                                                    </p>
+                                                </t>
+                                                <t t-else="">
+                                                    <p class="text-end" style="margin-bottom: 0px;">
+                                                        <img src="/custom_web_kreator/static/src/free.svg"
+                                                             style="width: 40px; height: 40px;"/>
+                                                    </p>
+                                                </t>
                                                 <p class="fs-3">
                                                     <t t-esc="course.name"/>
+                                                    <t t-if="course.is_upgradable">
+                                                        <span style="color: red; font-size: 20px;">( Upgradable Course
+                                                            )
+                                                        </span>
+                                                    </t>
                                                 </p>
 
                                                 <div class="d-flex gap-4 align-items-center">
@@ -270,28 +286,42 @@
                                                             </button>
                                                         </a>
                                                     </div>
-                                                    <div class="col-12 col-md-6 my-2 my-md-0">
-                                                        <t t-if="course.id in added_course_ids">
-                                                            <button class="btn1"
-                                                                    style="width: 100%; height: auto; opacity: 0.5; cursor: not-allowed; font-size: 12px;"
-                                                                    disabled="disabled">
-                                                                Added
-                                                            </button>
-                                                        </t>
-                                                        <!-- ELSE show the "Add to My List" form -->
-                                                        <t t-else="">
-                                                            <form action="/add-to-cart" method="POST">
-                                                                <input type="hidden" name="courseId"
-                                                                       t-att-value="course.id"/>
-                                                                <input type="hidden" name="csrf_token"
-                                                                       t-att-value="request.csrf_token()"/>
-                                                                <button type="submit" class="btn1"
-                                                                        style="width: 100%; height: auto; font-size: 12px;">
-                                                                    Add to My List
+
+
+                                                    <t t-if="not course.is_paid or (course.id in request.env.user.partner_id.slide_channel_ids.ids) or (request.env.user.id in course.user_ids.ids)">
+                                                        <div class="col-12 col-md-6 my-2 my-md-0">
+                                                            <t t-if="course.id in added_course_ids">
+                                                                <button class="btn1"
+                                                                        style="width: 100%; height: auto; opacity: 0.5; cursor: not-allowed; font-size: 12px;"
+                                                                        disabled="disabled">
+                                                                    Added
                                                                 </button>
-                                                            </form>
-                                                        </t>
-                                                    </div>
+                                                            </t>
+                                                            <!-- ELSE show the "Add to My List" form -->
+                                                            <t t-else="">
+                                                                <form action="/add-to-cart" method="POST">
+                                                                    <input type="hidden" name="courseId"
+                                                                           t-att-value="course.id"/>
+                                                                    <input type="hidden" name="csrf_token"
+                                                                           t-att-value="request.csrf_token()"/>
+                                                                    <button type="submit" class="btn1"
+                                                                            style="width: 100%; height: auto; font-size: 12px;">
+                                                                        Add to My Product
+                                                                    </button>
+                                                                </form>
+                                                            </t>
+                                                        </div>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <div class="col-12 col-md-6 my-2 my-md-0">
+                                                            <a t-att-href="'/partner/product-detail?course_id=%s' % course.id">
+                                                                <button class="btn1"
+                                                                        style="width: 100%; height: auto; font-size: 12px;">
+                                                                    Add to My Product
+                                                                </button>
+                                                            </a>
+                                                        </div>
+                                                    </t>
                                                 </div>
                                                 <t t-if="course.id in added_course_ids">
                                                     <div class="row justify-content-center">

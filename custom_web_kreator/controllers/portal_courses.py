@@ -2,7 +2,7 @@
 from odoo import http, tools, _
 from odoo.http import request
 import base64
-from itertools import groupby
+from itertools import groupby, product
 from operator import attrgetter
 from datetime import date, datetime, timedelta
 import json
@@ -497,6 +497,12 @@ class PortalMyCourses(http.Controller):
         user = request.env.user
         partner = user.partner_id  # Get related partner
 
+        if not partner.partner_term_accepted:
+            return request.redirect('/master-partner')
+        premium_course = request.env['slide.channel'].sudo().search([('is_mandate', '=', True)], limit=1)
+        if not request.env.user.partner_id.early_sign_in and (premium_course.id not in request.env.user.partner_id.slide_channel_ids.ids):
+            return request.redirect('/partner-welcome')
+
         # Check if the user is an Internal User or Creator
         if partner.user_type in ['internal_user', 'partner']:
             current_user = request.env.user
@@ -709,6 +715,8 @@ class PortalMyCourses(http.Controller):
 
             courses = []
 
+            show_upgrade = False
+
             # Check if the user is of type 'customer'
             if partner.user_type in ['partner', 'internal_user']:
                 # Fetch sale orders linked to the customer
@@ -884,9 +892,28 @@ class PortalMyCourses(http.Controller):
         description = kwargs.get('description', '')
         date_from = kwargs.get('from_date', '')
         date_to = kwargs.get('to_date', '')
-        course_product_id = int(kwargs.get('course'))
+        course_product_id = request.env['slide.channel'].sudo().search([('id', '=', int(kwargs.get('course')))])
+
+        coupon = request.env['loyalty.program'].sudo().search(
+            [('name', '=', coupon_name), ('date_to', '>=', datetime.now().date())], limit=1)
+        if coupon:
+            request.session['fail_create_offer'] = 'Yes'
+            request.session['create_offer'] = 'Yes'
+            request.session['create_offer_message'] = 'Coupon Code Already Exist, Please Create a New One'
+            if request.env.user.partner_id.user_type== 'partner':
+                return request.redirect('/partner/offers')
+            return request.redirect('/creator/offers')
+
         # Step 1: Handle discount field
         discount_record = request.env['discount.discount'].sudo().search([('id', '=', discount)], limit=1)
+
+        if (course_product_id.product_id.list_price < 15000 and discount_record.name > 500) or (course_product_id.product_id.list_price > 15000 and discount_record.name > 1000):
+            request.session['fail_create_offer'] = 'Yes'
+            request.session['create_offer'] = 'Yes'
+            request.session['create_offer_message'] = "Allowed offer limit: 500 and less if Course price is less than 15000"
+            if request.env.user.partner_id.user_type== 'partner':
+                return request.redirect('/partner/offers')
+            return request.redirect('/creator/offers')
 
         # Step 2: Handle duration field
         if '_' in duration_value:
@@ -926,8 +953,10 @@ class PortalMyCourses(http.Controller):
             'duration_id': duration_record.id,
             'date_from': date_from,
             'date_to': date_to,
-            'referral_product_id': course_product_id
+            'referral_product_id': course_product_id.product_id.product_tmpl_id.id
         })
+        if request.env.user.partner_id.user_type == 'partner':
+            return request.redirect('/partner/offers')
         return request.redirect('/creator/offers')
 
     @http.route('/course/discount/apply', type='http', auth="user", website=True)
@@ -936,7 +965,14 @@ class PortalMyCourses(http.Controller):
         promo = kwargs.get('promo')
         if promo:
             coupon = request.env['loyalty.program'].sudo().search([('name', '=', promo), ('date_to', '>=', datetime.now().date())], limit=1)
-            if coupon:
+            if coupon and order.amount_untaxed >= coupon.minimum_amount:
+                if coupon.limit_usage and coupon.max_usage > 1:
+                    coupon.max_usage -= 1
+                if coupon.limit_usage and coupon.max_usage <= 1:
+                    request.session['coupon_status'] = 'failed'
+                    return request.redirect('/shop/payment')
+                user_type = coupon.create_uid.partner_id.user_type
+                order.coupon_type = 'creator' if user_type == 'creator' else 'partner' if user_type == 'partner' else 'company'
                 if not [line.discount for line in order.order_line if line.discount > 0.0]:
                     coupon_discount = coupon.discount_id.name
                     order_line = order.order_line.filtered(lambda ol: ol.product_template_id.id == coupon.referral_product_id.id)
@@ -970,7 +1006,7 @@ class PortalMyCourses(http.Controller):
                 end_date = datetime.strptime(end_date, '%Y-%m-%d')
 
             # Prepare the domain for filtering sales orders
-            domain = [('state', '!=', 'sale')]  # Only fetch orders that are not confirmed (state != 'sale')
+            domain = [('state', '!=', 'sale'), ('partner_id', '!=', 4)]  # Only fetch orders that are not confirmed (state != 'sale')
 
             if start_date and end_date:
                 domain.extend([
@@ -982,7 +1018,8 @@ class PortalMyCourses(http.Controller):
             sale_orders = request.env['sale.order'].sudo().search(domain)
 
             # Fetch visitor data, no date filters for visitors
-            visitors = request.env['website.visitor'].sudo().search([])
+            new = request.env['crm.stage'].sudo().search([('name', '=', 'New')])
+            visitors = request.env['crm.lead'].sudo().search([('stage_id', '=', new.id), ('email_from', '!=', False), ('phone', '!=', False)])
 
             # Prepare the context to pass to the template
             context = {
@@ -990,7 +1027,7 @@ class PortalMyCourses(http.Controller):
                 'sale_orders': sale_orders,  # Pass the filtered sale orders
                 'start_date': start_date,  # Pass the start date
                 'end_date': end_date,  # Pass the end date
-                # 'visitors': visitors,  # Pass the visitor data
+                'visitors': visitors,  # Pass the visitor data
             }
             tutorial_video = Markup("""
                         <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
@@ -1380,14 +1417,17 @@ class PortalMyCourses(http.Controller):
             [('partner_id', '=', partner.id), ('state', 'in', ['sale'])])
         order_line = sale_orders.order_line.filtered(lambda ol: ol.product_id.id == course_id.product_id.id)
         stage_id = course_id.upgrade_stage_ids.filtered(lambda us: us.name == type)
-        referral_id = request.env['apg.course.referral'].sudo().create({
-            'course_id': course_id.id,
-            'partner_id': order_line.partner_commission_partner_id.id,
-            'stage_id': stage_id.id,
-            'expiry_time': 315360000,
-        })
-        referal_link = referral_id.generate_referral_link()
-        return request.redirect(referal_link)
+        if order_line.partner_commission_partner_id.id:
+            referral_id = request.env['apg.course.referral'].sudo().create({
+                'course_id': course_id.id,
+                'partner_id': order_line.partner_commission_partner_id.id,
+                'stage_id': stage_id.id,
+                'expiry_time': 315360000,
+            })
+            referal_link = referral_id.generate_referral_link()
+            return request.redirect(referal_link)
+        else:
+            return request.redirect(f'/landing/page/{stage_id.landing_page_record_id.lading_id}?course_id={course_id.id}')
 
     @http.route('/customer/mycourses', type='http', auth='public', website=True)
     def customer_courses(self, **kwargs):
@@ -1494,12 +1534,12 @@ class PortalMyCourses(http.Controller):
             added_course_ids = request.env['my.product.cart'].sudo().search([
                 ('partner_id', '=', partner.id)
             ]).course_id.ids # Base domain to filter published courses
-            upgrade_domain = [('state', '=', 'published'), ('is_upgradable', '=', True), ('not_display', '=', False)]
-            upgrade_course = request.env['slide.channel'].sudo().search(upgrade_domain)
-            if current_user.id in upgrade_course.user_ids.ids:
-                domain = [('state', '=', 'published'), ('not_display', '=', False)]
-            else:
-                domain = [('state', '=', 'published'), ('is_upgradable', '=', False), ('not_display', '=', False)]
+            # upgrade_domain = [('state', '=', 'published'), ('is_upgradable', '=', True), ('not_display', '=', False)]
+            # upgrade_course = request.env['slide.channel'].sudo().search(upgrade_domain)
+            # if current_user.id in upgrade_course.user_ids.ids:
+            #     domain = [('state', '=', 'published'), ('not_display', '=', False)]
+            # else:
+            domain = [('state', '=', 'published'), ('not_display', '=', False)]
 
                 # If a specific course is selected, show only that course
             if selected_course_id:
@@ -1875,6 +1915,10 @@ class PortalMyCourses(http.Controller):
 
     @http.route('/partner/offers', type='http', auth="public", website=True)
     def offers_coupon(self, **kwargs):
+        if request.session.get('create_offer') == 'Yes':
+            request.session['create_offer'] = 'No'
+        else:
+            request.session['fail_create_offer'] = 'No'
         user = request.env.user
         partner = user.partner_id  # Get related partner
 
@@ -1884,6 +1928,9 @@ class PortalMyCourses(http.Controller):
             domain = [('program_type', '=', 'promo_code'), ('date_to', '>=', date.today())]  # Base domain to filter Discount coupons
             selected_coupon_id = kwargs.get('coupon_id')  # Get selected coupon ID from reques
             # If a specific course is selected, show only that course
+            product_cart_ids = request.env['my.product.cart'].sudo().search([('partner_id', '=', partner.id)],
+                                                                            order='create_date desc')
+            discount_ids = request.env['discount.discount'].sudo().search([('name', '<=', 1000)])
 
             if selected_coupon_id:
                 domain.append(('id', '=', int(selected_coupon_id)))
@@ -1901,7 +1948,9 @@ class PortalMyCourses(http.Controller):
                 'loyalty_ids': loyalty_ids,
                 'currency_id': request.env.company.currency_id,
                 'tutorial_video': tutorial_video,
-                'search_query': search_query  # Pass search query to maintain input value
+                'search_query': search_query,
+                'product_ids': product_cart_ids.course_id,
+                'discount_ids': discount_ids
             }
             return http.request.render('custom_web_kreator.coupon_offers_page', values)
         else:
@@ -3001,6 +3050,7 @@ class PortalMyCourses(http.Controller):
         if partner.user_type in ['internal_user', 'partner']:
             orders_lines = request.env['sale.order.line'].sudo().search(
                 [('is_commission', '=', True), ('state', '=', 'sale'), ('partner_commission_partner_id', '!=', False)])
+            orders_lines = orders_lines.filtered(lambda ol: ol.partner_commission_partner_id.id != ol.direct_commission_partner_id.id and ol.price_unit > 0.0)
             order_lines = sorted(orders_lines, key=attrgetter('partner_commission_partner_id'))
             # Group by commission partner ID
             grouped_data = {}
@@ -3010,6 +3060,8 @@ class PortalMyCourses(http.Controller):
                     'total_commission': sum(line.partner_commission_amount for line in lines),
                 }
             for data in grouped_data:
+                if data.id == 1142:
+                    continue
                 lines = orders_lines.filtered( lambda ol: ol.partner_commission_partner_id.id == data.id)
                 leaderboard.append({
                     'partner_name': data.name,
@@ -3487,6 +3539,8 @@ class PortalMyCourses(http.Controller):
 
     @http.route('/submit-terms', type='http', auth='public', website=True, methods=['POST'])
     def submit_terms(self, **post):
+        user = request.env.user
+        partner = user.partner_id
         agreement_value = request.params.get('agreement')
 
         if agreement_value not in ['agree', 'disagree']:
@@ -3494,6 +3548,8 @@ class PortalMyCourses(http.Controller):
 
         # Store the agreement value in session
         request.session['agreement'] = agreement_value
+        if agreement_value == 'agree':
+            partner.partner_term_accepted = True
 
         if agreement_value == 'disagree':
             # Create a lead in crm.lead
@@ -3508,9 +3564,13 @@ class PortalMyCourses(http.Controller):
     @http.route('/partner-welcome', type='http', auth='public', website=True)
     def partner_welcome(self, **kwargs):
         # Render the data page template
-
+        course_avl = False
+        premium_course = request.env['slide.channel'].sudo().search([('is_mandate', '=', True)], limit=1)
+        if premium_course.id in request.env.user.partner_id.slide_channel_ids.ids:
+            course_avl = True
         agreement = request.session.get('agreement', 'No Selection')
-        return http.request.render('custom_web_kreator.partner_welcome', {'agreement': agreement})
+        return http.request.render('custom_web_kreator.partner_welcome', {'agreement': agreement,
+                                                                          'course_avl': course_avl, 'course': premium_course})
 
     @http.route('/get_video_url', type='json', auth="public", website=True)
     def get_video_url(self):

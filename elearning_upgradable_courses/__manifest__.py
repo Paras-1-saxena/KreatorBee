@@ -11,6 +11,8 @@
         'security/ir.model.access.csv',
         'views/slide_channel_view.xml',
         'views/payment_message.xml',
+        'views/res_partner.xml',
+        'views/slide_content_upgradable.xml',
         'wizard/unblocked_third_party_domains.xml',
         'wizard/website_configuration_form_inherit.xml'
         # 'views/slide_content_upgradable.xml'

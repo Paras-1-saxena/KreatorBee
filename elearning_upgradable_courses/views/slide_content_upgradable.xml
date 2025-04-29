@@ -11,30 +11,13 @@
                     </div>
                     <i t-attf-class="fa #{slide.slide_icon_class} py-2 mx-2"/>
                     <div class="text-truncate me-auto">
-                        <t t-if="channel.is_upgradable">
-<!--                            and channel.sudo().channel_partner_ids.filtered(lambda pi: pi.id == user.partner_id.id).upgrade_stage_ids.id in slide.upgrade_stage_id.ids-->
-                            <a t-if="not invite_preview and (slide.is_preview or channel.is_member or channel.can_publish) "
-                               class="o_wslides_js_slides_list_slide_link" t-attf-href="/slides/slide/#{slug(slide)}">
-                                <span t-field="slide.name"/>
-<!--                                <t t-esc="channel.sudo().channel_partner_ids.filtered(lambda pi: pi.id == user.partner_id.id)"/>-->
-                                <t t-esc="user.partner_id"/>
-                            </a>
-                            <span t-else="">
-                                <span t-esc="slide.name"/>
-                            </span>
-                        </t>
-<!--                        <t t-esc="">-->
-<!--                            <a t-if="not invite_preview and (slide.is_preview or channel.is_member or channel.can_publish)"-->
-<!--                               class="o_wslides_js_slides_list_slide_link" t-attf-href="/slides/slide/#{slug(slide)}">-->
-<!--                                <span>-->
-<!--                                    <t t-esc="slide_partner_ids"/>-->
-<!--                                </span>-->
-<!--                                <span t-field="slide.name"/>-->
-<!--                            </a>-->
-<!--                            <span t-else="">-->
-<!--                                <span t-esc="slide.name"/>-->
-<!--                            </span>-->
-<!--                        </t>-->
+                        <a t-if="not invite_preview and (slide.is_preview or channel.is_member or channel.can_publish)"
+                           class="o_wslides_js_slides_list_slide_link" t-attf-href="/slides/slide/#{slug(slide)}">
+                            <span t-field="slide.name"/>
+                        </a>
+                        <span t-else="">
+                            <span t-esc="slide.name"/>
+                        </span>
                     </div>
 
                     <div class="d-flex flex-row o_not_editable align-items-center">
@@ -69,30 +52,30 @@
                         </span>
                     </div>
 
-                    <div t-if="channel.is_member or channel.can_publish"
-                         class="pt-2 pb-2 border-start ms-2 me-2 ps-2 d-flex flex-row align-items-center o_wslides_slides_list_slide_controls o_not_editable">
-                        <t t-call="website_slides.slide_sidebar_done_button">
-                            <t t-set="is_member" t-value="channel.is_member"/>
-                            <t t-set="slide_completed" t-value="channel_progress[slide.id].get('completed')"/>
-                            <t t-set="use_slide_icon" t-value="False"/>
-                        </t>
-                        <span t-if="channel.can_publish" class="d-none d-md-flex">
-                            <a t-if="slide.slide_category == 'article'"
-                               class="mx-2 o_text_link text-primary o_not_editable" target="_blank"
-                               t-attf-href="/slides/slide/#{slug(slide)}?enable_editor=1" title="Edit">
-                                <span class="fa fa-pencil"/>
-                            </a>
-                            <a t-else="" class="mx-2 o_text_link text-primary o_not_editable" target="_blank"
-                               t-attf-href="/odoo/slide.slide/{{slide.id}}" title="Edit in backend">
-                                <span class="fa fa-pencil"/>
-                            </a>
-                            <a href="#" t-att-data-slide-id="slide.id"
-                               class="o_text_link text-danger mx-2 o_wslides_js_slide_archive o_not_editable"
-                               title="Delete">
-                                <span class="fa fa-trash"/>
-                            </a>
-                        </span>
-                    </div>
+<!--                    <div t-if="channel.is_member or channel.can_publish"-->
+<!--                         class="pt-2 pb-2 border-start ms-2 me-2 ps-2 d-flex flex-row align-items-center o_wslides_slides_list_slide_controls o_not_editable">-->
+<!--                        <t t-call="website_slides.slide_sidebar_done_button">-->
+<!--                            <t t-set="is_member" t-value="channel.is_member"/>-->
+<!--                            <t t-set="slide_completed" t-value="channel_progress[slide.id].get('completed')"/>-->
+<!--                            <t t-set="use_slide_icon" t-value="False"/>-->
+<!--                        </t>-->
+<!--                        <span t-if="channel.can_publish" class="d-none d-md-flex">-->
+<!--                            <a t-if="slide.slide_category == 'article'"-->
+<!--                               class="mx-2 o_text_link text-primary o_not_editable" target="_blank"-->
+<!--                               t-attf-href="/slides/slide/#{slug(slide)}?enable_editor=1" title="Edit">-->
+<!--                                <span class="fa fa-pencil"/>-->
+<!--                            </a>-->
+<!--                            <a t-else="" class="mx-2 o_text_link text-primary o_not_editable" target="_blank"-->
+<!--                               t-attf-href="/odoo/slide.slide/{{slide.id}}" title="Edit in backend">-->
+<!--                                <span class="fa fa-pencil"/>-->
+<!--                            </a>-->
+<!--                            <a href="#" t-att-data-slide-id="slide.id"-->
+<!--                               class="o_text_link text-danger mx-2 o_wslides_js_slide_archive o_not_editable"-->
+<!--                               title="Delete">-->
+<!--                                <span class="fa fa-trash"/>-->
+<!--                            </a>-->
+<!--                        </span>-->
+<!--                    </div>-->
                 </li>
             </xpath>
         </template>

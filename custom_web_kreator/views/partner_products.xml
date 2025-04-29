@@ -82,8 +82,11 @@
                     .custom-button:hover {
                     background-color: #e6b800; /* Slightly darker yellow on hover */
                     }
-
-
+                    body {
+                    overflow: hidden;
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                    }
                 </style>
 
             </head>
@@ -335,11 +338,11 @@
                             <!--                                </t>-->
                             <!--                            </section>-->
 
-                            <section class="row justify-content-around g-4 my-4">
+                            <section class="row justify-content-around g-4 my-4 overflow-auto">
                                 <t t-foreach="product_cart" t-as="cart">
-                                    <div class="col-lg-5 col-12">
-                                        <div class="product row">
-                                            <div class="col-5">
+                                    <div class="col-lg-6 col-12">
+                                        <div class="product row h-100" style="width: 98%">
+                                            <div class="col-4">
                                                 <a>
                                                     <img
                                                             t-att-src="image_data_uri(cart.course_id.image_1920) if cart.course_id.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'"
@@ -348,35 +351,36 @@
                                                     <img
                                                             t-att-src="image_data_uri(cart.course_id.image_1920) if cart.course_id.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'"
                                                             alt="Course Image" class="rounded d-block d-md-none"
-                                                            style="width: 125px; height: 170px; display: block; margin: 0 auto;"/>
+                                                            style="width: 115px; height: 170px; display: block; margin: 0 auto;"/>
                                                 </a>
                                             </div>
-                                            <div class="col-7">
+                                            <div class="col-8">
                                                 <div class="p-2 row">
-                                                    <p class="text-center">
-                                                        <t t-if="cart.course_id.is_upgradable">
-                                                            <span style="color: red; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;"
-                                                                  class="p-2 h4 d-none d-md-block">
-                                                                <i class="ri-star-line"></i>
-                                                                Upgradable Course
-                                                                <i class="ri-star-line"></i>
-                                                            </span>
-                                                            <span style="color: red; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; font-size: 14px;"
-                                                                  class="p-2 d-block d-md-none">
-                                                                <i class="ri-star-line"></i>
-                                                                Upgradable Course
-                                                                <i class="ri-star-line"></i>
-                                                            </span>
-                                                        </t>
-                                                    </p>
+                                                    <!--                                                    <p class="text-center">-->
+                                                    <!--                                                        <t t-if="cart.course_id.is_upgradable">-->
+                                                    <!--                                                            <span style="color: red; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;"-->
+                                                    <!--                                                                  class="p-2 h4 d-none d-md-block">-->
+                                                    <!--                                                                <i class="ri-star-line"></i>-->
+                                                    <!--                                                                Upgradable Course-->
+                                                    <!--                                                                <i class="ri-star-line"></i>-->
+                                                    <!--                                                            </span>-->
+                                                    <!--                                                            <span style="color: red; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; font-size: 14px;"-->
+                                                    <!--                                                                  class="p-2 d-block d-md-none">-->
+                                                    <!--                                                                <i class="ri-star-line"></i>-->
+                                                    <!--                                                                Upgradable Course-->
+                                                    <!--                                                                <i class="ri-star-line"></i>-->
+                                                    <!--                                                            </span>-->
+                                                    <!--                                                        </t>-->
+                                                    <!--                                                    </p>-->
                                                     <p class="fs-3">
-                                                        <t t-esc="cart.name"/>
+                                                        <div class="fs-3 text-center">
+                                                            <t t-esc="cart.name"/>
+                                                        </div>
                                                     </p>
-
-                                                    <div class="d-flex gap-4 align-items-center">
-                                                        <p>By
+                                                    <div class="d-flex gap-4 text-center">
+                                                        <span>By
                                                             <t t-esc="cart.user_id.name"/>
-                                                        </p>
+                                                        </span>
                                                         <!--                                                    <p>-->
                                                         <!--                                                        <i class="ri-star-fill"></i>-->
                                                         <!--                                                        <i class="ri-star-fill"></i>-->
@@ -387,24 +391,49 @@
                                                         <!--                                                    </p>-->
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-6 d-none d-md-block">
-                                                            <div>
-                                                                <b>Price</b>
+                                                        <t t-if="cart.course_id.is_upgradable">
+                                                            <table class="table d-none d-md-table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Options</th>
+                                                                        <th scope="col">Price</th>
+                                                                        <th scope="col">Commission</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <t t-foreach="cart.course_id.upgrade_stage_ids"
+                                                                       t-as="stage">
+                                                                        <t t-if="not [False for prd in stage.product_ids.ids if prd not in request.env.user.partner_id.slide_channel_ids.product_id.ids] or (request.env.user.id in cart.course_id.user_ids.ids)">
+                                                                            <tr>
+                                                                                <th style="text-transform: capitalize;" scope="row"><t t-esc="stage.name"/></th>
+                                                                                <td>₹ <span t-esc="sum([pid.list_price for pid in stage.product_ids]) - 1000"/></td>
+                                                                                <td>₹ <span t-esc="(sum([pid.list_price for pid in stage.product_ids])-1000)/100*70"/></td>
+                                                                            </tr>
+                                                                        </t>
+                                                                    </t>
+                                                                </tbody>
+                                                            </table>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <div class="col-6 d-none d-md-block">
+                                                                <div>
+                                                                    <b>Price</b>
+                                                                </div>
+                                                                ₹
+                                                                <t t-esc="cart.sales_price"/>
                                                             </div>
-                                                            ₹
-                                                            <t t-esc="cart.sales_price"/>
-                                                        </div>
-                                                        <div class="col-6 d-none d-md-block">
-                                                            <div>
-                                                                <b>Commission</b>
+                                                            <div class="col-6 d-none d-md-block">
+                                                                <div>
+                                                                    <b>Commission</b>
+                                                                </div>
+                                                                ₹
+                                                                <t t-esc="cart.partner_commission"/>
                                                             </div>
-                                                            ₹
-                                                            <t t-esc="cart.partner_commission"/>
-                                                        </div>
-                                                        <div class="col-12 col-md-6  d-none d-md-block">
+                                                        </t>
+                                                        <div class="col-12 col-md-6  d-none d-md-block mt-2">
                                                             <a href="/partner-referral">
-                                                                <button class="btn1"
-                                                                        style="width: 100%; height: auto; font-size: 12px;">
+                                                                <button class="btn1 shadow"
+                                                                        style="width: 100%; height: auto; font-size: 12px; border-radius: 25px;">
                                                                     Generate Affiliate Link
                                                                 </button>
                                                             </a>
@@ -423,9 +452,9 @@
                                                                        readonly="readonly"
                                                                        t-att-value="cart.partner_id.id"/>
                                                                 <button type="submit" href="/partner-referral"
-                                                                        class="btn1"
-                                                                        style="width: 100%; height: auto; font-size: 12px;">
-                                                                    Remove
+                                                                        class="btn1 mt-2 shadow"
+                                                                        style="width: 100%; height: auto; font-size: 12px; border-radius: 25px;">
+                                                                    Remove from My Product
                                                                 </button>
                                                             </form>
                                                         </div>
@@ -434,20 +463,45 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="row">
-                                                    <div class="col-6 d-block d-md-none">
-                                                        <div>
-                                                            <b>Price</b>
+                                                    <t t-if="cart.course_id.is_upgradable">
+                                                        <table class="table d-table d-md-none">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Options</th>
+                                                                        <th scope="col">Price</th>
+                                                                        <th scope="col">Commission</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <t t-foreach="cart.course_id.upgrade_stage_ids"
+                                                                       t-as="stage">
+                                                                        <t t-if="not [False for prd in stage.product_ids.ids if prd not in request.env.user.partner_id.slide_channel_ids.product_id.ids] or (request.env.user.id in cart.course_id.user_ids.ids)">
+                                                                            <tr>
+                                                                                <th style="text-transform: capitalize;" scope="row"><t t-esc="stage.name"/></th>
+                                                                                <td>₹ <span t-esc="sum([pid.list_price for pid in stage.product_ids])"/></td>
+                                                                                <td>₹ <span t-esc="sum([pid.list_price for pid in stage.product_ids])/100*60"/></td>
+                                                                            </tr>
+                                                                        </t>
+                                                                    </t>
+                                                                </tbody>
+                                                            </table>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <div class="col-6 d-block d-md-none">
+                                                            <div>
+                                                                <b>Price</b>
+                                                            </div>
+                                                            ₹
+                                                            <t t-esc="cart.sales_price"/>
                                                         </div>
-                                                        ₹
-                                                        <t t-esc="cart.sales_price"/>
-                                                    </div>
-                                                    <div class="col-6 d-block d-md-none">
-                                                        <div>
-                                                            <b>Commission</b>
+                                                        <div class="col-6 d-block d-md-none">
+                                                            <div>
+                                                                <b>Commission</b>
+                                                            </div>
+                                                            ₹
+                                                            <t t-esc="cart.partner_commission"/>
                                                         </div>
-                                                        ₹
-                                                        <t t-esc="cart.partner_commission"/>
-                                                    </div>
+                                                    </t>
                                                     <div class="col-12 col-md-6 d-block d-md-none">
                                                         <a href="/partner-referral">
                                                             <button class="btn1"

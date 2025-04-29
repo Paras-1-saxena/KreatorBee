@@ -118,36 +118,36 @@
                                         </p>
                                     </a>
                                 </div>
-                                <div
-                                        class="p-lg-2 p-1 d-flex flex-column align-items-center"
-                                >
-                                    <a class='text-center'>
-                                        <i class="ri-movie-line"></i>
-                                        <p>
-                                            Onboarding Video 1
-                                        </p>
-                                    </a>
-                                </div>
-                                <div
-                                        class="p-lg-2 p-1 d-flex flex-column align-items-center"
-                                >
-                                    <a class='text-center'>
-                                        <i class="ri-movie-line"></i>
-                                        <p>
-                                            Onboarding Video 2
-                                        </p>
-                                    </a>
-                                </div>
-                                <div
-                                        class="p-lg-2 p-1 d-flex flex-column align-items-center"
-                                >
-                                    <a class='text-center'>
-                                        <i class="ri-movie-line"></i>
-                                        <p>
-                                            Onboarding Video 3
-                                        </p>
-                                    </a>
-                                </div>
+<!--                                <div-->
+<!--                                        class="p-lg-2 p-1 d-flex flex-column align-items-center"-->
+<!--                                >-->
+<!--                                    <a class='text-center'>-->
+<!--                                        <i class="ri-movie-line"></i>-->
+<!--                                        <p>-->
+<!--                                            Onboarding Video 1-->
+<!--                                        </p>-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                                <div-->
+<!--                                        class="p-lg-2 p-1 d-flex flex-column align-items-center"-->
+<!--                                >-->
+<!--                                    <a class='text-center'>-->
+<!--                                        <i class="ri-movie-line"></i>-->
+<!--                                        <p>-->
+<!--                                            Onboarding Video 2-->
+<!--                                        </p>-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                                <div-->
+<!--                                        class="p-lg-2 p-1 d-flex flex-column align-items-center"-->
+<!--                                >-->
+<!--                                    <a class='text-center'>-->
+<!--                                        <i class="ri-movie-line"></i>-->
+<!--                                        <p>-->
+<!--                                            Onboarding Video 3-->
+<!--                                        </p>-->
+<!--                                    </a>-->
+<!--                                </div>-->
                                 <div
                                         class="active p-lg-2 p-1 d-flex flex-column align-items-center"
                                 >

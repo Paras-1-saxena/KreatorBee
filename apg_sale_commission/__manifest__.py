@@ -6,10 +6,11 @@
     'author': 'Apagen solutions',
     'website': 'https://www.apagen.com',
     'category': 'website',
-    'depends': ['base','sale','apg_elearning'],  # List of dependent modules
+    'depends': ['base','sale','apg_elearning', 'product'],  # List of dependent modules
     'data': [
         'security/ir.model.access.csv',
         'views/sale_order_commission.xml',
+        'views/product.xml',
         'views/menu.xml',
     ],
     'demo': [

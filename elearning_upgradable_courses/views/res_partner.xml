@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+    <record id="view_res_partner_inherit_upgrade" model="ir.ui.view">
+        <field name="name">res.partner.upgrade.course</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_type']" position="after">
+                <field name="partner_term_accepted" widget="boolean_toggle"/>
+                <field name="early_sign_in" widget="boolean_toggle"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

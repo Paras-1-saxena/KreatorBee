@@ -38,6 +38,7 @@
                 }
                 }
             </style>
+            <input type="hidden" id="course_name" name="state_selection" value="Freelancing for GenZ"/>
             <a href="#popup1" class="dropdown-item" style="color: #fff; text-decoration: none;" hidden="hidden"
                id="open_pop">
             </a>
