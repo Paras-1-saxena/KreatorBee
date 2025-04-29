@@ -146,7 +146,8 @@
                 margin-right: 10px;
                 }
             </style>
-            <input type="hidden" id="course_name" name="state_selection" value="Affiliate Marketing Millionaire Program"/>
+            <input type="hidden" id="course_name" name="state_selection"
+                   value="Affiliate Marketing Millionaire Program"/>
             <a href="#popup1" class="dropdown-item" style="color: #fff; text-decoration: none;" hidden="hidden"
                id="open_pop">
             </a>
@@ -290,17 +291,51 @@
                         </div>
                         <div class="col-6 col-md-3">
                             <div class="add_to_cart_button my-2" id="cart1">
-                                <form action="/shop/cart/update" method="POST">
-                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                    <input type="hidden" name="product_template_id" t-att-value="product_template_id"/>
-                                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
-                                    <button type="submit"
-                                            class="btn fw-bold text-white rounded shadow-sm mt-3"
-                                            style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3);">
-                                        Enroll Now
-                                    </button>
-                                    <div id="product_option_block"></div>
-                                </form>
+                                <t t-if="course_type == 'basic'">
+                                    <form action="/shop/cart/update?option=basic" method="POST">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="product_template_id"
+                                               t-att-value="product_template_id"/>
+                                        <input type="hidden" class="product_id" name="product_id"
+                                               t-att-value="product_id"/>
+                                        <button type="submit"
+                                                class="btn fw-bold text-white rounded shadow-sm mt-3"
+                                                style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3);">
+                                            Enroll Now
+                                        </button>
+                                        <div id="product_option_block"></div>
+                                    </form>
+                                </t>
+                                <t t-if="course_type == 'intermediate'">
+                                    <form action="/shop/cart/update?option=intermediate" method="POST">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="product_template_id"
+                                               t-att-value="product_template_id"/>
+                                        <input type="hidden" class="product_id" name="product_id"
+                                               t-att-value="product_id"/>
+                                        <button type="submit"
+                                                class="btn fw-bold text-white rounded shadow-sm mt-3"
+                                                style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3);">
+                                            Enroll Now
+                                        </button>
+                                        <div id="product_option_block"></div>
+                                    </form>
+                                </t>
+                                <t t-if="course_type == 'Advanced'">
+                                    <form action="/shop/cart/update?option=Advanced" method="POST">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="product_template_id"
+                                               t-att-value="product_template_id"/>
+                                        <input type="hidden" class="product_id" name="product_id"
+                                               t-att-value="product_id"/>
+                                        <button type="submit"
+                                                class="btn fw-bold text-white rounded shadow-sm mt-3"
+                                                style="background-image: linear-gradient(to right, #0077DF, #289BFF, #0068C3);">
+                                            Enroll Now
+                                        </button>
+                                        <div id="product_option_block"></div>
+                                    </form>
+                                </t>
                             </div>
                             <div class="add_to_cart_button my-2" hidden="hidden" id="cart1_hidden">
                                 <a class="btn fw-bold text-white rounded shadow-sm mt-3"
@@ -760,10 +795,20 @@
                                 <div class="accordion-content2 manrope_medium">
                                     <ul class="h4">
                                         <li>
-                                            Introduction <span class="rounded" style="padding: 2px; font-size: 10px; border: 1px solid black; margin-left: 20px; cursor:pointer;" onclick="openPreview('10', '1')">Preview <i class="ri-arrow-right-s-fill"></i></span>
+                                            Introduction
+                                            <span class="rounded"
+                                                  style="padding: 2px; font-size: 10px; border: 1px solid black; margin-left: 20px; cursor:pointer;"
+                                                  onclick="openPreview('10', '1')">Preview
+                                                <i class="ri-arrow-right-s-fill"></i>
+                                            </span>
                                         </li>
                                         <li>
-                                            The Millionaire Mindset <span class="rounded" style="padding: 2px; font-size: 10px; border: 1px solid black; margin-left: 20px; cursor:pointer;" onclick="openPreview('10', '2')">Preview <i class="ri-arrow-right-s-fill"></i></span>
+                                            The Millionaire Mindset
+                                            <span class="rounded"
+                                                  style="padding: 2px; font-size: 10px; border: 1px solid black; margin-left: 20px; cursor:pointer;"
+                                                  onclick="openPreview('10', '2')">Preview
+                                                <i class="ri-arrow-right-s-fill"></i>
+                                            </span>
                                         </li>
                                         <li>
                                             The Millionaire Lifestyle
