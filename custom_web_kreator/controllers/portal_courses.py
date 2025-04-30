@@ -823,14 +823,15 @@ class PortalMyCourses(http.Controller):
         if partner.user_type in ['internal_user', 'partner']:
             # Fetch courses where is_training_course is True and sort them alphabetically by name
             promotional_courses = request.env['slide.channel'].sudo().search(
-                [('state', '=', 'published')],
+                [('state', '=', 'published'), ('not_display', '=', False)],
                 order='name asc'
             )
 
             # Fetch only courses that have at least one record in promotional_material_ids
             promotional_courses = request.env['slide.channel'].sudo().search([
                 ('state', '=', 'published'),
-                ('promotional_material_ids', '!=', False)  # Filters only those courses with promotional materials
+                ('not_display', '=', False),
+                ('promotional_material_ids', '!=', False),  # Filters only those courses with promotional materials
             ], order='name asc')
             tutorial_video = Markup("""
                                     <iframe src="https://player.vimeo.com/video/1073823881?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
@@ -1617,6 +1618,7 @@ class PortalMyCourses(http.Controller):
         if partner.user_type in ['internal_user', 'partner']:
             product_cart_ids = request.env['my.product.cart'].sudo().search([('partner_id', '=', partner.id)],
                                                                             order='create_date desc')
+            product_cart_ids = product_cart_ids.filtered(lambda pc: not pc.course_id.not_display)
             values = {
                 'product_cart': product_cart_ids,
                 'currency_id': request.env.company.currency_id

@@ -178,7 +178,8 @@ class ReferralController(http.Controller):
         if courses:
             course_ids = request.env['slide.channel'].sudo().search([
                 ('id', 'in', courses),
-                ('state', '=', 'published')
+                ('state', '=', 'published'),
+                ('not_display', '=', False)
                 ])
         if kwargs.get('success') == 'Success':
             payment_referral_id = request.env['apg.course.referral'].sudo().search([('id', '=', kwargs.get('payment_referral_id'))])
@@ -243,6 +244,7 @@ class ReferralController(http.Controller):
             course_ids = request.env['slide.channel'].sudo().search([
                 ('id', 'in', courses),
                 ('state', '=', 'published')
+                , ('not_display', '=', False)
             ])
         if kwargs.get('success') == 'Success':
             payment_referral_id = request.env['apg.course.referral'].sudo().search(
