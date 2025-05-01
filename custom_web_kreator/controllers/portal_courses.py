@@ -1007,7 +1007,7 @@ class PortalMyCourses(http.Controller):
                 end_date = datetime.strptime(end_date, '%Y-%m-%d')
 
             # Prepare the domain for filtering sales orders
-            domain = [('state', '!=', 'sale'), ('partner_id', '!=', 4)]  # Only fetch orders that are not confirmed (state != 'sale')
+            domain = [('state', '!=', 'sale')]  # Only fetch orders that are not confirmed (state != 'sale')
 
             if start_date and end_date:
                 domain.extend([
@@ -1017,6 +1017,7 @@ class PortalMyCourses(http.Controller):
 
             # Fetch the sale orders based on the domain
             sale_orders = request.env['sale.order'].sudo().search(domain)
+            sale_orders = sale_orders.filtered(lambda so: so.order_line and [True for ol in so.order_line if ol.partner_commission_partner_id and ol.partner_commission_partner_id.id == partner.id])
 
             # Fetch visitor data, no date filters for visitors
             new = request.env['crm.stage'].sudo().search([('name', '=', 'New')])
