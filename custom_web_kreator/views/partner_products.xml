@@ -479,7 +479,7 @@
                                                                             <tr>
                                                                                 <th style="text-transform: capitalize;" scope="row"><t t-esc="stage.name"/></th>
                                                                                 <td>₹ <span t-esc="sum([pid.list_price for pid in stage.product_ids]) - 1000"/></td>
-                                                                                <td>₹ <span t-esc="(sum([pid.list_price for pid in stage.product_ids]) - 1000)/100*60"/></td>
+                                                                                <td>₹ <span t-esc="(sum([pid.list_price for pid in stage.product_ids]) - 1000)/100*70"/></td>
                                                                             </tr>
                                                                         </t>
                                                                     </t>
