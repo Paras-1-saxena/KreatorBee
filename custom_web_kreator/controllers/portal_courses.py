@@ -3053,7 +3053,7 @@ class PortalMyCourses(http.Controller):
         if partner.user_type in ['internal_user', 'partner']:
             orders_lines = request.env['sale.order.line'].sudo().search(
                 [('is_commission', '=', True), ('state', '=', 'sale'), ('partner_commission_partner_id', '!=', False)])
-            orders_lines = orders_lines.filtered(lambda ol: ol.partner_commission_partner_id.id != ol.direct_commission_partner_id.id and ol.price_unit > 0.0)
+            orders_lines = orders_lines.filtered(lambda ol: ol.partner_commission_partner_id.id != ol.direct_commission_partner_id.id and ol.price_unit != 0.0)
             order_lines = sorted(orders_lines, key=attrgetter('partner_commission_partner_id'))
             # Group by commission partner ID
             grouped_data = {}
