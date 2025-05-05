@@ -859,6 +859,10 @@ class PortalMyCourses(http.Controller):
 
     @http.route('/creator/offers', type='http', auth='public', website=True, methods=['GET', 'POST'])
     def offers(self, **kwargs):
+        if request.session.get('create_offer') == 'Yes':
+            request.session['create_offer'] = 'No'
+        else:
+            request.session['fail_create_offer'] = 'No'
         user = request.env.user
         partner = user.partner_id  # Get related partner
 
@@ -871,9 +875,11 @@ class PortalMyCourses(http.Controller):
             product_ids = request.env['slide.channel'].sudo().search([
                 ('product_id', '!=', False),
                 ('create_uid', '=', user_id.id)  # Filter courses by the logged-in user
-            ]).product_id
+            ])
+            all_courses = request.env['slide.channel'].sudo().search([('create_uid', '=', user.id)])
             discount_ids = request.env['discount.discount'].sudo().search([])
             loyalty_ids = request.env['loyalty.program'].sudo().search([], order='create_date desc')
+            loyalty_ids = loyalty_ids.filtered(lambda li: li.referral_product_id.product_variant_id.channel_ids.id in all_courses.ids)
             values = {
                 'loyalty_ids': loyalty_ids,
                 'product_ids': product_ids,
@@ -1098,6 +1104,63 @@ class PortalMyCourses(http.Controller):
         else:
             raise NotFound()
 
+    @http.route('/creator/create_course_detail', type='http', auth='public', website=True)
+    def create_course_detail(self, **kwargs):
+        # Render the data page template
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
+
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'creator']:
+            partner_commission_rate = (request.env['partner.commission'].sudo().search([], order='create_date desc',
+                                                                                       # Order by creation date, latest first
+                                                                                       limit=1).rate) / 100
+            direct_commission_rate = (request.env['direct.commission'].sudo().search([], order='create_date desc',
+                                                                                     # Order by creation date, latest first
+                                                                                     limit=1).rate) / 100
+            values = {
+                'partner_commission_rate': partner_commission_rate,
+                'direct_commission_rate': direct_commission_rate,
+                'currency_id': request.env.company.currency_id
+            }
+            user = request.env.user
+            course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id)]) > 0
+            approve_course_count = request.env['slide.channel'].sudo().search_count(
+                [('create_uid', '=', user.id), ('state', '=', 'published')]) > 0
+            values['course_count'] = course_count
+            values['approve_course_count'] = approve_course_count
+            # Render the data page template
+            return http.request.render('custom_web_kreator.create_course_detail', values)
+        else:
+            raise NotFound()
+
+    @http.route('/creator/create_course_standard', type='http', auth='public', website=True)
+    def create_course_standard(self, **kwargs):
+        # Render the data page template
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
+
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'creator']:
+            course_data = {
+                'course_name': kwargs.get('course_name'),
+                'course_description': kwargs.get('course_description'),
+                'regular_price': kwargs.get('regular_price'),
+                'sales_price': kwargs.get('sales_price'),
+            }
+            http.request.session['course_data'] = course_data
+
+            user = request.env.user
+            course_count = request.env['slide.channel'].sudo().search_count([('create_uid', '=', user.id)]) > 0
+            approve_course_count = request.env['slide.channel'].sudo().search_count(
+                [('create_uid', '=', user.id), ('state', '=', 'published')]) > 0
+            # Render the data page template
+            return http.request.render('custom_web_kreator.create_course_standard', {'course_data': course_data,
+                                                                                     'course_count': course_count,
+                                                                                     'approve_course_count': approve_course_count})
+        else:
+            raise NotFound()
+
     @http.route('/creator/course_standard', type='http', auth='public', website=True)
     def master_course_standard(self, **kwargs):
         # Render the data page template
@@ -1165,6 +1228,22 @@ class PortalMyCourses(http.Controller):
             print('-----------apporve', approve_course_count)
             print('-----------course_count', course_count)
             # Render the data page template
+            if kwargs.get('create_course'):
+                SlideChannel = request.env['slide.channel']
+                slide_channel = SlideChannel.sudo().create({
+                    'name': course_data.get('course_name'),
+                    'description': course_data.get('course_description'),
+                    'regular_price': course_data.get('regular_price'),
+                    'sales_price': course_data.get('sales_price'),
+                    # Add other fields as required from course_data
+                })
+
+                # ✅ Add Google Drive links to google_drive_links1
+                google_drive_links = course_data.get('new_google_drive_links', [])  # Extract links from session data
+                if google_drive_links:
+                    google_drive_link_records = [(0, 0, {'link': link}) for link in google_drive_links]
+                    slide_channel.sudo().write({'google_drive_links1': google_drive_link_records})
+                return request.redirect('/creator/my-courses')
             return http.request.render('custom_web_kreator.master_term',
                                        {'course_data': course_data, 'course_count': course_count,
                                         'approve_course_count': approve_course_count})
@@ -2022,9 +2101,14 @@ class PortalMyCourses(http.Controller):
 
             # Fetch the sale orders based on the domain
             sale_orders = request.env['sale.order'].sudo().search(domain)
+            sale_orders = sale_orders.filtered(lambda so: so.order_line and [True for ol in so.order_line if
+                                                                             ol.partner_commission_partner_id and ol.partner_commission_partner_id.id == partner.id])
 
             # Fetch visitor data, no date filters for visitors
-            visitors = request.env['website.visitor'].sudo().search([])
+            all_courses = request.env['slide.channel'].sudo().search([('create_uid', '=', user.id)])
+
+            new = request.env['crm.stage'].sudo().search([('name', '=', 'New')])
+            visitors = request.env['crm.lead'].sudo().search([('stage_id', '=', new.id), ('email_from', '!=', False), ('phone', '!=', False), ('description', 'in' , all_courses.mapped('name'))])
 
             # Prepare the context to pass to the template
             context = {
@@ -2032,7 +2116,7 @@ class PortalMyCourses(http.Controller):
                 'sale_orders': sale_orders,  # Pass the filtered sale orders
                 'start_date': start_date,  # Pass the start date
                 'end_date': end_date,  # Pass the end date
-                # 'visitors': visitors,  # Pass the visitor data
+                'visitors': visitors,  # Pass the visitor data
             }
 
             return request.render('custom_web_kreator.creator_lead', context)
@@ -3512,8 +3596,20 @@ class PortalMyCourses(http.Controller):
                         </div>
                         <iframe width="100%" height="auto" class="d-block d-md-none" src="https://www.youtube.com/embed/S6wJmx4nhrs?si=Qbk-mRKBq7i9Gn2L" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         ''')
+                        next_vid = Markup('''
+                                                <a onclick="openVideo(4, 'zerotoo')" class="border1 rounded p-2" style="background-color:#ffc107; cursor:pointer;">
+                                                                    Next
+                                                                    <i class="ri-arrow-right-line"></i>
+                                                                </a>
+                                                ''')
+                    if int(ved_no) == 4:
+                        video_data = Markup('''
+                        <div style="width: 80dvw; height: 100dvh;" class="d-none d-md-block">
+                        <iframe width="100%" height="60%" src="https://www.youtube.com/embed/ShElKN_n_WU?si=tS0SvrfnHe2ZNiFC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        <iframe width="100%" height="auto" class="d-block d-md-none" src="https://www.youtube.com/embed/ShElKN_n_WU?si=tS0SvrfnHe2ZNiFC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        ''')
                         next_vid = ''
-
                 return request.make_response(
                     data=json.dumps({'response': "success", 'video_data': video_data, 'next_but': next_vid}),
                     headers=[('Content-Type', 'application/json')],

@@ -3,23 +3,23 @@
         <template id="creator_lead" name="Creator Lead Template">
             <head>
                 <!-- meta tags -->
-                <meta charset="UTF-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <meta charset="UTF-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <!-- title -->
                 <title>Kreator Bee | Sales</title>
                 <!-- external css -->
-                <link rel="stylesheet" href="/custom_web_kreator/static/src/css/custom_styl.css" />
+                <link rel="stylesheet" href="/custom_web_kreator/static/src/css/custom_styl.css"/>
                 <!-- bootstrap css -->
                 <link
-                    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-                    rel="stylesheet"
-                    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-                    crossorigin="anonymous"
+                        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+                        rel="stylesheet"
+                        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+                        crossorigin="anonymous"
                 />
                 <!-- remix icon -->
                 <link
-                    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
-                    rel="stylesheet"
+                        href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+                        rel="stylesheet"
                 />
                 <style>
                     .sidebar ul li,header a {
@@ -32,7 +32,11 @@
                     #visitorsTableForCreator {
                     transition: opacity 0.3s ease-in-out;
                     }
-
+                    body {
+                    overflow: hidden;
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                    }
                 </style>
             </head>
 
@@ -41,19 +45,19 @@
                     <!-- Header -->
                     <header class="container-fluid">
                         <div
-                            class="d-flex justify-content-between align-items-center border-bottom"
+                                class="d-flex justify-content-between align-items-center border-bottom"
                         >
                             <!-- Menu Icon visible on mobile-->
                             <img
-                                class="pe-2 d-block d-lg-none hamburger"
-                                src="/custom_web_kreator/static/src/nev-icon.svg"
+                                    class="pe-2 d-block d-lg-none hamburger"
+                                    src="/custom_web_kreator/static/src/nev-icon.svg"
                             />
                             <!-- Logo -->
                             <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 160px;"/>
                             <!-- Menu-->
                             <div class="d-lg-flex d-none gap-4">
                                 <div
-                                    class="p-lg-2 p-1 d-flex flex-column align-items-center"
+                                        class="p-lg-2 p-1 d-flex flex-column align-items-center"
                                 >
                                     <a href="/creator/income" class='text-center'>
                                         <i class="ri-line-chart-fill"></i>
@@ -71,7 +75,7 @@
                                     </a>
                                 </div>
                                 <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
-                                    <a href="/creator/kyc" class='text-center' >
+                                    <a href="/creator/kyc" class='text-center'>
                                         <i class="ri-profile-fill"></i>
                                         <p>
                                             KYC
@@ -96,7 +100,7 @@
                                 </div>
                             </div>
                             <!-- Profile -->
-                            <t t-call="custom_web_kreator.partner_profile_dropdown" />
+                            <t t-call="custom_web_kreator.partner_profile_dropdown"/>
                         </div>
                     </header>
                     <div class="d-flex w-100">
@@ -105,53 +109,68 @@
                             <nav class="py-3 px-2">
                                 <!-- Sidebar Menu -->
                                 <ul class="d-flex flex-column gap-2">
-                                    <a href="/master">
-                                        <li>
-                                            <i class="ri-dashboard-fill"></i> Get Started </li>
-                                    </a>
                                     <a href="/creator/income">
                                         <li class="active">
-                                            <i class="ri-discount-percent-fill"></i> Sales </li>
+                                            <i class="ri-discount-percent-fill"></i>
+                                            Sales
+                                        </li>
                                     </a>
                                     <!-- Sales Dropdown -->
                                     <div class="ps-2 d-block d-lg-none">
                                         <li>
-                                            <a href="/creator/income"><i
-                                                    class="ri-subtract-fill"></i> Income Data</a>
+                                            <a href="/creator/income">
+                                                <i class="ri-checkbox-blank-circle-line"></i>
+                                                Income Data
+                                            </a>
                                         </li>
                                         <li>
-                                            <a href="/creator/referral"><i class="ri-subtract-fill"></i>
-                                                Links</a>
+                                            <a href="/creator/referral">
+                                                <i class="ri-checkbox-blank-circle-line"></i>
+                                                Links
+                                            </a>
                                         </li>
                                         <li>
-                                            <a href="/creator/kyc"><i class="ri-subtract-fill"></i> kyc</a>
+                                            <a href="/creator/kyc">
+                                                <i class="ri-checkbox-blank-circle-line"></i>
+                                                kyc
+                                            </a>
                                         </li>
                                         <li>
-                                            <i class="ri-subtract-fill"></i>
+                                            <i class="ri-checkbox-circle-fill"></i>
                                             <a href="/creator/lead">Lead</a>
                                         </li>
                                         <li>
-                                            <a href="/creator/leaderboard"><i
-                                                    class="ri-subtract-fill"></i> Leaderboard</a>
+                                            <a href="/creator/leaderboard">
+                                                <i class="ri-checkbox-blank-circle-line"></i>
+                                                Leaderboard
+                                            </a>
                                         </li>
                                     </div>
                                     <a href="/creator/my-courses">
                                         <li>
-                                            <i class="ri-product-hunt-fill"></i> Products </li>
+                                            <i class="ri-product-hunt-fill"></i>
+                                            Products
+                                        </li>
                                     </a>
                                     <a href="/creator/community">
                                         <li>
-                                            <i class="ri-user-community-fill"></i> Connect with
-                                            Partner </li>
+                                            <i class="ri-user-community-fill"></i>
+                                            Connect with
+                                            Partner
+                                        </li>
                                     </a>
                                     <a href="/creator/customer">
                                         <li>
-                                            <i class="ri-user-fill"></i> Customer </li>
+                                            <i class="ri-user-fill"></i>
+                                            Customer
+                                        </li>
                                     </a>
                                     <a href="#">
                                         <li>
-                                            <i class="ri-user-community-fill"></i> Become a Bee
-                                            Partner </li>
+                                            <i class="ri-user-community-fill"></i>
+                                            Become a Bee
+                                            Partner
+                                        </li>
                                     </a>
                                 </ul>
                             </nav>
@@ -163,18 +182,22 @@
                             <!-- Welcome Section -->
                             <section class="welcome">
                                 <div
-                                    class="d-flex gap-2 flex-column flex-lg-row align-items-lg-center justify-content-between"
+                                        class="d-flex gap-2 flex-column flex-lg-row align-items-lg-center justify-content-between"
                                 >
                                     <h1 class="d-flex align-items-center gap-1">
                                         <img class="play"
-                                            src="/custom_web_kreator/static/src/user_icon.svg" />
-                                        Welcome,<t
-                                            t-esc="request.env.user.name" /></h1>
+                                             src="/custom_web_kreator/static/src/user_icon.svg"/>
+                                        Welcome,
+                                        <t
+                                                t-esc="request.env.user.name"/>
+                                    </h1>
                                     <div class="d-flex gap-3 align-items-center">
                                         <a href="#"
-                                        >Tutorial <img class="ms-1"
-                                                src="/custom_web_kreator/static/src/play.png"
-                                            /></a>
+                                        >Tutorial
+                                            <img class="ms-1"
+                                                 src="/custom_web_kreator/static/src/play.png"
+                                            />
+                                        </a>
                                         <a
                                                 href="https://wa.me/+919289384910" target="_blank" class="text-center"
                                         >
@@ -202,8 +225,9 @@
                                 </div>
                                 <!-- Lead Table -->
                                 <div id="unverifiedOrdersTableForCreator">
-                                    <div class="row">
-                                        <div class="col-lg-8 col-12 lead-table p-3">
+                                    <div class="row justify-content-center">
+                                        <div class="col-11 col-lg-8 lead-table p-3 overflow-auto"
+                                             style="height: 80dvh;">
                                             <table>
                                                 <thead>
                                                     <tr>
@@ -218,27 +242,27 @@
                                                     <t t-foreach="sale_orders" t-as="order">
                                                         <tr>
                                                             <td>
-                                                                <t t-esc="order.partner_id.name" />
+                                                                <t t-esc="order.partner_id.name"/>
                                                             </td>
                                                             <td>
                                                                 <t t-if="order.partner_id.email">
                                                                     <a
-                                                                        t-att-href="'mailto:' + order.partner_id.email">
+                                                                            t-att-href="'mailto:' + order.partner_id.email">
                                                                         <t
-                                                                            t-esc="order.partner_id.email" />
+                                                                                t-esc="order.partner_id.email"/>
                                                                     </a>
                                                                 </t>
                                                                 <t t-else="">No Email</t>
                                                             </td>
                                                             <td>
-                                                                <t t-esc="order.partner_id.phone" />
+                                                                <t t-esc="order.partner_id.phone"/>
                                                             </td>
                                                             <td>
-                                                                <t t-esc="order.state" />
+                                                                <t t-esc="order.state"/>
                                                             </td>
                                                             <td>
                                                                 <t
-                                                                    t-esc="order.date_order.strftime('%Y-%m-%d %H:%M:%S')" />
+                                                                        t-esc="order.date_order.strftime('%Y-%m-%d %H:%M:%S')"/>
                                                             </td>
                                                         </tr>
                                                     </t>
@@ -247,49 +271,50 @@
                                         </div>
                                         <div class="col-lg-4 d-none d-lg-block col-12">
                                             <img class="write"
-                                                src="/custom_web_kreator/static/src/write.png" />
+                                                 src="/custom_web_kreator/static/src/write.png"/>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Lead Table -->
                                 <div id="visitorsTableForCreator">
-                                    <div class="row">
-                                        <div class="col-lg-8 col-12 lead-table p-3">
+                                    <div class="row justify-content-center">
+                                        <div class="col-11 col-lg-8 lead-table p-3 overflow-auto"
+                                             style="height: 80dvh;">
                                             <table>
                                                 <thead>
                                                     <tr>
-                                                        <th>NAME</th>
-                                                        <th>FIRST CONNECTION</th>
-                                                        <th>LAST CONNECTION</th>
-                                                        <th>VISITS</th>
-                                                        <th>PAGES</th>
+                                                        <th>Date</th>
+                                                        <th>Name</th>
+                                                        <th>Email</th>
+                                                        <th>Phone Number</th>
+                                                        <th>Course Name</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <t t-foreach="sale_orders" t-as="order">
+                                                    <t t-foreach="visitors" t-as="order">
                                                         <tr>
                                                             <td>
-                                                                <t t-esc="order.partner_id.name" />
+                                                                <t
+                                                                        t-esc="order.create_date.strftime('%Y-%m-%d %H:%M:%S')"/>
                                                             </td>
                                                             <td>
-                                                                <t t-if="order.partner_id.email">
+                                                                <t t-esc="order.name"/>
+                                                            </td>
+                                                            <td>
+                                                                <t t-if="order.email_from">
                                                                     <a
-                                                                        t-att-href="'mailto:' + order.partner_id.email">
+                                                                            t-att-href="'mailto:' + order.email_from">
                                                                         <t
-                                                                            t-esc="order.partner_id.email" />
+                                                                                t-esc="order.email_from"/>
                                                                     </a>
                                                                 </t>
                                                                 <t t-else="">No Email</t>
                                                             </td>
                                                             <td>
-                                                                <t t-esc="order.partner_id.phone" />
+                                                                <t t-esc="order.phone"/>
                                                             </td>
                                                             <td>
-                                                                <t t-esc="order.state" />
-                                                            </td>
-                                                            <td>
-                                                                <t
-                                                                    t-esc="order.date_order.strftime('%Y-%m-%d %H:%M:%S')" />
+                                                                <t t-esc="order.description"/>
                                                             </td>
                                                         </tr>
                                                     </t>
@@ -298,7 +323,7 @@
                                         </div>
                                         <div class="col-lg-4 d-none d-lg-block col-12">
                                             <img class="write"
-                                                src="/custom_web_kreator/static/src/write.png" />
+                                                 src="/custom_web_kreator/static/src/write.png"/>
                                         </div>
                                     </div>
                                 </div>
@@ -310,9 +335,9 @@
                     <script src="/custom_web_kreator/static/src/js/script.js"></script>
                     <!-- bootstrap script -->
                     <script
-                        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-                        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-                        crossorigin="anonymous"
+                            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                            crossorigin="anonymous"
                     ></script>
                     <script>
                         document.addEventListener("DOMContentLoaded", function () {
@@ -329,9 +354,9 @@
                         document.getElementById('visitorsTableForCreator');
 
                         // Ensure the default view is set (Unverified Orders visible, Visitors hidden)
-                        unverifiedOrdersTableForCreator.style.display = "block"; 
-                        visitorsTableForCreator.style.display = "none"; 
-                        unverifiedOrdersBtnForCreator.classList.add('active'); 
+                        unverifiedOrdersTableForCreator.style.display = "block";
+                        visitorsTableForCreator.style.display = "none";
+                        unverifiedOrdersBtnForCreator.classList.add('active');
                         // Function to toggle the active class and table visibility
                         function switchActive(buttonToActivate) {
                         // Remove 'active' class from both buttons

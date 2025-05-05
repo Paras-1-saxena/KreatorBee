@@ -47,6 +47,7 @@ class KreatorWebsite(http.Controller):
 
     @http.route('/landing/page/6', auth='public', website=True)
     def video_editing_ayushman(self, **kwargs):
+        return request.redirect('/')
         course = request.env['slide.channel'].sudo().search([('id', '=', kwargs.get('course_id'))])
         values = self.fetch_values(**kwargs)
 
@@ -59,6 +60,7 @@ class KreatorWebsite(http.Controller):
 
     @http.route('/landing/page/7', auth='public', website=True)
     def freelancing_employees_ayushman(self, **kwargs):
+        return request.redirect('/')
         course = request.env['slide.channel'].sudo().search([('id', '=', kwargs.get('course_id'))])
         values = self.fetch_values(**kwargs)
         intro_video = Markup('''<iframe src="https://player.vimeo.com/video/1068749072?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
@@ -69,6 +71,7 @@ class KreatorWebsite(http.Controller):
 
     @http.route('/landing/page/8', auth='public', website=True)
     def freelancing_genz_ayushman(self, **kwargs):
+        return request.redirect('/')
         course = request.env['slide.channel'].sudo().search([('id', '=', kwargs.get('course_id'))])
         values = self.fetch_values(**kwargs)
         intro_video = Markup('''<iframe src="https://player.vimeo.com/video/1068746592?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"

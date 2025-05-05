@@ -52,7 +52,11 @@
                     height: auto;
                     overflow: visible;
                     }
-
+                    body {
+                    overflow: hidden;
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                    }
                 </style>
                 <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel"
                      aria-hidden="true">
@@ -96,7 +100,7 @@
                             <div class="d-lg-flex d-none gap-4 menu-links">
                                 <div
                                         class="p-lg-2 p-1 d-flex flex-column align-items-center" id="underReviewLink"
-                                        onclick="showCourseSection('underReview', this)"
+                                        onclick="showCourseSection('underReview', 'Desk', this)"
                                 >
                                     <a href="#" class='text-center'>
                                         <i class="fa fa-edit"></i>
@@ -106,7 +110,7 @@
                                     </a>
                                 </div>
                                 <div class="p-lg-2 p-1 d-flex flex-column align-items-center" id="approvedLink"
-                                     onclick="showCourseSection('approved', this)">
+                                     onclick="showCourseSection('approved', 'Desk', this)">
                                     <a href="#" class='text-center'>
                                         <i class="fas fa-thumbs-up"></i>
                                         <p>
@@ -115,7 +119,7 @@
                                     </a>
                                 </div>
                                 <div class="p-lg-2 p-1 d-flex flex-column align-items-center" id="publishedLink"
-                                     onclick="showCourseSection('published', this)">
+                                     onclick="showCourseSection('published', 'Desk', this)">
                                     <a href="#" class='text-center'>
                                         <i class="fa fa-check-circle"></i>
                                         <p>
@@ -134,12 +138,6 @@
                             <nav class="py-3 px-2">
                                 <!-- Sidebar Menu -->
                                 <ul class="d-flex flex-column gap-2">
-                                    <a href="/master">
-                                        <li>
-                                            <i class="ri-dashboard-fill"></i>
-                                            Get Started
-                                        </li>
-                                    </a>
                                     <a href="/creator/income">
                                         <li>
                                             <i class="ri-discount-percent-fill"></i>
@@ -147,44 +145,32 @@
                                         </li>
                                     </a>
                                     <!-- Sales Dropdown -->
-                                    <div class="ps-2 d-block d-lg-none">
-                                        <li>
-                                            <a href="/creator/income">
-                                                <i
-                                                        class="ri-subtract-fill"></i>
-                                                Income Data
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/creator/referral">
-                                                <i class="ri-subtract-fill"></i>
-                                                Links
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/creator/kyc">
-                                                <i class="ri-subtract-fill"></i>
-                                                kyc
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <i class="ri-subtract-fill"></i>
-                                            <a href="/creator/lead">Lead</a>
-                                        </li>
-                                        <li>
-                                            <a href="/creator/leaderboard">
-                                                <i
-                                                        class="ri-subtract-fill"></i>
-                                                Leaderboard
-                                            </a>
-                                        </li>
-                                    </div>
                                     <a href="/creator/my-courses">
                                         <li class="active">
                                             <i class="ri-product-hunt-fill"></i>
                                             Products
                                         </li>
                                     </a>
+                                    <div class="ps-2 d-block d-lg-none menu-links-mob">
+                                        <li>
+                                            <a href="#" id="underReviewLinkMob" onclick="showCourseSection('underReview', 'Mob', this)">
+                                                <i class="ri-checkbox-circle-fill"></i>
+                                                Under Review
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" id="approvedLinkMob" onclick="showCourseSection('approved', 'Mob', this)">
+                                                <i class="ri-checkbox-blank-circle-line"></i>
+                                                Approved
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" id="PublishedLinkMob" onclick="showCourseSection('published', 'Mob', this)">
+                                                <i class="ri-checkbox-blank-circle-line"></i>
+                                                Published
+                                            </a>
+                                        </li>
+                                    </div>
                                     <a href="/creator/community">
                                         <li>
                                             <i class="ri-user-community-fill"></i>
@@ -291,13 +277,16 @@
                                 <!-- Under Review Courses Section -->
                                 <div class="row course-section" id="underReview">
                                     <div class="col-12">
-                                        <div>
-                                            <h4 style="float:left">Course Under Review</h4>
-                                            <a href="/creator/course_detail">
-                                                <button style="float:right" class="p-1 rounded bg-black text-white">Create New Course</button>
+                                        <div class="row justify-content-between my-2">
+                                            <div class="col-12 col-md-4">
+                                                <h4 style="float:left">Course Under Review</h4>
+                                            </div>
+                                            <div class="col-12 col-md-2">
+                                                <a href="/creator/create_course_detail">
+                                                <button style="" class="p-1 rounded bg-black text-white">Create New Course</button>
                                             </a>
+                                            </div>
                                         </div>
-
                                     </div>
                                     <t t-if="under_review_courses">
                                         <t t-foreach="under_review_courses" t-as="course">
@@ -419,7 +408,7 @@
                             crossorigin="anonymous"
                     ></script>
                     <script type="text/javascript">
-                        function showCourseSection(section, linkElement) {
+                        function showCourseSection(section, version, linkElement) {
                         // Hide all sections by removing 'active' class
                         document.querySelectorAll('.course-section').forEach((el) => {
                         el.classList.remove('active');
@@ -433,13 +422,34 @@
                         link.classList.remove('active');
                         });
 
+                        document.querySelectorAll('.menu-links-mob li>a>i').forEach((link) => {
+                        link.classList.remove('ri-checkbox-circle-fill');
+                        link.classList.add('ri-checkbox-blank-circle-line');
+                        });
+
+                        document.querySelectorAll('.menu-links-mob li').forEach((link) => {
+                        link.classList.remove('active');
+                        });
+
                         // Add 'active' class to the clicked link
+                        if (version == 'Mob') {
+                        linkElement.firstElementChild.classList.remove('ri-checkbox-blank-circle-line');
+                        linkElement.firstElementChild.classList.add('ri-checkbox-circle-fill');
+                        linkElement.parentElement.classList.add('active');
+                        }
+                        else {
                         linkElement.classList.add('active');
+                        }
                         }
 
                         // Set "Under Review" as default selected tab
                         document.addEventListener("DOMContentLoaded", function() {
-                        showCourseSection('underReview', document.getElementById('underReviewLink'));
+                        if (document.body.scrollWidth &lt;= 664) {
+                        showCourseSection('underReview', 'Mob',  document.getElementById('underReviewLinkMob'));
+                        }
+                        else {
+                        showCourseSection('underReview', 'Desk', document.getElementById('underReviewLink'));
+                        }
                         });
                     </script>
                 </div>

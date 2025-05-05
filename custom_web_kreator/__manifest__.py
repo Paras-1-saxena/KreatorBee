@@ -80,6 +80,8 @@
         'views/payment_page_cart.xml',
         'views/partner_promotional_consume.xml',
         'views/loyalty_program.xml',
+        'views/create_course_detail.xml',
+        'views/create_course_standard.xml',
         # 'views/blog_post_views.xml',
         'data/email_templates.xml'
     ],
