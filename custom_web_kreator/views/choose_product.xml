@@ -165,6 +165,12 @@
                                         </li>
                                     </div>
                                     <li>
+                                        <a href="/partner/training">
+                                            <i class="ri-presentation-fill"></i>
+                                            Training
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a href="/partner/promotional-material">
                                             <i class="ri-user-community-fill"></i>
                                             Promote

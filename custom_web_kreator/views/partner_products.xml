@@ -164,6 +164,12 @@
                                         </li>
                                     </div>
                                     <li>
+                                        <a href="/partner/training">
+                                            <i class="ri-presentation-fill"></i>
+                                            Training
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a href="/partner/promotional-material">
                                             <i class="ri-user-community-fill"></i>
                                             Promote
@@ -405,9 +411,16 @@
                                                                        t-as="stage">
                                                                         <t t-if="not [False for prd in stage.product_ids.ids if prd not in request.env.user.partner_id.slide_channel_ids.product_id.ids] or (request.env.user.id in cart.course_id.user_ids.ids)">
                                                                             <tr>
-                                                                                <th style="text-transform: capitalize;" scope="row"><t t-esc="stage.name"/></th>
-                                                                                <td>₹ <span t-esc="sum([pid.list_price for pid in stage.product_ids]) - 1000"/></td>
-                                                                                <td>₹ <span t-esc="(sum([pid.list_price for pid in stage.product_ids])-1000)/100*70"/></td>
+                                                                                <th style="text-transform: capitalize;"
+                                                                                    scope="row">
+                                                                                    <t t-esc="stage.name"/>
+                                                                                </th>
+                                                                                <td>₹
+                                                                                    <span t-esc="sum([pid.list_price for pid in stage.product_ids]) - 1000"/>
+                                                                                </td>
+                                                                                <td>₹
+                                                                                    <span t-esc="(sum([pid.list_price for pid in stage.product_ids])-1000)/100*70"/>
+                                                                                </td>
                                                                             </tr>
                                                                         </t>
                                                                     </t>
@@ -465,26 +478,33 @@
                                                 <div class="row">
                                                     <t t-if="cart.course_id.is_upgradable">
                                                         <table class="table d-table d-md-none">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th scope="col">Options</th>
-                                                                        <th scope="col">Price</th>
-                                                                        <th scope="col">Commission</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <t t-foreach="cart.course_id.upgrade_stage_ids"
-                                                                       t-as="stage">
-                                                                        <t t-if="not [False for prd in stage.product_ids.ids if prd not in request.env.user.partner_id.slide_channel_ids.product_id.ids] or (request.env.user.id in cart.course_id.user_ids.ids)">
-                                                                            <tr>
-                                                                                <th style="text-transform: capitalize;" scope="row"><t t-esc="stage.name"/></th>
-                                                                                <td>₹ <span t-esc="sum([pid.list_price for pid in stage.product_ids]) - 1000"/></td>
-                                                                                <td>₹ <span t-esc="(sum([pid.list_price for pid in stage.product_ids]) - 1000)/100*70"/></td>
-                                                                            </tr>
-                                                                        </t>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Options</th>
+                                                                    <th scope="col">Price</th>
+                                                                    <th scope="col">Commission</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <t t-foreach="cart.course_id.upgrade_stage_ids"
+                                                                   t-as="stage">
+                                                                    <t t-if="not [False for prd in stage.product_ids.ids if prd not in request.env.user.partner_id.slide_channel_ids.product_id.ids] or (request.env.user.id in cart.course_id.user_ids.ids)">
+                                                                        <tr>
+                                                                            <th style="text-transform: capitalize;"
+                                                                                scope="row">
+                                                                                <t t-esc="stage.name"/>
+                                                                            </th>
+                                                                            <td>₹
+                                                                                <span t-esc="sum([pid.list_price for pid in stage.product_ids]) - 1000"/>
+                                                                            </td>
+                                                                            <td>₹
+                                                                                <span t-esc="(sum([pid.list_price for pid in stage.product_ids]) - 1000)/100*70"/>
+                                                                            </td>
+                                                                        </tr>
                                                                     </t>
-                                                                </tbody>
-                                                            </table>
+                                                                </t>
+                                                            </tbody>
+                                                        </table>
                                                     </t>
                                                     <t t-else="">
                                                         <div class="col-6 d-block d-md-none">

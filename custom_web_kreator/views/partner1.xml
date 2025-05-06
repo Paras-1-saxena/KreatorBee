@@ -151,6 +151,12 @@
                                             Products
                                         </li>
                                     </a>
+                                    <a href="/partner/training">
+                                        <li>
+                                            <i class="ri-presentation-fill"></i>
+                                            Training
+                                        </li>
+                                    </a>
                                     <a href="/partner/promotional-material">
                                         <li>
                                             <i class="ri-user-community-fill"></i>

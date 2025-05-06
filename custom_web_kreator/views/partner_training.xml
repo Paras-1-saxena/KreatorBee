@@ -301,14 +301,6 @@
                             <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 160px;"/>
                             <!-- Menu-->
                             <div class="d-lg-flex d-none gap-4">
-                                <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
-                                    <a href="/partner/promotional-material" class='text-center'>
-                                        <i class="fa fa-layer-group"></i>
-                                        <p>
-                                            Promotional Material
-                                        </p>
-                                    </a>
-                                </div>
                                 <div
                                         class="active p-lg-2 p-1 d-flex flex-column align-items-center"
                                 >
@@ -319,23 +311,6 @@
                                         </p>
                                     </a>
                                 </div>
-                                <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
-                                    <a href="/partner/target" class='text-center'>
-                                        <i class="fa fa-bullseye"></i>
-                                        <p>
-                                            Targets
-                                        </p>
-                                    </a>
-                                </div>
-                                <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
-                                    <a href="/partner/offers" class='text-center'>
-                                        <i class="fa fa-cubes"></i>
-                                        <p>
-                                            Offers
-                                        </p>
-                                    </a>
-                                </div>
-
                             </div>
                             <!-- Profile -->
                             <t t-call="custom_web_kreator.partner_profile_dropdown"/>
@@ -360,38 +335,18 @@
                                             Products
                                         </li>
                                     </a>
-                                    <a href="/partner/promotional-material">
+                                    <a href="/partner/training">
                                         <li class="active">
+                                            <i class="ri-presentation-fill"></i>
+                                            Training
+                                        </li>
+                                    </a>
+                                    <a href="/partner/promotional-material">
+                                        <li>
                                             <i class="ri-user-community-fill"></i>
                                             Promote
                                         </li>
                                     </a>
-                                    <div class="ps-2 d-block d-lg-none">
-                                        <li>
-                                            <a href="/partner/promotional-material">
-                                                <i class="ri-checkbox-blank-circle-line"></i>
-                                                Promotional Material
-                                            </a>
-                                        </li>
-                                        <li class="active">
-                                            <a href="/partner/training">
-                                                <i class="ri-checkbox-circle-fill"></i>
-                                                Training
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/partner/target">
-                                                <i class="ri-checkbox-blank-circle-line"></i>
-                                                Targets
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/partner/offers">
-                                                <i class="ri-checkbox-blank-circle-line"></i>
-                                                Offers
-                                            </a>
-                                        </li>
-                                    </div>
                                     <a href="/partner/community/updates">
                                         <li>
                                             <i class="ri-user-fill"></i>
