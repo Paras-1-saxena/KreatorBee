@@ -83,7 +83,9 @@
         'views/create_course_detail.xml',
         'views/create_course_standard.xml',
         # 'views/blog_post_views.xml',
-        'data/email_templates.xml'
+        'data/email_templates.xml',
+        'views/live_session.xml',
+        'views/live_slot_booking.xml'
     ],
     # 'assets': {
     #     'web.assets_frontend': [

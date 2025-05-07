@@ -211,7 +211,7 @@ class PortalMyCourses(http.Controller):
                 'Content-Type': 'application/json',
                 'Authorization': '••••••'
             }
-            response = requests.request("GET", url,)
+            response = requests.request("GET", url, )
             if response.status_code == 200:
                 response = json.loads(response.text)
                 bank_id = request.env['res.bank'].sudo().create({'name': response.get('BANK'), 'bic': ifsc,
@@ -227,7 +227,7 @@ class PortalMyCourses(http.Controller):
                     status=200
                 )
         return request.make_response(
-            data=json.dumps({'response': "success", 'bank': bank, 'branch':branch}),
+            data=json.dumps({'response': "success", 'bank': bank, 'branch': branch}),
             headers=[('Content-Type', 'application/json')],
             status=200
         )
@@ -500,7 +500,8 @@ class PortalMyCourses(http.Controller):
         if not partner.partner_term_accepted:
             return request.redirect('/master-partner')
         premium_course = request.env['slide.channel'].sudo().search([('is_mandate', '=', True)], limit=1)
-        if not request.env.user.partner_id.early_sign_in and (premium_course.id not in request.env.user.partner_id.slide_channel_ids.ids):
+        if not request.env.user.partner_id.early_sign_in and (
+                premium_course.id not in request.env.user.partner_id.slide_channel_ids.ids):
             return request.redirect('/partner-welcome')
 
         # Check if the user is an Internal User or Creator
@@ -879,7 +880,8 @@ class PortalMyCourses(http.Controller):
             all_courses = request.env['slide.channel'].sudo().search([('create_uid', '=', user.id)])
             discount_ids = request.env['discount.discount'].sudo().search([])
             loyalty_ids = request.env['loyalty.program'].sudo().search([], order='create_date desc')
-            loyalty_ids = loyalty_ids.filtered(lambda li: li.referral_product_id.product_variant_id.channel_ids.id in all_courses.ids)
+            loyalty_ids = loyalty_ids.filtered(
+                lambda li: li.referral_product_id.product_variant_id.channel_ids.id in all_courses.ids)
             values = {
                 'loyalty_ids': loyalty_ids,
                 'product_ids': product_ids,
@@ -907,18 +909,20 @@ class PortalMyCourses(http.Controller):
             request.session['fail_create_offer'] = 'Yes'
             request.session['create_offer'] = 'Yes'
             request.session['create_offer_message'] = 'Coupon Code Already Exist, Please Create a New One'
-            if request.env.user.partner_id.user_type== 'partner':
+            if request.env.user.partner_id.user_type == 'partner':
                 return request.redirect('/partner/offers')
             return request.redirect('/creator/offers')
 
         # Step 1: Handle discount field
         discount_record = request.env['discount.discount'].sudo().search([('id', '=', discount)], limit=1)
 
-        if (course_product_id.product_id.list_price < 15000 and discount_record.name > 500) or (course_product_id.product_id.list_price > 15000 and discount_record.name > 1000):
+        if (course_product_id.product_id.list_price < 15000 and discount_record.name > 500) or (
+                course_product_id.product_id.list_price > 15000 and discount_record.name > 1000):
             request.session['fail_create_offer'] = 'Yes'
             request.session['create_offer'] = 'Yes'
-            request.session['create_offer_message'] = "Allowed offer limit: 500 and less if Course price is less than 15000"
-            if request.env.user.partner_id.user_type== 'partner':
+            request.session[
+                'create_offer_message'] = "Allowed offer limit: 500 and less if Course price is less than 15000"
+            if request.env.user.partner_id.user_type == 'partner':
                 return request.redirect('/partner/offers')
             return request.redirect('/creator/offers')
 
@@ -971,7 +975,8 @@ class PortalMyCourses(http.Controller):
         order = request.website.sale_get_order()
         promo = kwargs.get('promo')
         if promo:
-            coupon = request.env['loyalty.program'].sudo().search([('name', '=', promo), ('date_to', '>=', datetime.now().date())], limit=1)
+            coupon = request.env['loyalty.program'].sudo().search(
+                [('name', '=', promo), ('date_to', '>=', datetime.now().date())], limit=1)
             if coupon and order.amount_untaxed >= coupon.minimum_amount:
                 if coupon.limit_usage and coupon.max_usage > 1:
                     coupon.max_usage -= 1
@@ -982,8 +987,9 @@ class PortalMyCourses(http.Controller):
                 order.coupon_type = 'creator' if user_type == 'creator' else 'partner' if user_type == 'partner' else 'company'
                 if not [line.discount for line in order.order_line if line.discount > 0.0]:
                     coupon_discount = coupon.discount_id.name
-                    order_line = order.order_line.filtered(lambda ol: ol.product_template_id.id == coupon.referral_product_id.id)
-                    discount_percentage = (coupon_discount/order_line.price_unit)*100
+                    order_line = order.order_line.filtered(
+                        lambda ol: ol.product_template_id.id == coupon.referral_product_id.id)
+                    discount_percentage = (coupon_discount / order_line.price_unit) * 100
                     order_line.discount = discount_percentage
                     request.session['coupon_status'] = 'success'
                 else:
@@ -1023,11 +1029,13 @@ class PortalMyCourses(http.Controller):
 
             # Fetch the sale orders based on the domain
             sale_orders = request.env['sale.order'].sudo().search(domain)
-            sale_orders = sale_orders.filtered(lambda so: so.order_line and [True for ol in so.order_line if ol.partner_commission_partner_id and ol.partner_commission_partner_id.id == partner.id])
+            sale_orders = sale_orders.filtered(lambda so: so.order_line and [True for ol in so.order_line if
+                                                                             ol.partner_commission_partner_id and ol.partner_commission_partner_id.id == partner.id])
 
             # Fetch visitor data, no date filters for visitors
             new = request.env['crm.stage'].sudo().search([('name', '=', 'New')])
-            visitors = request.env['crm.lead'].sudo().search([('stage_id', '=', new.id), ('email_from', '!=', False), ('phone', '!=', False)])
+            visitors = request.env['crm.lead'].sudo().search(
+                [('stage_id', '=', new.id), ('email_from', '!=', False), ('phone', '!=', False)])
 
             # Prepare the context to pass to the template
             context = {
@@ -1386,7 +1394,7 @@ class PortalMyCourses(http.Controller):
             direct_commission_today = partner_commission_today = commission_today = 0.0
             direct_commission_last_7_days = partner_commission_last_7_days = commission_last_7_days = 0.0
             direct_commission_last_30_days = partner_commission_last_30_days = commission_last_30_days = 0.0
-            labels_state, data_state, labels, data = 0,0,0,0
+            labels_state, data_state, labels, data = 0, 0, 0, 0
 
             if product_ids:
                 # Fetch order lines with commissions
@@ -1431,7 +1439,8 @@ class PortalMyCourses(http.Controller):
                 data = list(sorted_courses.values())[:5]
                 courses_data_state = {pid.name: sum([pamount.direct_commission_amount for pamount in
                                                      order_lines.filtered(
-                                                         lambda ol: ol.order_partner_id.state_id.id == pid.id)]) for pid in
+                                                         lambda ol: ol.order_partner_id.state_id.id == pid.id)]) for pid
+                                      in
                                       order_lines.order_partner_id.state_id}
                 sorted_courses_state = {k: v for k, v in
                                         sorted(courses_data_state.items(), key=lambda item: item[1], reverse=True)}
@@ -1508,7 +1517,8 @@ class PortalMyCourses(http.Controller):
             referal_link = referral_id.generate_referral_link()
             return request.redirect(referal_link)
         else:
-            return request.redirect(f'/landing/page/{stage_id.landing_page_record_id.lading_id}?course_id={course_id.id}')
+            return request.redirect(
+                f'/landing/page/{stage_id.landing_page_record_id.lading_id}?course_id={course_id.id}')
 
     @http.route('/customer/mycourses', type='http', auth='public', website=True)
     def customer_courses(self, **kwargs):
@@ -1614,7 +1624,7 @@ class PortalMyCourses(http.Controller):
 
             added_course_ids = request.env['my.product.cart'].sudo().search([
                 ('partner_id', '=', partner.id)
-            ]).course_id.ids # Base domain to filter published courses
+            ]).course_id.ids  # Base domain to filter published courses
             # upgrade_domain = [('state', '=', 'published'), ('is_upgradable', '=', True), ('not_display', '=', False)]
             # upgrade_course = request.env['slide.channel'].sudo().search(upgrade_domain)
             # if current_user.id in upgrade_course.user_ids.ids:
@@ -1622,7 +1632,7 @@ class PortalMyCourses(http.Controller):
             # else:
             domain = [('state', '=', 'published'), ('not_display', '=', False)]
 
-                # If a specific course is selected, show only that course
+            # If a specific course is selected, show only that course
             if selected_course_id:
                 domain.append(('id', '=', int(selected_course_id)))
 
@@ -1877,7 +1887,7 @@ class PortalMyCourses(http.Controller):
                             bank_id.filtered(lambda bi: bi.partner_id.id == partner.id).sudo().unlink()
                             request._cr.commit()
                         bank = request.env['res.partner.bank'].sudo().create({'acc_number': account_holder_number,
-                                                                          'bank_id': act_bank.id,
+                                                                              'bank_id': act_bank.id,
                                                                               'partner_id': partner.id})
                         partner_values['bank_id'] = bank.id
                     # return request.render('custom_web_kreator.error_page_template', {
@@ -2007,7 +2017,8 @@ class PortalMyCourses(http.Controller):
         # Check if the user is an Internal User or Creator
         if partner.user_type in ['internal_user', 'partner']:
             search_query = kwargs.get('name', '').strip()  # Get search query from URL
-            domain = [('program_type', '=', 'promo_code'), ('date_to', '>=', date.today())]  # Base domain to filter Discount coupons
+            domain = [('program_type', '=', 'promo_code'),
+                      ('date_to', '>=', date.today())]  # Base domain to filter Discount coupons
             selected_coupon_id = kwargs.get('coupon_id')  # Get selected coupon ID from reques
             # If a specific course is selected, show only that course
             product_cart_ids = request.env['my.product.cart'].sudo().search([('partner_id', '=', partner.id)],
@@ -2108,7 +2119,9 @@ class PortalMyCourses(http.Controller):
             all_courses = request.env['slide.channel'].sudo().search([('create_uid', '=', user.id)])
 
             new = request.env['crm.stage'].sudo().search([('name', '=', 'New')])
-            visitors = request.env['crm.lead'].sudo().search([('stage_id', '=', new.id), ('email_from', '!=', False), ('phone', '!=', False), ('description', 'in' , all_courses.mapped('name'))])
+            visitors = request.env['crm.lead'].sudo().search(
+                [('stage_id', '=', new.id), ('email_from', '!=', False), ('phone', '!=', False),
+                 ('description', 'in', all_courses.mapped('name'))])
 
             # Prepare the context to pass to the template
             context = {
@@ -3137,7 +3150,8 @@ class PortalMyCourses(http.Controller):
         if partner.user_type in ['internal_user', 'partner']:
             orders_lines = request.env['sale.order.line'].sudo().search(
                 [('is_commission', '=', True), ('state', '=', 'sale'), ('partner_commission_partner_id', '!=', False)])
-            orders_lines = orders_lines.filtered(lambda ol: ol.partner_commission_partner_id.id != ol.direct_commission_partner_id.id and ol.price_unit != 0.0)
+            orders_lines = orders_lines.filtered(lambda
+                                                     ol: ol.partner_commission_partner_id.id != ol.direct_commission_partner_id.id and ol.price_unit != 0.0)
             order_lines = sorted(orders_lines, key=attrgetter('partner_commission_partner_id'))
             # Group by commission partner ID
             grouped_data = {}
@@ -3149,7 +3163,7 @@ class PortalMyCourses(http.Controller):
             for data in grouped_data:
                 if data.id == 1142:
                     continue
-                lines = orders_lines.filtered( lambda ol: ol.partner_commission_partner_id.id == data.id)
+                lines = orders_lines.filtered(lambda ol: ol.partner_commission_partner_id.id == data.id)
                 leaderboard.append({
                     'partner_name': data.name,
                     'total_commission': sum(line.partner_commission_amount for line in lines),
@@ -3248,6 +3262,22 @@ class PortalMyCourses(http.Controller):
             return http.request.render('custom_web_kreator.coming_soon')
         else:
             raise NotFound()
+
+    @http.route('/live/session', type='http', auth='public', website=True)
+    def live_session(self, **kwargs):
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
+
+        # Check if the user is an Internal User or Creator
+        return http.request.render('custom_web_kreator.live_session')
+
+    @http.route('/live/slot/booking', type='http', auth='public', website=True)
+    def live_slot_booking(self, **kwargs):
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
+
+        # Check if the user is an Internal User or Creator
+        return http.request.render('custom_web_kreator.live_slot_booking')
 
     @http.route('/creator-profile', type='http', auth='user', website=True, methods=['GET', 'POST'], csrf=False)
     def creator_profile(self, **post):
@@ -3455,7 +3485,8 @@ class PortalMyCourses(http.Controller):
                     'course_id': course_id,
                     'course_name': course.name,
                     'promote_url': promote_url,
-                    'file_name': course.promotional_material_ids.filtered(lambda pm: pm.id == material_id).promotional_attachment_name,
+                    'file_name': course.promotional_material_ids.filtered(
+                        lambda pm: pm.id == material_id).promotional_attachment_name,
                     'back': back
                 }
                 return request.render('custom_web_kreator.promotional_consume', values)
@@ -3609,6 +3640,20 @@ class PortalMyCourses(http.Controller):
                         </div>
                         <iframe width="100%" height="auto" class="d-block d-md-none" src="https://www.youtube.com/embed/ShElKN_n_WU?si=tS0SvrfnHe2ZNiFC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         ''')
+                        next_vid = Markup('''
+                                                                        <a onclick="openVideo(5, 'zerotoo')" class="border1 rounded p-2" style="background-color:#ffc107; cursor:pointer;">
+                                                                                            Next
+                                                                                            <i class="ri-arrow-right-line"></i>
+                                                                                        </a>
+                                                                        ''')
+
+                    if int(ved_no) == 5:
+                        video_data = Markup('''
+                        <div style="width: 80dvw; height: 100dvh;" class="d-none d-md-block">
+                        <iframe width="100%" height="60%" src="https://www.youtube.com/embed/MePNuAF5GIw?si=yaJN1vhdW4JReefm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        <iframe width="100%" height="auto" class="d-block d-md-none" src="https://www.youtube.com/embed/MePNuAF5GIw?si=yaJN1vhdW4JReefm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        ''')
                         next_vid = ''
                 return request.make_response(
                     data=json.dumps({'response': "success", 'video_data': video_data, 'next_but': next_vid}),
@@ -3689,7 +3734,8 @@ class PortalMyCourses(http.Controller):
             course_avl = True
         agreement = request.session.get('agreement', 'No Selection')
         return http.request.render('custom_web_kreator.partner_welcome', {'agreement': agreement,
-                                                                          'course_avl': course_avl, 'course': premium_course})
+                                                                          'course_avl': course_avl,
+                                                                          'course': premium_course})
 
     @http.route('/get_video_url', type='json', auth="public", website=True)
     def get_video_url(self):
