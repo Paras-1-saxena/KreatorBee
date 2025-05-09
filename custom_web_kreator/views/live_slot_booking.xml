@@ -383,7 +383,7 @@
                                     </div>
                                     <br/>
                                     <p class="ticket-number">
-                                        <a t-att-href="f'/live/session?booking_id={booking_data.id}'"
+                                        <a t-att-href="'/live/session?booking_id={}'.format(booking_data.id)"
                                            class="p-2 rounded text-white" style="background-color: #008CBA">JOIN NOW
                                         </a>
                                     </p>
