@@ -378,7 +378,7 @@
                             <div class="most-right">
                                 <div class="most-right-info-container">
                                     <div class="barcode">
-                                        <img t-att-src="f'data:image/png;base64,{qr}'"
+                                        <img t-att-src="'data:image/png;base64,{}'.format(qr)"
                                              alt="QR code"/>
                                     </div>
                                     <br/>
