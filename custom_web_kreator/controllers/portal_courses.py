@@ -4,7 +4,7 @@ from odoo.http import request
 import base64
 from itertools import groupby, product
 from operator import attrgetter
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, time
 import json
 from werkzeug.exceptions import NotFound
 from odoo.addons.website.controllers.main import QueryURL
@@ -16,6 +16,8 @@ from odoo.addons.website.controllers.form import WebsiteForm
 from odoo.addons.base.models.ir_qweb_fields import nl2br, nl2br_enclose
 from odoo.exceptions import ValidationError, UserError
 import requests
+import qrcode
+import io
 
 
 class PortalMyCourses(http.Controller):
@@ -3275,9 +3277,62 @@ class PortalMyCourses(http.Controller):
     def live_slot_booking(self, **kwargs):
         user = request.env.user
         partner = user.partner_id  # Get related partner
+        # request.session['booking_id'] = ''
+        booking_id =  request.session.get('booking_id')
+        if not booking_id:
+            dates = []
+            seven_pm = time(19, 0, 0)
+            today = datetime.now()
+            seven_pm_datetime = datetime.combine(today.now(), seven_pm)
+            if today < seven_pm_datetime:
+                dates.append('Today')
+            dates.append('Tomorrow')
+            if today > seven_pm_datetime:
+                dates.append((today + timedelta(days=2)).strftime('%d %B %Y'))
 
+            # Check if the user is an Internal User or Creator
+            return http.request.render('custom_web_kreator.live_slot_booking', {'dates': dates})
+        else:
+            booking_data = request.env['lead.funnel'].sudo().search([('id', '=', int(booking_id))])
+            data = f"https://www.kreatorbee.com/live/session?booking_id={booking_data.id}"
+            qr = qrcode.QRCode(
+                version=1,
+                error_correction=qrcode.constants.ERROR_CORRECT_L,
+                box_size=10,
+                border=4,
+            )
+            qr.add_data(data)
+            qr.make(fit=True)
+
+            # Create an image from the QR code
+            img = qr.make_image(fill_color="black", back_color="white")
+            img_buffer = io.BytesIO()
+            img.save(img_buffer, format='PNG')  # Save as PNG format
+            img_bytes = base64.b64encode(img_buffer.getvalue()).decode('utf-8')
+            return http.request.render('custom_web_kreator.live_slot_booking', {'booking_data': booking_data, 'qr': img_bytes})
+
+    @http.route('/live/slot/book', type='http', auth='public', website=True)
+    def live_slot_boo(self, **kwargs):
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
+        slot_date = kwargs.get('date')
+        slot_time = kwargs.get('time')
+        lead = request.env['lead.funnel'].sudo().search(['|', ('email', '=', kwargs.get('email')), ('mobile', '=', kwargs.get('mobile'))])
+        if not lead:
+            if slot_date == 'today':
+                slot_date = datetime.now()
+            elif slot_time == 'tomorrow':
+                slot_date = datetime.now() + timedelta(days=1)
+            else:
+                slot_date = datetime.now() + timedelta(days=2)
+            slot_time = request.env['slot.time'].sudo().search([('name', '=', slot_time)])
+
+            sequence = request.env['ir.sequence'].sudo().next_by_code('lead.funnel')
+            lead = request.env['lead.funnel'].sudo().create({'user_name': kwargs.get('name'), 'email': kwargs.get('email'), 'name': sequence,
+                                                      'mobile': kwargs.get('mobile'), 'slot_date': slot_date, 'slot_time': slot_time.id})
+        request.session['booking_id'] = lead.id
         # Check if the user is an Internal User or Creator
-        return http.request.render('custom_web_kreator.live_slot_booking')
+        return http.request.redirect('/live/slot/booking')
 
     @http.route('/creator-profile', type='http', auth='user', website=True, methods=['GET', 'POST'], csrf=False)
     def creator_profile(self, **post):

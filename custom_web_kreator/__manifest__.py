@@ -11,6 +11,7 @@
                 'crm', 'mail', 'loyalty'],
     'data': [
         'security/ir.model.access.csv',
+        'data/sequence.xml',
         # 'views/get_started.xml',
         # 'views/1getstart.xml',
         # 'views/maindesign.xml',
@@ -84,8 +85,9 @@
         'views/create_course_standard.xml',
         # 'views/blog_post_views.xml',
         'data/email_templates.xml',
+        'views/lead_funnel_view.xml',
         'views/live_session.xml',
-        'views/live_slot_booking.xml'
+        'views/live_slot_booking.xml',
     ],
     # 'assets': {
     #     'web.assets_frontend': [

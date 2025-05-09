@@ -23,12 +23,180 @@
                         href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
                         rel="stylesheet"
                 />
+                <!--                <style>-->
+                <!--                    .PlayButton_module_playButtonWrapper__d1afd73a {-->
+                <!--                    display: none!important;-->
+                <!--                    }-->
+                <!--                    PlayButton_module_playButtonWrapper__d1afd73a-->
+                <!--                </style>-->
                 <style>
+                    body {
+                    overflow: hidden;
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                    }
+                    .popup {
+                    position: fixed;
+                    top: 0; left: 0;
+                    width: 100dvw; height: 100dvh;
+                    background: rgba(0, 0, 0, 0.5);
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 1;
+                    }
+                    .popup-content {
+                    background: #ffd000;
+                    padding: 20px;
+                    border-radius: 5px;
+                    text-align: center;
+                    }
+                    .popup:target {
+                    display: flex;
+                    }
+                    /* Hide the full-screen button */
+                    video::-webkit-media-controls-play-button {
+                    display: none;
+                    }
+                    video::-webkit-media-controls-timeline {
+                    display: none;
+                    }
+                    video::-webkit-media-controls-time {
+                    display: none;
+                    }
+                    video::-webkit-media-controls-current-time-display { display: none }
+                    video::-webkit-media-controls-time-remaining-display { display: none }
+                    .container {
+                    background-color: #fff;
+                    border-radius: 16px;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                    padding: 2rem;
+                    width: 100%;
+                    max-width: 800px;
+                    text-align: center;
+                    }
+                    .logo {
+                    max-width: 250px;
+                    margin-bottom: 1rem;
+                    }
+                    h1 {
+                    font-size: 1.8rem;
+                    margin-bottom: 0.5rem;
+                    color: #333;
+                    }
+                    p {
+                    color: #666;
+                    margin-bottom: 1.5rem;
+                    }
+                    form {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                    }
+                    input, select, button {
+                    padding: 0.75rem 1rem;
+                    font-size: 1rem;
+                    border-radius: 8px;
+                    border: 1px solid #ccc;
+                    outline: none;
+                    }
+                    button {
+                    background-color: #ff9800;
+                    color: white;
+                    font-weight: bold;
+                    border: none;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    width: 100%!important;
+                    padding: 0.75rem 1rem!important;
+                    font-size: 1.3rem!important;
+                    }
+                    button:hover {
+                    background-color: #fb8c00;
+                    }
+                    .hook {
+                    font-weight: bold;
+                    margin-bottom: 1rem;
+                    color: #ff5722;
+                    }
                 </style>
             </head>
-
             <body>
-
+                <div style="width:100dvw; height:100dvh; background-color: black;">
+                    <div class="popup" id="popup1" style="width: 100dvw; height:100dvh; background-color:#ff5722;">
+                        <div class="container" style="margin-top: 30dvh;">
+                        <img src="/custom_web_kreator/static/src/kreator_logo.webp"
+                             alt="Kreator Bee Logo" class="logo"/>
+                        <form>
+                            <input type="text" name="name" placeholder="Your Name" required="required" id="name"/>
+                            <input type="email" name="email" placeholder="Email Address" required="required"
+                                   id="email"/>
+                            <input type="tel" name="mobile" placeholder="Mobile Number" pattern="[0-9]{10}" id="phone"
+                                   required="required"/>
+                            <div class="mt-2" id="close">
+                                <a href="#" id="play" style="display: inline-block; margin-top: 10px; background-color: #dc3545; color: #fff; text-decoration:
+                                                   none; border-radius: 3px; width: 250px; height: 50px;"
+                                   class="rounded-pill p-1 fs-3 text-white">Start Session
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-9">
+                            <!--                            <div style="padding:56.25% 0 0 0;position:relative;">-->
+                            <!--                                <iframe src="https://player.vimeo.com/video/1071659872?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;play=0"-->
+                            <!--                                        frameborder="0"-->
+                            <!--                                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"-->
+                            <!--                                        style="position:absolute;top:0;left:0;width:100%;height:100%;"-->
+                            <!--                                        title="Onboarding Video 1"></iframe>-->
+                            <!--                            </div>-->
+                            <!--                            <script src="https://player.vimeo.com/api/player.js"></script>-->
+                            <video width="100%" height="100%" controls="" id="player"
+                                   controlsList="nodownload noplaybackrate" disablePictureInPicture=""
+                                   style="padding:8px;">
+                                <source src="/custom_web_kreator/static/src/test.mp4#t=90" type="video/mp4"/>
+                            </video>
+                            <!--                            <a id="play" class="tap" href="javascript:void(0);">PLAY VIDEO</a>-->
+                        </div>
+                        <div class="col-12 col-md-3">
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    let player = document.getElementById("player");
+                    let pop = document.getElementById("popup1");
+                    let name = document.getElementById("name");
+                    let email = document.getElementById("email");
+                    let phone = document.getElementById("phone");
+                    window.onload = function(){
+                    play = document.getElementById("play");
+                    console.log(email);
+                    console.log(phone);
+                    play.addEventListener("click",function(){
+                    if (name.value == '') {
+                    alert('Enter Your Name');
+                    return;
+                    }
+                    if (email.value == '') {
+                    alert('Enter Your email');
+                    return;
+                    }
+                    if (phone.value == '' || phone.value.length &lt; 10 || phone.value.length &gt; 10) {
+                    alert('Enter a valid mobile Number');
+                    return;
+                    }
+                    player.play();
+                    pop.style.display = 'none';
+                    });
+                    }
+                    player.addEventListener('pause', function() {
+                    // Immediately play the video when it's paused
+                    player.play().catch(error => {
+                    // Handle potential errors (e.g., autoplay blocked by the browser)
+                    console.error("Autoplay prevented:", error);
+                    });
+                    });
+                </script>
             </body>
         </template>
     </data>

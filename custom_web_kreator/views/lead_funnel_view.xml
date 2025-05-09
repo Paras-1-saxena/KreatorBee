@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_lead_funnel_tree" model="ir.ui.view">
+        <field name="name">Lead Funnel Tree</field>
+        <field name="model">lead.funnel</field>
+        <field name="arch" type="xml">
+            <list editable="bottom" create="0">
+                <field name="name" readonly="1"/>
+                <field name="user_name" readonly="1"/>
+                <field name="email" readonly="1"/>
+                <field name="mobile" readonly="1"/>
+                <!--                    <field name="course_interested" readonly="1"/>-->
+                <field name="slot_date" readonly="1"/>
+                <field name="slot_time" readonly="1"/>
+                <field name="visited" readonly="1" widget="boolean_toggle"/>
+                <field name="finished" readonly="1" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_lead_funnel" model="ir.actions.act_window">
+        <field name="name">Lead Funnel</field>
+        <field name="res_model">lead.funnel</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Data Available
+            </p>
+        </field>
+    </record>
+
+    <record id="view_lead_funnel_slot_tree" model="ir.ui.view">
+        <field name="name">Slot Time Tree</field>
+        <field name="model">slot.time</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_slot_time" model="ir.actions.act_window">
+        <field name="name">Slot Time</field>
+        <field name="res_model">slot.time</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Data Available
+            </p>
+        </field>
+    </record>
+
+    <record id="lead_funnel_survey" model="ir.ui.view">
+        <field name="name">Lead Funnel Survey</field>
+        <field name="model">live.session.survey</field>
+        <field name="arch" type="xml">
+            <form editable="bottom">
+                <sheet>
+                    <field name="name"/>
+                    <group>
+                        <group>
+                            <field name="rating"/>
+                            <field name="notes"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem
+            id="menu_lead_funnel_main"
+            name="Lead Funnel"
+            sequence="200"/>
+
+    <menuitem
+            id="menu_lead_funnel"
+            name="Lead Funnel"
+            parent="menu_lead_funnel_main"
+            action="action_lead_funnel"
+            sequence="1"/>
+
+    <menuitem
+            id="menu_time_slot"
+            name="Time Slot"
+            parent="menu_lead_funnel_main"
+            action="action_slot_time"
+            sequence="2"/>
+</odoo>

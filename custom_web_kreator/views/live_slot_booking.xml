@@ -24,11 +24,552 @@
                         rel="stylesheet"
                 />
                 <style>
+                    body {
+                    font-family: 'Inter', sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #ffd000;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    }
+                    .container {
+                    background-color: #fff;
+                    border-radius: 16px;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                    padding: 2rem;
+                    width: 100dvw;
+                    max-width: 800px;
+                    text-align: center;
+                    }
+                    .logo {
+                    max-width: 250px;
+                    margin-bottom: 1rem;
+                    }
+                    h1 {
+                    font-size: 1.8rem;
+                    margin-bottom: 0.5rem;
+                    color: #333;
+                    }
+                    p {
+                    color: #666;
+                    margin-bottom: 1.5rem;
+                    }
+                    form {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                    }
+                    input, select, button {
+                    padding: 0.75rem 1rem;
+                    font-size: 1rem;
+                    border-radius: 8px;
+                    border: 1px solid #ccc;
+                    outline: none;
+                    }
+                    button {
+                    background-color: #ff9800;
+                    color: white;
+                    font-weight: bold;
+                    border: none;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    width: 100%!important;
+                    padding: 0.75rem 1rem!important;
+                    font-size: 1.3rem!important;
+                    }
+                    button:hover {
+                    background-color: #fb8c00;
+                    }
+                    .hook {
+                    font-weight: bold;
+                    margin-bottom: 1rem;
+                    color: #ff5722;
+                    }
+                    .disabled {
+                    background-color: #808080!important;
+                    cursor: default!important;
+                    }
+                    .ticket {
+                    margin: auto;
+                    display: flex;
+                    background: white;
+                    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+                    height: 200px;
+                    width: 100%;
+                    }
+
+                    .ticket-mobile {
+                    margin: auto;
+                    display: flex;
+                    background: white;
+                    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+                    height: 340px;
+                    width: 100%;
+                    }
+
+                    .left {
+                    display: flex;
+                    }
+
+                    .admit-one {
+                    position: absolute;
+                    color: darkgray;
+                    height: 250px;
+                    padding: 0 10px;
+                    letter-spacing: 0.15em;
+                    display: flex;
+                    text-align: center;
+                    justify-content: space-around;
+                    writing-mode: vertical-rl;
+                    transform: rotate(-180deg);
+                    }
+
+                    .admit-one span:nth-child(2) {
+                    color: white;
+                    font-weight: 700;
+                    }
+
+                    .left .ticket-number {
+                    height: 250px;
+                    width: 250px;
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: flex-end;
+                    padding: 5px;
+                    }
+
+                    .ticket-info {
+                    padding: 10px 10px;
+                    display: flex;
+                    flex-direction: column;
+                    text-align: center;
+                    justify-content: space-between;
+                    align-items: center;
+                    }
+
+                    .date {
+                    border-top: 1px solid gray;
+                    border-bottom: 1px solid gray;
+                    padding: 5px 0;
+                    font-weight: 700;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-around;
+                    }
+
+                    .date span {
+                    width: 100px;
+                    }
+
+                    .date span:first-child {
+                    text-align: left;
+                    }
+
+                    .date span:last-child {
+                    text-align: right;
+                    }
+
+                    .date .june-29 {
+                    color: #d83565;
+                    font-size: 14px;
+                    }
+
+
+                    .date-mobile {
+                    border-top: 1px solid gray;
+                    border-bottom: 1px solid gray;
+                    padding: 5px 0;
+                    font-weight: 700;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-around;
+                    }
+
+                    .date-mobile span {
+                    width: 80px;
+                    }
+
+                    .date-mobile span:first-child {
+                    text-align: left;
+                    }
+
+                    .date-mobile span:last-child {
+                    text-align: right;
+                    }
+
+                    .date-mobile .june-29 {
+                    color: #d83565;
+                    font-size: 14px;
+                    }
+
+                    .show-name {
+                    font-size: 32px;
+                    font-family: "Nanum Pen Script", cursive;
+                    color: #d83565;
+                    }
+
+                    .show-name h1 {
+                    font-size: 48px;
+                    font-weight: 700;
+                    letter-spacing: 0.1em;
+                    color: #4a437e;
+                    }
+
+                    .show-name-mobile {
+                    font-size: 40px;
+                    font-family: "Nanum Pen Script", cursive;
+                    color: #d83565;
+                    }
+
+                    .show-name-mobile h1 {
+                    font-size: 40px;
+                    font-weight: 700;
+                    letter-spacing: 0.1em;
+                    color: #4a437e;
+                    }
+
+                    .time {
+                    padding: 18px 0;
+                    color: #4a437e;
+                    text-align: center;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+                    font-weight: 700;
+                    }
+
+                    .time span {
+                    font-weight: 400;
+                    color: gray;
+                    }
+
+                    .left .time {
+                    font-size: 16px;
+                    }
+
+
+                    .location {
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: center;
+                    width: 100%;
+                    padding-top: 8px;
+                    border-top: 1px solid gray;
+                    }
+
+                    .location .separator {
+                    font-size: 20px;
+                    }
+
+                    .right {
+                    width: 230px;
+                    border-left: 1px dashed #404040;
+                    }
+                    .most-right {
+                    width: 140px;
+                    border-left: 1px dashed #404040;
+                    }
+
+                    .right .admit-one {
+                    color: darkgray;
+                    }
+
+                    .right .admit-one span:nth-child(2) {
+                    color: gray;
+                    }
+
+                    .right .right-info-container {
+                    height: 250px;
+                    padding: 10px 10px 10px 35px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                    align-items: center;
+                    }
+                    .most-right .most-right-info-container {
+                    height: 250px;
+                    padding: 10px 10px 10px 35px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    }
+
+                    .right .show-name h1 {
+                    font-size: 18px;
+                    }
+
+                    .barcode {
+                    height: 100px;
+                    }
+
+                    .barcode img {
+                    height: 100%;
+                    }
+
+                    .barcode-mobile {
+                    height: 90px;
+                    }
+
+                    .barcode-mobile img {
+                    height: 100%;
+                    }
+
+                    .right .ticket-number {
+                    color: gray;
+                    }
                 </style>
             </head>
             <body>
+                <div class="container">
+                    <img src="/custom_web_kreator/static/src/kreator_logo.webp"
+                         alt="Kreator Bee Logo" class="logo"/>
+                    <t t-if="booking_data">
+                        <div>
+                            Congratulations
+                        </div>
+                        <div>
+                            You have successfully booked the slot
+                        </div>
+                        <!--                        <div style="border: 1px solid black;" class="mt-4 rounded">-->
+                        <!--                            <div style="width: 40px; height: 150px; background-color: black;">-->
 
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <div class="ticket mt-4 rounded d-none d-md-flex">
+                            <div class="left">
+                                <div class="ticket-info">
+                                    <p class="date">
+                                        <span>
+                                            <t t-esc="booking_data.slot_date.strftime('%A')"/>
+                                        </span>
+                                        <span class="june-29">
+                                            <t t-esc="booking_data.slot_date.strftime('%b %d')"/>
+                                        </span>
+                                        <span>
+                                            <t t-esc="booking_data.slot_date.strftime('%Y')"/>
+                                        </span>
+                                    </p>
+                                    <div class="show-name">
+                                        <h1>Live Session</h1>
+                                        <h2>By Paras Saxena</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <p class="admit-one">
+                                    <span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;LIVE SESSION</span>
+                                </p>
+                                <div class="right-info-container">
+                                    <div class="show-name">
+                                        <h1>
+                                            <t t-esc="booking_data.user_name.upper()"/>
+                                        </h1>
+                                    </div>
+                                    <div>Starts</div>
+                                    <div class="time">
+                                        <p>
+                                            <t t-esc="booking_data.slot_time.name"/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="most-right">
+                                <div class="most-right-info-container">
+                                    <div class="barcode">
+                                        <img t-att-src="f'data:image/png;base64,{qr}'"
+                                             alt="QR code"/>
+                                    </div>
+                                    <br/>
+                                    <p class="ticket-number">
+                                        <a t-att-href="f'/live/session?booking_id={booking_data.id}'"
+                                           class="p-2 rounded text-white" style="background-color: #008CBA">JOIN NOW
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ticket-mobile mt-4 rounded d-flex d-md-none">
+                            <div class="left">
+                                <div class="left">
+                                    <div class="ticket-info">
+                                        <p class="date-mobile">
+                                            <span>
+                                                <t t-esc="booking_data.slot_date.strftime('%A')"/>
+                                            </span>
+                                            <span class="june-29">
+                                                <t t-esc="booking_data.slot_date.strftime('%b %d')"/>
+                                            </span>
+                                            <span>
+                                                <t t-esc="booking_data.slot_date.strftime('%Y')"/>
+                                            </span>
+                                        </p>
+                                        <div class="show-name-mobile">
+                                            <h1>Live Session</h1>
+                                            <h2>By Paras Saxena</h2>
+                                        </div>
+                                        <div style="border-top: 1px solid black;" class="pt-2">
+                                            <h6>
+                                                <t t-esc="booking_data.user_name.upper()"/>
+                                            </h6>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                <span>Starts:</span>
+                                                <t t-esc="booking_data.slot_time.name"/>
+                                            </p>
+                                        </div>
+                                        <div class="barcode-mobile">
+                                            <img t-att-src="f'data:image/png;base64,{qr}'"
+                                                 alt="QR code"/>
+                                            <a t-att-href="f'/live/session?booking_id={booking_data.id}'"
+                                               class="p-2 rounded text-white" style="background-color: #008CBA">JOIN NOW
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div class="hook">🔥 Limited Slots – Reserve Yours Before They’re Gone!</div>
+                        <h1>Book Your Free Slot Now</h1>
+                        <p>Take the first step toward transforming your future with our exclusive program.</p>
+                        <form action="/live/slot/book" method="POST" id="leadForm">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <input type="text" name="name" placeholder="Your Name" required="required"/>
+                            <input type="email" name="email" placeholder="Email Address" required="required"/>
+                            <input type="tel" name="mobile" placeholder="Mobile Number" pattern="[0-9]{10}"
+                                   required="required"/>
+                            <div>Select A Slot</div>
+                            <div class="row justify-content-around p-3" id="date_select">
+                                <t t-foreach="dates" t-as="date">
+                                    <div class="col-4 rounded-pill p-1 text-white" onclick="selectDate(this)"
+                                         style="background-color: #fb8c00; cursor:pointer;">
+                                        <t t-esc="date"/>
+                                    </div>
+                                </t>
+                            </div>
+                            <input type="radio" id="date1" name="date" value="today" hidden="hidden"/>
+                            <input type="radio" id="date2" name="date" value="tomorrow" hidden="hidden"/>
+                            <input type="radio" id="date3" name="date" value="dat" hidden="hidden"/>
+                            <div class="row justify-content-around p-3">
+                                <div class="col-3 rounded-pill p-1 text-white disabled" onclick="selectTime(this)"
+                                     id="eleven"
+                                     style="background-color: #fb8c00; cursor:pointer;">
+                                    11 AM
+                                </div>
+                                <div class="col-3 rounded-pill p-1 text-white disabled" onclick="selectTime(this)"
+                                     id="three"
+                                     style="background-color: #fb8c00; cursor:pointer;">
+                                    3 PM
+                                </div>
+                                <div class="col-3 rounded-pill p-1 text-white disabled" onclick="selectTime(this)"
+                                     id="seven"
+                                     style="background-color: #fb8c00; cursor:pointer;">
+                                    7 PM
+                                </div>
+                            </div>
+                            <input type="radio" id="time1" name="time" value="11 AM" hidden="hidden"/>
+                            <input type="radio" id="time2" name="time" value="3 PM" hidden="hidden"/>
+                            <input type="radio" id="time3" name="time" value="7 PM" hidden="hidden"/>
+                            <button type="submit" style="display: none;" id="submit_button">Register Now</button>
+                        </form>
+                    </t>
+                </div>
             </body>
+            <script>
+                let date1 = document.getElementById('date1');
+                let date2 = document.getElementById('date2');
+                let date3 = document.getElementById('date3');
+                let time1 = document.getElementById('time1');
+                let time2 = document.getElementById('time2');
+                let time3 = document.getElementById('time3');
+
+                let eleven = document.getElementById('eleven');
+                let three = document.getElementById('three');
+                let seven = document.getElementById('seven');
+                let leadForm = document.getElementById('leadForm');
+                let submit_button = document.getElementById('submit_button');
+                const threePm = new Date();
+                threePm.setHours(15);
+                threePm.setMinutes(0);
+                threePm.setSeconds(0);
+                threePm.setMilliseconds(0);
+                const elevenAm = new Date();
+                elevenAm.setHours(11);
+                elevenAm.setMinutes(0);
+                elevenAm.setSeconds(0);
+                elevenAm.setMilliseconds(0);
+                function selectDate(data) {
+                eleven.classList.add('disabled');
+                three.classList.add('disabled');
+                seven.classList.add('disabled');
+                time1.checked = false;
+                time2.checked = false;
+                time3.checked = false;
+                if (data.innerHTML.trim() == 'Today') {
+                date1.checked = true;
+                const now = new Date();
+                if (now &lt; elevenAm) {
+                eleven.classList.remove('disabled');
+                }
+                if (now &lt; threePm) {
+                three.classList.remove('disabled');
+                }
+                }
+                else if (data.innerHTML.trim() == 'Tomorrow') {
+                date2.checked = true;
+                eleven.classList.remove('disabled');
+                three.classList.remove('disabled');
+                }
+                else {
+                date3.checked = true;
+                eleven.classList.remove('disabled');
+                three.classList.remove('disabled');
+                }
+                seven.classList.remove('disabled')
+                document.querySelectorAll('#date_select div').forEach((link) => {
+                link.classList.add('disabled');
+                });
+                data.classList.remove('disabled');
+
+                }
+                function selectTime(data) {
+                if (data.classList.contains('disabled')) {
+                return
+                }
+                if (data.innerHTML.trim() == '11 AM') {
+                time1.checked = true;
+                }
+                else if (data.innerHTML.trim() == '3 PM') {
+                time2.checked = true;
+                }
+                else {
+                time3.checked = true;
+                }
+                submit_button.style.display = 'block';
+                }
+                document.querySelector('#leadForm').onsubmit = function(e) {
+                e.preventDefault();
+                let date = false;
+                let time = false;
+                if (date1.checked || date2.checked || date3.checked) {
+                date = true;
+                }
+                if (time1.checked || time2.checked || time3.checked) {
+                time = true;
+                }
+                if (date == false || time == false) {
+                alert('Please Select a Slot');
+                debugger;
+                }
+                else {
+                this.submit();
+                }
+                }
+            </script>
         </template>
     </data>
 </odoo>

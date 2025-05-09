@@ -3,3 +3,4 @@
 
 from . import my_product
 from . import loyalty_program
+from . import lead_funnel
