@@ -14,7 +14,7 @@ class LeadFunnel(models.Model):
     slot_time = fields.Many2one(comodel_name='slot.time', string='Slot Time')
     visited = fields.Boolean(string="Visited")
     finished = fields.Boolean(string="Finished")
-    survey_id = fields.Many2one(comodel_name='live.session.survey', sring='Survey')
+    survey_id = fields.Many2one(comodel_name='live.session.survey', string='Survey')
 
 
 class SlotTime(models.Model):
