@@ -422,7 +422,7 @@ class WebsiteSale(payment_portal.PaymentPortal):
             current_url = request.httprequest.referrer
             request.session['redirect_after_signup'] = '/shop/cart'
             if order.order_line.filtered(lambda ol: ol.product_id.channel_ids.partner_redirect):
-                return request.redirect('/web/login')
+                return request.redirect('/web/signup?user_type=partner')
             return request.redirect('/web/signup?user_type=customer')
 
         if user.id != public_user_id and order and order.order_line:
