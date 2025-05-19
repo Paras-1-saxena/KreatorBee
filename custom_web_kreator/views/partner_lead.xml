@@ -284,9 +284,9 @@
                                             <span class="active" id="unverifiedOrdersBtn">
                                                 <a style="cursor: pointer;">Verified</a>
                                             </span>
-                                            <span id="visitorsBtn">
-                                                <a style="cursor: pointer;">Visitors</a>
-                                            </span>
+<!--                                            <span id="visitorsBtn">-->
+<!--                                                <a style="cursor: pointer;">Visitors</a>-->
+<!--                                            </span>-->
                                         </div>
                                     </section>
                                 </div>
