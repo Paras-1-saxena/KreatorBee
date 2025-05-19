@@ -4,24 +4,58 @@
         <field name="name">Lead Funnel Tree</field>
         <field name="model">lead.funnel</field>
         <field name="arch" type="xml">
-            <list editable="bottom" create="0">
+            <list create="0">
                 <field name="name" readonly="1"/>
                 <field name="user_name" readonly="1"/>
                 <field name="email" readonly="1"/>
                 <field name="mobile" readonly="1"/>
-                <!--                    <field name="course_interested" readonly="1"/>-->
                 <field name="slot_date" readonly="1"/>
                 <field name="slot_time" readonly="1"/>
+                <field name="expired" readonly="1" widget="boolean_toggle"/>
                 <field name="visited" readonly="1" widget="boolean_toggle"/>
                 <field name="finished" readonly="1" widget="boolean_toggle"/>
+                <button name="open_survey" string="Survey" type="object" class="btn-secondary"/>
             </list>
+        </field>
+    </record>
+
+    <record id="view_lead_funnel_form" model="ir.ui.view">
+        <field name="name">Lead Funnel Form</field>
+        <field name="model">lead.funnel</field>
+        <field name="arch" type="xml">
+            <form editable="bottom" create="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="user_name" readonly="1"/>
+                            <field name="email" readonly="1"/>
+                            <field name="mobile" readonly="1"/>
+                            <button name="open_survey" string="Survey" type="object" class="btn-secondary"/>
+                        </group>
+                        <group>
+                            <field name="slot_date" readonly="1"/>
+                            <field name="slot_time" readonly="1"/>
+                            <field name="expired" readonly="1" widget="boolean_toggle"/>
+                            <field name="visited" readonly="1" widget="boolean_toggle"/>
+                            <field name="finished" readonly="1" widget="boolean_toggle"/>
+                        </group>
+                        <group>
+                            <field name="describe" readonly="1"/>
+                            <field name="city" readonly="1"/>
+                            <field name="income" readonly="1"/>
+                            <field name="affiliate_career" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
         </field>
     </record>
 
     <record id="action_lead_funnel" model="ir.actions.act_window">
         <field name="name">Lead Funnel</field>
         <field name="res_model">lead.funnel</field>
-        <field name="view_mode">list</field>
+        <field name="view_mode">list,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 No Data Available
@@ -56,13 +90,37 @@
         <field name="arch" type="xml">
             <form editable="bottom">
                 <sheet>
-                    <field name="name"/>
-                    <group>
-                        <group>
-                            <field name="rating"/>
-                            <field name="notes"/>
-                        </group>
-                    </group>
+                    <div>1. How helpful was the webinar in making you understand affiliate marketing?</div>
+                    <div>-->
+                        <span>
+                            <field name="rating" readonly="1"/>
+                        </span>
+                    </div>
+                    <div>2. How would you rate the speaker's delivery and explanation style?</div>
+                    <div>-->
+                        <span>
+                            <field name="delivery" readonly="1"/>
+                        </span>
+                    </div>
+                    <div>3. How easy was it to use and watch the webinar platform (video, audio, chat)?</div>
+                    <div>-->
+                        <span>
+                            <field name="platform" readonly="1"/>
+                        </span>
+                    </div>
+                    <div>4. How useful was the content for someone just starting out in affiliate marketing?</div>
+                    <div>-->
+                        <span>
+                            <field name="starting" readonly="1"/>
+                        </span>
+                    </div>
+                    <div>5. How likely are you to recommend this webinar to a friend or teammate?</div>
+                    <div>-->
+                        <span>
+                            <field name="friend" readonly="1"/>
+                        </span>
+                    </div>
+
                 </sheet>
             </form>
         </field>
