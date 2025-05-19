@@ -3709,6 +3709,19 @@ class PortalMyCourses(http.Controller):
                         </div>
                         <iframe width="100%" height="auto" class="d-block d-md-none" src="https://www.youtube.com/embed/MePNuAF5GIw?si=yaJN1vhdW4JReefm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         ''')
+                        next_vid = Markup('''
+                                                                                                <a onclick="openVideo(6, 'zerotoo')" class="border1 rounded p-2" style="background-color:#ffc107; cursor:pointer;">
+                                                                                                                    Next
+                                                                                                                    <i class="ri-arrow-right-line"></i>
+                                                                                                                </a>
+                                                                                                ''')
+                    if int(ved_no) == 6:
+                        video_data = Markup('''
+                        <div style="width: 80dvw; height: 100dvh;" class="d-none d-md-block">
+                        <iframe width="100%" height="60%" src="https://www.youtube.com/embed/wsqsk6SMojQ?si=VncQlVADMATpOEx6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        <iframe width="100%" height="auto" class="d-block d-md-none" src="https://www.youtube.com/embed/wsqsk6SMojQ?si=VncQlVADMATpOEx6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        ''')
                         next_vid = ''
                 return request.make_response(
                     data=json.dumps({'response': "success", 'video_data': video_data, 'next_but': next_vid}),
