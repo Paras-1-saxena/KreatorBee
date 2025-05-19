@@ -74,11 +74,33 @@
                     border: none;
                     cursor: pointer;
                     transition: background-color 0.3s ease;
-                    width: 100%!important;
+                    width: 50%!important;
                     padding: 0.75rem 1rem!important;
                     font-size: 1.3rem!important;
                     }
                     button:hover {
+                    background-color: #fb8c00;
+                    }
+
+                    .next_button {
+                    background-color: #ffd000;
+                    color: white;
+                    font-weight: bold;
+                    border: none;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    width: 50%!important;
+                    padding: 0.75rem 1rem!important;
+                    font-size: 1.3rem!important;
+                    }
+                    .next_button:hover {
+                    background-color: #fb8c00;
+                    }
+
+                    .slot_select {
+                    background-color: ffd000;
+                    }
+                    .slot_select:hover {
                     background-color: #fb8c00;
                     }
                     .hook {
@@ -210,7 +232,7 @@
                     }
 
                     .show-name h1 {
-                    font-size: 48px;
+                    font-size: 52px;
                     font-weight: 700;
                     letter-spacing: 0.1em;
                     color: #4a437e;
@@ -263,7 +285,7 @@
                     }
 
                     .right {
-                    width: 230px;
+                    width: 300px;
                     border-left: 1px dashed #404040;
                     }
                     .most-right {
@@ -323,14 +345,12 @@
             </head>
             <body>
                 <div class="container">
-                    <img src="/custom_web_kreator/static/src/kreator_logo.webp"
-                         alt="Kreator Bee Logo" class="logo"/>
                     <t t-if="booking_data">
-                        <div>
-                            Congratulations
+                        <div class="fs-2">
+                            Congratulations 🎉
                         </div>
                         <div>
-                            You have successfully booked the slot
+                            Your Registration for webinar is Successful
                         </div>
                         <!--                        <div style="border: 1px solid black;" class="mt-4 rounded">-->
                         <!--                            <div style="width: 40px; height: 150px; background-color: black;">-->
@@ -367,26 +387,14 @@
                                             <t t-esc="booking_data.user_name.upper()"/>
                                         </h1>
                                     </div>
-                                    <div>Starts</div>
+                                    <div>
+                                        <b>Slot Booked for</b>
+                                    </div>
                                     <div class="time">
                                         <p>
                                             <t t-esc="booking_data.slot_time.name"/>
                                         </p>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="most-right">
-                                <div class="most-right-info-container">
-                                    <div class="barcode">
-                                        <img t-att-src="'data:image/png;base64,{}'.format(qr)"
-                                             alt="QR code"/>
-                                    </div>
-                                    <br/>
-                                    <p class="ticket-number">
-                                        <a t-att-href="'/live/session?booking_id={}'.format(booking_data.id)"
-                                           class="p-2 rounded text-white" style="background-color: #008CBA">JOIN NOW
-                                        </a>
-                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -416,37 +424,86 @@
                                         </div>
                                         <div>
                                             <p>
-                                                <span>Starts:</span>
+                                                <span>
+                                                    <b>Slot Booked for</b>
+                                                </span>
                                                 <t t-esc="booking_data.slot_time.name"/>
                                             </p>
-                                        </div>
-                                        <div class="barcode-mobile">
-                                            <img t-att-src="'data:image/png;base64,{}'.format(qr)"
-                                                 alt="QR code"/>
-                                            <a t-att-href="'/live/session?booking_id={}'.format(booking_data.id)"
-                                               class="p-2 rounded text-white" style="background-color: #008CBA">JOIN NOW
-                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="mt-4">
+                            <b>Important :</b>
+                            Join the Whatsapp community to receive the joining link, resources and webinar bonuses:
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <a href="https://chat.whatsapp.com/LhXgfArgkNBAFtxHQwkreu" class="p-2 rounded"
+                               style="border: 1px solid green; background-color: #90EE90" target="_blank">Join the
+                                Whatsapp Group
+                            </a>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            See you inside the webinar :) Don't miss this opportunity!
+                        </div>
                     </t>
                     <t t-else="">
-                        <div class="hook">🔥 Limited Slots – Reserve Yours Before They’re Gone!</div>
-                        <h1>Book Your Free Slot Now</h1>
-                        <p>Take the first step toward transforming your future with our exclusive program.</p>
+                        <div class="hook">🔥 Limited Slots</div>
+                        <h1 style="border-bottom: 1px solid black; margin-bottom: 30px; padding-bottom: 6px;"
+                            id="form_title">Book Your Free Slot Now
+                        </h1>
+                        <!--                        <p>Take the first step toward transforming your future with our exclusive program.</p>-->
                         <form action="/live/slot/book" method="POST" id="leadForm">
                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                            <input type="text" name="name" placeholder="Your Name" required="required"/>
-                            <input type="email" name="email" placeholder="Email Address" required="required"/>
-                            <input type="tel" name="mobile" placeholder="Mobile Number" pattern="[0-9]{10}"
+                            <input type="text" name="name" placeholder="Your Name" required="required" id="name"/>
+                            <input type="email" name="email" placeholder="Email Address" required="required"
+                                   id="email"/>
+                            <input type="tel" name="mobile" placeholder="Mobile Number" pattern="[0-9]{10}" id="mobile"
                                    required="required"/>
-                            <div>Select A Slot</div>
-                            <div class="row justify-content-around p-3" id="date_select">
+                            <div style="display: none" id="profession">
+                                <div class="fs-4">
+                                    <b>What best describes your current profession?</b>
+                                    <input type="text" name="describe" placeholder="Describe Yourself"
+                                           style="width: 100%;" id="describe"
+                                           required="required"/>
+                                </div>
+
+                                <div class="fs-4">
+                                    <b>Which city are you joining us from?</b>
+                                    <input type="text" name="city" placeholder="Enter Your City" required="required"
+                                           style="width: 100%;" id="city"/>
+                                </div>
+                            </div>
+                            <div style="display: none" id="income_sec">
+                                <div class="fs-4">
+                                    <b>How much do you aim to earn monthly through online income?</b>
+                                    <select id="income" name="income" style="width: 100%;">
+                                        <option value="0">Please Select</option>
+                                        <option value="1">Less than ₹10,000</option>
+                                        <option value="2">₹10,000 – ₹50,000</option>
+                                        <option value="3">₹50,000 – ₹1,00,000</option>
+                                        <option value="4">₹1,00,000+</option>
+                                    </select>
+                                </div>
+                                <div class="fs-4">
+                                    <b>Have you tried affiliate marketing before?</b>
+                                    <select id="affiliate_career" name="affiliate_career" style="width: 100%;">
+                                        <option value="0">Please Select</option>
+                                        <option value="1">Yes, I’m already doing it</option>
+                                        <option value="2">I’ve heard about it but haven’t started</option>
+                                        <option value="3">No, this is my first time</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="fs-3" style="display: none;" id="slot_header">
+                                <b>Select A Slot</b>
+                            </div>
+                            <div class="row justify-content-around p-3" id="date_select" style="display: none;">
                                 <t t-foreach="dates" t-as="date">
-                                    <div class="col-4 rounded-pill p-1 text-white" onclick="selectDate(this)"
-                                         style="background-color: #fb8c00; cursor:pointer;">
+                                    <div class="col-4 rounded-pill p-1 text-black slot_select"
+                                         onclick="selectDate(this)"
+                                         style="cursor:pointer;">
                                         <t t-esc="date"/>
                                     </div>
                                 </t>
@@ -454,31 +511,157 @@
                             <input type="radio" id="date1" name="date" value="today" hidden="hidden"/>
                             <input type="radio" id="date2" name="date" value="tomorrow" hidden="hidden"/>
                             <input type="radio" id="date3" name="date" value="dat" hidden="hidden"/>
-                            <div class="row justify-content-around p-3">
-                                <div class="col-3 rounded-pill p-1 text-white disabled" onclick="selectTime(this)"
+                            <div class="row justify-content-around p-3" id="time_select" style="display: none;">
+                                <div class="col-3 rounded-pill p-1 text-black disabled slot_select"
+                                     onclick="selectTime(this)"
                                      id="eleven"
-                                     style="background-color: #fb8c00; cursor:pointer;">
-                                    11 AM
+                                     style="cursor:pointer;">
+                                    12 PM
                                 </div>
-                                <div class="col-3 rounded-pill p-1 text-white disabled" onclick="selectTime(this)"
+                                <div class="col-3 rounded-pill p-1 text-black disabled slot_select"
+                                     onclick="selectTime(this)"
                                      id="three"
-                                     style="background-color: #fb8c00; cursor:pointer;">
-                                    3 PM
+                                     style="cursor:pointer;">
+                                    4 PM
                                 </div>
-                                <div class="col-3 rounded-pill p-1 text-white disabled" onclick="selectTime(this)"
+                                <div class="col-3 rounded-pill p-1 text-black disabled slot_select"
+                                     onclick="selectTime(this)"
                                      id="seven"
-                                     style="background-color: #fb8c00; cursor:pointer;">
+                                     style="cursor:pointer;">
                                     7 PM
                                 </div>
+                                <div class="col-3 rounded-pill p-1 text-black disabled slot_select"
+                                     onclick="selectTime(this)"
+                                     id="nine"
+                                     style="cursor:pointer;">
+                                    9 PM
+                                </div>
                             </div>
-                            <input type="radio" id="time1" name="time" value="11 AM" hidden="hidden"/>
-                            <input type="radio" id="time2" name="time" value="3 PM" hidden="hidden"/>
+                            <input type="radio" id="time1" name="time" value="12 PM" hidden="hidden"/>
+                            <input type="radio" id="time2" name="time" value="4 PM" hidden="hidden"/>
                             <input type="radio" id="time3" name="time" value="7 PM" hidden="hidden"/>
-                            <button type="submit" style="display: none;" id="submit_button">Register Now</button>
+                            <input type="radio" id="time4" name="time" value="9 PM" hidden="hidden"/>
+                            <div id="basic_button">
+                                <span class="next_button" onclick="open_profession()">Next</span>
+                            </div>
+                            <div style="display: none;" id="professional_button">
+                                <span class="next_button" onclick="back_income()">Back</span>
+                                <span class="next_button" onclick="open_income()">Next</span>
+                            </div>
+                            <div style="display: none;" id="income_button">
+                                <span class="next_button" onclick="back_slot()">Back</span>
+                                <span class="next_button" onclick="open_slot()">Next</span>
+                            </div>
+                            <div style="display: none;" id="submit_button_sec">
+                                <span class="next_button" onclick="back_submit()">Back</span>
+                                <button type="submit" id="submit_button" style="display: none;">Register Now</button>
+                            </div>
                         </form>
                     </t>
                 </div>
             </body>
+            <script>
+                let name = document.getElementById('name');
+                let email = document.getElementById('email');
+                let mobile = document.getElementById('mobile');
+                let profession = document.getElementById('profession');
+                let describe = document.getElementById('describe');
+                let city = document.getElementById('city');
+                let income_sec = document.getElementById('income_sec');
+                let income = document.getElementById('income');
+                let affiliate_career = document.getElementById('affiliate_career');
+                let slot_header = document.getElementById('slot_header');
+                let date_select = document.getElementById('date_select');
+                let time_select = document.getElementById('time_select');
+                let form_title = document.getElementById('form_title');
+                let basic_button = document.getElementById('basic_button');
+                let professional_button = document.getElementById('professional_button');
+                let income_button = document.getElementById('income_button');
+                let submit_button_sec = document.getElementById('submit_button_sec');
+
+                function open_profession() {
+                if (name.value == '') {
+                alert('Enter Your Name');
+                return;
+                }
+                if (email.value == '') {
+                alert('Enter Your email');
+                return;
+                }
+                if (mobile.value == '' || mobile.value.length &lt; 10 || mobile.value.length &gt; 10) {
+                alert('Enter a valid mobile Number');
+                return;
+                }
+                name.style.display = 'none';
+                email.style.display = 'none';
+                mobile.style.display = 'none';
+                profession.style.display = 'block';
+                basic_button.style.display = 'none';
+                professional_button.style.display = 'block';
+                form_title.innerHTML = 'Please Answer the following Questions';
+                }
+
+                function back_income() {
+                name.style.display = 'block';
+                email.style.display = 'block';
+                mobile.style.display = 'block';
+                profession.style.display = 'none';
+                basic_button.style.display = 'block';
+                professional_button.style.display = 'none';
+                form_title.innerHTML = 'Book Your Free Slot Now';
+                }
+
+                function open_income() {
+                if (describe.value == '') {
+                alert('Please Describe Yourself');
+                return;
+                }
+                if (city.value == '') {
+                alert('Please Enter Your City');
+                return;
+                }
+                profession.style.display = 'none';
+                income_sec.style.display = 'block';
+                professional_button.style.display = 'none';
+                income_button.style.display = 'block';
+                }
+
+                function back_slot() {
+                profession.style.display = 'block';
+                income_sec.style.display = 'none';
+                professional_button.style.display = 'block';
+                income_button.style.display = 'none';
+                }
+
+                function open_slot() {
+                if (income.value == 0) {
+                alert('Please Answer the following Questions');
+                return;
+                }
+                if (affiliate_career.value == 0) {
+                alert('Please Answer the following Questions');
+                return;
+                }
+                slot_header.style.display = 'block';
+                date_select.style.display = 'flex';
+                time_select.style.display = 'flex';
+                income_sec.style.display = 'none';
+                income_button.style.display = 'none';
+                submit_button_sec.style.display = 'block';
+                form_title.innerHTML = 'Book Your Free Slot Now';
+                }
+
+                function back_submit() {
+                slot_header.style.display = 'none';
+                date_select.style.display = 'none';
+                time_select.style.display = 'none';
+                income_sec.style.display = 'block';
+                income_button.style.display = 'block';
+                submit_button_sec.style.display = 'none';
+                form_title.innerHTML = 'Please Answer the following Questions';
+                }
+
+            </script>
             <script>
                 let date1 = document.getElementById('date1');
                 let date2 = document.getElementById('date2');
@@ -490,15 +673,21 @@
                 let eleven = document.getElementById('eleven');
                 let three = document.getElementById('three');
                 let seven = document.getElementById('seven');
+                let nine = document.getElementById('nine');
                 let leadForm = document.getElementById('leadForm');
                 let submit_button = document.getElementById('submit_button');
+                const sevenPm = new Date();
+                sevenPm.setHours(19);
+                sevenPm.setMinutes(0);
+                sevenPm.setSeconds(0);
+                sevenPm.setMilliseconds(0);
                 const threePm = new Date();
                 threePm.setHours(15);
                 threePm.setMinutes(0);
                 threePm.setSeconds(0);
                 threePm.setMilliseconds(0);
                 const elevenAm = new Date();
-                elevenAm.setHours(11);
+                elevenAm.setHours(12);
                 elevenAm.setMinutes(0);
                 elevenAm.setSeconds(0);
                 elevenAm.setMilliseconds(0);
@@ -509,6 +698,7 @@
                 time1.checked = false;
                 time2.checked = false;
                 time3.checked = false;
+                time4.checked = false;
                 if (data.innerHTML.trim() == 'Today') {
                 date1.checked = true;
                 const now = new Date();
@@ -518,38 +708,54 @@
                 if (now &lt; threePm) {
                 three.classList.remove('disabled');
                 }
+                if (now &lt; sevenPm) {
+                seven.classList.remove('disabled');
+                }
                 }
                 else if (data.innerHTML.trim() == 'Tomorrow') {
                 date2.checked = true;
                 eleven.classList.remove('disabled');
                 three.classList.remove('disabled');
+                seven.classList.remove('disabled')
                 }
                 else {
                 date3.checked = true;
                 eleven.classList.remove('disabled');
                 three.classList.remove('disabled');
-                }
                 seven.classList.remove('disabled')
+                }
+                nine.classList.remove('disabled')
                 document.querySelectorAll('#date_select div').forEach((link) => {
                 link.classList.add('disabled');
+                link.style.border = 'none';
                 });
                 data.classList.remove('disabled');
-
+                data.style.border = '3px inset black';
                 }
                 function selectTime(data) {
                 if (data.classList.contains('disabled')) {
                 return
                 }
-                if (data.innerHTML.trim() == '11 AM') {
+                document.querySelectorAll('#time_select div').forEach((link) => {
+                link.style.border = 'none';
+                });
+                if (data.innerHTML.trim() == '12 PM') {
                 time1.checked = true;
+                data.style.border = '3px inset black';
                 }
-                else if (data.innerHTML.trim() == '3 PM') {
+                else if (data.innerHTML.trim() == '4 PM') {
                 time2.checked = true;
+                data.style.border = '3px inset black';
+                }
+                else if (data.innerHTML.trim() == '7 PM') {
+                time3.checked = true;
+                data.style.border = '3px inset black';
                 }
                 else {
-                time3.checked = true;
+                time4.checked = true;
+                data.style.border = '3px inset black';
                 }
-                submit_button.style.display = 'block';
+                submit_button.style.display = 'inline-block';
                 }
                 document.querySelector('#leadForm').onsubmit = function(e) {
                 e.preventDefault();
@@ -558,7 +764,7 @@
                 if (date1.checked || date2.checked || date3.checked) {
                 date = true;
                 }
-                if (time1.checked || time2.checked || time3.checked) {
+                if (time1.checked || time2.checked || time3.checked || time4.checked) {
                 time = true;
                 }
                 if (date == false || time == false) {
