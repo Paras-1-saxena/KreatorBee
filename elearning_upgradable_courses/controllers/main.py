@@ -36,20 +36,22 @@ class WebsiteSaleCustom(WebsiteSale):
         # if user.id == public_user_id:  # if current user is public user
         #     # Store the current product URL to return after signup
         #     return request.redirect("/shop/cart")
-
         sale_order.order_line.unlink()
-        request.session['coupon_status'] = ''
-        course = request.env['slide.channel'].search([('product_id', '=', int(product_id))])
-        coupon_id = course.referral_coupon_id
-        if coupon_id and (request.session.get('referral_partner') or kwargs.get('promoted')) and (course.id not in request.env.user.partner_id.slide_channel_ids.ids):
-            sale_order._cart_update(
-                product_id=coupon_id.id,
-                add_qty=add_qty,
-                set_qty=set_qty,
-                product_custom_attribute_values=product_custom_attribute_values,
-                no_variant_attribute_value_ids=no_variant_attribute_value_ids,
-                **kwargs
-            )
+        if kwargs.get('type') !=  'subscription':
+            request.session['coupon_status'] = ''
+            course = request.env['slide.channel'].search([('product_id', '=', int(product_id))])
+            coupon_id = course.referral_coupon_id
+            if coupon_id and (request.session.get('referral_partner') or kwargs.get('promoted')) and (course.id not in request.env.user.partner_id.slide_channel_ids.ids):
+                pricelist = request.env['product.pricelist'].search([('name', '=', 'Referral Price')], limit=1)
+                sale_order.update({'pricelist_id': pricelist.id})
+                sale_order._cart_update(
+                    product_id=coupon_id.id,
+                    add_qty=add_qty,
+                    set_qty=set_qty,
+                    product_custom_attribute_values=product_custom_attribute_values,
+                    no_variant_attribute_value_ids=no_variant_attribute_value_ids,
+                    **kwargs
+                )
         if kwargs.get('option'):
             stage_id = course.upgrade_stage_ids.filtered(lambda us: us.name == kwargs.get('option'))
             partner_course_ids = request.env.user.partner_id.slide_channel_ids.product_id.ids

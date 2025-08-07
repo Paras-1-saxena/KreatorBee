@@ -4,3 +4,5 @@
 from . import my_product
 from . import loyalty_program
 from . import lead_funnel
+from . import kb_sale_cart
+from . import sale

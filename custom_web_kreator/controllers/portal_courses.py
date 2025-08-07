@@ -18,6 +18,7 @@ from odoo.exceptions import ValidationError, UserError
 import requests
 import qrcode
 import io
+from odoo.tools.image import image_data_uri
 
 
 class PortalMyCourses(http.Controller):
@@ -502,8 +503,16 @@ class PortalMyCourses(http.Controller):
         if not partner.partner_term_accepted:
             return request.redirect('/master-partner')
         premium_course = request.env['slide.channel'].sudo().search([('is_mandate', '=', True)], limit=1)
-        if not request.env.user.partner_id.early_sign_in and (
-                premium_course.id not in request.env.user.partner_id.slide_channel_ids.ids):
+        is_active_subscription = False
+        partner = request.env.user.partner_id  # Get related partner
+        subscription = partner.subscription_product_line_ids.subscription_id.filtered(
+            lambda sub: sub.stage_id.name == 'In Progress')
+        if subscription and subscription.next_invoice_date >= datetime.today().date():
+            is_active_subscription = True
+        # if not request.env.user.partner_id.early_sign_in and (
+        #         premium_course.id not in request.env.user.partner_id.slide_channel_ids.ids):
+        #     return request.redirect('/partner-welcome')
+        if not is_active_subscription:
             return request.redirect('/partner-welcome')
 
         # Check if the user is an Internal User or Creator
@@ -750,7 +759,7 @@ class PortalMyCourses(http.Controller):
             # Render the data page template
             tutorial_video = Markup("""
                                                         <iframe src="https://player.vimeo.com/video/1073823881?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                                                         frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                                         frameborder="0" allow="au`toplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
                                                           style="width:60vw;height:40vh;" title="Promote+Community+MyCourses"></iframe>
                                                                     """)
             return request.render('custom_web_kreator.nmy_courses_partner', {
@@ -1612,6 +1621,103 @@ class PortalMyCourses(http.Controller):
         result = [{'id': course.id, 'name': course.name} for course in courses]
         return result
 
+    @http.route('/sale/cart/checkout', type='http', auth='public', website=True)
+    def update_sale_cart(self, **kwargs):
+        user = request.env.user
+        sale_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', user.id)], limit=1)
+        products = sale_cart.course_ids.product_id
+        subscription_product_id = request.env['product.product'].sudo().search([('name', '=', '28 Days Subscription'), ('is_subscription', '=', True)], limit=1)
+        pricelist = request.env['product.pricelist'].search([('name', '=', 'Referral Price')], limit=1)
+        sale_order = request.website.sale_get_order(force_create=True)
+        sale_order.order_line = False
+        for product in products:
+            request.env['sale.order.line'].sudo().create({
+                'order_id': sale_order.id,
+                'product_id': product.id,
+                'product_uom_qty': 1,
+                'product_uom': product.uom_id.id,
+                'price_unit': product.lst_price,
+                'name': product.name,
+            })
+        if subscription_product_id and pricelist:
+            request.env['sale.order.line'].sudo().create({
+                'order_id': sale_order.id,
+                'product_id': subscription_product_id.id,
+                'product_uom_qty': 1,
+                'product_uom': subscription_product_id.uom_id.id,
+                'price_unit': subscription_product_id.lst_price,
+                'name': subscription_product_id.name,
+            })
+            sale_order.sudo().update({'pricelist_id': pricelist.id})
+        if kwargs.get('course_count') and request.session.get('referral_partner'):
+            sale_order.sudo().order_line[0:int(kwargs.get('course_count'))].write({'partner_commission_partner_id': int(request.session.get('referral_partner'))})
+        if request.env.user.is_public:
+            request.session['redirect_after_signup'] = '/shop/cart'
+            return request.redirect('/web/login')
+        return request.redirect("/shop/cart")
+
+    @http.route('/get/sale/cart', type='json', auth='public', methods=['POST'])
+    def get_sale_cart(self, **kwargs):
+        user = request.env.user
+        redirect = kwargs.get('redirect')
+        sale_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', user.id)], limit=1)
+        data = sale_cart
+        dynamic_data = ""
+        if kwargs.get('customer'):
+            for course in sale_cart.course_ids:
+                dynamic_data += f"""
+                            <div class="cart-modal-item" id="cart-items">
+                                <img src="{image_data_uri(course.image_1920)}" alt="Product Image"/>
+                                <div class="cart-modal-item-details">
+                                    <h5>{course.name}</h5>
+                                    <p>₹ {course.sales_price}</p>
+                                </div>
+                            </div>
+                            """
+        else:
+            for course in sale_cart.course_ids:
+                dynamic_data += f"""
+                <div class="cart-item">
+                            <img src="{image_data_uri(course.image_1920)}" alt="Product Image"
+                                 class="cart-item-image"/>
+                            <div class="cart-item-details">
+                                <h3 class="cart-item-name">{course.name}</h3>
+                                <p class="cart-item-price">₹ {course.sales_price}</p>
+                            </div>
+                            <div class="cart-item-qty">
+                                <a href='/remove/sale/cart?course_id={course.id}&amp;redirect={redirect}'><i class="fas fa-trash"></i></a>
+                            </div>
+                        </div>
+                """
+        total = sum(course.sales_price for course in sale_cart.course_ids)
+        return {'response': 'success', 'data': Markup(dynamic_data), 'total': Markup(f"₹ {total}"), 'checkout': 'checkout-button' if total > 0.0 else 'checkout-button-disabled', 'cart_count': len(sale_cart.course_ids.ids)}
+
+    @http.route('/add/sale/cart', type='http', auth='public', website=True)
+    def add_sale_cart(self, **kwargs):
+        course_id = kwargs.get('course_id')
+        redirect = kwargs.get('redirect')
+        if not course_id or not redirect:
+            raise NotFound()
+        user = request.env.user
+        sale_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', user.id)], limit=1)
+        if not sale_cart:
+            sale_cart = request.env['kb.sale.cart'].sudo().create({'name': user.id})
+        sale_cart.sudo().write({'course_ids': [(4, int(course_id))]})
+        return request.redirect(redirect)
+
+    @http.route('/remove/sale/cart', type='http', auth='public', website=True)
+    def remove_sale_cart(self, **kwargs):
+        course_id = kwargs.get('course_id')
+        redirect = kwargs.get('redirect')
+        if not course_id or not redirect:
+            raise NotFound()
+        user = request.env.user
+        sale_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', user.id)], limit=1)
+        if not sale_cart:
+            sale_cart = request.env['kb.sale.cart'].sudo().create({'name': user.id})
+        sale_cart.sudo().write({'course_ids': [(3, int(course_id))]})
+        return request.redirect(redirect)
+
     @http.route('/partner/product', type='http', auth="public", website=True)
     def choose_product(self, **kwargs):
         user = request.env.user
@@ -1700,6 +1806,15 @@ class PortalMyCourses(http.Controller):
             'partner_id': partner.id,
         })
         return request.redirect('/choose-product')
+
+    @http.route('/product/referral/page', type='http', auth="public", csrf=False)
+    def product_referral_page(self, **kwargs):
+        course_in_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', request.env.user.id)]).course_ids
+        courses = json.loads(kwargs.get('courses'))
+        recomended_courses = request.env['slide.channel'].sudo().search([('id', 'not in', courses), ('state', '=', 'published'), ('not_display', '=', False)])
+        referred_courses = request.env['slide.channel'].sudo().search([('id', 'in', courses)])
+        values = {'referred_courses': referred_courses, 'recomended_courses': recomended_courses, 'course_in_cart': course_in_cart}
+        return request.render('custom_web_kreator.product_referral_page', values)
 
     @http.route('/partner/myproducts', type='http', auth="public", website=True)
     def partner_product(self, **kwargs):
@@ -3278,7 +3393,7 @@ class PortalMyCourses(http.Controller):
         user = request.env.user
         partner = user.partner_id  # Get related partner
         # request.session['booking_id'] = ''
-        booking_id =  request.session.get('booking_id')
+        booking_id = request.session.get('booking_id')
         if not booking_id:
             dates = []
             seven_pm = time(19, 0, 0)
@@ -3309,7 +3424,8 @@ class PortalMyCourses(http.Controller):
             img_buffer = io.BytesIO()
             img.save(img_buffer, format='PNG')  # Save as PNG format
             img_bytes = base64.b64encode(img_buffer.getvalue()).decode('utf-8')
-            return http.request.render('custom_web_kreator.live_slot_booking', {'booking_data': booking_data, 'qr': img_bytes})
+            return http.request.render('custom_web_kreator.live_slot_booking',
+                                       {'booking_data': booking_data, 'qr': img_bytes})
 
     @http.route('/live/slot/book', type='http', auth='public', website=True)
     def live_slot_boo(self, **kwargs):
@@ -3317,7 +3433,8 @@ class PortalMyCourses(http.Controller):
         partner = user.partner_id  # Get related partner
         slot_date = kwargs.get('date')
         slot_time = kwargs.get('time')
-        lead = request.env['lead.funnel'].sudo().search(['|', ('email', '=', kwargs.get('email')), ('mobile', '=', kwargs.get('mobile'))])
+        lead = request.env['lead.funnel'].sudo().search(
+            ['|', ('email', '=', kwargs.get('email')), ('mobile', '=', kwargs.get('mobile'))])
         if not lead:
             if slot_date == 'today':
                 slot_date = datetime.now()
@@ -3328,8 +3445,9 @@ class PortalMyCourses(http.Controller):
             slot_time = request.env['slot.time'].sudo().search([('name', '=', slot_time)])
 
             sequence = request.env['ir.sequence'].sudo().next_by_code('lead.funnel')
-            lead = request.env['lead.funnel'].sudo().create({'user_name': kwargs.get('name'), 'email': kwargs.get('email'), 'name': sequence,
-                                                      'mobile': kwargs.get('mobile'), 'slot_date': slot_date, 'slot_time': slot_time.id})
+            lead = request.env['lead.funnel'].sudo().create(
+                {'user_name': kwargs.get('name'), 'email': kwargs.get('email'), 'name': sequence,
+                 'mobile': kwargs.get('mobile'), 'slot_date': slot_date, 'slot_time': slot_time.id})
         request.session['booking_id'] = lead.id
         # Check if the user is an Internal User or Creator
         return http.request.redirect('/live/slot/booking')
@@ -3797,13 +3915,38 @@ class PortalMyCourses(http.Controller):
     def partner_welcome(self, **kwargs):
         # Render the data page template
         course_avl = False
-        premium_course = request.env['slide.channel'].sudo().search([('is_mandate', '=', True)], limit=1)
-        if premium_course.id in request.env.user.partner_id.slide_channel_ids.ids:
-            course_avl = True
+        course_in_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', request.env.user.id)]).course_ids
+        premium_course = request.env['slide.channel'].sudo().search([('state', '=', 'published'), ('not_display', '=', False)])
+        is_active_subscription = False
+        subscription_avl = False
+        subscription_end_date = False
+        partner = request.env.user.partner_id  # Get related partner
+        subscription = partner.subscription_product_line_ids.subscription_id.filtered(
+            lambda sub: sub.stage_id.name == 'In Progress')
+        if subscription:
+            subscription_avl = True
+        if subscription and subscription.next_invoice_date >= datetime.today().date():
+            is_active_subscription = True
+        else:
+            subscription_end_date = subscription.next_invoice_date.strftime('%Y-%m-%d') if subscription else False
+        invoice_id = False
+        if not is_active_subscription and subscription:
+            subscription.sudo().close_limit_cron()
+            invoice_id = request.env['account.move'].sudo().search([('subscription_id', '=', subscription.id), ('state', 'in', ['draft', 'posted']), ('payment_state', '=', 'not_paid')], limit=1)
+            if invoice_id.state == 'draft':
+                invoice_id.sudo().action_post()
+        subscription_packages = request.env['product.template'].sudo().search(
+            [('is_subscription', '=', True)]).product_variant_id
         agreement = request.session.get('agreement', 'No Selection')
         return http.request.render('custom_web_kreator.partner_welcome', {'agreement': agreement,
-                                                                          'course_avl': course_avl,
-                                                                          'course': premium_course})
+                                                                          'subscription_avl': subscription_avl,
+                                                                          'is_active_subscription': is_active_subscription,
+                                                                          'subscription_end_date': subscription_end_date,
+                                                                          'subscription_packages': subscription_packages,
+                                                                          'courses': premium_course,
+                                                                          'course_in_cart': course_in_cart,
+                                                                          'invoice_id': invoice_id,
+                                                                          'cart': True})
 
     @http.route('/get_video_url', type='json', auth="public", website=True)
     def get_video_url(self):

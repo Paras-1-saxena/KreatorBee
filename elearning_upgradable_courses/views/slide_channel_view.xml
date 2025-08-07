@@ -19,6 +19,8 @@
                             <field name="partner_redirect" widget="boolean_toggle"/>
                             <field name="referral_coupon_id"/>
                             <field name="is_mandate" widget="boolean_toggle"/>
+                            <field name="brochure" filename="brochure_name"/>
+                            <field name="brochure_name" invisible="1"/>
                         </group>
                     </group>
                 </xpath>

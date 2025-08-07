@@ -1,0 +1,316 @@
+<odoo>
+    <data>
+        <template id="product_referral_page" name="Product Referral Page">
+            <head>
+                <meta charset="UTF-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <title>Amazon Product Section Replica</title>
+                <!-- Bootstrap 5.3 CSS -->
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+                      xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+                      crossorigin="anonymous"/>
+                <!-- Google Fonts - Inter -->
+                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+                      rel="stylesheet"/>
+                <style>
+                    body {
+                    font-family: 'Inter', sans-serif;
+                    background-color: #f0f2f5; /* Light gray background */
+                    padding-top: 2rem;
+                    padding-bottom: 2rem;
+                    }
+                    .section-title {
+                    font-size: 2.5rem;
+                    font-weight: 700;
+                    color: #1a1a1a;
+                    margin-bottom: 2.5rem;
+                    text-align: center;
+                    }
+                    .product-card {
+                    background-color: #fff;
+                    border: 1px solid #ddd;
+                    border-radius: 0.75rem; /* Rounded corners */
+                    padding: 1.5rem;
+                    margin-bottom: 1.5rem;
+                    text-align: center;
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+                    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    height: 100%; /* Ensure cards are same height in a row */
+                    }
+                    .product-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+                    }
+                    .product-card img {
+                    max-width: 100%;
+                    height: 200px; /* Fixed height for images */
+                    object-fit: contain; /* Ensure image fits without cropping */
+                    margin-bottom: 1rem;
+                    border-radius: 0.5rem; /* Rounded corners for images */
+                    }
+                    .product-title {
+                    font-size: 1.1rem;
+                    font-weight: 500;
+                    color: #0f1111;
+                    margin-bottom: 0.5rem;
+                    line-height: 1.4;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2; /* Limit title to 2 lines */
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    min-height: 2.8em; /* Ensure consistent height for titles */
+                    }
+                    .product-price {
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    color: #B12704; /* Amazon's price color */
+                    margin-bottom: 0.5rem;
+                    }
+                    .add-to-cart-btn, .download-brochure-btn {
+                    background-color: #FFD814; /* Amazon's add to cart button color */
+                    color: #0F1111;
+                    border: 1px solid #FCD200;
+                    border-radius: 0.5rem;
+                    padding: 0.6rem 1.2rem;
+                    font-size: 1rem;
+                    font-weight: 600;
+                    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+                    width: 100%; /* Full width button */
+                    margin-top: auto; /* Push button to the bottom */
+                    }
+                    .add-to-cart-btn:hover, .download-brochure-btn:hover {
+                    background-color: #F7CA00;
+                    border-color: #F2C200;
+                    color: #0F1111;
+                    }
+                    .download-brochure-btn {
+                    background-color: #232F3E; /* Darker Amazon-like color for secondary action */
+                    color: #fff;
+                    border: 1px solid #131A22;
+                    margin-top: 0.5rem; /* Space between buttons */
+                    }
+                    .download-brochure-btn:hover {
+                    background-color: #131A22;
+                    border-color: #0F1111;
+                    color: #fff;
+                    }
+                    /* Cart Section Styles */
+                    .cart-section {
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: center;
+                    margin-bottom: 2rem;
+                    padding: 0.5rem 1rem;
+                    background-color: #fff;
+                    border-radius: 0.75rem;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                    cursor: pointer; /* Indicate it's clickable */
+                    }
+                    .cart-icon {
+                    font-size: 1.8rem;
+                    margin-right: 0.5rem;
+                    color: #232F3E;
+                    }
+                    .cart-count {
+                    background-color: #B12704;
+                    color: #fff;
+                    border-radius: 50%;
+                    padding: 0.2rem 0.6rem;
+                    font-size: 0.8rem;
+                    font-weight: 600;
+                    }
+                    /* Cart Modal Specific Styles */
+                    .cart-modal-item {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 1rem;
+                    border-bottom: 1px solid #eee;
+                    padding-bottom: 1rem;
+                    }
+                    .cart-modal-item:last-child {
+                    border-bottom: none;
+                    margin-bottom: 0;
+                    padding-bottom: 0;
+                    }
+                    .cart-modal-item img {
+                    width: 60px;
+                    height: 60px;
+                    object-fit: contain;
+                    margin-right: 1rem;
+                    border-radius: 0.25rem;
+                    }
+                    .cart-modal-item-details {
+                    flex-grow: 1;
+                    text-align: left;
+                    }
+                    .cart-modal-item-details h5 {
+                    font-size: 1rem;
+                    font-weight: 500;
+                    margin-bottom: 0.25rem;
+                    }
+                    .cart-modal-item-details p {
+                    font-size: 0.9rem;
+                    color: #555;
+                    margin-bottom: 0;
+                    }
+                    .cart-total {
+                    font-size: 1.2rem;
+                    font-weight: 700;
+                    text-align: right;
+                    margin-top: 1.5rem;
+                    padding-top: 1rem;
+                    border-top: 1px solid #ddd;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <!-- Cart Section -->
+                    <div class="cart-section" data-bs-toggle="modal" data-bs-target="#cartModal"
+                         onclick="get_cart_data()">
+                        <span class="cart-icon">&#128722;</span> <!-- Shopping Cart Emoji -->
+                        <span class="cart-count" id="cartCount"><t t-esc="len(course_in_cart.ids)"/></span>
+                        <div id="referral_count" hidden="hidden"><t t-esc="len(referred_courses.ids)"/></div>
+                    </div>
+
+                    <!-- Referred Courses Section -->
+                    <h2 class="section-title">Referred Courses</h2>
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mb-5">
+                        <!-- Product Card 1 -->
+                        <t t-foreach="referred_courses" t-as="course">
+                            <div class="col">
+                                <div class="product-card">
+                                    <img t-att-src="image_data_uri(course.image_1920) if course.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'"
+                                         alt="Product 5"/>
+                                    <h3 class="product-title">
+                                        <t t-esc="course.name"/>
+                                    </h3>
+                                    <div class="product-price">₹
+                                        <t t-esc="course.sales_price"/>
+                                    </div>
+                                    <t t-if="course.id in course_in_cart.ids">
+                                        <a t-att-href="'/remove/sale/cart?course_id={}&amp;redirect={}'.format(course.id, request.httprequest.full_path)">
+                                            <button class="add-to-cart-btn">Remove</button>
+                                        </a>
+                                    </t>
+                                    <t t-else="">
+                                        <a t-att-href="'/add/sale/cart?course_id={}&amp;redirect={}'.format(course.id, request.httprequest.full_path)">
+                                            <button class="add-to-cart-btn">Add to Cart</button>
+                                        </a>
+                                    </t>
+                                    <button class="download-brochure-btn">Download Syllabus</button>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+
+                    <!-- Recommended Courses Section -->
+                    <h2 class="section-title">Recommended Courses</h2>
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                        <t t-foreach="recomended_courses" t-as="course">
+                            <div class="col">
+                                <div class="product-card">
+                                    <img t-att-src="image_data_uri(course.image_1920) if course.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'"
+                                         alt="Product 5"/>
+                                    <h3 class="product-title">
+                                        <t t-esc="course.name"/>
+                                    </h3>
+                                    <div class="product-price">₹
+                                        <t t-esc="course.sales_price"/>
+                                    </div>
+                                    <t t-if="course.id in course_in_cart.ids">
+                                        <a t-att-href="'/remove/sale/cart?course_id={}&amp;redirect={}'.format(course.id, request.httprequest.full_path)">
+                                            <button class="add-to-cart-btn">Remove</button>
+                                        </a>
+                                    </t>
+                                    <t t-else="">
+                                        <a t-att-href="'/add/sale/cart?course_id={}&amp;redirect={}'.format(course.id, request.httprequest.full_path)">
+                                            <button class="add-to-cart-btn">Add to Cart</button>
+                                        </a>
+                                    </t>
+                                    <button class="download-brochure-btn">Download Syllabus</button>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+
+                <!-- Cart Modal -->
+                <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="cartModalLabel">Your Shopping Cart</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <p class="text-center bg-warning" id="warning"></p>
+                            <div class="modal-body" id="cartItemsContainer">
+                                <!-- Cart items will be dynamically added here -->
+                                <!--                                <p id="emptyCartMessage">Your cart is empty.</p>-->
+                            </div>
+                            <div class="modal-footer">
+                                <div class="cart-total" id="cartTotal"></div>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continue
+                                    Shopping
+                                </button>
+                                <a t-att-href="'/sale/cart/checkout?course_count={}'.format(len(referred_courses.ids))" id="checkout_link"><button type="button" class="btn btn-primary" id="checkoutBtn">Checkout</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bootstrap 5.3 JS Bundle (Popper.js and Bootstrap JS) -->
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                        xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                        crossorigin="anonymous"></script>
+
+                <script>
+                    function get_cart_data() {
+                    const cart_list = document.getElementById('cartItemsContainer');
+                    const cart_total = document.getElementById('cartTotal');
+                    const cartCount = document.getElementById('cartCount');
+                    const referral_count = document.getElementById('referral_count').innerText;
+                    const checkout = document.getElementById('checkout_link');
+                    const warning = document.getElementById('warning');
+                    try{
+                    fetch('/get/sale/cart',
+                    {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json",
+
+                    },
+                    'body': JSON.stringify({
+                    'params': {
+                    'redirect': window.location.pathname,
+                    'customer': true
+                    }
+                    })
+                    }).then(response=&gt;response.json()).then(data=&gt;{
+                    if(data.result['response']=='success'){
+                    cart_list.innerHTML = data.result.data;
+                    if (referral_count &gt; data.result.cart_count) {
+                        checkout.style.pointerEvents = 'none';
+                        warning.innerHTML = "Need to add minimum " + referral_count + " in the cart for checkout"
+                    }
+                    cart_total.innerHTML = data.result.total;
+                    }else{
+                    alert('Error');
+                    }
+                    })
+                    }catch(error){
+                    console.error('Error:',
+                    error);alert('Failed to Unlike post.');
+                    }
+                    }
+                </script>
+            </body>
+        </template>
+    </data>
+</odoo>
