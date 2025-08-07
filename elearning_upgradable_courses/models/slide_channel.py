@@ -14,6 +14,8 @@ class SlideChannel(models.Model):
                                       help="Purchasing this course will redirect to creating a partner account instead of Customer")
     referral_coupon_id = fields.Many2one(comodel_name='product.product', string='Referral Coupon', help="if applicable a Discount Code is automatically Applicable to the Order Line")
     is_mandate = fields.Boolean(string='Is Mandate', help="User Needs to buy this course to Start the Affiliate Journey")
+    brochure = fields.Binary(string='Brochure', help="Brochure")
+    brochure_name = fields.Char(string='Brochure Name', help="Brochure Name")
 
 class SlideSlide(models.Model):
     _inherit = 'slide.slide'

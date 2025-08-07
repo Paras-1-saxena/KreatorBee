@@ -175,6 +175,7 @@ class ReferralController(http.Controller):
         course_ids = False
         courses = request.env['my.product.cart'].sudo().search([('partner_id', '=', partner_id.id)]).course_id.ids
         partner_ids = request.env['res.partner'].sudo().search([('user_type', '=', 'customer')])
+        course_count = len(request.env.user.partner_id.slide_channel_ids.product_id.ids)
         if courses:
             course_ids = request.env['slide.channel'].sudo().search([
                 ('id', 'in', courses),
@@ -187,12 +188,12 @@ class ReferralController(http.Controller):
                 'product_cart_ids': course_ids,
                 'partner_ids': partner_ids,
                 'payment_referral_id': payment_referral_id,
-
+                'course_count': course_count
             }
             # Render the data page template
             return http.request.render('apg_course_referral.partner_referral_link_page', values)
         if request.httprequest.method == 'POST':
-            course_id = kwargs.get('course_id')
+            course_id = request.httprequest.form.getlist('course_id')
             expiry_time = kwargs.get('expiry_time')
             expireOn = False
             if expiry_time == '5_minutes':
@@ -204,9 +205,9 @@ class ReferralController(http.Controller):
             else:
                 expireOn = 315360000  # 10 years for unlimited
             if course_id:
-                course_id = request.env['slide.channel'].sudo().search([('id', '=', course_id)])
+                course_id = request.env['slide.channel'].sudo().search([('id', 'in', course_id)])
                 referral_id = request.env['apg.course.referral'].sudo().create({
-                    'course_id':course_id.id,
+                    'course_id':[(4, c.id) for c in course_id],
                     'partner_id': partner_id.id,
                     'stage_id': int(kwargs.get('stage_id')) if kwargs.get('stage_id') else False,
                     'expiry_time': expireOn,
@@ -216,19 +217,20 @@ class ReferralController(http.Controller):
                     'product_cart_ids': course_ids,
                     'referral_id': referral_id,
                     'partner_ids': partner_ids,
+                    'course_count': course_count
                 }
                 return http.request.render('apg_course_referral.partner_referral_link_page', values)
         values = {
             'product_cart_ids': course_ids,
             'partner_ids': partner_ids,
+            'course_count': course_count
         }
         tutorial_video = Markup("""
                     <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
                      frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
                       style="width:60vw;;height:40vh;" title="Sales+Product"></iframe>
                     """)
-        values.update({'tutorial_video': tutorial_video})
-        # Render the data page template
+        values.update({'tutorial_video': tutorial_video})        # Render the data page template
         return http.request.render('apg_course_referral.partner_referral_link_page', values)
 
     
@@ -318,16 +320,16 @@ class ReferralController(http.Controller):
             request.session['link_expiry_time'] = expiry_time
             # Store access session
             request.session['course_access'] = {
-                'course_id': int(course_id),
+                'course_id': course_id,
                 'partner_id': int(partner_id)
             }
             encrypt_expiry = [f"{x}{''.join(random.choices(string.ascii_letters + string.digits, k=2))}" for x in str(expiry_time)]
             encrypt_expiry = ''.join(encrypt_expiry)
-            if stage_id != 'False':
-                stage_id = request.env['slide.channel.upgrade.stage'].browse(int(stage_id))
-                course_url = f"{request.env['ir.config_parameter'].sudo().get_param('web.base.url')}/landing/page/{stage_id.landing_page_record_id.lading_id}?course_id={int(course_id)}&course_name={encrypt_expiry}"
-            else:
-                course_url = f"{course_url}&course_name={encrypt_expiry}"
+            # if stage_id != 'False':
+            #     stage_id = request.env['slide.channel.upgrade.stage'].browse(int(stage_id))
+            #     course_url = f"{request.env['ir.config_parameter'].sudo().get_param('web.base.url')}/landing/page/{stage_id.landing_page_record_id.lading_id}?course_id={int(course_id)}&course_name={encrypt_expiry}"
+            # else:
+            course_url = f"/product/referral/page?courses={course_id}&course_name={encrypt_expiry}"
             return request.redirect(course_url)
         except Exception as e:
             return "Invalid or expired referral link."
@@ -455,7 +457,7 @@ class ReferralController(http.Controller):
         course_id = request.env['slide.channel'].sudo().search([('id', '=', course_id)])
         if course_id:
             referral_id = request.env['apg.course.referral'].sudo().create({
-                'course_id':course_id.id,
+                'course_id': [(4, course_id.id)],
                 'partner_id': partner.id,
                 'expiry_time': expireOn,
                 })
@@ -475,18 +477,18 @@ class WebsiteSale(payment_portal.PaymentPortal):
         referral_course = False
         referral_partner = False 
         user = request.env.user
-        if user and user.id != request.website.user_id.id:
-            if request.session.get('referral_course'):
-                referral_course = request.session.get('referral_course')
-                del request.session['referral_course']  # Clear session value after use
-            if request.session.get('referral_partner'):
-                referral_partner = request.session.get('referral_partner')
-                # del request.session['referral_partner']
-            if 'link_expiry_time' in request.session:
-                del request.session['link_expiry_time']  # Delete session key
-            if 'course_access' in request.session:
-                del request.session['course_access']
-            if order:
-                for line in order.order_line:
-                    line.partner_commission_partner_id = int(referral_partner)
+        # if user and user.id != request.website.user_id.id:
+        #     if request.session.get('referral_course'):
+        #         referral_course = request.session.get('referral_course')
+        #         del request.session['referral_course']  # Clear session value after use
+        #     if request.session.get('referral_partner'):
+        #         referral_partner = request.session.get('referral_partner')
+        #         # del request.session['referral_partner']
+        #     if 'link_expiry_time' in request.session:
+        #         del request.session['link_expiry_time']  # Delete session key
+        #     if 'course_access' in request.session:
+        #         del request.session['course_access']
+        #     if order:
+        #         for line in order.order_line:
+        #             line.partner_commission_partner_id = int(referral_partner)
         return response

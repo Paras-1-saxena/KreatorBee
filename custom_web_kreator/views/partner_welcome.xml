@@ -9,6 +9,8 @@
                 <title>Kreator Bee | Sales</title>
                 <!-- external css -->
                 <link rel="stylesheet" href="/custom_web_kreator/static/src/css/custom_styl.css"/>
+                <link rel="stylesheet"
+                      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
                 <!-- bootstrap css -->
                 <link
                         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -164,36 +166,36 @@
                                         </p>
                                     </a>
                                 </div>
-<!--                                <div-->
-<!--                                        class="p-lg-2 p-1 d-flex flex-column align-items-center"-->
-<!--                                >-->
-<!--                                    <a class='text-center'>-->
-<!--                                        <i class="ri-movie-line"></i>-->
-<!--                                        <p>-->
-<!--                                            Onboarding Video 1-->
-<!--                                        </p>-->
-<!--                                    </a>-->
-<!--                                </div>-->
-<!--                                <div-->
-<!--                                        class="p-lg-2 p-1 d-flex flex-column align-items-center"-->
-<!--                                >-->
-<!--                                    <a class='text-center'>-->
-<!--                                        <i class="ri-movie-line"></i>-->
-<!--                                        <p>-->
-<!--                                            Onboarding Video 2-->
-<!--                                        </p>-->
-<!--                                    </a>-->
-<!--                                </div>-->
-<!--                                <div-->
-<!--                                        class="p-lg-2 p-1 d-flex flex-column align-items-center"-->
-<!--                                >-->
-<!--                                    <a class='text-center'>-->
-<!--                                        <i class="ri-movie-line"></i>-->
-<!--                                        <p>-->
-<!--                                            Onboarding Video 3-->
-<!--                                        </p>-->
-<!--                                    </a>-->
-<!--                                </div>-->
+                                <!--                                <div-->
+                                <!--                                        class="p-lg-2 p-1 d-flex flex-column align-items-center"-->
+                                <!--                                >-->
+                                <!--                                    <a class='text-center'>-->
+                                <!--                                        <i class="ri-movie-line"></i>-->
+                                <!--                                        <p>-->
+                                <!--                                            Onboarding Video 1-->
+                                <!--                                        </p>-->
+                                <!--                                    </a>-->
+                                <!--                                </div>-->
+                                <!--                                <div-->
+                                <!--                                        class="p-lg-2 p-1 d-flex flex-column align-items-center"-->
+                                <!--                                >-->
+                                <!--                                    <a class='text-center'>-->
+                                <!--                                        <i class="ri-movie-line"></i>-->
+                                <!--                                        <p>-->
+                                <!--                                            Onboarding Video 2-->
+                                <!--                                        </p>-->
+                                <!--                                    </a>-->
+                                <!--                                </div>-->
+                                <!--                                <div-->
+                                <!--                                        class="p-lg-2 p-1 d-flex flex-column align-items-center"-->
+                                <!--                                >-->
+                                <!--                                    <a class='text-center'>-->
+                                <!--                                        <i class="ri-movie-line"></i>-->
+                                <!--                                        <p>-->
+                                <!--                                            Onboarding Video 3-->
+                                <!--                                        </p>-->
+                                <!--                                    </a>-->
+                                <!--                                </div>-->
                                 <div
                                         class="p-lg-2 p-1 d-flex flex-column align-items-center"
                                 >
@@ -274,39 +276,240 @@
                         <main class="flex-grow-1 p-4 overflow-auto">
                             <!-- Welcome Section -->
                             <!-- product filter -->
-                            <t t-if="course_avl or request.env.user.partner_id.early_sign_in">
+                            <t t-if="subscription_avl and not is_active_subscription">
                                 <div class="my-4">
                                     <div class="row justify-content-around border1 rounded text-center">
-                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                <img src="/custom_web_kreator/static/src/thankyou.png" class="img-fluid"
-                                                     alt="Welcome Icon"/>
-                                                <h1>Thank You for Joining the Bee Partner Program!</h1>
-                                                <h4>Our Customer Support team will get in touch with you for your
-                                                    upcoming Trainings
-                                                </h4>
-                                            </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <!--                                            <img src="/custom_web_kreator/static/src/thankyou.png" class="img-fluid"-->
+                                            <!--                                                     alt="Welcome Icon"/>-->
+                                            <h1>Your Subscription has Just Ended</h1>
+                                            <h4>Renew your subscription to continue enjoying the benefits of Kreator Bee
+                                            </h4>
+                                        </div>
                                         <div class="col-12 p-2 my-3">
                                             <div class="row justify-content-around">
-                                                <div class="col-col-lg-4 col-md-4 col-sm-10 rounded"
-                                                     style="border: 1px solid black;">
-                                                    <a href="https://whatsapp.com/channel/0029Vb9AgyDHwXbAFQJjuT1F"
-                                                       target="_blank">
-                                                        <span class="fs-5">Click here &amp; Follow the Kreator Bee
-                                                            Partners channel on WhatsApp
-                                                        </span>
-                                                        <img
-                                                                src="/custom_web_kreator/static/src/Whatsapp.png"
-                                                        />
+                                                <!--                                                <div class="col-col-lg-4 col-md-4 col-sm-10 rounded"-->
+                                                <!--                                                     style="border: 1px solid black;">-->
+                                                <!--                                                    <a href="https://whatsapp.com/channel/0029Vb9AgyDHwXbAFQJjuT1F"-->
+                                                <!--                                                       target="_blank">-->
+                                                <!--                                                        <span class="fs-5">Click here &amp; Follow the Kreator Bee-->
+                                                <!--                                                            Partners channel on WhatsApp-->
+                                                <!--                                                        </span>-->
+                                                <!--                                                        <img-->
+                                                <!--                                                                src="/custom_web_kreator/static/src/Whatsapp.png"-->
+                                                <!--                                                        />-->
+                                                <!--                                                    </a>-->
+                                                <!--                                                </div>-->
+                                                <span>
+                                                    <a t-att-href="'my/invoices/{}?access_token={}'.format(invoice_id.id, invoice_id.access_token)"
+                                                       class="p-2 rounded text-white"
+                                                       style="background-color: black">Renew Now
                                                     </a>
-                                                </div>
+                                                </span>
                                                 <div class="col-12"></div>
                                                 <div class="col-lg-4 col-md-4 col-sm-10 my-3">
-                                                    <div class="fs-5 p-2">Click below to earn a rewarding 60% commission
-                                                        on every sale!
+                                                    <div class="fs-5 p-2">OR
                                                     </div>
-                                                    <a href="/partner/product" class="custom-btn h5">
-                                                        Start Promoting Now
-                                                    </a>
+                                                    <div>
+                                                        Explore our Other Subscription Packages
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-around">
+                                                <div style="margin-bottom: 50px; border: 2px solid black; border-radius: 25px; width: 29%; height: 52%; margin-top: 45px;"
+                                                     class="bg-white shadow-lg">
+                                                    <div style="font-family: 'Poppins'; font-size: 31.52px; font-weight: 600; border-top-left-radius: 20px; border-top-right-radius: 20px;"
+                                                         class="bg-black text-white p-3">
+                                                        28 Days
+                                                    </div>
+                                                    <br/>
+                                                    <div class="text-start"
+                                                         style="padding-right: 1rem; padding-left: 1rem;">
+                                                        <span class="fs-5"><i class="ri-check-fill"
+                                                                              style="color: green;"></i>&#160;&#160;&#160;
+                                                        </span>
+                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
+                                                            <b>100 % Commission</b>
+                                                        </span>
+                                                    </div>
+                                                    <div class="text-start mt-2"
+                                                         style="padding-right: 1rem; padding-left: 1rem;">
+                                                        <span class="fs-5"><i class="ri-check-fill"
+                                                                              style="color: green;"></i>&#160;&#160;&#160;
+                                                        </span>
+                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
+                                                            <b>Access :</b>
+                                                            All Courses
+                                                        </span>
+                                                    </div>
+                                                    <div class="text-start mt-2"
+                                                         style="padding-right: 1rem; padding-left: 1rem;">
+                                                        <span class="fs-5"><i class="ri-check-fill"
+                                                                              style="color: green;"></i>&#160;&#160;&#160;
+                                                        </span>
+                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
+                                                            <b>Validity :</b>
+                                                            28 Days
+                                                        </span>
+                                                    </div>
+                                                    <div class="text-start mt-2"
+                                                         style="padding-right: 1rem; padding-left: 1rem;">
+                                                        <span class="fs-5"><i class="ri-check-fill"
+                                                                              style="color: green;"></i>&#160;&#160;&#160;
+                                                        </span>
+                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
+                                                            <b>Price :</b>
+                                                            999 INR
+                                                        </span>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <form action="/shop/cart/update?type=subscription" method="POST"
+                                                              class="d-flex justify-content-center bg-black p-1"
+                                                              style="border-radius: 15px;">
+                                                            <input type="hidden" name="csrf_token"
+                                                                   t-att-value="request.csrf_token()"/>
+                                                            <input type="hidden" name="product_template_id"
+                                                                   t-att-value="subscription_packages.filtered(lambda sp: sp.name == '28 Days Subscription').product_tmpl_id.id"/>
+                                                            <input type="hidden" class="product_id" name="product_id"
+                                                                   t-att-value="subscription_packages.filtered(lambda sp: sp.name == '28 Days Subscription').id"/>
+                                                            <button type="submit"
+                                                                    style="background: none; border: none; color: white; font-family: 'Poppins'; font-size: 17.86px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                                                Subscribe Now
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div style="height: 52%; margin-bottom: 50px; border: 2px solid #fff5c6; border-top-left-radius: 100px; border-bottom-left-radius: 24px; border-radius: 25px; width: 29%; background-color: #fff5c6;"
+                                                     class="shadow-lg">
+                                                    <div style="font-family: 'Poppins'; font-size: 20.52px; font-weight: 600; border-top-left-radius: 20px; border-top-right-radius: 20px; background-color: #fff5c6;"
+                                                         class="p-1">
+                                                        MOST POPULAR
+                                                    </div>
+                                                    <div style="font-family: 'Poppins'; font-size: 31.52px; font-weight: 600;"
+                                                         class="bg-black text-white p-3">
+                                                        84 Days
+                                                    </div>
+                                                    <br/>
+                                                    <div class="text-start"
+                                                         style="padding-right: 1rem; padding-left: 1rem;">
+                                                        <span class="fs-5"><i class="ri-check-fill"
+                                                                              style="color: green;"></i>&#160;&#160;&#160;
+                                                        </span>
+                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
+                                                            <b>100 % Commission</b>
+                                                        </span>
+                                                    </div>
+                                                    <div class="text-start mt-2"
+                                                         style="padding-right: 1rem; padding-left: 1rem;">
+                                                        <span class="fs-5"><i class="ri-check-fill"
+                                                                              style="color: green;"></i>&#160;&#160;&#160;
+                                                        </span>
+                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
+                                                            <b>Access :</b>
+                                                            All Courses
+                                                        </span>
+                                                    </div>
+                                                    <div class="text-start mt-2"
+                                                         style="padding-right: 1rem; padding-left: 1rem;">
+                                                        <span class="fs-5"><i class="ri-check-fill"
+                                                                              style="color: green;"></i>&#160;&#160;&#160;
+                                                        </span>
+                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
+                                                            <b>Validity :</b>
+                                                            84 Days
+                                                        </span>
+                                                    </div>
+                                                    <div class="text-start mt-2"
+                                                         style="padding-right: 1rem; padding-left: 1rem;">
+                                                        <span class="fs-5"><i class="ri-check-fill"
+                                                                              style="color: green;"></i>&#160;&#160;&#160;
+                                                        </span>
+                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
+                                                            <b>Price :</b>
+                                                            <s>2997</s>
+                                                            - 2499 INR
+                                                        </span>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <form action="/shop/cart/update?type=subscription" method="POST"
+                                                              class="d-flex justify-content-center bg-black p-1"
+                                                              style="border-radius: 15px;">
+                                                            <input type="hidden" name="csrf_token"
+                                                                   t-att-value="request.csrf_token()"/>
+                                                            <input type="hidden" name="product_template_id"
+                                                                   t-att-value="subscription_packages.filtered(lambda sp: sp.name == '84 Days Subscription').product_tmpl_id.id"/>
+                                                            <input type="hidden" class="product_id" name="product_id"
+                                                                   t-att-value="subscription_packages.filtered(lambda sp: sp.name == '84 Days Subscription').id"/>
+                                                            <button type="submit"
+                                                                    style="background: none; border: none; color: white; font-family: 'Poppins'; font-size: 17.86px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                                                Subscribe Now
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div style="height: 52%; margin-bottom: 50px; border: 2px solid black; border-radius: 24px; width: 29%; margin-top: 45px;"
+                                                     class="bg-white shadow-lg">
+                                                    <div style="font-family: 'Poppins'; font-size: 31.52px; font-weight: 600; border-top-left-radius: 20px; border-top-right-radius: 20px;"
+                                                         class="bg-black text-white p-3">
+                                                        336 Days
+                                                    </div>
+                                                    <br/>
+                                                    <div class="text-start"
+                                                         style="padding-right: 1rem; padding-left: 1rem;">
+                                                        <span class="fs-5"><i class="ri-check-fill"
+                                                                              style="color: green;"></i>&#160;&#160;&#160;
+                                                        </span>
+                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
+                                                            <b>100 % Commission</b>
+                                                        </span>
+                                                    </div>
+                                                    <div class="text-start mt-2"
+                                                         style="padding-right: 1rem; padding-left: 1rem;">
+                                                        <span class="fs-5"><i class="ri-check-fill"
+                                                                              style="color: green;"></i>&#160;&#160;&#160;
+                                                        </span>
+                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
+                                                            <b>Access :</b>
+                                                            All Courses
+                                                        </span>
+                                                    </div>
+                                                    <div class="text-start mt-2"
+                                                         style="padding-right: 1rem; padding-left: 1rem;">
+                                                        <span class="fs-5"><i class="ri-check-fill"
+                                                                              style="color: green;"></i>&#160;&#160;&#160;
+                                                        </span>
+                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
+                                                            <b>Validity :</b>
+                                                            336 Days
+                                                        </span>
+                                                    </div>
+                                                    <div class="text-start mt-2"
+                                                         style="padding-right: 1rem; padding-left: 1rem;">
+                                                        <span class="fs-5"><i class="ri-check-fill"
+                                                                              style="color: green;"></i>&#160;&#160;&#160;
+                                                        </span>
+                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
+                                                            <b>Price :</b>
+                                                            <s>11998</s>
+                                                            - 10999 INR
+                                                        </span>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <form action="/shop/cart/update?type=subscription" method="POST"
+                                                              class="d-flex justify-content-center bg-black p-1"
+                                                              style="border-radius: 15px;">
+                                                            <input type="hidden" name="csrf_token"
+                                                                   t-att-value="request.csrf_token()"/>
+                                                            <input type="hidden" name="product_template_id"
+                                                                   t-att-value="subscription_packages.filtered(lambda sp: sp.name == '336 Days Subscription').product_tmpl_id.id"/>
+                                                            <input type="hidden" class="product_id" name="product_id"
+                                                                   t-att-value="subscription_packages.filtered(lambda sp: sp.name == '336 Days Subscription').id"/>
+                                                            <button type="submit"
+                                                                    style="background: none; border: none; color: white; font-family: 'Poppins'; font-size: 17.86px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                                                Subscribe Now
+                                                            </button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -314,806 +517,599 @@
                                 </div>
                             </t>
                             <t t-else="">
-                                <div class="rounded text-center d-none d-md-block"
-                                     style="background-image: url('/custom_web_kreator/static/src/welcom_img_desk.svg')">
+                                <style>
+                                    .product-card {
+                                    border: none;
+                                    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+                                    }
+                                    .product-card:hover {
+                                    transform: translateY(-5px);
+                                    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+                                    }
+                                    .card-img-top {
+                                    object-fit: cover;
+                                    height: 200px;
+                                    }
+                                    .card-body {
+                                    display: flex;
+                                    flex-direction: column;
+                                    }
+                                    .card-price {
+                                    font-size: 1.5rem;
+                                    font-weight: bold;
+                                    color: var(--bs-primary);
+                                    white-space: nowrap;
+                                    }
+                                    /* Style for the buttons at the bottom of the card */
+                                    .card-buttons {
+                                    display: flex;
+                                    flex-direction: column;
+                                    gap: 0.5rem;
+                                    }
+                                    @media (min-width: 576px) {
+                                    .card-buttons {
+                                    flex-direction: row;
+                                    gap: 0.5rem;
+                                    }
+                                    }
+                                    .card-buttons > * {
+                                    flex-grow: 1;
+                                    }
+
+                                    .add-to-cart-btn {
+                                    background-color: #ffd000;
+                                    color: black;
+                                    }
+
+                                    .add-to-cart-btn:hover {
+                                    background-color: #fff5c6;
+                                    color: black;
+                                    }
+                                </style>
+                                <div class="rounded text-center d-none d-md-block">
                                     <div class="text-center h3 p-2 row justify-content-center">
                                         <div class="col-9">
                                             Thank you for joining Kreator Bee - get trained with our exclusive
                                             Program and start earning by promoting top courses
                                         </div>
-                                        <div class="col-9 display-3" style="font-weight: 600; color: #fff5c6; text-shadow:-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, -3px 0px 0 #000, 3px 0px 0 #000, 0px -3px 0 #000, 0px 3px 0 #000;">
-                                            Affiliate Marketing Millionaire Program
-                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-around">
-                                        <div style="margin-bottom: 50px; border: 2px solid black; border-radius: 25px; width: 29%; height: 52%; margin-top: 45px;"
-                                             class="bg-white shadow-lg">
-                                            <div style="font-family: 'Poppins'; font-size: 31.52px; font-weight: 600; border-top-left-radius: 20px; border-top-right-radius: 20px;"
-                                                 class="bg-black text-white p-3">
-                                                BASIC
-                                            </div>
-                                            <br/>
-                                            <div class="text-start"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>Module 1:</b> The
-                                                    Foundation
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>Module 2:</b> The
-                                                    Blueprint
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>Module 3:</b> The Engine
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>Module 4:</b> The
-                                                    Accelerator
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>Module 5:</b>The Roadmap
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Customer Support
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Mobile Video Editing (Crash Course)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Advanced Meta Ads (Crash Course)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Sales Mastery (Crash Course)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Viral Your Reels (Crash Course)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">4 Live QnA Sessions Monthly
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-close-fill" style="color: white;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">( 1 Per Each Crash Course )
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>4 Live QnA Sessions Monthly </b>
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-close-fill" style="color: white;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>By Paras Saxena</b> ( For 1 Year)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Priority Support
-                                                </span>
-                                            </div>
-                                            <div style="margin-top: 30px; padding-right: 1rem; padding-left: 1rem; padding-bottom: 0.6rem;">
-                                                <a t-att-href="'/landing/page/10?course_id={}'.format(course.id)"
-                                                   class="d-flex justify-content-center bg-black p-2"
-                                                   style="border-radius: 15px;">
-                                                    <div style="font-family: 'Poppins'; font-size: 17.86px;"
-                                                         class="text-white">
-                                                        LEARN MORE
+                                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                                        <t t-foreach="courses" t-as="course">
+                                            <div class="col">
+                                                <!--                                                <div class="card h-100 rounded-3 product-card shadow-sm">-->
+                                                <!--                                                    <img t-att-src="image_data_uri(course.image_1920) if course.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'"-->
+                                                <!--                                                         class="card-img-top rounded-top" alt="Course Image"/>-->
+                                                <!--                                                    <div class="card-body d-flex flex-column">-->
+                                                <!--                                                        <h5 class="card-title fw-semibold">-->
+                                                <!--                                                            <t t-esc="course.name"/>-->
+                                                <!--                                                        </h5>-->
+                                                <!--                                                        <p class="card-text text-muted mb-4">-->
+                                                <!--                                                            <t t-esc="course.description"/>-->
+                                                <!--                                                        </p>-->
+                                                <!--                                                        <div class="mt-auto d-flex justify-content-between align-items-center">-->
+                                                <!--                                                            <span class="card-price">₹-->
+                                                <!--                                                                <t t-esc="course.sales_price"/>-->
+                                                <!--                                                            </span>-->
+                                                <!--                                                            <button class="btn add-to-cart-btn"-->
+                                                <!--                                                                    data-product-id="1"-->
+                                                <!--                                                                    data-product-name="Awesome Gadget Pro"-->
+                                                <!--                                                                    data-product-price="99.99">-->
+                                                <!--                                                                <i class="bi bi-cart-plus me-2"></i>Add to Cart-->
+                                                <!--                                                            </button>-->
+                                                <!--                                                        </div>-->
+                                                <!--                                                    </div>-->
+                                                <!--                                                </div>-->
+                                                <div class="card h-100 rounded-3 product-card shadow-sm">
+                                                    <img t-att-src="image_data_uri(course.image_1920) if course.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'"
+                                                         class="card-img-top rounded-top" alt="Course Image"/>
+                                                    <div class="card-body d-flex flex-column">
+                                                        <h5 class="card-title fw-semibold">
+                                                            <t t-esc="course.name"/>
+                                                        </h5>
+                                                        <p class="card-text text-muted mb-4">
+                                                            <t t-esc="course.description"/>
+                                                        </p>
+                                                        <div class="mt-auto">
+                                                            <span class="card-price d-block mb-3">₹
+                                                                <t t-esc="course.sales_price"/>
+                                                            </span>
+                                                            <div class="card-buttons">
+                                                                <t t-if="course.id in course_in_cart.ids">
+                                                                    <a class="btn btn-success add-to-cart-btn"
+                                                                       t-att-href="'/remove/sale/cart?course_id={}&amp;redirect={}'.format(course.id, 'partner-welcome')">
+                                                                        <i class="fas fa-trash me-2"></i>Remove
+                                                                    </a>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <a class="btn btn-success add-to-cart-btn"
+                                                                       t-att-href="'/add/sale/cart?course_id={}&amp;redirect={}'.format(course.id, 'partner-welcome')">
+                                                                        <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                                                                    </a>
+                                                                </t>
+                                                                <a t-att-href="'/web/binary/saveas?model=slide.channel&amp;field=brochure&amp;id={}&amp;filename_field={}'.format(course.id, course.brochure_name)"
+                                                                   class="btn add-to-cart-btn" download="download">
+                                                                    <i class="fas fa-download me-2"></i>
+                                                                    Brochure
+                                                                </a>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </a>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div style="height: 52%; margin-bottom: 50px; border: 2px solid #fff5c6; border-top-left-radius: 100px; border-bottom-left-radius: 24px; border-radius: 25px; width: 29%; background-color: #fff5c6;"
-                                             class="shadow-lg">
-                                            <div style="font-family: 'Poppins'; font-size: 20.52px; font-weight: 600; border-top-left-radius: 20px; border-top-right-radius: 20px; background-color: #fff5c6;"
-                                            class="p-1">
-                                                MOST POPULAR
-                                            </div>
-                                            <div style="font-family: 'Poppins'; font-size: 31.52px; font-weight: 600;"
-                                                 class="bg-black text-white p-3">
-                                                INTERMEDIATE
-                                            </div>
-                                            <br/>
-                                            <div class="text-start"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>Module 1:</b> The
-                                                    Foundation
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>Module 2:</b> The
-                                                    Blueprint
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>Module 3:</b> The Engine
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>Module 4:</b> The
-                                                    Accelerator
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>Module 5:</b>The Roadmap
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Customer Support
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Mobile Video Editing (Crash Course)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Advanced Meta Ads (Crash Course)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Sales Mastery (Crash Course)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Viral Your Reels (Crash Course)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">4 Live QnA Sessions Monthly
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-close-fill" style="color: #fff5c6;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">( 1 Per Each Crash Course )
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>4 Live QnA Sessions Monthly</b>
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-close-fill" style="color: #fff5c6;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>By Paras Saxena</b> ( For 1 Year)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Priority Support
-                                                </span>
-                                            </div>
-                                            <div style="margin-top: 38px; padding-right: 1rem; padding-left: 1rem; padding-bottom: 0.6rem;">
-                                                <a t-att-href="'/landing/page/11?course_id={}'.format(course.id)"
-                                                   class="d-flex justify-content-center bg-black p-2"
-                                                   style="border-radius: 15px;">
-                                                    <div style="font-family: 'Poppins'; font-size: 17.86px;"
-                                                         class="text-white">
-                                                        LEARN MORE
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div style="height: 52%; margin-bottom: 50px; border: 2px solid black; border-radius: 24px; width: 29%; margin-top: 45px;"
-                                             class="bg-white shadow-lg">
-                                            <div style="font-family: 'Poppins'; font-size: 31.52px; font-weight: 600; border-top-left-radius: 20px; border-top-right-radius: 20px;"
-                                                 class="bg-black text-white p-3">
-                                                ADVANCED
-                                            </div>
-                                            <br/>
-                                            <div class="text-start"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-6"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>Module 1:</b> The
-                                                    Foundation
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>Module 2:</b> The
-                                                    Blueprint
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>Module 3:</b> The Engine
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>Module 4:</b> The
-                                                    Accelerator
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>Module 5:</b>The Roadmap
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Customer Support
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Mobile Video Editing (Crash Course)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Advanced Meta Ads (Crash Course)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Sales Mastery (Crash Course)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Viral Your Reels (Crash Course)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">4 Live QnA Sessions Monthly
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: white;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">( 1 Per Each Crash Course )
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>4 Live QnA Sessions Monthly</b>
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: white;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;"><b>By Paras Saxena</b> ( For 1 Year)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 20.01px;">Priority Support
-                                                </span>
-                                            </div>
-                                            <div style="margin-top: 38px; padding-right: 1rem; padding-left: 1rem; padding-bottom: 0.6rem;">
-                                                <a t-att-href="'/landing/page/12?course_id={}'.format(course.id)"
-                                                   class="d-flex justify-content-center bg-black p-2"
-                                                   style="border-radius: 15px;">
-                                                    <div style="font-family: 'Poppins'; font-size: 17.86px;"
-                                                         class="text-white">
-                                                        LEARN MORE
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
+                                        </t>
                                     </div>
+
                                 </div>
-                                <div class="rounded text-center d-block d-md-none"
-                                     style="background-image: url('/custom_web_kreator/static/src/welcom_img_desk.svg'); background-repeat: no-repeat; background-attachment: fixed;">
-                                    <div class="text-center h3 p-2 row justify-content-center">
-                                        <div class="col-12">
-                                            Thank you for joining Kreator Bee - get trained with our exclusive
-                                            Program and start earning by promoting top courses
-                                        </div>
-                                        <div class="col-12 display-4" style="font-weight: 600; color: #fff5c6; text-shadow:-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, -3px 0px 0 #000, 3px 0px 0 #000, 0px -3px 0 #000, 0px 3px 0 #000;">
-                                            Affiliate Marketing Millionaire Program
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-around">
-                                        <div style="margin-bottom: 50px; border: 2px solid black; border-radius: 25px; margin-top: 45px; padding: 0px;"
-                                             class="col-11 bg-white shadow-lg">
-                                            <div style="font-family: 'Poppins'; font-size: 31.52px; font-weight: 600; border-top-left-radius: 20px; border-top-right-radius: 20px;"
-                                                 class="bg-black text-white p-3">
-                                                BASIC
-                                            </div>
-                                            <br/>
-                                            <div class="text-start"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module 1:</b> The
-                                                    Foundation
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module 2:</b> The
-                                                    Blueprint
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module 3:</b> The Engine
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module 4:</b> The
-                                                    Accelerator
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module 5:</b>The Roadmap
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Customer Support
-                                                </span>
-                                            </div>
-                                            <hr/>
-                                            <div class="text-center fs-5" style="font-family: 'Poppins';"><b>Crash Courses</b></div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Mobile Video Editing
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Advanced Meta Ads
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Sales Mastery
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Viral Your Reels
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">4 Live QnA Sessions Monthly
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-close-fill" style="color: white;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">( 1 Per Each Crash Course )
-                                                </span>
-                                            </div>
-                                            <hr/>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>4 Live QnA Sessions Monthly </b>
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-close-fill" style="color: white;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>By Paras Saxena</b> ( For 1 Year)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Priority Support
-                                                </span>
-                                            </div>
-                                            <div style="margin-top: 30px; padding-right: 1rem; padding-left: 1rem; padding-bottom: 0.6rem;">
-                                                <a t-att-href="'/landing/page/10?course_id={}'.format(course.id)"
-                                                   class="d-flex justify-content-center bg-black p-2"
-                                                   style="border-radius: 15px;">
-                                                    <div style="font-family: 'Poppins'; font-size: 17.86px;"
-                                                         class="text-white">
-                                                        LEARN MORE
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div style="padding: 0px; margin-bottom: 50px; border: 2px solid #fff5c6; border-top-left-radius: 100px; border-bottom-left-radius: 24px; border-radius: 25px; background-color: #fff5c6;"
-                                             class="col-11 shadow-lg">
-                                            <div style="font-family: 'Poppins'; font-size: 20.52px; font-weight: 600; border-top-left-radius: 20px; border-top-right-radius: 20px; background-color: #fff5c6;"
-                                            class="p-1">
-                                                MOST POPULAR
-                                            </div>
-                                            <div style="font-family: 'Poppins'; font-size: 31.52px; font-weight: 600;"
-                                                 class="bg-black text-white p-3">
-                                                INTERMEDIATE
-                                            </div>
-                                            <br/>
-                                            <div class="text-start"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module 1:</b> The
-                                                    Foundation
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module 2:</b> The
-                                                    Blueprint
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module 3:</b> The Engine
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module 4:</b> The
-                                                    Accelerator
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module 5:</b>The Roadmap
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Customer Support
-                                                </span>
-                                            </div>
-                                            <hr/>
-                                            <div class="text-center fs-5" style="font-family: 'Poppins';"><b>Crash Courses</b></div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Mobile Video Editing
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Advanced Meta Ads
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Sales Mastery
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Viral Your Reels
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">4 Live QnA Sessions Monthly
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-close-fill" style="color: #fff5c6;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">( 1 Per Each Crash Course )
-                                                </span>
-                                            </div>
-                                            <hr/>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>4 Live QnA Sessions Monthly</b>
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-close-fill" style="color: #fff5c6;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>By Paras Saxena</b> ( For 1 Year)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Priority Support
-                                                </span>
-                                            </div>
-                                            <div style="margin-top: 38px; padding-right: 1rem; padding-left: 1rem; padding-bottom: 0.6rem;">
-                                                <a t-att-href="'/landing/page/11?course_id={}'.format(course.id)"
-                                                   class="d-flex justify-content-center bg-black p-2"
-                                                   style="border-radius: 15px;">
-                                                    <div style="font-family: 'Poppins'; font-size: 17.86px;"
-                                                         class="text-white">
-                                                        LEARN MORE
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div style="padding: 0px; margin-bottom: 50px; border: 2px solid black; border-radius: 24px;"
-                                             class="col-11 bg-white shadow-lg">
-                                            <div style="font-family: 'Poppins'; font-size: 31.52px; font-weight: 600; border-top-left-radius: 20px; border-top-right-radius: 20px;"
-                                                 class="bg-black text-white p-3">
-                                                ADVANCED
-                                            </div>
-                                            <br/>
-                                            <div class="text-start"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module 1:</b> The
-                                                    Foundation
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module 2:</b> The
-                                                    Blueprint
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module 3:</b> The Engine
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module 4:</b> The
-                                                    Accelerator
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module 5:</b>The Roadmap
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Customer Support
-                                                </span>
-                                            </div>
-                                            <hr/>
-                                            <div class="text-center fs-5" style="font-family: 'Poppins';"><b>Crash Courses</b></div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Mobile Video Editing
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Advanced Meta Ads
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Sales Mastery
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Viral Your Reels
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">4 Live QnA Sessions Monthly
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: white;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">( 1 Per Each Crash Course )
-                                                </span>
-                                            </div>
-                                            <hr/>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>4 Live QnA Sessions Monthly</b>
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: white;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>By Paras Saxena</b> ( For 1 Year)
-                                                </span>
-                                            </div>
-                                            <div class="text-start mt-2"
-                                                 style="padding-right: 1rem; padding-left: 1rem;">
-                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;
-                                                </span>
-                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Priority Support
-                                                </span>
-                                            </div>
-                                            <div style="margin-top: 38px; padding-right: 1rem; padding-left: 1rem; padding-bottom: 0.6rem;">
-                                                <a t-att-href="'/landing/page/12?course_id={}'.format(course.id)"
-                                                   class="d-flex justify-content-center bg-black p-2"
-                                                   style="border-radius: 15px;">
-                                                    <div style="font-family: 'Poppins'; font-size: 17.86px;"
-                                                         class="text-white">
-                                                        LEARN MORE
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div>
+                                    <!--                                    <div class="rounded text-center d-block d-md-none"-->
+                                    <!--                                     style="background-image: url('/custom_web_kreator/static/src/welcom_img_desk.svg'); background-repeat: no-repeat; background-attachment: fixed;">-->
+                                    <!--                                    <div class="text-center h3 p-2 row justify-content-center">-->
+                                    <!--                                        <div class="col-12">-->
+                                    <!--                                            Thank you for joining Kreator Bee - get trained with our exclusive-->
+                                    <!--                                            Program and start earning by promoting top courses-->
+                                    <!--                                        </div>-->
+                                    <!--                                        <div class="col-12 display-4"-->
+                                    <!--                                             style="font-weight: 600; color: #fff5c6; text-shadow:-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, -3px 0px 0 #000, 3px 0px 0 #000, 0px -3px 0 #000, 0px 3px 0 #000;">-->
+                                    <!--                                            Affiliate Marketing Millionaire Program-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <div class="row justify-content-around">-->
+                                    <!--                                        <div style="margin-bottom: 50px; border: 2px solid black; border-radius: 25px; margin-top: 45px; padding: 0px;"-->
+                                    <!--                                             class="col-11 bg-white shadow-lg">-->
+                                    <!--                                            <div style="font-family: 'Poppins'; font-size: 31.52px; font-weight: 600; border-top-left-radius: 20px; border-top-right-radius: 20px;"-->
+                                    <!--                                                 class="bg-black text-white p-3">-->
+                                    <!--                                                BASIC-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <br/>-->
+                                    <!--                                            <div class="text-start"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>Module 1:</b>-->
+                                    <!--                                                    The-->
+                                    <!--                                                    Foundation-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>Module 2:</b>-->
+                                    <!--                                                    The-->
+                                    <!--                                                    Blueprint-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>Module 3:</b>-->
+                                    <!--                                                    The Engine-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>Module 4:</b>-->
+                                    <!--                                                    The-->
+                                    <!--                                                    Accelerator-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module-->
+                                    <!--                                                    5:</b>The Roadmap-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Customer-->
+                                    <!--                                                    Support-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <hr/>-->
+                                    <!--                                            <div class="text-center fs-5" style="font-family: 'Poppins';">-->
+                                    <!--                                                <b>Crash Courses</b>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Mobile Video-->
+                                    <!--                                                    Editing-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Advanced Meta-->
+                                    <!--                                                    Ads-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Sales Mastery-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Viral Your-->
+                                    <!--                                                    Reels-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">4 Live QnA-->
+                                    <!--                                                    Sessions Monthly-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-close-fill" style="color: white;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">( 1 Per Each-->
+                                    <!--                                                    Crash Course )-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <hr/>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>4 Live QnA Sessions Monthly</b>-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-close-fill" style="color: white;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>By Paras Saxena</b>-->
+                                    <!--                                                    ( For 336 Days)-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Priority-->
+                                    <!--                                                    Support-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div style="margin-top: 30px; padding-right: 1rem; padding-left: 1rem; padding-bottom: 0.6rem;">-->
+                                    <!--                                                <a t-att-href="'/landing/page/10?course_id={}'.format(course.id)"-->
+                                    <!--                                                   class="d-flex justify-content-center bg-black p-2"-->
+                                    <!--                                                   style="border-radius: 15px;">-->
+                                    <!--                                                    <div style="font-family: 'Poppins'; font-size: 17.86px;"-->
+                                    <!--                                                         class="text-white">-->
+                                    <!--                                                        LEARN MORE-->
+                                    <!--                                                    </div>-->
+                                    <!--                                                </a>-->
+                                    <!--                                            </div>-->
+                                    <!--                                        </div>-->
+                                    <!--                                        <div style="padding: 0px; margin-bottom: 50px; border: 2px solid #fff5c6; border-top-left-radius: 100px; border-bottom-left-radius: 24px; border-radius: 25px; background-color: #fff5c6;"-->
+                                    <!--                                             class="col-11 shadow-lg">-->
+                                    <!--                                            <div style="font-family: 'Poppins'; font-size: 20.52px; font-weight: 600; border-top-left-radius: 20px; border-top-right-radius: 20px; background-color: #fff5c6;"-->
+                                    <!--                                                 class="p-1">-->
+                                    <!--                                                MOST POPULAR-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div style="font-family: 'Poppins'; font-size: 31.52px; font-weight: 600;"-->
+                                    <!--                                                 class="bg-black text-white p-3">-->
+                                    <!--                                                INTERMEDIATE-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <br/>-->
+                                    <!--                                            <div class="text-start"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>Module 1:</b>-->
+                                    <!--                                                    The-->
+                                    <!--                                                    Foundation-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>Module 2:</b>-->
+                                    <!--                                                    The-->
+                                    <!--                                                    Blueprint-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>Module 3:</b>-->
+                                    <!--                                                    The Engine-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>Module 4:</b>-->
+                                    <!--                                                    The-->
+                                    <!--                                                    Accelerator-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module-->
+                                    <!--                                                    5:</b>The Roadmap-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Customer-->
+                                    <!--                                                    Support-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <hr/>-->
+                                    <!--                                            <div class="text-center fs-5" style="font-family: 'Poppins';">-->
+                                    <!--                                                <b>Crash Courses</b>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Mobile Video-->
+                                    <!--                                                    Editing-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Advanced Meta-->
+                                    <!--                                                    Ads-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Sales Mastery-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Viral Your-->
+                                    <!--                                                    Reels-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">4 Live QnA-->
+                                    <!--                                                    Sessions Monthly-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-close-fill" style="color: #fff5c6;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">( 1 Per Each-->
+                                    <!--                                                    Crash Course )-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <hr/>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>4 Live QnA Sessions Monthly</b>-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-close-fill" style="color: #fff5c6;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>By Paras Saxena</b>-->
+                                    <!--                                                    ( For 336 Days)-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-close-fill" style="color: red;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Priority-->
+                                    <!--                                                    Support-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div style="margin-top: 38px; padding-right: 1rem; padding-left: 1rem; padding-bottom: 0.6rem;">-->
+                                    <!--                                                <a t-att-href="'/landing/page/11?course_id={}'.format(course.id)"-->
+                                    <!--                                                   class="d-flex justify-content-center bg-black p-2"-->
+                                    <!--                                                   style="border-radius: 15px;">-->
+                                    <!--                                                    <div style="font-family: 'Poppins'; font-size: 17.86px;"-->
+                                    <!--                                                         class="text-white">-->
+                                    <!--                                                        LEARN MORE-->
+                                    <!--                                                    </div>-->
+                                    <!--                                                </a>-->
+                                    <!--                                            </div>-->
+                                    <!--                                        </div>-->
+                                    <!--                                        <div style="padding: 0px; margin-bottom: 50px; border: 2px solid black; border-radius: 24px;"-->
+                                    <!--                                             class="col-11 bg-white shadow-lg">-->
+                                    <!--                                            <div style="font-family: 'Poppins'; font-size: 31.52px; font-weight: 600; border-top-left-radius: 20px; border-top-right-radius: 20px;"-->
+                                    <!--                                                 class="bg-black text-white p-3">-->
+                                    <!--                                                ADVANCED-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <br/>-->
+                                    <!--                                            <div class="text-start"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span class="fs-5"><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>Module 1:</b>-->
+                                    <!--                                                    The-->
+                                    <!--                                                    Foundation-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>Module 2:</b>-->
+                                    <!--                                                    The-->
+                                    <!--                                                    Blueprint-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>Module 3:</b>-->
+                                    <!--                                                    The Engine-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>Module 4:</b>-->
+                                    <!--                                                    The-->
+                                    <!--                                                    Accelerator-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;"><b>Module-->
+                                    <!--                                                    5:</b>The Roadmap-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Customer-->
+                                    <!--                                                    Support-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <hr/>-->
+                                    <!--                                            <div class="text-center fs-5" style="font-family: 'Poppins';">-->
+                                    <!--                                                <b>Crash Courses</b>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Mobile Video-->
+                                    <!--                                                    Editing-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Advanced Meta-->
+                                    <!--                                                    Ads-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Sales Mastery-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Viral Your-->
+                                    <!--                                                    Reels-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">4 Live QnA-->
+                                    <!--                                                    Sessions Monthly-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: white;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">( 1 Per Each-->
+                                    <!--                                                    Crash Course )-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <hr/>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>4 Live QnA Sessions Monthly</b>-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: white;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">-->
+                                    <!--                                                    <b>By Paras Saxena</b>-->
+                                    <!--                                                    ( For 336 Days)-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div class="text-start mt-2"-->
+                                    <!--                                                 style="padding-right: 1rem; padding-left: 1rem;">-->
+                                    <!--                                                <span><i class="ri-check-fill" style="color: green;"></i>&#160;&#160;&#160;-->
+                                    <!--                                                </span>-->
+                                    <!--                                                <span style="font-family: 'Poppins'; font-size: 17.01px;">Priority-->
+                                    <!--                                                    Support-->
+                                    <!--                                                </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                            <div style="margin-top: 38px; padding-right: 1rem; padding-left: 1rem; padding-bottom: 0.6rem;">-->
+                                    <!--                                                <a t-att-href="'/landing/page/12?course_id={}'.format(course.id)"-->
+                                    <!--                                                   class="d-flex justify-content-center bg-black p-2"-->
+                                    <!--                                                   style="border-radius: 15px;">-->
+                                    <!--                                                    <div style="font-family: 'Poppins'; font-size: 17.86px;"-->
+                                    <!--                                                         class="text-white">-->
+                                    <!--                                                        LEARN MORE-->
+                                    <!--                                                    </div>-->
+                                    <!--                                                </a>-->
+                                    <!--                                            </div>-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
+                                    <!--                                </div>-->
                                 </div>
                             </t>
                         </main>

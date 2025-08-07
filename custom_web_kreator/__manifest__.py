@@ -88,6 +88,7 @@
         'views/lead_funnel_view.xml',
         'views/live_session.xml',
         'views/live_slot_booking.xml',
+        'views/product_referral_page.xml'
     ],
     # 'assets': {
     #     'web.assets_frontend': [

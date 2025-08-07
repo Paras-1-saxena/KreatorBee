@@ -5,3 +5,4 @@ access_my_product_cart_public,access.my.product.cart.user,model_my_product_cart,
 access_lead_funnel,access.lead.funnel,model_lead_funnel,base.group_user,1,1,1,1
 access_slot_time,access.slot.time,model_slot_time,base.group_user,1,1,1,1
 access_live_session_survey,access.live.session.survey,model_live_session_survey,base.group_user,1,1,1,1
+access_kb_sale_cart,access.kb.sale.cart,model_kb_sale_cart,base.group_user,1,1,1,1
