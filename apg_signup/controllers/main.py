@@ -146,7 +146,7 @@ class AuthSignupHome(Home):
                 if user.partner_id.user_type == 'creator':
                     return request.redirect("sign-up/about?partner=%d" % user.partner_id)
                 elif user.partner_id.user_type == 'partner':
-                    return request.redirect("sign-up/about?partner=%d" % user.partner_id)
+                    return request.redirect("/partner-welcome")
                 elif user.partner_id.user_type == 'customer':
                     return request.redirect('/customer/mycourses')
                 else:
@@ -213,6 +213,7 @@ class AuthSignupHome(Home):
 
     @http.route(['/sign-up/about'], type="http", auth="public", website=True)
     def signup_details(self, **post):
+        return request.redirect('/partner-welcome')
         partner_id = post.get('partner')
         niche_type_obj = request.env['niche.type'].search([])
         partner_obj = request.env['res.partner'].search([])
