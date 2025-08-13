@@ -578,7 +578,7 @@
                                     color: black;
                                     }
                                 </style>
-                                <div class="rounded text-center d-none d-md-block">
+                                <div class="rounded text-center">
                                     <div class="text-center h3 p-2 row justify-content-center">
                                         <div class="col-9">
                                             Thank you for joining Kreator Bee - get trained with our exclusive

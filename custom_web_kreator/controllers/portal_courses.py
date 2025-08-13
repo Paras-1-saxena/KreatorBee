@@ -1730,7 +1730,11 @@ class PortalMyCourses(http.Controller):
         sale_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', user.id)], limit=1)
         if not sale_cart:
             sale_cart = request.env['kb.sale.cart'].sudo().create({'name': user.id})
-        sale_cart.sudo().write({'course_ids': [(4, int(course_id))]})
+        if kwargs.get('multi'):
+            course_ids = [(4, cid) for cid in json.loads(course_id)]
+            sale_cart.sudo().write({'course_ids': course_ids})
+        else:
+            sale_cart.sudo().write({'course_ids': [(4, int(course_id))]})
         return request.redirect(redirect)
 
     @http.route('/remove/sale/cart', type='http', auth='public', website=True)
@@ -1743,7 +1747,11 @@ class PortalMyCourses(http.Controller):
         sale_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', user.id)], limit=1)
         if not sale_cart:
             sale_cart = request.env['kb.sale.cart'].sudo().create({'name': user.id})
-        sale_cart.sudo().write({'course_ids': [(3, int(course_id))]})
+        if kwargs.get('multi'):
+            course_ids = [(3, int(cid)) for cid in json.loads(course_id)]
+            sale_cart.sudo().write({'course_ids': course_ids})
+        else:
+            sale_cart.sudo().write({'course_ids': [(3, int(course_id))]})
         return request.redirect(redirect)
 
     @http.route('/partner/product', type='http', auth="public", website=True)

@@ -179,7 +179,7 @@
 
                     <!-- Referred Courses Section -->
                     <h2 class="section-title">Referred Courses</h2>
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mb-5">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mb-5 mb-4">
                         <!-- Product Card 1 -->
                         <t t-foreach="referred_courses" t-as="course">
                             <div class="col">
@@ -192,23 +192,35 @@
                                     <div class="product-price">₹
                                         <t t-esc="course.list_price"/>
                                     </div>
-                                    <t t-if="course.id in course_in_cart.ids">
-                                        <a t-att-href="'/remove/sale/cart?course_id={}&amp;redirect={}'.format(course.id, request.httprequest.full_path)">
-                                            <button class="add-to-cart-btn">Remove</button>
-                                        </a>
-                                    </t>
-                                    <t t-else="">
-                                        <a t-att-href="'/add/sale/cart?course_id={}&amp;redirect={}'.format(course.id, request.httprequest.full_path)">
-                                            <button class="add-to-cart-btn">Add to Cart</button>
-                                        </a>
-                                    </t>
+<!--                                    <t t-if="course.id in course_in_cart.ids">-->
+<!--                                        <a t-att-href="'/remove/sale/cart?course_id={}&amp;redirect={}'.format(course.id, request.httprequest.full_path)">-->
+<!--                                            <button class="add-to-cart-btn">Remove</button>-->
+<!--                                        </a>-->
+<!--                                    </t>-->
+<!--                                    <t t-else="">-->
+<!--                                        <a t-att-href="'/add/sale/cart?course_id={}&amp;redirect={}'.format(course.id, request.httprequest.full_path)">-->
+<!--                                            <button class="add-to-cart-btn">Add to Cart</button>-->
+<!--                                        </a>-->
+<!--                                    </t>-->
                                     <a t-att-href="'/my/product/brochure/{}'.format(course.id)">
                                         <button class="download-brochure-btn">Download Brochure</button>
                                     </a>
                                 </div>
+                                <t t-if="referred_courses.filtered(lambda rc_id: rc_id.id in course_in_cart.ids)">
+                                        <a t-att-href="'/remove/sale/cart?course_id={}&amp;redirect={}&amp;multi=True'.format(referred_courses.ids, request.httprequest.full_path)">
+                                            <button class="add-to-cart-btn">Remove</button>
+                                        </a>
+                                </t>
+                                <t t-else="">
+                                    <a t-att-href="'/add/sale/cart?course_id={}&amp;redirect={}&amp;multi=True'.format(referred_courses.ids, request.httprequest.full_path)">
+                                        <button class="add-to-cart-btn">Add to Cart</button>
+                                    </a>
+                                </t>
                             </div>
                         </t>
                     </div>
+                    <br/>
+                    <br/>
 
                     <!-- Recommended Courses Section -->
                     <h2 class="section-title">Recommended Courses</h2>
