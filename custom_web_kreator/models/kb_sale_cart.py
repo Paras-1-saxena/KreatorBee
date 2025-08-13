@@ -6,4 +6,4 @@ class Kb_Sale_Cart(models.Model):
     _description = 'Record sale Cart'
 
     name = fields.Many2one('res.users', string='User Name')
-    course_ids = fields.Many2many('slide.channel', string='Courses')
+    course_ids = fields.Many2many('product.template', string='Courses')

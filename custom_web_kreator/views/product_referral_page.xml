@@ -190,7 +190,7 @@
                                         <t t-esc="course.name"/>
                                     </h3>
                                     <div class="product-price">₹
-                                        <t t-esc="course.sales_price"/>
+                                        <t t-esc="course.list_price"/>
                                     </div>
                                     <t t-if="course.id in course_in_cart.ids">
                                         <a t-att-href="'/remove/sale/cart?course_id={}&amp;redirect={}'.format(course.id, request.httprequest.full_path)">
@@ -202,7 +202,9 @@
                                             <button class="add-to-cart-btn">Add to Cart</button>
                                         </a>
                                     </t>
-                                    <button class="download-brochure-btn">Download Syllabus</button>
+                                    <a t-att-href="'/my/product/brochure/{}'.format(course.id)">
+                                        <button class="download-brochure-btn">Download Brochure</button>
+                                    </a>
                                 </div>
                             </div>
                         </t>
@@ -220,7 +222,7 @@
                                         <t t-esc="course.name"/>
                                     </h3>
                                     <div class="product-price">₹
-                                        <t t-esc="course.sales_price"/>
+                                        <t t-esc="course.list_price"/>
                                     </div>
                                     <t t-if="course.id in course_in_cart.ids">
                                         <a t-att-href="'/remove/sale/cart?course_id={}&amp;redirect={}'.format(course.id, request.httprequest.full_path)">

@@ -34,3 +34,5 @@ class ProductTemplate(models.Model):
                                            string='Subscription Plan',
                                            help='Select the subscription plan '
                                                 'associated with this record.')
+    brochure = fields.Binary("Brochure")
+    brochure_filename = fields.Char("Brochure Filename")

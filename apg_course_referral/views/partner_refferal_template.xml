@@ -404,14 +404,26 @@
                                         </p>
                                     </a>
                                 </div>
-                                <div class="active p-lg-2 p-1 d-flex flex-column align-items-center">
+                                <t t-if="end_days > 5">
+                                    <div class="active p-lg-2 p-1 d-flex flex-column align-items-center">
+                                        <a href="/partner-referral" class='text-center'>
+                                            <i class="ri-links-fill"></i>
+                                            <p>
+                                                Links
+                                            </p>
+                                        </a>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="active p-lg-2 p-1 d-flex flex-column align-items-center">
                                     <a href="/partner-referral" class='text-center'>
-                                        <i class="ri-links-fill"></i>
-                                        <p>
+                                        <i class="ri-links-fill" style="color: red!important;"></i>
+                                        <p style="color: red!important;">
                                             Links
                                         </p>
                                     </a>
                                 </div>
+                                </t>
                                 <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
                                     <a href="/partner/kyc" class='text-center'>
                                         <i class="ri-profile-fill"></i>
@@ -455,18 +467,28 @@
                                     </a>
                                     <!-- Sales Dropdown -->
                                     <div class="ps-2 d-block d-lg-none">
-                                        <li class="active">
+                                        <li>
                                             <a href="/partner/income">
                                                 <i class="ri-checkbox-blank-circle-line"></i>
                                                 Income Data
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="/partner-referral">
-                                                <i class="ri-checkbox-circle-fill"></i>
-                                                Links
-                                            </a>
-                                        </li>
+                                        <t t-if="end_days > 5">
+                                            <li class="active">
+                                                <a href="/partner-referral">
+                                                    <i class="ri-checkbox-blank-circle-line"></i>
+                                                    Links
+                                                </a>
+                                            </li>
+                                        </t>
+                                        <t t-else="">
+                                            <li class="active">
+                                                <a href="/partner-referral" style="color: red!important;">
+                                                    <i class="ri-checkbox-blank-circle-line" style="color: red!important;"></i>
+                                                    Links
+                                                </a>
+                                            </li>
+                                        </t>
                                         <li>
                                             <a href="/partner/kyc">
                                                 <i class="ri-checkbox-blank-circle-line"></i>
@@ -486,18 +508,6 @@
                                             </a>
                                         </li>
                                     </div>
-                                    <a href="/partner/myproducts">
-                                        <li>
-                                            <i class="ri-product-hunt-fill"></i>
-                                            Products
-                                        </li>
-                                    </a>
-                                    <a href="/partner/training">
-                                        <li>
-                                            <i class="ri-presentation-fill"></i>
-                                            Training
-                                        </li>
-                                    </a>
                                     <a href="/partner/promotional-material">
                                         <li>
                                             <i class="ri-user-community-fill"></i>
@@ -536,12 +546,12 @@
                                                 t-esc="request.env.user.name"/>
                                     </h1>
                                     <div class="d-flex gap-3 align-items-center">
-                                        <a href="#popup_tutorial"
-                                        >Tutorial
-                                            <img class="ms-1"
-                                                 src="/custom_web_kreator/static/src/play.png"
-                                            />
-                                        </a>
+<!--                                        <a href="#popup_tutorial"-->
+<!--                                        >Tutorial-->
+<!--                                            <img class="ms-1"-->
+<!--                                                 src="/custom_web_kreator/static/src/play.png"-->
+<!--                                            />-->
+<!--                                        </a>-->
                                         <a
                                                 href="https://wa.me/+919289384910" target="_blank" class="text-center"
                                         >
@@ -637,7 +647,7 @@
                                             <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css'></script>
                                             <script src="./script.js"></script>
                                             <script>
-                                                course_count = document.getElementById('course_count').innerText;
+                                                    course_count = document.getElementById('course_count').innerText;
                                                 $(document).ready(function(){
                                                 var multipleCancelButton = new Choices('#course_id', {
                                                 removeItemButton: true,
@@ -677,13 +687,13 @@
 
                                                 }
                                             </script>
-                                            <select id="expiry_time" name="expiry_time"
-                                                    style="margin-top: 10px;!important;">
-                                                <option value="5_minutes">5 minutes</option>
-                                                <option value="15_minutes">15 minutes</option>
-                                                <option value="30_minutes">30 minutes</option>
-                                                <option value="no_limit">No Limit</option>
-                                            </select>
+<!--                                            <select id="expiry_time" name="expiry_time"-->
+<!--                                                    style="margin-top: 10px;!important;">-->
+<!--                                                <option value="5_minutes">5 minutes</option>-->
+<!--                                                <option value="15_minutes">15 minutes</option>-->
+<!--                                                <option value="30_minutes">30 minutes</option>-->
+<!--                                                <option value="no_limit">No Limit</option>-->
+<!--                                            </select>-->
                                             <label>Generated Link</label>
                                             <t t-if="referral_id">
                                                 <input type="text" id="pgenerated_url" readonly="readonly"
@@ -727,127 +737,127 @@
                                     </form>
                                 </div>
                                 <div class="col-12"></div>
-                                <div class="col-lg-6 col-md-6 col-sm-11 mt-4">
-                                    <!-- Payment Link -->
-                                    <form method="post" action="/partner/payment/link">
-                                        <!-- CSRF Token for security -->
-                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                        <div class="link-box">
-                                            <label>Payment Link</label>
-                                            <select id="payment_course_id" name="payment_course_id" required="required"
-                                                    onchange="getPOption()">
-                                                <option value="" selected="selected">e.g. Select Course</option>
-                                                <t t-if="payment_referral_id">
-                                                    <t t-foreach="product_cart_ids or []" t-as="course">
-                                                        <option t-att-value="course.id"
-                                                                t-att-selected="course.id == payment_referral_id.course_id.id">
-                                                            <t t-esc="course.name"/>
-                                                        </option>
-                                                    </t>
-                                                </t>
-                                                <t t-else="">
-                                                    <t t-foreach="product_cart_ids or []" t-as="course">
-                                                        <option t-att-value="course.id">
-                                                            <t t-esc="course.name"/>
-                                                        </option>
-                                                    </t>
-                                                </t>
-                                            </select>
-                                            <select id="stagep_id" name="stage_id" required="required"
-                                                    style="display: none; text-transform: capitalize;">
-                                            </select>
-                                            <script>
-                                                function getPOption() {
-                                                let course_id = document.getElementById('payment_course_id').value
-                                                let stage_id = document.getElementById('stagep_id')
-                                                fetch('/check/upgrade?course_id=' + course_id, {
-                                                method: "POST",
-                                                headers: {
-                                                "Content-Type": "application/json",
-                                                },
-                                                'body': JSON.stringify({'params': {'course': query}})
-                                                })
-                                                .then(response =&gt; response.json())
-                                                .then(data =&gt; {
+<!--                                <div class="col-lg-6 col-md-6 col-sm-11 mt-4">-->
+<!--                                    &lt;!&ndash; Payment Link &ndash;&gt;-->
+<!--                                    <form method="post" action="/partner/payment/link">-->
+<!--                                        &lt;!&ndash; CSRF Token for security &ndash;&gt;-->
+<!--                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>-->
+<!--                                        <div class="link-box">-->
+<!--                                            <label>Payment Link</label>-->
+<!--                                            <select id="payment_course_id" name="payment_course_id" required="required"-->
+<!--                                                    onchange="getPOption()">-->
+<!--                                                <option value="" selected="selected">e.g. Select Course</option>-->
+<!--                                                <t t-if="payment_referral_id">-->
+<!--                                                    <t t-foreach="product_cart_ids or []" t-as="course">-->
+<!--                                                        <option t-att-value="course.id"-->
+<!--                                                                t-att-selected="course.id == payment_referral_id.course_id.id">-->
+<!--                                                            <t t-esc="course.name"/>-->
+<!--                                                        </option>-->
+<!--                                                    </t>-->
+<!--                                                </t>-->
+<!--                                                <t t-else="">-->
+<!--                                                    <t t-foreach="product_cart_ids or []" t-as="course">-->
+<!--                                                        <option t-att-value="course.id">-->
+<!--                                                            <t t-esc="course.name"/>-->
+<!--                                                        </option>-->
+<!--                                                    </t>-->
+<!--                                                </t>-->
+<!--                                            </select>-->
+<!--                                            <select id="stagep_id" name="stage_id" required="required"-->
+<!--                                                    style="display: none; text-transform: capitalize;">-->
+<!--                                            </select>-->
+<!--                                            <script>-->
+<!--                                                function getPOption() {-->
+<!--                                                let course_id = document.getElementById('payment_course_id').value-->
+<!--                                                let stage_id = document.getElementById('stagep_id')-->
+<!--                                                fetch('/check/upgrade?course_id=' + course_id, {-->
+<!--                                                method: "POST",-->
+<!--                                                headers: {-->
+<!--                                                "Content-Type": "application/json",-->
+<!--                                                },-->
+<!--                                                'body': JSON.stringify({'params': {'course': query}})-->
+<!--                                                })-->
+<!--                                                .then(response =&gt; response.json())-->
+<!--                                                .then(data =&gt; {-->
 
-                                                if (data['response'] == 'yes') {
-                                                let option = ''
-                                                for (let k in data['upgrade_options']) {
-                                                option += '&lt;option style="text-transform: capitalize;" value="' + k + '"&gt;' + data['upgrade_options'][k] + "&lt;/option&gt;"
-                                                }
-                                                stage_id.style.display = 'block';
-                                                stage_id.innerHTML = option;
-                                                stage_id.setAttribute("required", "required");
-                                                } else {
-                                                stage_id.style.display = 'none';
-                                                stage_id.removeAttribute("required");
-                                                }
-                                                })
+<!--                                                if (data['response'] == 'yes') {-->
+<!--                                                let option = ''-->
+<!--                                                for (let k in data['upgrade_options']) {-->
+<!--                                                option += '&lt;option style="text-transform: capitalize;" value="' + k + '"&gt;' + data['upgrade_options'][k] + "&lt;/option&gt;"-->
+<!--                                                }-->
+<!--                                                stage_id.style.display = 'block';-->
+<!--                                                stage_id.innerHTML = option;-->
+<!--                                                stage_id.setAttribute("required", "required");-->
+<!--                                                } else {-->
+<!--                                                stage_id.style.display = 'none';-->
+<!--                                                stage_id.removeAttribute("required");-->
+<!--                                                }-->
+<!--                                                })-->
 
-                                                }
-                                            </script>
-                                            <!--                                            <select id="payment_partner_id" name="payment_partner_id"-->
-                                            <!--                                                    required="required">-->
-                                            <!--                                                <option value="" selected="selected">e.g. Select Customer</option>-->
-                                            <!--                                                <t t-if="payment_referral_id">-->
-                                            <!--                                                    <t t-foreach="partner_ids or []" t-as="partner">-->
-                                            <!--                                                        <option t-att-value="partner.id"-->
-                                            <!--                                                                t-att-selected="partner.id == payment_referral_id.order_id.partner_id.id">-->
-                                            <!--                                                            <t t-esc="partner.name"/>-->
-                                            <!--                                                        </option>-->
-                                            <!--                                                    </t>-->
-                                            <!--                                                </t>-->
-                                            <!--                                                <t t-else="">-->
-                                            <!--                                                    <t t-foreach="partner_ids or []" t-as="partner">-->
-                                            <!--                                                        <option t-att-value="partner.id">-->
-                                            <!--                                                            <t t-esc="partner.name"/>-->
-                                            <!--                                                        </option>-->
-                                            <!--                                                    </t>-->
-                                            <!--                                                </t>-->
+<!--                                                }-->
+<!--                                            </script>-->
+<!--                                            &lt;!&ndash;                                            <select id="payment_partner_id" name="payment_partner_id"&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                    required="required">&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                <option value="" selected="selected">e.g. Select Customer</option>&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                <t t-if="payment_referral_id">&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                    <t t-foreach="partner_ids or []" t-as="partner">&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                        <option t-att-value="partner.id"&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                                t-att-selected="partner.id == payment_referral_id.order_id.partner_id.id">&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                            <t t-esc="partner.name"/>&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                        </option>&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                    </t>&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                </t>&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                <t t-else="">&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                    <t t-foreach="partner_ids or []" t-as="partner">&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                        <option t-att-value="partner.id">&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                            <t t-esc="partner.name"/>&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                        </option>&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                    </t>&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                </t>&ndash;&gt;-->
 
-                                            <!--                                            </select>-->
-                                            <select id="payment_expiry_time" name="payment_expiry_time">
-                                                <option value="5_minutes">5 minutes</option>
-                                                <option value="15_minutes">15 minutes</option>
-                                                <option value="30_minutes">30 minutes</option>
-                                                <option value="no_limit">No Limit</option>
-                                            </select>
-                                            <label>Generated Link</label>
-                                            <t t-if="payment_referral_id">
-                                                <input type="text" id="generated_payment_link" readonly="readonly"
-                                                       t-att-value="payment_referral_id.generated_url"/>
-                                            </t>
-                                            <t t-else="">
-                                                <input type="text" id="generated_payment_link" readonly="readonly"/>
-                                            </t>
+<!--                                            &lt;!&ndash;                                            </select>&ndash;&gt;-->
+<!--                                            <select id="payment_expiry_time" name="payment_expiry_time">-->
+<!--                                                <option value="5_minutes">5 minutes</option>-->
+<!--                                                <option value="15_minutes">15 minutes</option>-->
+<!--                                                <option value="30_minutes">30 minutes</option>-->
+<!--                                                <option value="no_limit">No Limit</option>-->
+<!--                                            </select>-->
+<!--                                            <label>Generated Link</label>-->
+<!--                                            <t t-if="payment_referral_id">-->
+<!--                                                <input type="text" id="generated_payment_link" readonly="readonly"-->
+<!--                                                       t-att-value="payment_referral_id.generated_url"/>-->
+<!--                                            </t>-->
+<!--                                            <t t-else="">-->
+<!--                                                <input type="text" id="generated_payment_link" readonly="readonly"/>-->
+<!--                                            </t>-->
 
-                                            <button type="submit" class="mr-5" style="width: 70%">Generate Link</button>
-                                            <a type="button" class="fa fa-copy" id="payment_copy_icon"
-                                               style="cursor: pointer;margin-left: 10px;color: black;"/>
+<!--                                            <button type="submit" class="mr-5" style="width: 70%">Generate Link</button>-->
+<!--                                            <a type="button" class="fa fa-copy" id="payment_copy_icon"-->
+<!--                                               style="cursor: pointer;margin-left: 10px;color: black;"/>-->
 
-                                            <!-- <a type="button" class="btn btn-warning mr-5"
-                                               id="generatePaymentLinkButton">Generate Link</a>
-                                            <a type="button" class="fa fa-copy" id="copy_icon" style="cursor: pointer;margin-left: 10px;color: black;"/> -->
-                                            <!-- <input type="text" readonly="readonly" value="https://www.bizgurukul.com/Signup?id=cbcDJ7DVHoQ&gt;ref=BGbh/Jf$+jbdjlL+ohZsSg==" /> -->
-                                            <!-- <button class="mr-5">Generate Link</button><i class="fa fa-copy" style="cursor: pointer;margin-left: 10px;"></i> -->
-                                        </div>
-                                        <script>
-                                            document.getElementById("payment_copy_icon").addEventListener("click",
-                                            function () {
-                                            const copyButton = document.getElementById('payment_copy_icon'); // Copy button ID
-                                            const fieldTextElement = document.getElementById('generated_payment_link');
-                                            const fieldText = fieldTextElement.value.trim();
-                                            navigator.clipboard.writeText(fieldText).then(() =&gt; {
-                                            alert("Payment link copied");
-                                            }).catch(err =&gt; {
-                                            console.error('Failed to copy:', err);
-                                            alert("Failed to copy the Referral link.");
-                                            });
-                                            });
+<!--                                            &lt;!&ndash; <a type="button" class="btn btn-warning mr-5"-->
+<!--                                               id="generatePaymentLinkButton">Generate Link</a>-->
+<!--                                            <a type="button" class="fa fa-copy" id="copy_icon" style="cursor: pointer;margin-left: 10px;color: black;"/> &ndash;&gt;-->
+<!--                                            &lt;!&ndash; <input type="text" readonly="readonly" value="https://www.bizgurukul.com/Signup?id=cbcDJ7DVHoQ&gt;ref=BGbh/Jf$+jbdjlL+ohZsSg==" /> &ndash;&gt;-->
+<!--                                            &lt;!&ndash; <button class="mr-5">Generate Link</button><i class="fa fa-copy" style="cursor: pointer;margin-left: 10px;"></i> &ndash;&gt;-->
+<!--                                        </div>-->
+<!--                                        <script>-->
+<!--                                            document.getElementById("payment_copy_icon").addEventListener("click",-->
+<!--                                            function () {-->
+<!--                                            const copyButton = document.getElementById('payment_copy_icon'); // Copy button ID-->
+<!--                                            const fieldTextElement = document.getElementById('generated_payment_link');-->
+<!--                                            const fieldText = fieldTextElement.value.trim();-->
+<!--                                            navigator.clipboard.writeText(fieldText).then(() =&gt; {-->
+<!--                                            alert("Payment link copied");-->
+<!--                                            }).catch(err =&gt; {-->
+<!--                                            console.error('Failed to copy:', err);-->
+<!--                                            alert("Failed to copy the Referral link.");-->
+<!--                                            });-->
+<!--                                            });-->
 
-                                        </script>
-                                    </form>
-                                </div>
+<!--                                        </script>-->
+<!--                                    </form>-->
+<!--                                </div>-->
                             </div>
 
 

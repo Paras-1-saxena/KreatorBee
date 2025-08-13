@@ -33,6 +33,18 @@
                     </group>
                 </page>
             </xpath>
+            <!--            <xpath expr="//label[@for='list_price']" position="after">-->
+            <!--                -->
+            <!--            </xpath>-->
+            <xpath expr="//div[@name='list_price_uom']" position="after">
+                <label for="brochure"/>
+                <div name="list_price_uom">
+                    <field name="brochure" class="oe_inline"/>
+                    <span name="uom_span" groups="uom.group_uom" invisible="type == 'combo'">
+                    </span>
+                </div>
+                <field name="brochure_filename" invisible="1"/>
+            </xpath>
         </field>
     </record>
     <!--    Product template action-->

@@ -76,7 +76,7 @@
         </script>
 
         <t t-call="website.layout">
-            <div id="wrap" class="row justify-content-around" style="background-color:#ffd000;">
+            <div id="wrap" class="row justify-content-around" style="background-image: linear-gradient(74deg, #EDFFF3 0%, #ECF9FF 100%)">
                 <div class="col-8">
                     <form t-if="otp_login and not otp" id="form_otp_login" class="oe_login_form" role="form"
                           t-attf-action="/web/otp/login" method="post"
@@ -114,7 +114,7 @@
                                     The Mobile number entered is incorrect.
                                 </p>
                                 <div t-attf-class="clearfix oe_login_buttons text-center mb-1 {{'pt-2' if form_small else 'pt-3'}}">
-                                    <button style="width:100%; background-color: #ffd000;" class="rounded"
+                                    <button style="width:100%; background-color: #cdf2d9;" class="rounded"
                                             type="submit">Send OTP
                                     </button>
                                 </div>
@@ -144,7 +144,7 @@
                             <input t-att-value="login" id="login" type="hidden" name="login"/>
                         </div>
                         <div t-attf-class="clearfix oe_login_buttons text-center mb-1 {{'pt-2' if form_small else 'pt-3'}}">
-                            <button style="width:100%" type="submit" class="btn btn-primary btn-block">Verify
+                            <button style="width:100%; background-color: #cdf2d9!important;" type="submit" class="btn btn-block">Verify
                                 OTP
                             </button>
                         </div>

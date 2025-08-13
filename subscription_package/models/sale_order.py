@@ -101,6 +101,20 @@ class SaleOrder(models.Model):
     def _action_confirm(self):
         """the function used to Confrim the sale order and
         create subscriptions for subscription products"""
+        combo_product = self.order_line.filtered(lambda p: p.product_id.bom_ids)
+        if combo_product:
+            new_order =  self.env['sale.order'].create({
+                'name': f'Course Access {self.name}',
+                'partner_id': self.partner_id.id,
+                'date_order': self.date_order,
+                'company_id': self.company_id.id,
+                'order_line': [(0, 0, {
+                    'product_id': line.product_id.id,
+                    'product_uom_qty': 1,
+                    'price_unit': 0,
+                }) for line in combo_product.product_id.bom_ids[0].bom_line_ids]
+            })
+            new_order.action_confirm()
         if self.subscription_count != 1:
             if self.order_line:
                 for line in self.order_line:
@@ -116,7 +130,7 @@ class SaleOrder(models.Model):
                         this_products_line = []
                         rec_list = [0, 0, {'product_id': line.product_id.id,
                                            'product_qty': line.product_uom_qty,
-                                           'unit_price': line.price_unit}]
+                                           'unit_price': line.product_id.list_price}]
                         this_products_line.append(rec_list)
                         subscription = self.env['subscription.package'].create(
                             {
