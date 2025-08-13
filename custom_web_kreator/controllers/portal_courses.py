@@ -499,9 +499,6 @@ class PortalMyCourses(http.Controller):
     def partner(self, **kwargs):
         user = request.env.user
         partner = user.partner_id  # Get related partner
-
-        if not partner.partner_term_accepted:
-            return request.redirect('/master-partner')
         premium_course = request.env['slide.channel'].sudo().search([('is_mandate', '=', True)], limit=1)
         is_active_subscription = False
         partner = request.env.user.partner_id  # Get related partner
@@ -509,11 +506,14 @@ class PortalMyCourses(http.Controller):
             lambda sub: sub.stage_id.name == 'In Progress')
         if subscription and subscription.next_invoice_date >= datetime.today().date():
             is_active_subscription = True
+        end_days = 0
+        if subscription:
+            end_days = (subscription.next_invoice_date - datetime.today().date()).days
         # if not request.env.user.partner_id.early_sign_in and (
         #         premium_course.id not in request.env.user.partner_id.slide_channel_ids.ids):
         #     return request.redirect('/partner-welcome')
-        if not is_active_subscription:
-            return request.redirect('/partner-welcome')
+        # if not is_active_subscription:
+        #     return request.redirect('/partner-welcome')
 
         # Check if the user is an Internal User or Creator
         if partner.user_type in ['internal_user', 'partner']:
@@ -586,7 +586,8 @@ class PortalMyCourses(http.Controller):
                 'xml_label': xml_label,
                 'labels_state': labels_state,
                 'data_state': data_state,
-                'xml_label_state': xml_label_state
+                'xml_label_state': xml_label_state,
+                'end_days': end_days,
             }
             tutorial_video = Markup("""
             <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
@@ -727,45 +728,39 @@ class PortalMyCourses(http.Controller):
 
             courses = []
 
+            return request.render('custom_web_kreator.nmy_courses_partner_combo', {
+                'courses': request.env.user.partner_id.sale_order_ids.order_line.filtered(lambda line: line.product_id.bom_ids).product_id,
+            })
+        else:
+            raise NotFound()
+
+    @http.route('/partner/mycourses/courses', type='http', auth='public', website=True)
+    def nmycourses_partner_details(self, **kwargs):
+        # Get the current logged-in user
+        user = request.env.user
+        partner = user.partner_id  # Get related partner
+
+        # Check if the user is an Internal User or Creator
+        if partner.user_type in ['internal_user', 'partner']:
+
+            # Get the logged-in user
+            current_user = request.env.user
+            partner = current_user.partner_id
+
+            courses = []
+
             show_upgrade = False
 
             # Check if the user is of type 'customer'
             if partner.user_type in ['partner', 'internal_user']:
                 # Fetch sale orders linked to the customer
-                sale_orders = request.env['sale.order'].sudo().search(
-                    [('partner_id', '=', partner.id), ('state', 'in', ['sale'])])
-                print("Sale Orders:", sale_orders)
-
-                # Extract product template IDs from sale order lines
-                product_template_ids = sale_orders.mapped('order_line.product_template_id')
-                product_names = product_template_ids.mapped('name')
-                print("Product Template IDs:", product_template_ids)
-
-                if product_template_ids:
-                    # Fetch courses where the product_template_ids match
-                    courses = request.env['slide.channel'].sudo().search(
-                        [('name', 'in', product_names)]
-                    )
-                    print("Courses:", courses)
-                    upgrade_courses = request.env['slide.channel'].sudo().search(
-                        [('name', 'in', product_names), ('is_upgradable', '=', True)]
-                    )
-                    if upgrade_courses:
-                        stage_id = upgrade_courses.upgrade_stage_ids.filtered(lambda us: us.name == 'Advanced')
-                        partner_course_ids = request.env.user.partner_id.slide_channel_ids.product_id.ids
-                        products_to_add = [sc.id for sc in stage_id.product_ids if sc.id not in partner_course_ids]
-                        show_upgrade = True if products_to_add else False
-
-            # Render the data page template
-            tutorial_video = Markup("""
-                                                        <iframe src="https://player.vimeo.com/video/1073823881?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                                                         frameborder="0" allow="au`toplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-                                                          style="width:60vw;height:40vh;" title="Promote+Community+MyCourses"></iframe>
-                                                                    """)
+                if kwargs and not kwargs['product_id']:
+                    return request.render('custom_web_kreator.nmy_courses_partner', {
+                        'courses': []
+                    })
+                courses = request.env['product.product'].sudo().browse(int(kwargs['product_id'])).bom_ids[0].bom_line_ids.product_id.channel_ids
             return request.render('custom_web_kreator.nmy_courses_partner', {
-                'courses': courses,
-                'tutorial_video': tutorial_video,
-                'show_upgrade': show_upgrade
+                'courses': courses
             })
         else:
             raise NotFound()
@@ -1010,6 +1005,30 @@ class PortalMyCourses(http.Controller):
                 request.session['coupon_status'] = 'failed'
                 return request.redirect('/shop/payment')
 
+    @http.route(['/my/product/brochure/<int:product_id>'], type='http', auth='public', website=True)
+    def download_product_brochure(self, product_id, **kwargs):
+        # Fetch product with sudo (since portal may not have direct access)
+        product = request.env['product.template'].sudo().browse(product_id)
+        if not product.exists():
+            return request.not_found()
+
+        # Check if brochure is available
+        if not product.brochure:
+            return request.not_found()
+
+        # Decode the binary file
+        brochure_data = base64.b64decode(product.brochure)
+        brochure_name = product.brochure_filename or f"brochure_{product.name}.pdf"
+
+        # Return response for download
+        return request.make_response(
+            brochure_data,
+            headers=[
+                ('Content-Type', 'application/pdf'),
+                ('Content-Disposition', f'attachment; filename="{brochure_name}"')
+            ]
+        )
+
     @http.route('/partner/lead', type='http', auth="user", website=True)
     def partner_lead(self, **kwargs):
         # Get the current logged-in user
@@ -1022,6 +1041,14 @@ class PortalMyCourses(http.Controller):
             # Get the start and end date from the URL parameters, if provided
             start_date = kwargs.get('start_date')
             end_date = kwargs.get('end_date')
+
+            subscription = partner.subscription_product_line_ids.subscription_id.filtered(
+                lambda sub: sub.stage_id.name == 'In Progress')
+            if subscription and subscription.next_invoice_date >= datetime.today().date():
+                is_active_subscription = True
+            end_days = 0
+            if subscription:
+                end_days = (subscription.next_invoice_date - datetime.today().date()).days
 
             # Convert date strings into datetime objects (if they exist)
             if start_date:
@@ -1054,7 +1081,8 @@ class PortalMyCourses(http.Controller):
                 'sale_orders': sale_orders,  # Pass the filtered sale orders
                 'start_date': start_date,  # Pass the start date
                 'end_date': end_date,  # Pass the end date
-                'visitors': visitors,  # Pass the visitor data
+                'visitors': visitors,
+                'end_days': end_days# Pass the visitor data
             }
             tutorial_video = Markup("""
                         <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
@@ -1625,7 +1653,7 @@ class PortalMyCourses(http.Controller):
     def update_sale_cart(self, **kwargs):
         user = request.env.user
         sale_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', user.id)], limit=1)
-        products = sale_cart.course_ids.product_id
+        products = sale_cart.course_ids
         subscription_product_id = request.env['product.product'].sudo().search([('name', '=', '28 Days Subscription'), ('is_subscription', '=', True)], limit=1)
         pricelist = request.env['product.pricelist'].search([('name', '=', 'Referral Price')], limit=1)
         sale_order = request.website.sale_get_order(force_create=True)
@@ -1633,10 +1661,10 @@ class PortalMyCourses(http.Controller):
         for product in products:
             request.env['sale.order.line'].sudo().create({
                 'order_id': sale_order.id,
-                'product_id': product.id,
+                'product_id': product.product_variant_id.id,
                 'product_uom_qty': 1,
                 'product_uom': product.uom_id.id,
-                'price_unit': product.lst_price,
+                'price_unit': product.list_price,
                 'name': product.name,
             })
         if subscription_product_id and pricelist:
@@ -1645,7 +1673,7 @@ class PortalMyCourses(http.Controller):
                 'product_id': subscription_product_id.id,
                 'product_uom_qty': 1,
                 'product_uom': subscription_product_id.uom_id.id,
-                'price_unit': subscription_product_id.lst_price,
+                'price_unit': subscription_product_id.list_price,
                 'name': subscription_product_id.name,
             })
             sale_order.sudo().update({'pricelist_id': pricelist.id})
@@ -1667,10 +1695,10 @@ class PortalMyCourses(http.Controller):
             for course in sale_cart.course_ids:
                 dynamic_data += f"""
                             <div class="cart-modal-item" id="cart-items">
-                                <img src="{image_data_uri(course.image_1920)}" alt="Product Image"/>
+                                <img src="{image_data_uri(course.image_1920) if course.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'}" alt="Product Image"/>
                                 <div class="cart-modal-item-details">
                                     <h5>{course.name}</h5>
-                                    <p>₹ {course.sales_price}</p>
+                                    <p>₹ {course.list_price}</p>
                                 </div>
                             </div>
                             """
@@ -1678,18 +1706,18 @@ class PortalMyCourses(http.Controller):
             for course in sale_cart.course_ids:
                 dynamic_data += f"""
                 <div class="cart-item">
-                            <img src="{image_data_uri(course.image_1920)}" alt="Product Image"
+                            <img src="{image_data_uri(course.image_1920) if course.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'}" alt="Product Image"
                                  class="cart-item-image"/>
                             <div class="cart-item-details">
                                 <h3 class="cart-item-name">{course.name}</h3>
-                                <p class="cart-item-price">₹ {course.sales_price}</p>
+                                <p class="cart-item-price">₹ {course.list_price}</p>
                             </div>
                             <div class="cart-item-qty">
                                 <a href='/remove/sale/cart?course_id={course.id}&amp;redirect={redirect}'><i class="fas fa-trash"></i></a>
                             </div>
                         </div>
                 """
-        total = sum(course.sales_price for course in sale_cart.course_ids)
+        total = sum(course.list_price for course in sale_cart.course_ids)
         return {'response': 'success', 'data': Markup(dynamic_data), 'total': Markup(f"₹ {total}"), 'checkout': 'checkout-button' if total > 0.0 else 'checkout-button-disabled', 'cart_count': len(sale_cart.course_ids.ids)}
 
     @http.route('/add/sale/cart', type='http', auth='public', website=True)
@@ -1811,8 +1839,8 @@ class PortalMyCourses(http.Controller):
     def product_referral_page(self, **kwargs):
         course_in_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', request.env.user.id)]).course_ids
         courses = json.loads(kwargs.get('courses'))
-        recomended_courses = request.env['slide.channel'].sudo().search([('id', 'not in', courses), ('state', '=', 'published'), ('not_display', '=', False)])
-        referred_courses = request.env['slide.channel'].sudo().search([('id', 'in', courses)])
+        recomended_courses = request.env['product.template'].sudo().search([('id', 'not in', courses), ('bom_ids', '!=', False)])
+        referred_courses = request.env['product.template'].sudo().search([('id', 'in', courses)])
         values = {'referred_courses': referred_courses, 'recomended_courses': recomended_courses, 'course_in_cart': course_in_cart}
         return request.render('custom_web_kreator.product_referral_page', values)
 
@@ -2070,6 +2098,14 @@ class PortalMyCourses(http.Controller):
             if partner.pan_card_file:
                 pan_file = base64.b64encode(partner.pan_card_file).decode('utf-8')
 
+            subscription = partner.subscription_product_line_ids.subscription_id.filtered(
+                lambda sub: sub.stage_id.name == 'In Progress')
+            if subscription and subscription.next_invoice_date >= datetime.today().date():
+                is_active_subscription = True
+            end_days = 0
+            if subscription:
+                end_days = (subscription.next_invoice_date - datetime.today().date()).days
+
             values = {
                 'partner_id': partner,
                 'partner_name': partner.name,
@@ -2092,7 +2128,8 @@ class PortalMyCourses(http.Controller):
                 'pan_file': pan_file,
                 'state_selection': partner.state_selection,
                 'bank': bank_id.filtered(lambda bi: bi.partner_id.id == partner.id).bank_id.name if bank_id else '',
-                'branch': bank_id.filtered(lambda bi: bi.partner_id.id == partner.id).bank_id.street if bank_id else ''
+                'branch': bank_id.filtered(lambda bi: bi.partner_id.id == partner.id).bank_id.street if bank_id else '',
+                'end_days': end_days,
             }
             tutorial_video = Markup("""
                         <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
@@ -3270,9 +3307,16 @@ class PortalMyCourses(http.Controller):
             orders_lines = orders_lines.filtered(lambda
                                                      ol: ol.partner_commission_partner_id.id != ol.direct_commission_partner_id.id and ol.price_unit != 0.0)
             order_lines = sorted(orders_lines, key=attrgetter('partner_commission_partner_id'))
-            # Group by commission partner ID
+            # Group by commission partner ID`
             grouped_data = {}
             leaderboard = []
+            subscription = partner.subscription_product_line_ids.subscription_id.filtered(
+                lambda sub: sub.stage_id.name == 'In Progress')
+            if subscription and subscription.next_invoice_date >= datetime.today().date():
+                is_active_subscription = True
+            end_days = 0
+            if subscription:
+                end_days = (subscription.next_invoice_date - datetime.today().date()).days
             for partner, lines in groupby(order_lines, key=attrgetter('partner_commission_partner_id')):
                 grouped_data[partner] = {
                     'total_commission': sum(line.partner_commission_amount for line in lines),
@@ -3288,7 +3332,8 @@ class PortalMyCourses(http.Controller):
             leaderboard = sorted(leaderboard, key=lambda x: x['total_commission'], reverse=True)
             values = {
                 'leaderboard': leaderboard,
-                'currency_id': request.env.company.currency_id
+                'currency_id': request.env.company.currency_id,
+                'end_days': end_days,
             }
             tutorial_video = Markup("""
                         <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
@@ -3916,7 +3961,7 @@ class PortalMyCourses(http.Controller):
         # Render the data page template
         course_avl = False
         course_in_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', request.env.user.id)]).course_ids
-        premium_course = request.env['slide.channel'].sudo().search([('state', '=', 'published'), ('not_display', '=', False)])
+        premium_course = request.env['product.template'].sudo().search([('bom_ids', '!=', False)])
         is_active_subscription = False
         subscription_avl = False
         subscription_end_date = False

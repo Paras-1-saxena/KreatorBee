@@ -386,14 +386,26 @@
                                         </p>
                                     </a>
                                 </div>
-                                <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
+                                <t t-if="end_days > 5">
+                                    <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
+                                        <a href="/partner-referral" class='text-center'>
+                                            <i class="ri-links-fill"></i>
+                                            <p>
+                                                Links
+                                            </p>
+                                        </a>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
                                     <a href="/partner-referral" class='text-center'>
-                                        <i class="ri-links-fill"></i>
-                                        <p>
+                                        <i class="ri-links-fill" style="color: red!important;"></i>
+                                        <p style="color: red!important;">
                                             Links
                                         </p>
                                     </a>
                                 </div>
+                                </t>
                                 <div class="p-lg-2 p-1 d-flex flex-column align-items-center">
                                     <a href="/partner/kyc" class='text-center'>
                                         <i class="ri-profile-fill"></i>
@@ -443,12 +455,22 @@
                                                 Income Data
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="/partner-referral">
-                                                <i class="ri-checkbox-blank-circle-line"></i>
-                                                Links
-                                            </a>
-                                        </li>
+                                        <t t-if="end_days > 5">
+                                            <li>
+                                                <a href="/partner-referral">
+                                                    <i class="ri-checkbox-blank-circle-line"></i>
+                                                    Links
+                                                </a>
+                                            </li>
+                                        </t>
+                                        <t t-else="">
+                                            <li>
+                                                <a href="/partner-referral" style="color: red!important;">
+                                                    <i class="ri-checkbox-blank-circle-line" style="color: red!important;"></i>
+                                                    Links
+                                                </a>
+                                            </li>
+                                        </t>
                                         <li>
                                             <a href="/partner/kyc">
                                                 <i class="ri-checkbox-blank-circle-line"></i>
@@ -466,18 +488,6 @@
                                             </a>
                                         </li>
                                     </div>
-                                    <a href="/partner/myproducts">
-                                        <li>
-                                            <i class="ri-product-hunt-fill"></i>
-                                            Products
-                                        </li>
-                                    </a>
-                                    <a href="/partner/training">
-                                        <li>
-                                            <i class="ri-presentation-fill"></i>
-                                            Training
-                                        </li>
-                                    </a>
                                     <a href="/partner/promotional-material">
                                         <li>
                                             <i class="ri-user-community-fill"></i>
@@ -516,12 +526,12 @@
                                                 t-esc="request.env.user.name"/>
                                     </h1>
                                     <div class="d-flex gap-3 align-items-center">
-                                        <a href="#popup_tutorial"
-                                        >Tutorial
-                                            <img class="ms-1"
-                                                 src="/custom_web_kreator/static/src/play.png"
-                                            />
-                                        </a>
+<!--                                        <a href="#popup_tutorial"-->
+<!--                                        >Tutorial-->
+<!--                                            <img class="ms-1"-->
+<!--                                                 src="/custom_web_kreator/static/src/play.png"-->
+<!--                                            />-->
+<!--                                        </a>-->
                                         <a
                                                 href="https://wa.me/+919289384910" target="_blank" class="text-center"
                                         >

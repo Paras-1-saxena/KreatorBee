@@ -329,12 +329,12 @@ class AuthSignupHome(Home):
                 })
             
             partner_id.sudo().write(partner_vals)
-            if partner_id.user_type == 'creator':
-                return request.redirect('/creator/course_detail')
-            elif partner_id.user_type == 'partner':
-                return request.redirect('/master-partner')
-            elif partner_id.user_type == 'customer':
-                return request.redirect('/customer/mycourses')
+            # if partner_id.user_type == 'creator':
+            #     return request.redirect('/creator/course_detail')
+            if partner_id.user_type == 'partner':
+                return request.redirect('/partner-welcome')
+            # elif partner_id.user_type == 'customer':
+            #     return request.redirect('/customer/mycourses')
             else:
                 return request.redirect('/')
 

@@ -555,31 +555,6 @@
                                         </a>
                                     </div>
                                 </t>
-                                <t t-if="partner_type == 'creator'">
-                                    <div
-                                            class="active p-lg-2 p-1 d-flex flex-column align-items-center"
-                                    >
-                                        <a href="/partner/community/creator" class='text-center'>
-                                            <i class="fa fa-users"></i>
-                                            <p>
-                                                Creator
-                                            </p>
-                                        </a>
-                                    </div>
-                                </t>
-                                <t t-if="partner_type != 'creator'">
-                                    <div
-                                            class="p-lg-2 p-1 d-flex flex-column align-items-center"
-                                    >
-                                        <a href="/partner/community/creator" class='text-center'>
-                                            <i class="fa fa-users"></i>
-                                            <p>
-                                                Creator
-                                            </p>
-                                        </a>
-                                    </div>
-                                </t>
-
                                 <t t-if="partner_type == 'partner'">
                                     <div class="active p-lg-2 p-1 d-flex flex-column align-items-center">
                                         <a href="/partner/community/partner" class='text-center'>
@@ -619,18 +594,6 @@
                                         </li>
                                     </a>
                                     <!-- Sales Dropdown -->
-                                    <a href="/partner/myproducts">
-                                        <li>
-                                            <i class="ri-product-hunt-fill"></i>
-                                            Products
-                                        </li>
-                                    </a>
-                                    <a href="/partner/training">
-                                        <li>
-                                            <i class="ri-presentation-fill"></i>
-                                            Training
-                                        </li>
-                                    </a>
                                     <a href="/partner/promotional-material">
                                         <li>
                                             <i class="ri-user-community-fill"></i>
@@ -657,22 +620,6 @@
                                             <a href="/partner/community/updates">
                                                 <i class="ri-checkbox-blank-circle-line"></i>
                                                 Update
-                                            </a>
-                                        </li>
-                                        </t>
-                                        <t t-if="partner_type == 'creator'">
-                                            <li class="active">
-                                            <a href="/partner/community/creator">
-                                                <i class="ri-checkbox-circle-fill"></i>
-                                                Creator
-                                            </a>
-                                        </li>
-                                        </t>
-                                        <t t-if="partner_type != 'creator'">
-                                            <li>
-                                            <a href="/partner/community/creator">
-                                                <i class="ri-checkbox-blank-circle-line"></i>
-                                                Creator
                                             </a>
                                         </li>
                                         </t>
@@ -719,12 +666,12 @@
                                                 t-esc="request.env.user.name"/>
                                     </h1>
                                     <div class="d-flex gap-3 align-items-center">
-                                        <a href="#popup_tutorial"
-                                        >Tutorial
-                                            <img class="ms-1"
-                                                 src="/custom_web_kreator/static/src/play.png"
-                                            />
-                                        </a>
+<!--                                        <a href="#popup_tutorial"-->
+<!--                                        >Tutorial-->
+<!--                                            <img class="ms-1"-->
+<!--                                                 src="/custom_web_kreator/static/src/play.png"-->
+<!--                                            />-->
+<!--                                        </a>-->
                                         <a
                                                 href="https://wa.me/+919289384910" target="_blank" class="text-center"
                                         >

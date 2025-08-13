@@ -172,40 +172,56 @@ class ReferralController(http.Controller):
     def partner_referral(self, **kwargs):
         user_id = request.env.user
         partner_id = user_id.partner_id
-        course_ids = False
-        courses = request.env['my.product.cart'].sudo().search([('partner_id', '=', partner_id.id)]).course_id.ids
+        is_active_subscription = False
+        partner = request.env.user.partner_id  # Get related partner
+        subscription = partner.subscription_product_line_ids.subscription_id.filtered(
+            lambda sub: sub.stage_id.name == 'In Progress')
+        if subscription and subscription.next_invoice_date >= datetime.today().date():
+            is_active_subscription = True
+        end_days = 0
+        if subscription:
+            end_days = (subscription.next_invoice_date - datetime.today().date()).days
+        # if not request.env.user.partner_id.early_sign_in and (
+        #         premium_course.id not in request.env.user.partner_id.slide_channel_ids.ids):
+        #     return request.redirect('/partner-welcome')
+        if not is_active_subscription:
+            request.env['apg.course.referral'].sudo().search([('partner_id', '=', partner_id.id)]).unlink()
+            return request.redirect('/partner-welcome')
+        # course_ids = False
+        course_ids = request.env['product.template'].sudo().search([('bom_ids', '!=', False)])
         partner_ids = request.env['res.partner'].sudo().search([('user_type', '=', 'customer')])
-        course_count = len(request.env.user.partner_id.slide_channel_ids.product_id.ids)
-        if courses:
-            course_ids = request.env['slide.channel'].sudo().search([
-                ('id', 'in', courses),
-                ('state', '=', 'published'),
-                ('not_display', '=', False)
-                ])
+        course_count = len(request.env.user.partner_id.sale_order_ids.order_line.filtered(lambda line: line.product_id.bom_ids).product_id.ids)
+        # if courses:
+        #     course_ids = request.env['slide.channel'].sudo().search([
+        #         ('id', 'in', courses),
+        #         ('state', '=', 'published'),
+        #         ('not_display', '=', False)
+        #         ])
         if kwargs.get('success') == 'Success':
             payment_referral_id = request.env['apg.course.referral'].sudo().search([('id', '=', kwargs.get('payment_referral_id'))])
             values = {
                 'product_cart_ids': course_ids,
                 'partner_ids': partner_ids,
                 'payment_referral_id': payment_referral_id,
-                'course_count': course_count
+                'course_count': course_count,
+                'end_days': end_days
             }
             # Render the data page template
             return http.request.render('apg_course_referral.partner_referral_link_page', values)
         if request.httprequest.method == 'POST':
             course_id = request.httprequest.form.getlist('course_id')
             expiry_time = kwargs.get('expiry_time')
-            expireOn = False
-            if expiry_time == '5_minutes':
-                expireOn = 300    # 5 minutes
-            elif expiry_time == '15_minutes':
-                expireOn = 900   # 15 minutes
-            elif expiry_time == '30_minutes':
-                expireOn = 1800   # 30 minutes
-            else:
-                expireOn = 315360000  # 10 years for unlimited
+            # expireOn = False
+            # if expiry_time == '5_minutes':
+            #     expireOn = 300    # 5 minutes
+            # elif expiry_time == '15_minutes':
+            #     expireOn = 900   # 15 minutes
+            # elif expiry_time == '30_minutes':
+            #     expireOn = 1800   # 30 minutes
+            # else:
+            expireOn = 315360000  # 10 years for unlimited
             if course_id:
-                course_id = request.env['slide.channel'].sudo().search([('id', 'in', course_id)])
+                course_id = request.env['product.template'].sudo().search([('id', 'in', course_id)])
                 referral_id = request.env['apg.course.referral'].sudo().create({
                     'course_id':[(4, c.id) for c in course_id],
                     'partner_id': partner_id.id,
@@ -217,13 +233,15 @@ class ReferralController(http.Controller):
                     'product_cart_ids': course_ids,
                     'referral_id': referral_id,
                     'partner_ids': partner_ids,
-                    'course_count': course_count
+                    'course_count': course_count,
+                    'end_days': end_days
                 }
                 return http.request.render('apg_course_referral.partner_referral_link_page', values)
         values = {
             'product_cart_ids': course_ids,
             'partner_ids': partner_ids,
-            'course_count': course_count
+            'course_count': course_count,
+            'end_days': end_days
         }
         tutorial_video = Markup("""
                     <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"

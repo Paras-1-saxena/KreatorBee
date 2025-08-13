@@ -184,8 +184,8 @@
         <template id="partner_profile_dropdown" name="Profile">
             <style>
                 :root {
-                --primary-color: #fff5c6; /* Indigo-600 */
-                --primary-hover-color: #FFD000; /* Indigo-700 */
+                --primary-color: #EDFFF3; /* Indigo-600 */
+                --primary-hover-color: #ECF9FF; /* Indigo-700 */
                 --background-color: black; /* Gray-100 */
                 --text-color: white; /* Gray-900 */
                 --secondary-text-color: #6b7280; /* Gray-500 */
@@ -389,7 +389,7 @@
                     width: 100%;
                     padding: 0.75rem;
                     background-color: var(--primary-hover-color);
-                    color: white;
+                    color: black!important;
                     font-size: 1.125rem;
                     font-weight: 700;
                     border: none;
@@ -400,7 +400,7 @@
                     width: 100%;
                     padding: 0.75rem;
                     background-color: var(--primary-hover-color);
-                    color: white;
+                    color: black!important;
                     font-size: 1.125rem;
                     font-weight: 700;
                     border: none;

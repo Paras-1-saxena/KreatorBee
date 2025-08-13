@@ -328,18 +328,6 @@
                                         </li>
                                     </a>
                                     <!-- Sales Dropdown -->
-                                    <a href="/partner/myproducts">
-                                        <li>
-                                            <i class="ri-product-hunt-fill"></i>
-                                            Products
-                                        </li>
-                                    </a>
-                                    <a href="/partner/training">
-                                        <li>
-                                            <i class="ri-presentation-fill"></i>
-                                            Training
-                                        </li>
-                                    </a>
                                     <a href="/partner/promotional-material">
                                         <li>
                                             <i class="ri-user-community-fill"></i>
@@ -378,12 +366,12 @@
                                                 t-esc="request.env.user.name"/>
                                     </h1>
                                     <div class="d-flex gap-3 align-items-center">
-                                        <a href="#popup_tutorial"
-                                        >Tutorial
-                                            <img class="ms-1"
-                                                 src="/custom_web_kreator/static/src/play.png"
-                                            />
-                                        </a>
+<!--                                        <a href="#popup_tutorial"-->
+<!--                                        >Tutorial-->
+<!--                                            <img class="ms-1"-->
+<!--                                                 src="/custom_web_kreator/static/src/play.png"-->
+<!--                                            />-->
+<!--                                        </a>-->
                                         <a
                                                 href="https://wa.me/+919289384910" target="_blank" class="text-center"
                                         >
