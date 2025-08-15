@@ -120,12 +120,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="o_signin_div" class="text-center pt-3 f14">
-                            <span>
-                                Don't have an account?
-                                <a t-attf-href="/web/signup?user_type=partner" class="o-link" role="button">Signup</a>
-                            </span>
-                        </div>
+<!--                        <div id="o_signin_div" class="text-center pt-3 f14">-->
+<!--                            <span>-->
+<!--                                Don't have an account?-->
+<!--                                <a t-attf-href="/web/signup?user_type=partner" class="o-link" role="button">Signup</a>-->
+<!--                            </span>-->
+<!--                        </div>-->
                     </form>
                     <form t-if="otp and otp_no" id="form_otp" class="oe_login_form" role="form"
                           t-attf-action="/web/otp/verify" method="post" style="background-color:#fff; width: 100%;">
