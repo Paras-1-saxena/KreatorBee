@@ -19,6 +19,13 @@ import requests
 import qrcode
 import io
 from odoo.tools.image import image_data_uri
+from odoo.addons.website_sale.controllers.main import WebsiteSale
+
+class ShopRedirect(WebsiteSale):
+
+    @http.route(['/shop/confirmation'], type='http', auth="public", website=True, sitemap=False)
+    def shop_payment_confirmation(self, **post):
+        return request.redirect('/partner/mycourses')
 
 
 class PortalMyCourses(http.Controller):
@@ -1651,6 +1658,8 @@ class PortalMyCourses(http.Controller):
 
     @http.route('/sale/cart/checkout', type='http', auth='public', website=True)
     def update_sale_cart(self, **kwargs):
+        if kwargs.get('add_courses'):
+            self.add_sale_from_checkout(**kwargs)
         user = request.env.user
         sale_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', user.id)], limit=1)
         products = sale_cart.course_ids
@@ -1681,7 +1690,7 @@ class PortalMyCourses(http.Controller):
             sale_order.sudo().order_line[0:int(kwargs.get('course_count'))].write({'partner_commission_partner_id': int(request.session.get('referral_partner'))})
         if request.env.user.is_public:
             request.session['redirect_after_signup'] = '/shop/cart'
-            return request.redirect('/web/login')
+            return request.redirect('/web/signup?user_type=partner')
         return request.redirect("/shop/cart")
 
     @http.route('/get/sale/cart', type='json', auth='public', methods=['POST'])
@@ -1719,6 +1728,22 @@ class PortalMyCourses(http.Controller):
                 """
         total = sum(course.list_price for course in sale_cart.course_ids)
         return {'response': 'success', 'data': Markup(dynamic_data), 'total': Markup(f"₹ {total}"), 'checkout': 'checkout-button' if total > 0.0 else 'checkout-button-disabled', 'cart_count': len(sale_cart.course_ids.ids)}
+
+
+    def add_sale_from_checkout(self, **kwargs):
+        course_id = kwargs.get('course_id')
+        redirect = kwargs.get('redirect')
+        if not course_id or not redirect:
+            raise NotFound()
+        user = request.env.user
+        sale_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', user.id)], limit=1)
+        if not sale_cart:
+            sale_cart = request.env['kb.sale.cart'].sudo().create({'name': user.id})
+        if kwargs.get('multi'):
+            course_ids = [(4, cid) for cid in json.loads(course_id)]
+            sale_cart.sudo().write({'course_ids': course_ids})
+        else:
+            sale_cart.sudo().write({'course_ids': [(4, int(course_id))]})
 
     @http.route('/add/sale/cart', type='http', auth='public', website=True)
     def add_sale_cart(self, **kwargs):
@@ -3772,12 +3797,7 @@ class PortalMyCourses(http.Controller):
                         video_data = Markup('''
                         <iframe src="https://player.vimeo.com/video/1068061920?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh; title="PART 1"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
                         ''')
-                        next_vid = Markup('''
-                        <a onclick="openVideo(2, '0-100')" class="border1 rounded p-2" style="background-color:#ffc107; cursor:pointer;">
-                                            Next
-                                            <i class="ri-arrow-right-line"></i>
-                                        </a>
-                        ''')
+                        next_vid = ''
                     if int(ved_no) == 2:
                         video_data = Markup('''
                         <iframe src="https://player.vimeo.com/video/1068093187?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh; title="PART 2"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
@@ -3796,14 +3816,12 @@ class PortalMyCourses(http.Controller):
                 if kwargs.get('type') == 'onboarding':
                     if int(ved_no) == 1:
                         video_data = Markup('''
-                        <iframe src="https://player.vimeo.com/video/1071659872?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh;" title="Onboarding Video 1"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
+                        <div style="width: 80dvw; height: 100dvh;" class="d-none d-md-block">
+                        <iframe width="100%" height="60%" src="https://www.youtube.com/embed/shpmIxcn3AQ?si=-2R2Qr28CCWXsCIU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        <iframe width="100%" height="auto" class="d-block d-md-none" src="https://www.youtube.com/embed/zxgCpvxANA8?si=lhk9_CvGSq7PURs_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         ''')
-                        next_vid = Markup('''
-                        <a onclick="openVideo(2, 'onboarding')" class="border1 rounded p-2" style="background-color:#ffc107; cursor:pointer;">
-                                            Next
-                                            <i class="ri-arrow-right-line"></i>
-                                        </a>
-                        ''')
+                        next_vid =''
                     if int(ved_no) == 2:
                         video_data = Markup('''
                         <iframe src="https://player.vimeo.com/video/1071755214?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh;" title="Onboarding Video 2"></iframe><script src="https://player.vimeo.com/api/player.js"></script>

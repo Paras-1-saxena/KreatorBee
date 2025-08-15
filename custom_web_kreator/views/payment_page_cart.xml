@@ -74,41 +74,50 @@
                 <hr/>
             </div>
         </xpath>
+
         <xpath expr="//div[hasclass('o_cta_navigation_container')]" position="replace">
-            <t t-if="request.session.get('coupon_status') == 'success'">
-                <div class="bg-success text-center rounded p-3">
-                    Coupon Applied Successfully
+            <t t-if="'/shop/checkout' not in request.httprequest.url">
+                <t t-if="request.session.get('coupon_status') == 'success'">
+                    <div class="bg-success text-center rounded p-3">
+                        Coupon Applied Successfully
+                    </div>
+                </t>
+                <t t-if="request.session.get('coupon_status') == 'warning'">
+                    <div class="bg-warning text-center rounded p-3">
+                        You can only Add one Coupon
+                    </div>
+                </t>
+                <t t-if="request.session.get('coupon_status') == 'failed'">
+                    <div class="bg-danger text-center rounded p-3">
+                        Coupon Expired or Invalid
+                    </div>
+                </t>
+                <div>
+                    <div class="my-2">
+                        <label>
+                            <input type="checkbox" name="agreement" id="term" value="agree" required="required"
+                                   onchange="showPayNow()"/>
+                            I confirm that I have read and agree to the <a target="_blank" href="/privacy-policy">[Terms
+                            &amp; Conditions]</a>.
+                        </label>
+                        <label>
+                            <input type="checkbox" name="agreement" id="refund" value="agree" required="required"
+                                   onchange="showPayNow()"/>
+                            I confirm that I have read and agree to the <a target="_blank" href="/refund-policy">[Refund
+                            Policy]</a>.
+                        </label>
+                    </div>
                 </div>
             </t>
-            <t t-if="request.session.get('coupon_status') == 'warning'">
-                <div class="bg-warning text-center rounded p-3">
-                    You can only Add one Coupon
-                </div>
-            </t>
-            <t t-if="request.session.get('coupon_status') == 'failed'">
-                <div class="bg-danger text-center rounded p-3">
-                    Coupon Expired or Invalid
-                </div>
-            </t>
-            <div>
-                <div class="my-2">
-                    <label>
-                        <input type="checkbox" name="agreement" id="term" value="agree" required="required"
-                               onchange="showPayNow()"/>
-                        I confirm that I have read and agree to the <a target="_blank" href="/privacy-policy">[Terms
-                        &amp; Conditions]</a>.
-                    </label>
-                    <label>
-                        <input type="checkbox" name="agreement" id="refund" value="agree" required="required"
-                               onchange="showPayNow()"/>
-                        I confirm that I have read and agree to the <a target="_blank" href="/refund-policy">[Refund
-                        Policy]</a>.
-                    </label>
-                </div>
-            </div>
+            <!--            <t t-esc="request.httprequest.url"/>-->
             <div t-if="show_navigation_button" id="pay_button"
                  class="o_cta_navigation_container position-absolute position-lg-static start-0 bottom-0 col-12"
                  style="display: none;">
+                <t t-call="website_sale.navigation_buttons"/>
+            </div>
+            <div t-if="show_navigation_button and '/shop/checkout' in request.httprequest.url" id="pay_button"
+                 class="o_cta_navigation_container position-absolute position-lg-static start-0 bottom-0 col-12"
+                 style="display: block;">
                 <t t-call="website_sale.navigation_buttons"/>
             </div>
             <script>
@@ -131,16 +140,18 @@
 
     <template id="custom_coupon_form" inherit_id="website_sale.coupon_form" name="Custom Checkout Layout">
         <xpath expr="." position="replace">
-            <form action="/course/discount/apply"
-                  method="post" name="coupon_code">
-                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"
-                       t-nocache="The csrf token must always be up to date."/>
-                <div class="input-group w-100 my-2">
-                    <input name="promo" class="form-control" type="text" placeholder="Discount code..."
-                           t-att-value="website_sale_order.pricelist_id.code or None"/>
-                    <a href="#" role="button" class="btn btn-secondary a-submit ps-2">Apply</a>
-                </div>
-            </form>
+            <t t-if="'/shop/checkout' not in request.httprequest.url">
+                <form action="/course/discount/apply"
+                      method="post" name="coupon_code">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"
+                           t-nocache="The csrf token must always be up to date."/>
+                    <div class="input-group w-100 my-2">
+                        <input name="promo" class="form-control" type="text" placeholder="Discount code..."
+                               t-att-value="website_sale_order.pricelist_id.code or None"/>
+                        <a href="#" role="button" class="btn btn-secondary a-submit ps-2">Apply</a>
+                    </div>
+                </form>
+            </t>
         </xpath>
     </template>
 </odoo>

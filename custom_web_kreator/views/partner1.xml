@@ -42,7 +42,7 @@
                     <!-- Header -->
                     <header class="container-fluid">
                         <div
-                                class="d-flex justify-content-between align-items-center border-bottom"
+                                class="d-flex justify-content-between align-items-center border-bottom p-2 p-md-0"
                         >
                             <!-- Menu Icon visible on mobile-->
                             <img
@@ -59,7 +59,7 @@
                                     <a href="/partner/income" class='text-center'>
                                         <i class="ri-line-chart-fill"></i>
                                         <p>
-                                            Income
+                                            Dashboard
                                         </p>
                                     </a>
                                 </div>
@@ -129,7 +129,7 @@
                                         <li class="active">
                                             <a href="/partner/income">
                                                 <i class="ri-checkbox-circle-fill"></i>
-                                                Income Data
+                                                Dashboard
                                             </a>
                                         </li>
                                         <t t-if="end_days > 5">
@@ -167,10 +167,10 @@
                                             </a>
                                         </li>
                                     </div>
-                                    <a href="/partner/promotional-material">
+                                    <a href="/partner/training">
                                         <li>
                                             <i class="ri-user-community-fill"></i>
-                                            Promote
+                                            Training
                                         </li>
                                     </a>
                                     <a href="/partner/community/updates">
@@ -216,25 +216,28 @@
 <!--                                            />-->
 <!--                                        </a>-->
                                         <a
-                                                href="https://wa.me/+919289384910" target="_blank" class="text-center"
+                                                href="https://t.me/+rJB94QryEtNhM2Vl" target="_blank" class="text-center"
                                         >
                                             <img
-                                                    src="/custom_web_kreator/static/src/Whatsapp.png"
+                                                    src="/custom_web_kreator/static/src/telegram.gif"
                                             />
-                                            +91 9289384910
+                                            +91 8826585288
                                             <br/>
                                             <div style="font-size: 10px;">
-                                                9:30 AM to 6:00 PM (Except Sundays)
+                                                10 AM to 6:00 PM (Except Sundays)
                                             </div>
                                         </a>
                                     </div>
                                 </div>
                             </section>
+                            <div id="tooltip" style="display: none;" class="text-center h6 mt-2">
+                                You are entitled to receive 100% commission, subject to deduction of applicable TDS and processing charges. <i class="ri-close-circle-fill" onclick="tooltip_func('close')" style="cursor: pointer;"></i>
+                            </div>
 
                             <section class="sales-data my-5 overflow-auto" style="height: 80%;">
                                 <div class="row justify-content-around align-items-center">
                                     <div class="col-12 col-md-3 mt-1 total-sales-card p-4 d-flex flex-column justify-content-center align-items-center">
-                                        <h2>Total Sales</h2>
+                                        <h2>Total Earning <i class="ri-information-fill" style="color: black!important; cursor: pointer;" onclick="tooltip_func('open')"></i></h2>
                                         <p>₹
                                             <t t-esc="commission['total']"/>
                                         </p>
@@ -260,6 +263,17 @@
                                         </p>
                                     </div>
                                 </div>
+                                <script>
+                                    function tooltip_func(trigger){
+                                        tooltip = document.getElementById('tooltip');
+                                        if (trigger == 'close') {
+                                        tooltip.style.display = 'none';
+                                        }
+                                    if (trigger == 'open') {
+                                        tooltip.style.display = 'block';
+                                        }
+                                    }
+                                </script>
 
 
 <!--                                <div class="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-5 mt-5">-->
