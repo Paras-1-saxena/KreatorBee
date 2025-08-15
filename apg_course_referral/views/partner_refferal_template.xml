@@ -400,7 +400,7 @@
                                     <a href="/partner/income" class='text-center'>
                                         <i class="ri-line-chart-fill"></i>
                                         <p>
-                                            Income Data
+                                            Dashboard
                                         </p>
                                     </a>
                                 </div>
@@ -470,13 +470,13 @@
                                         <li>
                                             <a href="/partner/income">
                                                 <i class="ri-checkbox-blank-circle-line"></i>
-                                                Income Data
+                                                Dashboard
                                             </a>
                                         </li>
                                         <t t-if="end_days > 5">
                                             <li class="active">
                                                 <a href="/partner-referral">
-                                                    <i class="ri-checkbox-blank-circle-line"></i>
+                                                    <i class="ri-checkbox-circle-fill"></i>
                                                     Links
                                                 </a>
                                             </li>
@@ -508,10 +508,10 @@
                                             </a>
                                         </li>
                                     </div>
-                                    <a href="/partner/promotional-material">
+                                    <a href="/partner/training">
                                         <li>
                                             <i class="ri-user-community-fill"></i>
-                                            Promote
+                                            Training
                                         </li>
                                     </a>
                                     <a href="/partner/community/updates">
@@ -553,15 +553,15 @@
 <!--                                            />-->
 <!--                                        </a>-->
                                         <a
-                                                href="https://wa.me/+919289384910" target="_blank" class="text-center"
+                                                href="https://t.me/+rJB94QryEtNhM2Vl" target="_blank" class="text-center"
                                         >
                                             <img
-                                                    src="/custom_web_kreator/static/src/Whatsapp.png"
+                                                    src="/custom_web_kreator/static/src/telegram.gif"
                                             />
-                                            +91 9289384910
+                                            +91 8826585288
                                             <br/>
                                             <div style="font-size: 10px;">
-                                                9:30 AM to 6:00 PM (Except Sundays)
+                                                10 AM to 6:00 PM (Except Sundays)
                                             </div>
                                         </a>
                                     </div>
@@ -590,6 +590,18 @@
                                     .choices__button {
                                     border-radius: 50px!important;
                                     }
+                                    .choices__item {
+                                    background: #125818!important;
+                                    }
+                                    .choices__item--choice {
+                                    background: white!important;
+                                    }
+<!--                                    .choices__button {-->
+<!--                                    background: black!important;-->
+<!--                                    }-->
+<!--                                    .choices__button i {-->
+<!--                                    color: black!important;-->
+<!--                                    }-->
 
                                 </style>
                                 <div class="col-lg-6 col-md-6 col-sm-11">
@@ -702,7 +714,7 @@
                                             <t t-else="">
                                                 <input type="text" id="pgenerated_url" readonly="readonly"/>
                                             </t>
-                                            <button type="submit" class="mr-5" style="width:70%;">Generate Link</button>
+                                            <button type="submit" class="mr-5" style="width:70%; background-color:#125818!important; color: white!important;">Generate Link</button>
                                             <a type="button" class="fa fa-copy" id="pcopy_icon"
                                                style="cursor: pointer; margin-left: 10px;color: black;"/>
 

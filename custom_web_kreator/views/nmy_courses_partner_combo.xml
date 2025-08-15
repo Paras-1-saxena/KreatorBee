@@ -328,10 +328,10 @@
                                         </li>
                                     </a>
                                     <!-- Sales Dropdown -->
-                                    <a href="/partner/promotional-material">
+                                    <a href="/partner/training">
                                         <li>
                                             <i class="ri-user-community-fill"></i>
-                                            Promote
+                                            Training
                                         </li>
                                     </a>
                                     <a href="/partner/community/updates">
@@ -373,15 +373,15 @@
 <!--                                            />-->
 <!--                                        </a>-->
                                         <a
-                                                href="https://wa.me/+919289384910" target="_blank" class="text-center"
+                                                href="https://t.me/+rJB94QryEtNhM2Vl" target="_blank" class="text-center"
                                         >
                                             <img
-                                                    src="/custom_web_kreator/static/src/Whatsapp.png"
+                                                    src="/custom_web_kreator/static/src/telegram.gif"
                                             />
-                                            +91 9289384910
+                                            +91 8826585288
                                             <br/>
                                             <div style="font-size: 10px;">
-                                                9:30 AM to 6:00 PM (Except Sundays)
+                                                10 AM to 6:00 PM (Except Sundays)
                                             </div>
                                         </a>
                                     </div>
@@ -395,7 +395,7 @@
                                 <!-- Loop over the courses -->
                                 <t t-foreach="courses" t-as="course">
                                     <div class="col-md-3 mb-4">
-                                        <div class="card text-center p-3">
+                                        <div class="card text-center p-3" style="border: 1px solid #125818!important;">
                                             <!-- Display course image without hyperlink -->
                                             <img t-att-src="image_data_uri(course.image_1920) if course.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'" alt="course Image"
                                                  style="width: 340px; height: 198px; display: block; margin: 0 auto;"
@@ -406,7 +406,7 @@
                                             </h6>
                                             <!-- View Now button -->
                                             <a t-att-href="'/partner/mycourses/courses?product_id=%s' % course.id"
-                                               class="btn btn-warning mt-3 mb-1">
+                                               class="btn mt-3 mb-1" style="background:#125818; color:white!important;">
                                                 View Now
                                             </a>
                                         </div>

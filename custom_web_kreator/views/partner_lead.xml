@@ -119,7 +119,7 @@
                                     <a href="/partner/income" class='text-center'>
                                         <i class="ri-line-chart-fill"></i>
                                         <p>
-                                            Income Data
+                                            Dashboard
                                         </p>
                                     </a>
                                 </div>
@@ -189,7 +189,7 @@
                                         <li>
                                             <a href="/partner/income">
                                                 <i class="ri-checkbox-blank-circle-line"></i>
-                                                Income Data
+                                                Dashboard
                                             </a>
                                         </li>
                                         <t t-if="end_days > 5">
@@ -225,10 +225,10 @@
                                             </a>
                                         </li>
                                     </div>
-                                    <a href="/partner/promotional-material">
+                                    <a href="/partner/training">
                                         <li>
                                             <i class="ri-user-community-fill"></i>
-                                            Promote
+                                            Training
                                         </li>
                                     </a>
                                     <a href="/partner/community/updates">
@@ -270,15 +270,15 @@
 <!--                                            />-->
 <!--                                        </a>-->
                                         <a
-                                                href="https://wa.me/+919289384910" target="_blank" class="text-center"
+                                                href="https://t.me/+rJB94QryEtNhM2Vl" target="_blank" class="text-center"
                                         >
                                             <img
-                                                    src="/custom_web_kreator/static/src/Whatsapp.png"
+                                                    src="/custom_web_kreator/static/src/telegram.gif"
                                             />
-                                            +91 9289384910
+                                            +91 8826585288
                                             <br/>
                                             <div style="font-size: 10px;">
-                                                9:30 AM to 6:00 PM (Except Sundays)
+                                                10 AM to 6:00 PM (Except Sundays)
                                             </div>
                                         </a>
                                     </div>
@@ -301,56 +301,56 @@
                                     </section>
                                 </div>
                             </div>
-                            <div id="unverifiedOrdersTable">
-                                <div class="row">
-                                    <div class="col-lg-8 col-12 lead-table p-3 overflow-auto" style="height: 70vh;">
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>NAME</th>
-                                                    <th>EMAIL</th>
-                                                    <th>NUMBER</th>
-                                                    <th>STATUS</th>
-                                                    <th>DATE</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <t t-foreach="sale_orders" t-as="order">
-                                                    <tr>
-                                                        <td>
-                                                            <t t-esc="order.partner_id.name"/>
-                                                        </td>
-                                                        <td>
-                                                            <t t-if="order.partner_id.email">
-                                                                <a
-                                                                        t-att-href="'mailto:' + order.partner_id.email">
-                                                                    <t
-                                                                            t-esc="order.partner_id.email"/>
-                                                                </a>
-                                                            </t>
-                                                            <t t-else="">No Email</t>
-                                                        </td>
-                                                        <td>
-                                                            <t t-esc="order.partner_id.phone"/>
-                                                        </td>
-                                                        <td>
-                                                            <t t-esc="order.state"/>
-                                                        </td>
-                                                        <td>
-                                                            <t
-                                                                    t-esc="order.date_order.strftime('%Y-%m-%d %H:%M:%S')"/>
-                                                        </td>
-                                                    </tr>
-                                                </t>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="col-lg-4 d-none d-lg-block col-12">
-                                        <img class="write"
-                                             src="/custom_web_kreator/static/src/write.png"/>
-                                    </div>
-                                </div>
-                            </div>
+<!--                            <div id="unverifiedOrdersTable">-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-lg-8 col-12 lead-table p-3 overflow-auto" style="height: 70vh;">-->
+<!--                                        <table>-->
+<!--                                            <thead>-->
+<!--                                                <tr>-->
+<!--                                                    <th>NAME</th>-->
+<!--                                                    <th>EMAIL</th>-->
+<!--                                                    <th>NUMBER</th>-->
+<!--                                                    <th>STATUS</th>-->
+<!--                                                    <th>DATE</th>-->
+<!--                                                </tr>-->
+<!--                                            </thead>-->
+<!--                                            <tbody>-->
+<!--                                                <t t-foreach="sale_orders" t-as="order">-->
+<!--                                                    <tr>-->
+<!--                                                        <td>-->
+<!--                                                            <t t-esc="order.partner_id.name"/>-->
+<!--                                                        </td>-->
+<!--                                                        <td>-->
+<!--                                                            <t t-if="order.partner_id.email">-->
+<!--                                                                <a-->
+<!--                                                                        t-att-href="'mailto:' + order.partner_id.email">-->
+<!--                                                                    <t-->
+<!--                                                                            t-esc="order.partner_id.email"/>-->
+<!--                                                                </a>-->
+<!--                                                            </t>-->
+<!--                                                            <t t-else="">No Email</t>-->
+<!--                                                        </td>-->
+<!--                                                        <td>-->
+<!--                                                            <t t-esc="order.partner_id.phone"/>-->
+<!--                                                        </td>-->
+<!--                                                        <td>-->
+<!--                                                            <t t-esc="order.state"/>-->
+<!--                                                        </td>-->
+<!--                                                        <td>-->
+<!--                                                            <t-->
+<!--                                                                    t-esc="order.date_order.strftime('%Y-%m-%d %H:%M:%S')"/>-->
+<!--                                                        </td>-->
+<!--                                                    </tr>-->
+<!--                                                </t>-->
+<!--                                            </tbody>-->
+<!--                                        </table>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-lg-4 d-none d-lg-block col-12">-->
+<!--                                        <img class="write"-->
+<!--                                             src="/custom_web_kreator/static/src/write.png"/>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <div id="visitorsTable">
                                 <div class="row">
                                     <div class="col-lg-8 col-12 lead-table p-3 overflow-auto" style="height: 70vh;">
