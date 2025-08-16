@@ -2,7 +2,7 @@
 {
     'name': 'Kreator Website',
     'description': 'Kreator',
-    'depends': ['website', 'web'],
+    'depends': ['website', 'web', 'sale'],
     'data': [
         'views/templates.xml',
         'views/pixel_integration.xml',
