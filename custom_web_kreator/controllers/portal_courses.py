@@ -1663,7 +1663,7 @@ class PortalMyCourses(http.Controller):
         user = request.env.user
         sale_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', user.id)], limit=1)
         products = sale_cart.course_ids
-        subscription_product_id = request.env['product.product'].sudo().search([('name', '=', '28 Days Subscription'), ('is_subscription', '=', True)], limit=1)
+        subscription_product_id = request.env['product.product'].sudo().search([('name', '=', '[Free] 28 Days Subscription'), ('is_subscription', '=', True)], limit=1)
         pricelist = request.env['product.pricelist'].search([('name', '=', 'Referral Price')], limit=1)
         sale_order = request.website.sale_get_order(force_create=True)
         sale_order.order_line = False
