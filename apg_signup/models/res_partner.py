@@ -141,12 +141,12 @@ class ResPartner(models.Model):
     #             if video_duration < 60:
     #                 raise exceptions.ValidationError(_("Each video must be at least 1 minute long."))
 
-    @api.constrains('mobile')
-    def _check_mobile(self):
-        for rec in self:
-            partner_id = self.env["res.partner"].search([("mobile", "=", rec.mobile),("id", "!=", rec.id)])
-            if partner_id:
-                raise ValidationError(_('Another user is already registered using this mobile No.'))
+    # @api.constrains('mobile')
+    # def _check_mobile(self):
+    #     for rec in self:
+    #         partner_id = self.env["res.partner"].search([("mobile", "=", rec.mobile),("id", "!=", rec.id)])
+    #         if partner_id:
+    #             raise ValidationError(_('Another user is already registered using this mobile No.'))
 
 
     def _get_video_duration(self, video_attachment):
