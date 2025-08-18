@@ -1690,7 +1690,7 @@ class PortalMyCourses(http.Controller):
                 'name': subscription_product_id.name,
             })
             sale_order.sudo().update({'pricelist_id': pricelist.id})
-        if kwargs.get('course_count') and request.session.get('referral_partner'):
+        if kwargs.get('course_count') and request.session.get('referral_partner') and sale_order.sudo().partner_id.id != int(request.session.get('referral_partner')):
             sale_order.sudo().order_line[0:int(kwargs.get('course_count'))].write({'partner_commission_partner_id': int(request.session.get('referral_partner'))})
         if request.env.user.is_public:
             request.session['redirect_after_signup'] = '/shop/cart'

@@ -224,7 +224,7 @@
                             <t t-esc="sum(course.list_price for course in referred_courses)"/>
                         </div>
                         <div class="mt-2">
-                            <a t-att-href="'/sale/cart/checkout?course_id={}&amp;redirect={}&amp;multi=True&amp;add_courses=True'.format(referred_courses.ids, request.httprequest.full_path)">
+                            <a t-att-href="'/sale/cart/checkout?course_id={}&amp;redirect={}&amp;multi=True&amp;add_courses=True&amp;course_count={}'.format(referred_courses.ids, request.httprequest.full_path, len(referred_courses.ids))">
                                 <button class="add-to-cart-btn">Checkout</button>
                             </a>
                         </div>
