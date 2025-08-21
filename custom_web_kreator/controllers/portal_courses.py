@@ -516,8 +516,8 @@ class PortalMyCourses(http.Controller):
         end_days = 0
         if subscription:
             end_days = (subscription.next_invoice_date - datetime.today().date()).days
-        if (datetime.today().date() - timedelta(days=2)) < partner.create_date.date() and not partner.early_sign_in:
-            end_days = 0
+        # if (datetime.today().date() - timedelta(days=2)) < partner.create_date.date() and not partner.early_sign_in:
+        #     end_days = 0
         # if not request.env.user.partner_id.early_sign_in and (
         #         premium_course.id not in request.env.user.partner_id.slide_channel_ids.ids):
         #     return request.redirect('/partner-welcome')
@@ -1058,8 +1058,8 @@ class PortalMyCourses(http.Controller):
             end_days = 0
             if subscription:
                 end_days = (subscription.next_invoice_date - datetime.today().date()).days
-            if (datetime.today().date() - timedelta(days=2)) < partner.create_date.date() and not partner.early_sign_in:
-                end_days = 0
+            # if (datetime.today().date() - timedelta(days=2)) < partner.create_date.date() and not partner.early_sign_in:
+            #     end_days = 0
 
             # Convert date strings into datetime objects (if they exist)
             if start_date:
@@ -2142,8 +2142,8 @@ class PortalMyCourses(http.Controller):
             end_days = 0
             if subscription:
                 end_days = (subscription.next_invoice_date - datetime.today().date()).days
-            if (datetime.today().date() - timedelta(days=2)) < partner.create_date.date() and not partner.early_sign_in:
-                end_days = 0
+            # if (datetime.today().date() - timedelta(days=2)) < partner.create_date.date() and not partner.early_sign_in:
+            #     end_days = 0
 
             values = {
                 'partner_id': partner,
@@ -3356,8 +3356,8 @@ class PortalMyCourses(http.Controller):
             end_days = 0
             if subscription:
                 end_days = (subscription.next_invoice_date - datetime.today().date()).days
-            if (datetime.today().date() - timedelta(days=2)) < partner.create_date.date() and not partner.early_sign_in:
-                end_days = 0
+            # if (datetime.today().date() - timedelta(days=2)) < partner.create_date.date() and not partner.early_sign_in:
+            #     end_days = 0
             for partner, lines in groupby(order_lines, key=attrgetter('partner_commission_partner_id')):
                 grouped_data[partner] = {
                     'total_commission': sum(line.partner_commission_amount for line in lines),
