@@ -179,8 +179,8 @@ class ReferralController(http.Controller):
         if subscription and subscription.next_invoice_date >= datetime.today().date():
             is_active_subscription = True
         end_days = 0
-        if (datetime.today().date() - timedelta(days=2)) < partner.create_date.date() and not partner.early_sign_in:
-            return request.redirect('/partner/income')
+        # if (datetime.today().date() - timedelta(days=2)) < partner.create_date.date() and not partner.early_sign_in:
+        #     return request.redirect('/partner/income')
         if subscription:
             end_days = (subscription.next_invoice_date - datetime.today().date()).days
         # if not request.env.user.partner_id.early_sign_in and (
