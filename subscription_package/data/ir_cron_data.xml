@@ -9,4 +9,13 @@
         <field name='interval_number'>1</field>
         <field name='interval_type'>days</field>
     </record>
+
+    <record id="ir_cron_free_subscription_portal_users" model="ir.cron">
+        <field name="name">Auto Create Free Subscription for Portal Users</field>
+        <field name="model_id" ref="model_subscription_package"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_create_free_subscription_for_portal_users()</field>
+        <field name='interval_number'>1</field>
+        <field name='interval_type'>days</field>
+    </record>
 </odoo>

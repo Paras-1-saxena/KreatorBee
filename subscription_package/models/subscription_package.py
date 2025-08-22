@@ -449,6 +449,37 @@ class SubscriptionPackage(models.Model):
 
         return dict(pending=pending_subscription)
 
+
+    # Auto Create Free Subscription for Portal Users
+    def _cron_create_free_subscription_for_portal_users(self):
+        """ Cron job: create free subscription for portal users without subscription """
+        portal_group = self.env.ref('base.group_portal')
+        product = self.env['product.product'].search([('name', '=', '[Free] 28 Days Subscription')], limit=1)
+
+        if not product:
+            return  # No product found, nothing to do
+
+        # Find all users in portal group
+        portal_users = self.env['res.users'].search([('groups_id', 'in', portal_group.id)])
+
+        for user in portal_users:
+            existing_subscription = self.env['subscription.package'].search([
+                ('partner_id', '=', user.partner_id.id)
+            ], limit=1)
+
+            if not existing_subscription:  # No subscription exists
+                vals = {
+                    'reference_code': self.env['ir.sequence'].next_by_code('sequence.reference.code'),
+                    'start_date': fields.Date.today(),
+                    'stage_id': self.env.ref('subscription_package.draft_stage').id,
+                    'partner_id': user.partner_id.id,
+                    'plan_id': product.subscription_plan_id.id if product.subscription_plan_id else False,
+                    'product_line_ids': [(6, 0, [product.id])],  # Many2many or One2many handling
+                }
+
+                subscription = self.create(vals)
+                subscription.button_start_date()
+
     @api.depends('product_line_ids.total_amount',
                  'product_line_ids.price_total', 'product_line_ids.tax_ids')
     def _compute_total_recurring_price(self):
