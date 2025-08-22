@@ -42,3 +42,30 @@ class ResPartner(models.Model):
             return True
         return super(ResPartner,
                      self)._valid_field_parameter(field, name)
+
+
+class ResUsers(models.Model):
+    _inherit = 'res.users'
+
+    @api.model
+    def create(self, vals):
+        user = super(ResUsers, self).create(vals)
+
+        # Check if user is in portal group
+        portal_group = self.env.ref('base.group_portal')
+        if portal_group in user.groups_id:
+            # Find product with name "[Free] 28 Days Subscription"
+            product = self.env['product.product'].search([('name', '=', '[Free] 28 Days Subscription')], limit=1)
+
+            if product:
+                # Create subscription
+                subscription = self.env['subscription.package'].create({
+                    'reference_code': self.env['ir.sequence'].next_by_code('sequence.reference.code'),
+                    'start_date': fields.Date.today(),
+                    'stage_id': self.env.ref('subscription_package.draft_stage').id,
+                    'partner_id': user.partner_id.id,
+                    'plan_id': product.subscription_plan_id.id if product.subscription_plan_id else False,
+                    'product_line_ids': [(6, 0, [product.id])],  # Many2many or One2many handling
+                })
+                subscription.button_start_date()
+        return user
