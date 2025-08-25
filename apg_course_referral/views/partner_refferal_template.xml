@@ -596,13 +596,14 @@
                                     .choices__item--choice {
                                     background: white!important;
                                     }
-                                    .choices__list--dropdown {
+                                    <!--
+                                    .choices__list-dropdown {
                                         max-height: 150px;
                                         overflow-y: auto !important;
                                     }
                                     .choices__inner {
                                         overflow-y: auto !important;
-                                    }
+                                    }-->
 <!--                                    .choices__button {-->
 <!--                                    background: black!important;-->
 <!--                                    }-->
@@ -672,7 +673,7 @@
                                                 removeItemButton: true,
                                                 maxItemCount: course_count,
                                                 searchResultLimit:5,
-                                                renderChoiceLimit:5
+                                                renderChoiceLimit:-1
                                                 });
                                                 });
 

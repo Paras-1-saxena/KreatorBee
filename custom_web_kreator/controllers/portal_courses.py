@@ -3995,7 +3995,7 @@ class PortalMyCourses(http.Controller):
         # Render the data page template
         course_avl = False
         course_in_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', request.env.user.id)]).course_ids
-        premium_course = request.env['product.template'].sudo().search([])
+        premium_course = request.env['product.template'].sudo().search([('bom_ids', '!=', False)])
         is_active_subscription = False
         subscription_avl = False
         subscription_end_date = False
