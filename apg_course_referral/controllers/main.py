@@ -190,7 +190,7 @@ class ReferralController(http.Controller):
             request.env['apg.course.referral'].sudo().search([('partner_id', '=', partner_id.id)]).unlink()
             return request.redirect('/partner-welcome')
         # course_ids = False
-        course_ids = request.env['product.template'].sudo().search([])
+        course_ids = request.env['product.template'].sudo().search([('bom_ids', '!=', False)])
         partner_ids = request.env['res.partner'].sudo().search([('user_type', '=', 'customer')])
         course_count = len(request.env.user.partner_id.sale_order_ids.order_line.filtered(lambda line: line.product_id.bom_ids).product_id.ids)
         # if courses:
