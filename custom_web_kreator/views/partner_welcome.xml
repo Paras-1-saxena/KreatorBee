@@ -6,7 +6,7 @@
                 <meta charset="UTF-8"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <!-- title -->
-                <title>Kreator Bee | Sales</title>
+                <title>StartEazy</title>
                 <!-- external css -->
                 <link rel="stylesheet" href="/custom_web_kreator/static/src/css/custom_styl.css"/>
                 <link rel="stylesheet"
@@ -272,7 +272,7 @@
                             <t t-if="subscription_avl and is_active_subscription">
                                 <div class="row justify-content-center my-4">
                                     <div class="col-11 align-items-center content-section">
-                                        <h1 class="text-center">Welcome to Kreator Bee</h1>
+                                        <h1 class="text-center">Welcome to StartEazy</h1>
                                         <p>
                                             You are now part of a community that is dedicated to helping you succeed in your
                                             journey as a partner. We are excited to have you on board and look forward to
@@ -295,7 +295,7 @@
                                             <!--                                            <img src="/custom_web_kreator/static/src/thankyou.png" class="img-fluid"-->
                                             <!--                                                     alt="Welcome Icon"/>-->
                                             <h1>Your Subscription has Just Ended</h1>
-                                            <h4>Renew your subscription to continue enjoying the benefits of Kreator Bee
+                                            <h4>Renew your subscription to continue enjoying the benefits of StartEazy
                                             </h4>
                                         </div>
                                         <div class="col-12 p-2 my-3">
@@ -581,7 +581,7 @@
                                 <div class="rounded text-center">
                                     <div class="text-center h3 p-2 row justify-content-center">
                                         <div class="col-9">
-                                            Thank you for joining Kreator Bee - get trained with our exclusive
+                                            Thank you for joining StartEazy - get trained with our exclusive
                                             Program and start earning by promoting top courses
                                         </div>
                                     </div>
@@ -654,7 +654,7 @@
                                     <!--                                     style="background-image: url('/custom_web_kreator/static/src/welcom_img_desk.svg'); background-repeat: no-repeat; background-attachment: fixed;">-->
                                     <!--                                    <div class="text-center h3 p-2 row justify-content-center">-->
                                     <!--                                        <div class="col-12">-->
-                                    <!--                                            Thank you for joining Kreator Bee - get trained with our exclusive-->
+                                    <!--                                            Thank you for joining StartEazy - get trained with our exclusive-->
                                     <!--                                            Program and start earning by promoting top courses-->
                                     <!--                                        </div>-->
                                     <!--                                        <div class="col-12 display-4"-->
