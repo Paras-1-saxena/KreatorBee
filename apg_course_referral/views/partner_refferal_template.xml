@@ -667,16 +667,28 @@
                                             <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css'></script>
                                             <script src="./script.js"></script>
                                             <script>
-                                                    course_count = document.getElementById('course_count').innerText;
-                                                $(document).ready(function(){
-                                                var multipleCancelButton = new Choices('#course_id', {
-                                                removeItemButton: true,
-                                                maxItemCount: course_count,
-                                                searchResultLimit:5,
-                                                renderChoiceLimit:-1
+                                                $(document).ready(function () {
+                                                    // Parse count safely
+                                                    const raw = (document.getElementById('course_count')?.textContent || '').trim();
+                                                    const count = Number.parseInt(raw, 10);
+                                                    const allowed = Number.isFinite(count) ? count : 0;
+                                                    // Init Choices
+                                                    const choices = new Choices('#course_id', {
+                                                        removeItemButton: true,
+                                                        // show ALL options/results
+                                                        searchResultLimit: -1,
+                                                        renderChoiceLimit: -1,
+                                                        // we'll enforce the 0-case by disabling instead of using maxItemCount:0
+                                                        maxItemCount: allowed > 0 ? allowed : 999999, 
+                                                        placeholderValue: allowed > 0 ? 'Select courses…' : 'No courses allowed. Please buy at least one course', 
+                                                    });
+                                                    // If zero, disable completely and clear any preselected items
+                                                    if (allowed === 0) {
+                                                        choices.removeActiveItems();  // clear any selections
+                                                        choices.disable();            // disable dropdown
+                                                    }
                                                 });
-                                                });
-
+                                                
                                                 function getOption() {
                                                 let course_id = document.getElementById('course_id').value
                                                 fetch('/check/upgrade?course_id=' + course_id, {
