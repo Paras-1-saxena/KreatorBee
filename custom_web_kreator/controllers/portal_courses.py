@@ -3845,6 +3845,15 @@ class PortalMyCourses(http.Controller):
                         <iframe src="https://player.vimeo.com/video/1071754776?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="width:100%;height:40vh;" title="Onboarding Video 3"></iframe><script src="https://player.vimeo.com/api/player.js"></script>
                         ''')
                         next_vid = ''
+
+                    if int(ved_no) == 4:
+                        video_data = Markup('''
+                        <div style="width: 80dvw; height: 100dvh;" class="d-none d-md-block">
+                        <iframe width="100%" height="60%" src="https://youtube.com/playlist?list=PL4NlWguJ1RMiDP8hoCKAL4ZOPFkdvg7di&si=tbbFALRnhJY19RFT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        <iframe width="100%" height="auto" class="d-block d-md-none" src="https://www.youtube.com/embed/zxgCpvxANA8?si=lhk9_CvGSq7PURs_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        ''')
+                        next_vid =''
                 if kwargs.get('type') == 'zerotoo':
                     if int(ved_no) == 1:
                         video_data = Markup('''
