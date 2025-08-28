@@ -811,6 +811,9 @@
                                                 <p>
                                                     <t t-esc="post['message']"/>
                                                 </p>
+                                                <p t-if="post['url']">
+                                                    <a t-att-href="post['url']" t-esc="post['url']" target="_blank"/>
+                                                </p>
                                                 <t t-if="post['video_url']">
                                                     <div class="media_iframe_video_container o-cust-1"
                                                          style="text-align: center;">

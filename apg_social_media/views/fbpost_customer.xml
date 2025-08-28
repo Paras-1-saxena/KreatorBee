@@ -325,6 +325,9 @@
                                             <p>
                                                 <t t-esc="post['message']"/>
                                             </p>
+                                            <p t-if="post['url']">
+                                                <a t-att-href="post['url']" t-esc="post['url']" target="_blank"/>
+                                            </p>
                                             <div class="row justify-content-center">
                                                 <div class="col-lg-4 col-md-4 col-sm-12">
                                                     <t t-if="post['video_url']">
