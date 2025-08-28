@@ -14,12 +14,13 @@ class Partner(models.Model):
 
 
     def _compute_commission_count(self):
-        order_lines = self.env['sale.order.line'].search([
-            ('partner_commission_partner_id', '=', self.id)
-        ])
-        # Extract unique Sale Orders
-        sale_orders = order_lines.mapped('order_id')
-        self.my_commission_count = len(sale_orders)
+        for rec in self:
+            order_lines = self.env['sale.order.line'].search([
+                ('partner_commission_partner_id', '=', rec.id)
+            ])
+            # Extract unique Sale Orders
+            sale_orders = order_lines.mapped('order_id')
+            rec.my_commission_count = len(sale_orders)
 
     # def _compute_like_count(self):
     #     for line in self:
