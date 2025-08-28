@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields
 
 
 class ProductTemplate(models.Model):
@@ -11,28 +11,6 @@ class Partner(models.Model):
     _inherit = 'res.partner'
 
     my_commission_count = fields.Integer(compute="_compute_commission_count")
-    commission_count = fields.Integer(
-        string="My Commission Orders",
-        compute="_compute_commission_order_count",
-        store=True
-    )
-
-    @api.depends('sale_order_line_ids.partner_commission_partner_id')
-    def _compute_commission_order_count(self):
-        # use read_group for efficiency
-        counts = self.env['sale.order.line'].read_group(
-            [('partner_commission_partner_id', 'in', self.ids)],
-            ['order_id'],
-            ['partner_commission_partner_id']
-        )
-        # build mapping partner -> unique order count
-        mapping = {}
-        for rec in counts:
-            partner_id = rec['partner_commission_partner_id'][0]
-            mapping.setdefault(partner_id, set()).add(rec['order_id'][0])
-
-        for partner in self:
-            partner.commission_count = len(mapping.get(partner.id, set()))
 
 
     def _compute_commission_count(self):
