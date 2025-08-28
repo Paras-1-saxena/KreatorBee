@@ -32,6 +32,14 @@
             groups="base.group_user"/>
 
     <menuitem
+            id="menu_social_company_post_submain"
+            parent="menu_social_post_submain"
+            name="Company Post"
+            sequence="3"
+            groups="base.group_user"
+            action="action_apg_company_social_post"/>
+
+    <menuitem
             id="menu_social_post_submain"
             parent="menu_social_medial_main"
             name="Post"

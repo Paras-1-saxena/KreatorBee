@@ -10,7 +10,7 @@ class ProductTemplate(models.Model):
 class Partner(models.Model):
     _inherit = 'res.partner'
 
-    my_commission_count = fields.Integer(compute="_compute_commission_count")
+    my_commission_count = fields.Integer(compute="_compute_commission_count", store=True)
 
 
     def _compute_commission_count(self):

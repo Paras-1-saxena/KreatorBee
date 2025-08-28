@@ -46,11 +46,14 @@ class ForumSection(http.Controller):
             create_date = create_date_local.strftime('%B %d, %Y, %I:%M %p')
             print("create_date", create_date)
             videoID = False
+            url = False
             media_files = []
             if post.video_url:
                 match = re.search(pattern, post.video_url)
                 if match:
                     videoID = match.group(1)
+                else:
+                    url = post.video_url
             for img in post.image_ids:
                 # Base64 encode the media content
                 media_files.append({
@@ -69,6 +72,7 @@ class ForumSection(http.Controller):
                 'is_liked': is_liked,
                 'media': media_files,  # Pass media files here
                 'video_url': 'https://www.youtube.com/embed/' + str(videoID) if videoID else False,
+                'url': url if url else False,
                 'comments': self.get_comments(post)
                 # [
                 #     {
@@ -109,11 +113,14 @@ class ForumSection(http.Controller):
             create_date = create_date_local.strftime('%B %d, %Y, %I:%M %p')
             print("create_date", create_date)
             videoID = False
+            url = False
             media_files = []
             if post.video_url:
                 match = re.search(pattern, post.video_url)
                 if match:
                     videoID = match.group(1)
+                else:
+                    url = post.video_url
             for img in post.image_ids:
                 # Base64 encode the media content
                 media_files.append({
@@ -132,6 +139,7 @@ class ForumSection(http.Controller):
                 'is_liked': is_liked,
                 'media': media_files,  # Pass media files here
                 'video_url': 'https://www.youtube.com/embed/' + str(videoID) if videoID else False,
+                'url': url if url else False,
                 'comments': self.get_comments(post)
                 # 'comments': [
                 #     {
@@ -175,11 +183,14 @@ class ForumSection(http.Controller):
             create_date = create_date_local.strftime('%B %d, %Y, %I:%M %p')
             print("create_date", create_date)
             videoID = False
+            url = False
             media_files = []
             if post.video_url:
                 match = re.search(pattern, post.video_url)
                 if match:
                     videoID = match.group(1)
+                else:
+                    url = post.video_url
             for img in post.image_ids:
                 # Base64 encode the media content
                 media_files.append({
@@ -198,6 +209,7 @@ class ForumSection(http.Controller):
                 'is_liked': is_liked,
                 'media': media_files,  # Pass media files here
                 'video_url': 'https://www.youtube.com/embed/' + str(videoID) if videoID else False,
+                'url': url if url else False,
                 'comments': self.get_comments(post)
                 # 'comments': [
                 #     {
@@ -241,11 +253,14 @@ class ForumSection(http.Controller):
             create_date = create_date_local.strftime('%B %d, %Y, %I:%M %p')
             print("create_date", create_date)
             videoID = False
+            url = False
             media_files = []
             if post.video_url:
                 match = re.search(pattern, post.video_url)
                 if match:
                     videoID = match.group(1)
+                else:
+                    url = post.video_url
             for img in post.image_ids:
                 # Base64 encode the media content
                 media_files.append({
@@ -264,6 +279,7 @@ class ForumSection(http.Controller):
                 'is_liked': is_liked,
                 'media': media_files,  # Pass media files here
                 'video_url': 'https://www.youtube.com/embed/' + str(videoID) if videoID else False,
+                'url': url if url else False,
                 'comments': self.get_comments(post)
                 # 'comments': [
                 #     {
@@ -280,7 +296,7 @@ class ForumSection(http.Controller):
                                                       style="width:60vw;height:40vh;" title="Promote+Community+MyCourses"></iframe>
                                                                 """)
         values = {'post_ids': post_data, 'user_type': user_type, 'partner_type': partner_type, 'tutorial_video': tutorial_video}
-        return http.request.render('apg_social_media.fbpostforum_partner', values)
+        return http.request.render('apg_social_media.fbpostforum_partner', values) 
 
     # Partner Community Menu URLS END
 
@@ -310,11 +326,14 @@ class ForumSection(http.Controller):
             create_date = create_date_local.strftime('%B %d, %Y, %I:%M %p')
             print("create_date", create_date)
             videoID = False
+            url = False
             media_files = []
             if post.video_url:
                 match = re.search(pattern, post.video_url)
                 if match:
                     videoID = match.group(1)
+                else:
+                    url = post.video_url
             for img in post.image_ids:
                 # Base64 encode the media content
                 media_files.append({
@@ -333,6 +352,7 @@ class ForumSection(http.Controller):
                 'is_liked': is_liked,
                 'media': media_files,  # Pass media files here
                 'video_url': 'https://www.youtube.com/embed/' + str(videoID) if videoID else False,
+                'url': url if url else False,
                 'comments': self.get_comments(post)
                 # 'comments': [
                 #     {
