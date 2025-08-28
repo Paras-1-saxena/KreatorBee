@@ -11,18 +11,15 @@ class Partner(models.Model):
     _inherit = 'res.partner'
 
     my_commission_count = fields.Integer(compute="_compute_commission_count")
-    commission_count = fields.Integer(string="My Commission")
 
 
     def _compute_commission_count(self):
-        for rec in self:
-            order_lines = self.env['sale.order.line'].search([
-                ('partner_commission_partner_id', '=', rec.id)
-            ])
-            # Extract unique Sale Orders
-            sale_orders  = order_lines.mapped('order_id')
-            rec.my_commission_count = len(sale_orders)
-            rec.commission_count = len(sale_orders)
+        order_lines = self.env['sale.order.line'].search([
+            ('partner_commission_partner_id', '=', self.id)
+        ])
+        # Extract unique Sale Orders
+        sale_orders = order_lines.mapped('order_id')
+        self.my_commission_count = len(sale_orders)
 
     # def _compute_like_count(self):
     #     for line in self:
