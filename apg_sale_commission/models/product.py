@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class ProductTemplate(models.Model):
@@ -21,9 +21,24 @@ class Partner(models.Model):
         sale_orders = order_lines.mapped('order_id')
         self.my_commission_count = len(sale_orders)
 
-    # def _compute_like_count(self):
-    #     for line in self:
-    #         line.like_count = len(line.like_ids)
+    commission_line_ids = fields.One2many(
+        'sale.order.line',
+        'partner_commission_partner_id',
+        string="Commission Lines"
+    )
+
+    commission_count = fields.Integer(
+        string="Commission Count",
+        compute="_compute_commission_order_count",
+        store=True
+    )
+
+    @api.depends('commission_line_ids.order_id')
+    def _compute_commission_order_count(self):
+        for partner in self:
+            # count unique sale orders linked to partner's commission lines
+            order_ids = partner.commission_line_ids.mapped('order_id')
+            partner.commission_count = len(set(order_ids.ids))
 
 
     def action_view_my_commission_sale_order(self):
