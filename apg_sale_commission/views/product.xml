@@ -25,6 +25,9 @@
                     </div>
                 </button>
             </xpath>
+            <xpath expr="//form/sheet/group/group[1]/span[1]" position="before">
+                <field name="commission_count" invisible="1"/>
+            </xpath>
         </field>
     </record>
 
