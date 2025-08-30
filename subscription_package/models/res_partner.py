@@ -65,7 +65,10 @@ class ResUsers(models.Model):
                     'stage_id': self.env.ref('subscription_package.draft_stage').id,
                     'partner_id': user.partner_id.id,
                     'plan_id': product.subscription_plan_id.id if product.subscription_plan_id else False,
-                    'product_line_ids': [(6, 0, [product.id])],  # Many2many or One2many handling
+                    'product_line_ids': [(0, 0, {
+                        'product_id': product.id,
+                        'product_qty': 1,
+                    })],
                 })
                 subscription.button_start_date()
         return user

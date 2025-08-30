@@ -746,9 +746,14 @@ class PortalMyCourses(http.Controller):
             confirmed_orders = request.env.user.partner_id.sale_order_ids.filtered(lambda so: so.state in ['sale', 'done'])
 
             courses = confirmed_orders.order_line.filtered(lambda line: line.product_id.bom_ids).product_id
+            purchased_courses = request.env.user.partner_id.sale_order_ids.order_line.filtered(lambda line: line.product_id.bom_ids).product_id
+            purchased_courses = purchased_courses.mapped('product_tmpl_id')
+
+            premium_course = premium_course - purchased_courses
 
             return request.render('custom_web_kreator.nmy_courses_partner_combo', {
-                'courses': courses,
+                # 'courses': courses,
+                'courses': request.env.user.partner_id.sale_order_ids.order_line.filtered(lambda line: line.product_id.bom_ids).product_id,
                 'premium_courses': premium_course,
                 'course_in_cart': course_in_cart,
                 'cart': cart,
@@ -1693,22 +1698,64 @@ class PortalMyCourses(http.Controller):
                 'price_unit': product.list_price,
                 'name': product.name,
             })
-        if subscription_product_id and pricelist:
-            request.env['sale.order.line'].sudo().create({
-                'order_id': sale_order.id,
-                'product_id': subscription_product_id.id,
-                'product_uom_qty': 1,
-                'product_uom': subscription_product_id.uom_id.id,
-                'price_unit': subscription_product_id.list_price,
-                'name': subscription_product_id.name,
-            })
+        # if subscription_product_id and pricelist:
+        #     request.env['sale.order.line'].sudo().create({
+        #         'order_id': sale_order.id,
+        #         'product_id': subscription_product_id.id,
+        #         'product_uom_qty': 1,
+        #         'product_uom': subscription_product_id.uom_id.id,
+        #         'price_unit': subscription_product_id.list_price,
+        #         'name': subscription_product_id.name,
+        #     })
             sale_order.sudo().update({'pricelist_id': pricelist.id})
         if kwargs.get('course_count') and request.session.get('referral_partner') and sale_order.sudo().partner_id.id != int(request.session.get('referral_partner')):
             sale_order.sudo().order_line[0:int(kwargs.get('course_count'))].write({'partner_commission_partner_id': int(request.session.get('referral_partner'))})
+        else:
+            # If partner direct purchase any course
+            # No referral link -> use previous commission partner
+            previous_commission_lines = request.env['sale.order.line'].sudo().search([
+                ('order_id.partner_id', '=', user.partner_id.id),
+                ('partner_commission_partner_id', '!=', False)
+            ], limit=1)
+
+            if previous_commission_lines:
+                commission_partner = previous_commission_lines.partner_commission_partner_id
+
+                # Count courses commission partner owns
+                commission_partner_courses = commission_partner.sale_order_ids.filtered(
+                    lambda so: so.state in ['sale', 'done']
+                ).order_line.filtered(
+                    lambda line: line.product_id.bom_ids
+                ).product_id
+                commission_partner_count = len(commission_partner_courses)
+
+                # Count courses current user owns (before this order)
+                user_courses = user.partner_id.sale_order_ids.filtered(
+                    lambda so: so.state in ['sale', 'done']
+                ).order_line.filtered(
+                    lambda line: line.product_id.bom_ids
+                ).product_id
+                user_course_count = len(user_courses)
+
+                # Find difference
+                diff_count = max(0, commission_partner_count - user_course_count)
+
+                if diff_count > 0:
+                    # Filter only course lines (products with BoM)
+                    course_lines = sale_order.sudo().order_line.filtered(lambda l: l.product_id.bom_ids)
+                    
+                    # Take only up to diff_count lines
+                    lines_to_update = course_lines[:diff_count]
+
+                    if lines_to_update:
+                        lines_to_update.write({
+                            'partner_commission_partner_id': commission_partner.id
+                        })
         if request.env.user.is_public:
             request.session['redirect_after_signup'] = '/shop/cart'
             return request.redirect('/web/signup?user_type=partner')
         return request.redirect("/shop/cart")
+
 
     @http.route('/get/sale/cart', type='json', auth='public', methods=['POST'])
     def get_sale_cart(self, **kwargs):
