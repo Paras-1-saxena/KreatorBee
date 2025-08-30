@@ -32,7 +32,7 @@ class SaleOrderLine(models.Model):
     @api.depends('product_id','price_subtotal','partner_commission_partner_id')
     def _compute_commission(self):
         for line in self:
-            line.partner_commission_amount = line.price_unit if line.partner_commission_partner_id else False
+            line.partner_commission_amount = line.price_subtotal if line.partner_commission_partner_id else False
             line.direct_commission_amount = False
             line.direct_commission_partner_id = False
             line.is_commission = True
