@@ -412,6 +412,118 @@
                                         </div>
                                     </div>
                                 </t>
+                                <style>
+                                    .product-card {
+                                    border: none;
+                                    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+                                    }
+                                    .product-card:hover {
+                                    transform: translateY(-5px);
+                                    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+                                    }
+                                    .card-img-top {
+                                    object-fit: cover;
+                                    height: 200px;
+                                    }
+                                    .card-body {
+                                    display: flex;
+                                    flex-direction: column;
+                                    }
+                                    .card-price {
+                                    font-size: 1.5rem;
+                                    font-weight: bold;
+                                    color: var(--bs-primary);
+                                    white-space: nowrap;
+                                    }
+                                    /* Style for the buttons at the bottom of the card */
+                                    .card-buttons {
+                                    display: flex;
+                                    flex-direction: column;
+                                    gap: 0.5rem;
+                                    }
+                                    @media (min-width: 576px) {
+                                    .card-buttons {
+                                    flex-direction: row;
+                                    gap: 0.5rem;
+                                    }
+                                    }
+                                    .card-buttons &gt; * {
+                                    flex-grow: 1;
+                                    }
+    
+                                    .add-to-cart-btn {
+                                    background-color: #ffd000;
+                                    color: black;
+                                    }
+    
+                                    .add-to-cart-btn:hover {
+                                    background-color: #fff5c6;
+                                    color: black;
+                                    }
+                                    /* Make the whole card slightly faded */
+                                    .locked-card {
+                                        opacity: 0.4;  /* faded effect */
+                                        transition: opacity 0.3s ease-in-out;
+                                    }
+                                    .locked-card:hover {
+                                        opacity: 1;   /* normal on hover */
+                                    }
+                                    
+                                    /* Lock icon styling */
+                                    .lock-icon {
+                                        position: absolute;
+                                        top: 50%;
+                                        left: 50%;
+                                        transform: translate(-50%, -50%);
+                                        color: #000000;
+                                        font-size: 50px;   /*huge lock icon */
+                                        background: rgba(255, 255, 255, 0.85);
+                                        padding: 25px;      /* adjust padding so circle looks proportional */
+                                        border-radius: 50%;
+                                        z-index: 10;
+                                        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                                    }
+
+                                </style>
+                                <div>
+                                    <h4>Upgrade Bundle</h4>
+                                </div>
+                                <div class="rounded text-center">
+                                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                                        <t t-foreach="premium_courses" t-as="course">
+                                            
+                                            <div class="col">
+                                                <div class="card h-100 rounded-3 product-card shadow-sm position-relative locked-card">
+                                                    <!-- Lock Icon -->
+                                                    <i class="fas fa-lock lock-icon"/>
+                                                    <img t-att-src="image_data_uri(course.image_1920) if course.image_1920 else '/custom_web_kreator/static/src/thumbnail.png'" class="card-img-top rounded-top" alt="Course Image"/>
+                                                    <div class="card-body d-flex flex-column">
+                                                        <h5 class="card-title fw-semibold" style="text-align: left!important;">
+                                                            <t t-esc="course.name"/>
+                                                        </h5>
+                                                        <div class="mt-auto">
+                                                            <span class="card-price d-block mb-3" style="text-align: left!important;">₹
+                                                                <t t-esc="course.list_price"/>
+                                                            </span>
+                                                            <div class="card-buttons">
+                                                                <t t-if="course.id in course_in_cart.ids">
+                                                                    <a class="btn btn-success add-to-cart-btn" t-att-href="'/remove/sale/cart?course_id={}&amp;redirect={}'.format(course.id, '/partner/mycourses')">
+                                                                        <i class="fas fa-trash me-2"/>Remove
+                                                                    </a>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <a class="btn btn-success add-to-cart-btn" t-att-href="'/add/sale/cart?course_id={}&amp;redirect={}'.format(course.id, '/partner/mycourses')">
+                                                                        <i class="fas fa-cart-plus me-2"/>Add to Cart
+                                                                    </a>
+                                                                </t>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
                                 <t t-if="not courses">
                                     <div class="col-12">
                                         <div class="row justify-content-center text-center">

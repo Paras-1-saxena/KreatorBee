@@ -727,6 +727,12 @@ class PortalMyCourses(http.Controller):
         # Get the current logged-in user
         user = request.env.user
         partner = user.partner_id  # Get related partner
+        cart = False
+        premium_course = request.env['product.template'].sudo().search([('bom_ids', '!=', False)])
+        course_in_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', request.env.user.id)]).course_ids
+        cart_record = request.env['kb.sale.cart'].sudo().search([('name', '=', user.id)], limit=1)
+        if cart_record:
+            cart = True
 
         # Check if the user is an Internal User or Creator
         if partner.user_type in ['internal_user', 'partner']:
@@ -736,9 +742,16 @@ class PortalMyCourses(http.Controller):
             partner = current_user.partner_id
 
             courses = []
+            # Get only confirmed sale order lines (exclude draft/quotation)
+            confirmed_orders = request.env.user.partner_id.sale_order_ids.filtered(lambda so: so.state in ['sale', 'done'])
+
+            courses = confirmed_orders.order_line.filtered(lambda line: line.product_id.bom_ids).product_id
 
             return request.render('custom_web_kreator.nmy_courses_partner_combo', {
-                'courses': request.env.user.partner_id.sale_order_ids.order_line.filtered(lambda line: line.product_id.bom_ids).product_id,
+                'courses': courses,
+                'premium_courses': premium_course,
+                'course_in_cart': course_in_cart,
+                'cart': cart,
             })
         else:
             raise NotFound()
