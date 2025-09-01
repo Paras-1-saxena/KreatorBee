@@ -746,14 +746,13 @@ class PortalMyCourses(http.Controller):
             confirmed_orders = request.env.user.partner_id.sale_order_ids.filtered(lambda so: so.state in ['sale', 'done'])
 
             courses = confirmed_orders.order_line.filtered(lambda line: line.product_id.bom_ids).product_id
-            purchased_courses = request.env.user.partner_id.sale_order_ids.order_line.filtered(lambda line: line.product_id.bom_ids).product_id
-            purchased_courses = purchased_courses.mapped('product_tmpl_id')
+            purchased_courses = courses.mapped('product_tmpl_id')
 
             premium_course = premium_course - purchased_courses
 
             return request.render('custom_web_kreator.nmy_courses_partner_combo', {
-                # 'courses': courses,
-                'courses': request.env.user.partner_id.sale_order_ids.order_line.filtered(lambda line: line.product_id.bom_ids).product_id,
+                'courses': courses,
+                # 'courses': request.env.user.partner_id.sale_order_ids.order_line.filtered(lambda line: line.product_id.bom_ids).product_id,
                 'premium_courses': premium_course,
                 'course_in_cart': course_in_cart,
                 'cart': cart,
@@ -3887,7 +3886,7 @@ class PortalMyCourses(http.Controller):
                         <div style="width: 80dvw; height: 100dvh;" class="d-none d-md-block">
                         <iframe width="100%" height="60%" src="https://www.youtube.com/embed/shpmIxcn3AQ?si=-2R2Qr28CCWXsCIU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         </div>
-                        <iframe width="100%" height="auto" class="d-block d-md-none" src="https://www.youtube.com/embed/zxgCpvxANA8?si=lhk9_CvGSq7PURs_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <iframe width="100%" height="auto" class="d-block d-md-none" src="https://www.youtube.com/embed/shpmIxcn3AQ?si=-2R2Qr28CCWXsCIU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         ''')
                         next_vid =''
                     if int(ved_no) == 2:
@@ -3911,7 +3910,7 @@ class PortalMyCourses(http.Controller):
                         <div style="width: 80dvw; height: 100dvh;" class="d-none d-md-block">
                         <iframe width="100%" height="60%" src="https://www.youtube.com/embed/videoseries?list=PL4NlWguJ1RMiDP8hoCKAL4ZOPFkdvg7di" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         </div>
-                        <iframe width="100%" height="auto" class="d-block d-md-none" src="https://www.youtube.com/embed/zxgCpvxANA8?si=lhk9_CvGSq7PURs_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <iframe width="100%" height="auto" class="d-block d-md-none" src="https://www.youtube.com/embed/videoseries?list=PL4NlWguJ1RMiDP8hoCKAL4ZOPFkdvg7di" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         ''')
                         next_vid =''
                 if kwargs.get('type') == 'zerotoo':
