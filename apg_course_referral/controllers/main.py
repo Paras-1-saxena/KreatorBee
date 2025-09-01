@@ -192,7 +192,10 @@ class ReferralController(http.Controller):
         # course_ids = False
         course_ids = request.env['product.template'].sudo().search([('bom_ids', '!=', False)])
         partner_ids = request.env['res.partner'].sudo().search([('user_type', '=', 'customer')])
-        course_count = len(request.env.user.partner_id.sale_order_ids.order_line.filtered(lambda line: line.product_id.bom_ids).product_id.ids)
+        # Get only confirmed sale order lines (exclude draft/quotation)
+        confirmed_orders = request.env.user.partner_id.sale_order_ids.filtered(lambda so: so.state in ['sale', 'done'])
+        
+        course_count = len(confirmed_orders.order_line.filtered(lambda line: line.product_id.bom_ids).product_id)
         # if courses:
         #     course_ids = request.env['slide.channel'].sudo().search([
         #         ('id', 'in', courses),
