@@ -8,12 +8,24 @@ import logging
 _logger = logging.getLogger(__name__)
 
 class LoyaltyProgram(models.Model):
-	_inherit = 'loyalty.program'
-	_description = 'Loyalty Program'
+    _inherit = 'loyalty.program'
+    _description = 'Loyalty Program'
 
-	discount_id = fields.Many2one("discount.discount", "Discount")
-	duration_id = fields.Many2one("duration.duration", "Duration")
-	duration = fields.Selection(related="duration_id.duration", store=True, string='Duration')
+    discount_id = fields.Many2one("discount.discount", "Discount")
+    duration_id = fields.Many2one("duration.duration", "Duration")
+    duration = fields.Selection(related="duration_id.duration", store=True, string='Duration')
+    min_quantity = fields.Integer(string="Minimum Quantity")
+    discount_per_course = fields.Float(string="Discount Per Course", compute='_compute_discount_per_course',store=True)
+
+    @api.depends('discount_id','min_quantity')
+    def _compute_discount_per_course(self):
+        for rec in self:
+            rec.discount_per_course = 0.0
+            if rec.discount_id and rec.min_quantity:
+                discount_value = rec.discount_id.name  # use numeric field, not name
+                if discount_value <= rec.min_quantity:
+                    raise ValidationError(_("Discount amount should be greater than the minimum quantity."))
+                rec.discount_per_course = discount_value / rec.min_quantity
 
 class LoyaltyReward(models.Model):
     _inherit = 'loyalty.reward'
@@ -27,4 +39,4 @@ class LoyaltyReward(models.Model):
     def onchange_duration(self):
         self.discount = False
         if self.discount_id:
-        	self.discount = self.discount_id.name
+            self.discount = self.discount_id.name

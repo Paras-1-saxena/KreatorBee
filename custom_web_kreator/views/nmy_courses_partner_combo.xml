@@ -507,12 +507,12 @@
                                                             </span>
                                                             <div class="card-buttons">
                                                                 <t t-if="course.id in course_in_cart.ids">
-                                                                    <a class="btn btn-success add-to-cart-btn" t-att-href="'/remove/sale/cart?course_id={}&amp;redirect={}'.format(course.id, '/partner/mycourses')">
+                                                                    <a class="btn btn-success add-to-cart-btn" style="background:#125818 !important; color:white!important;" t-att-href="'/remove/sale/cart?course_id={}&amp;redirect={}'.format(course.id, '/partner/mycourses')">
                                                                         <i class="fas fa-trash me-2"/>Remove
                                                                     </a>
                                                                 </t>
                                                                 <t t-else="">
-                                                                    <a class="btn btn-success add-to-cart-btn" t-att-href="'/add/sale/cart?course_id={}&amp;redirect={}'.format(course.id, '/partner/mycourses')">
+                                                                    <a class="btn btn-success add-to-cart-btn" style="background:#125818 !important; color:white!important;" t-att-href="'/add/sale/cart?course_id={}&amp;redirect={}'.format(course.id, '/partner/mycourses')">
                                                                         <i class="fas fa-cart-plus me-2"/>Add to Cart
                                                                     </a>
                                                                 </t>
