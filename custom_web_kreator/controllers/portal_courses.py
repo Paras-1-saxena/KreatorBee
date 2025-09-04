@@ -1143,7 +1143,7 @@ class PortalMyCourses(http.Controller):
             context = {
                 'user_name': user.name,  # Pass the current user's name
                 'confirm_sale_orders': confirm_sale_orders,  # Pass the filtered sale orders
-                'confirm_courses_count': confirm_courses_count,
+                'quotation_sale_orders': quotation_sale_orders,  # Pass the filtered sale orders
                 'start_date': start_date,  # Pass the start date
                 'end_date': end_date,  # Pass the end date
                 'visitors': visitors,
