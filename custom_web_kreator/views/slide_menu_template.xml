@@ -419,7 +419,9 @@
                 <span t-if="cart == True">
                     <button id="cart-button" class="cart-button">
                         <i class="fas fa-shopping-cart text-xl"></i>
-                        <!--                        <span class="cart-badge">3</span>-->
+                        <span class="cart-badge bg-danger">
+                            <t t-esc="cart_count or 0"/>
+                        </span>
                     </button>
                 </span>
                 <img class="user-icon dropdown-toggle" t-att-src="'/user/profile/image'"

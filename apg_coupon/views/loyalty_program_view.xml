@@ -7,6 +7,8 @@
         <field name="arch" type="xml">
             <xpath expr="//form/sheet/group/group[2]/field[@name='company_id']" position="before">
                 <field name="discount_id" options="{'no_open': True, 'no_create': True}"/>
+                <field name="min_quantity"/>
+                <field name="discount_per_course"/>
                 <label for="duration_id" string="Duration"/>
                 <div name="duration_id" class="o_row">
                     <field name="duration_id" options="{'no_open': True, 'no_create': True}"/>

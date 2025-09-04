@@ -756,6 +756,7 @@ class PortalMyCourses(http.Controller):
                 'premium_courses': premium_course,
                 'course_in_cart': course_in_cart,
                 'cart': cart,
+                'cart_count': len(cart_record.course_ids),
             })
         else:
             raise NotFound()
@@ -1017,19 +1018,50 @@ class PortalMyCourses(http.Controller):
                     return request.redirect('/shop/payment')
                 user_type = coupon.create_uid.partner_id.user_type
                 order.coupon_type = 'creator' if user_type == 'creator' else 'partner' if user_type == 'partner' else 'company'
-                if not [line.discount for line in order.order_line if line.discount > 0.0]:
-                    coupon_discount = coupon.discount_id.name
-                    order_line = order.order_line.filtered(
-                        lambda ol: ol.product_template_id.id == coupon.referral_product_id.id)
-                    discount_percentage = (coupon_discount / order_line.price_unit) * 100
-                    order_line.discount = discount_percentage
-                    request.session['coupon_status'] = 'success'
+                if not coupon.referral_product_id:
+                    if not [line.discount for line in order.order_line if line.discount > 0.0]:
+                        coupon_discount = coupon.discount_per_course
+                        min_qty = coupon.min_quantity
+                        order_line = order.order_line.filtered(
+                            lambda ol: ol.product_id.bom_ids)
+                        # Take only up to diff_count lines
+                        lines_to_update = order_line[:min_qty]
+
+                        for dis_line in lines_to_update:
+                            discount_percentage = (coupon_discount / dis_line.price_unit) * 100
+                            dis_line.discount = discount_percentage
+                            request.session['coupon_status'] = 'success'
+                    else:
+                        request.session['coupon_status'] = 'warning'
+                    # coupon_status = order._try_apply_code(promo)
+                    # if coupon_status.get('not_found'):
+                    #     return super().courseDiscountApply(promo, **kwargs)
+                    # elif coupon_status.get('error'):
+                    #     request.session['coupon_status'] = coupon_status['error']
+                    #     request.session['coupon_error_msg'] = coupon_status['error']
+                    # elif 'error' not in coupon_status:
+                    #     request.session['coupon_status'] = 'success'
                 else:
-                    request.session['coupon_status'] = 'warning'
+                    if not [line.discount for line in order.order_line if line.discount > 0.0]:
+                        coupon_discount = coupon.discount_id.name
+                        order_line = order.order_line.filtered(
+                            lambda ol: ol.product_template_id.id == coupon.referral_product_id.id)
+                        if order_line:
+                            discount_percentage = (coupon_discount / order_line.price_unit) * 100
+                            order_line.discount = discount_percentage
+                            request.session['coupon_status'] = 'success'
+                        else:
+                            request.session['coupon_status'] = 'failed'
+                    else:
+                        request.session['coupon_status'] = 'warning'
                 return request.redirect('/shop/payment')
             else:
                 request.session['coupon_status'] = 'failed'
                 return request.redirect('/shop/payment')
+        else:
+            request.session['coupon_status'] = 'failed'
+            return request.redirect('/shop/payment')
+
 
     @http.route(['/my/product/brochure/<int:product_id>'], type='http', auth='public', website=True)
     def download_product_brochure(self, product_id, **kwargs):
@@ -1085,18 +1117,22 @@ class PortalMyCourses(http.Controller):
                 end_date = datetime.strptime(end_date, '%Y-%m-%d')
 
             # Prepare the domain for filtering sales orders
-            domain = [('state', '!=', 'sale')]  # Only fetch orders that are not confirmed (state != 'sale')
+            confirm_so_domain = [('state', '=', 'sale')]  # Only fetch orders that are confirmed (state = 'sale')
+            quotation_so_domain = [('state', 'in', ['draft', 'sent'])]  # Only fetch orders that are confirmed (state = 'sale')
 
             if start_date and end_date:
-                domain.extend([
+                confirm_so_domain.extend([
+                    ('date_order', '>=', start_date),
+                    ('date_order', '<=', end_date)
+                ])
+                quotation_so_domain.extend([
                     ('date_order', '>=', start_date),
                     ('date_order', '<=', end_date)
                 ])
 
             # Fetch the sale orders based on the domain
-            sale_orders = request.env['sale.order'].sudo().search(domain)
-            sale_orders = sale_orders.filtered(lambda so: so.order_line and [True for ol in so.order_line if
-                                                                             ol.partner_commission_partner_id and ol.partner_commission_partner_id.id == partner.id])
+            confirm_sale_orders = request.env['sale.order'].sudo().search(confirm_so_domain + [('order_line.partner_commission_partner_id', '=', partner.id)])
+            quotation_sale_orders = request.env['sale.order'].sudo().search(quotation_so_domain + [('order_line.partner_commission_partner_id', '=', partner.id)])
 
             # Fetch visitor data, no date filters for visitors
             new = request.env['crm.stage'].sudo().search([('name', '=', 'New')])
@@ -1106,7 +1142,8 @@ class PortalMyCourses(http.Controller):
             # Prepare the context to pass to the template
             context = {
                 'user_name': user.name,  # Pass the current user's name
-                'sale_orders': sale_orders,  # Pass the filtered sale orders
+                'confirm_sale_orders': confirm_sale_orders,  # Pass the filtered sale orders
+                'confirm_courses_count': confirm_courses_count,
                 'start_date': start_date,  # Pass the start date
                 'end_date': end_date,  # Pass the end date
                 'visitors': visitors,
@@ -1708,8 +1745,8 @@ class PortalMyCourses(http.Controller):
         #     })
             sale_order.sudo().update({'pricelist_id': pricelist.id})
         if kwargs.get('course_count') and request.session.get('referral_partner') and sale_order.sudo().partner_id.id != int(request.session.get('referral_partner')):
-            sale_order.sudo().order_line[0:int(kwargs.get('course_count'))].write({'partner_commission_partner_id': int(request.session.get('referral_partner'))})
-        else:
+        #     sale_order.sudo().order_line[0:int(kwargs.get('course_count'))].write({'partner_commission_partner_id': int(request.session.get('referral_partner'))})
+        # else:
             # If partner direct purchase any course
             # No referral link -> use previous commission partner
             previous_commission_lines = request.env['sale.order.line'].sudo().search([
@@ -1753,6 +1790,9 @@ class PortalMyCourses(http.Controller):
         if request.env.user.is_public:
             request.session['redirect_after_signup'] = '/shop/cart'
             return request.redirect('/web/signup?user_type=partner')
+
+        # clear coupon amd coupon messages
+        request.session.pop('coupon_status', None)
         return request.redirect("/shop/cart")
 
 
