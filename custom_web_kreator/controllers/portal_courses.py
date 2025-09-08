@@ -1009,7 +1009,7 @@ class PortalMyCourses(http.Controller):
         promo = kwargs.get('promo')
         if promo:
             coupon = request.env['loyalty.program'].sudo().search(
-                [('name', '=', promo), ('date_to', '>=', datetime.now().date())], limit=1)
+                [('name', '=', promo), ('date_from', '<=', datetime.now().date()), ('date_to', '>=', datetime.now().date())], limit=1)
             if coupon and order.amount_untaxed >= coupon.minimum_amount:
                 if coupon.limit_usage and coupon.max_usage > 1:
                     coupon.max_usage -= 1

@@ -2,7 +2,11 @@ from odoo import models, fields, api,http
 import io
 import xlsxwriter
 import base64
+from io import BytesIO
+import xlwt
+from datetime import date
 from odoo.http import request
+from odoo.exceptions import UserError, ValidationError
 
 
 class CommissionReportWizard(models.TransientModel):
@@ -297,3 +301,131 @@ class ICICIBankReportController(http.Controller):
         output.close()
         return response
 
+
+
+
+class SalesCustomReportWizard(models.TransientModel):
+    _name = 'sale.custom.report.wizard'
+    _description = 'Sales Report Wizard'
+
+    from_date = fields.Date(string='From Date')
+    to_date = fields.Date(string='To Date')
+    joined_from = fields.Date(string='Joined From Date')
+    joined_to = fields.Date(string='Joined TO Date')
+    customer_partner_id = fields.Many2one('res.partner', string="Customer")
+    sponsor_partner_id = fields.Many2one('res.partner', string="Sponsor")
+
+
+    def check_filters(self):
+        sale_orders = self.env['sale.order']
+        for rec in self:
+            # Validation checks
+            if rec.joined_from > rec.joined_to:
+                raise exceptions.ValidationError(_("Joined From Date should not be greater than Joined To Date."))
+
+            if rec.from_date > rec.to_date:
+                raise exceptions.ValidationError(_("From Date should not be greater than To Date."))
+
+            # Build user domain
+            domain = []
+            if rec.joined_from and rec.joined_to:
+                domain += [
+                    ('create_date', '>=', rec.joined_from),
+                    ('create_date', '<=', rec.joined_to)
+                ]
+
+            if rec.customer_partner_id:
+                domain.append(('partner_id', '=', rec.customer_partner_id.id))
+
+            # Fetch users and their partners
+            partner_ids = self.env['res.users'].sudo().search(domain).mapped('partner_id')
+
+            # Build sale order domain
+            so_domain = []
+            if rec.from_date and rec.to_date:
+                so_domain += [
+                    ('date_order', '>=', rec.from_date),
+                    ('date_order', '<=', rec.to_date)
+                ]
+                if partner_ids:
+                    so_domain.append(('partner_id', 'in', partner_ids.ids))
+
+                if rec.sponsor_partner_id:
+                    so_domain.append(('order_line.partner_commission_partner_id', '=', rec.sponsor_partner_id.id))
+
+            # Fetch sale orders
+            sale_orders = self.env['sale.order'].sudo().search(so_domain)
+
+        self.action_download_report(sale_orders)
+
+
+    def action_download_report(self, sale_orders=False):
+        workbook = xlwt.Workbook()
+        worksheet = workbook.add_sheet('Sheet 1')
+
+        # Column widths
+        worksheet.col(0).width = 250 * 12
+        worksheet.col(1).width = 250 * 20
+        worksheet.col(2).width = 250 * 20
+        worksheet.col(3).width = 250 * 18
+        worksheet.col(4).width = 250 * 15
+        worksheet.col(5).width = 250 * 20
+        worksheet.col(6).width = 250 * 12
+
+        # Headers
+        row = 0
+        worksheet.write(row, 0, 'Customer Name')
+        worksheet.write(row, 1, 'Email')
+        worksheet.write(row, 2, 'Phone number')
+        worksheet.write(row, 3, 'Sponsor')
+        worksheet.write(row, 4, 'Purchase amount')
+        worksheet.write(row, 5, 'Joined on')
+        worksheet.write(row, 6, 'Products')
+
+        row = 1
+        total_sale = 0.0
+        if sale_orders:
+            for rec in sale_orders:
+                total_sale += rec.amount_total
+
+                # products for each SO (⚠️ fixed loop – before it was fetching all products for all orders every time)
+                products = ", ".join(
+                    line.product_id.name
+                    for line in rec.order_line
+                    if line.product_id.bom_ids
+                )
+
+                worksheet.write(row, 0, rec.partner_id.name or '')
+                worksheet.write(row, 1, rec.partner_id.email or '')
+                worksheet.write(row, 2, rec.partner_id.mobile or '')
+                worksheet.write(row, 3, self.sponsor_partner_id.name or '')
+                worksheet.write(row, 4, rec.amount_total or 0.0)
+                worksheet.write(row, 5, str(rec.partner_id.create_date.date()) if rec.partner_id.create_date else '')
+                worksheet.write(row, 6, products or '')
+                row += 1
+            # Total row
+            worksheet.write(row, 3, 'Total')
+            worksheet.write(row, 4, total_sale or 0.0)
+
+        # Save to memory
+        fp = BytesIO()
+        workbook.save(fp)
+        fp.seek(0)
+
+        # Create attachment for direct download
+        attachment = self.env['ir.attachment'].create({
+            'name': 'Sales Report.xls',
+            'datas': base64.b64encode(fp.getvalue()),
+            'type': 'binary',
+            'store_fname': 'sales_report.xls',
+            'mimetype': 'application/vnd.ms-excel',
+        })
+
+        fp.close()
+
+        # Direct download
+        return {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
