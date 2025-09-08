@@ -332,30 +332,24 @@ class SalesCustomReportWizard(models.TransientModel):
                     ('create_date', '>=', rec.joined_from),
                     ('create_date', '<=', rec.joined_to)
                 ]
-            print("\n\n\n============0=============",domain)
             if rec.customer_partner_id:
                 domain.append(('partner_id', '=', rec.customer_partner_id.id))
 
-            print("\n\n\n============1=============",domain)
             # Fetch users and their partners
             partner_ids = self.env['res.users'].sudo().search(domain).mapped('partner_id')
-            print("\n\n\n============2=============",partner_ids)
             # Build sale order domain
-            so_domain = []
+            so_domain = [('state', '=', 'done')]
             if rec.from_date and rec.to_date:
                 so_domain += [
                     ('date_order', '>=', rec.from_date),
                     ('date_order', '<=', rec.to_date)
                 ]
-            print("\n\n\n============3=============",so_domain)
 
             if partner_ids:
                 so_domain.append(('partner_id', 'in', partner_ids.ids))
-            print("\n\n\n============4=============",so_domain)
 
             # Fetch sale orders
-            sale_orders = self.env['sale.order'].sudo().search(so_domain) if so_domain else self.env['sale.order']
-            print("\n\n\n============5=============",sale_orders)
+            sale_orders = self.env['sale.order'].sudo().search(so_domain, order="name asc") if so_domain else self.env['sale.order']
 
         return sale_orders
 
@@ -390,30 +384,31 @@ class SalesCustomReportWizard(models.TransientModel):
         total_sale = 0.0
         if sale_orders:
             for rec in sale_orders:
-                total_sale += rec.amount_total
+                if rec.amount_total > 0:
+                    total_sale += rec.amount_total
 
-                # products for each SO (⚠️ fixed loop – before it was fetching all products for all orders every time)
-                products = ", ".join(
-                    line.product_id.name
-                    for line in rec.order_line
-                    if line.product_id.bom_ids
-                )
-                sponsor_name = (
-                    rec.order_line.filtered(lambda l: l.partner_commission_partner_id)
-                    [:1].partner_commission_partner_id.name
-                )
+                    # products for each SO ( fixed loop – before it was fetching all products for all orders every time)
+                    products = ", ".join(
+                        line.product_id.name
+                        for line in rec.order_line
+                        if line.product_id.bom_ids
+                    )
+                    sponsor_name = (
+                        rec.order_line.filtered(lambda l: l.partner_commission_partner_id)
+                        [:1].partner_commission_partner_id.name
+                    )
 
-                worksheet.write(row, 0, rec.partner_id.name or '')
-                worksheet.write(row, 1, rec.partner_id.email or '')
-                worksheet.write(row, 2, rec.partner_id.mobile or '')
-                worksheet.write(row, 3, sponsor_name or '')
-                worksheet.write(row, 4, rec.amount_total or 0.0)
-                worksheet.write(row, 5, str(rec.partner_id.create_date.date()) if rec.partner_id.create_date else '')
-                worksheet.write(row, 6, products or '')
-                row += 1
-            # Total row
-            worksheet.write(row, 3, 'Total')
-            worksheet.write(row, 4, total_sale or 0.0)
+                    worksheet.write(row, 0, rec.partner_id.name or '')
+                    worksheet.write(row, 1, rec.partner_id.email or '')
+                    worksheet.write(row, 2, rec.partner_id.mobile or '')
+                    worksheet.write(row, 3, sponsor_name or '')
+                    worksheet.write(row, 4, rec.amount_total or 0.0)
+                    worksheet.write(row, 5, str(rec.partner_id.create_date.date()) if rec.partner_id.create_date else '')
+                    worksheet.write(row, 6, products or '')
+                    row += 1
+                # Total row
+                worksheet.write(row, 3, 'Total')
+                worksheet.write(row, 4, total_sale or 0.0)
 
         # Save to memory
         fp = BytesIO()
