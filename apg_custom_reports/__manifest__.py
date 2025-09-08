@@ -8,8 +8,9 @@
     'data': [
         'security/ir.model.access.csv',
         'views/account_payment.xml',
+        'views/sales_custom_report.xml',
         'views/menu.xml',
-        'views/custom_layout.xml'
+        'views/custom_layout.xml',
     ],
     'installable': True,
     'application': False,

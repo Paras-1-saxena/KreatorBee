@@ -65,4 +65,10 @@
               parent="account.menu_finance_reports"
               sequence="12"
               action="action_icici_bank_report_download"/>
+
+    <menuitem id="menu_sales_custom_report"
+              name="Sales Report"
+              parent="sale.menu_sale_report"
+              sequence="45"
+              action="apg_custom_reports.action_sale_custom_report_wizard"/>
 </odoo>
