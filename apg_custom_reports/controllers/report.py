@@ -308,12 +308,11 @@ class SalesCustomReportWizard(models.TransientModel):
     _name = 'sale.custom.report.wizard'
     _description = 'Sales Report Wizard'
 
-    from_date = fields.Date(string='From Date')
-    to_date = fields.Date(string='To Date')
+    from_date = fields.Date(string='Order Date From')
+    to_date = fields.Date(string='Order Date To')
     joined_from = fields.Date(string='Joined From Date')
     joined_to = fields.Date(string='Joined TO Date')
     customer_partner_id = fields.Many2one('res.partner', string="Customer")
-    sponsor_partner_id = fields.Many2one('res.partner', string="Sponsor")
 
 
     def check_filters(self):
@@ -333,13 +332,14 @@ class SalesCustomReportWizard(models.TransientModel):
                     ('create_date', '>=', rec.joined_from),
                     ('create_date', '<=', rec.joined_to)
                 ]
-
+            print("\n\n\n============0=============",domain)
             if rec.customer_partner_id:
                 domain.append(('partner_id', '=', rec.customer_partner_id.id))
 
+            print("\n\n\n============1=============",domain)
             # Fetch users and their partners
             partner_ids = self.env['res.users'].sudo().search(domain).mapped('partner_id')
-
+            print("\n\n\n============2=============",partner_ids)
             # Build sale order domain
             so_domain = []
             if rec.from_date and rec.to_date:
@@ -347,19 +347,23 @@ class SalesCustomReportWizard(models.TransientModel):
                     ('date_order', '>=', rec.from_date),
                     ('date_order', '<=', rec.to_date)
                 ]
-                if partner_ids:
-                    so_domain.append(('partner_id', 'in', partner_ids.ids))
+            print("\n\n\n============3=============",so_domain)
 
-                if rec.sponsor_partner_id:
-                    so_domain.append(('order_line.partner_commission_partner_id', '=', rec.sponsor_partner_id.id))
+            if partner_ids:
+                so_domain.append(('partner_id', 'in', partner_ids.ids))
+            print("\n\n\n============4=============",so_domain)
 
             # Fetch sale orders
-            sale_orders = self.env['sale.order'].sudo().search(so_domain)
+            sale_orders = self.env['sale.order'].sudo().search(so_domain) if so_domain else self.env['sale.order']
+            print("\n\n\n============5=============",sale_orders)
 
-        self.action_download_report(sale_orders)
+        return sale_orders
 
 
-    def action_download_report(self, sale_orders=False):
+    def action_download_report(self):
+
+        sale_orders = self.check_filters()
+
         workbook = xlwt.Workbook()
         worksheet = workbook.add_sheet('Sheet 1')
 
