@@ -398,11 +398,15 @@ class SalesCustomReportWizard(models.TransientModel):
                     for line in rec.order_line
                     if line.product_id.bom_ids
                 )
+                sponsor_name = (
+                    rec.order_line.filtered(lambda l: l.partner_commission_partner_id)
+                    [:1].partner_commission_partner_id.name
+                )
 
                 worksheet.write(row, 0, rec.partner_id.name or '')
                 worksheet.write(row, 1, rec.partner_id.email or '')
                 worksheet.write(row, 2, rec.partner_id.mobile or '')
-                worksheet.write(row, 3, self.sponsor_partner_id.name or '')
+                worksheet.write(row, 3, sponsor_name or '')
                 worksheet.write(row, 4, rec.amount_total or 0.0)
                 worksheet.write(row, 5, str(rec.partner_id.create_date.date()) if rec.partner_id.create_date else '')
                 worksheet.write(row, 6, products or '')
