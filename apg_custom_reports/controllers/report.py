@@ -338,7 +338,7 @@ class SalesCustomReportWizard(models.TransientModel):
             # Fetch users and their partners
             partner_ids = self.env['res.users'].sudo().search(domain).mapped('partner_id')
             # Build sale order domain
-            so_domain = [('state', '=', 'done')]
+            so_domain = []
             if rec.from_date and rec.to_date:
                 so_domain += [
                     ('date_order', '>=', rec.from_date),
@@ -347,6 +347,7 @@ class SalesCustomReportWizard(models.TransientModel):
 
             if partner_ids:
                 so_domain.append(('partner_id', 'in', partner_ids.ids))
+            so_domain.append(('state', '=', 'sale'))
 
             # Fetch sale orders
             sale_orders = self.env['sale.order'].sudo().search(so_domain, order="name asc") if so_domain else self.env['sale.order']
@@ -406,9 +407,9 @@ class SalesCustomReportWizard(models.TransientModel):
                     worksheet.write(row, 5, str(rec.partner_id.create_date.date()) if rec.partner_id.create_date else '')
                     worksheet.write(row, 6, products or '')
                     row += 1
-                # Total row
-                worksheet.write(row, 3, 'Total')
-                worksheet.write(row, 4, total_sale or 0.0)
+            # Total row
+            worksheet.write(row, 3, 'Total')
+            worksheet.write(row, 4, total_sale or 0.0)
 
         # Save to memory
         fp = BytesIO()
