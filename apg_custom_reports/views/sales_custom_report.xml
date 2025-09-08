@@ -11,10 +11,8 @@
                         <field name="to_date"/>
                     </group>
                     <group>
-                        <field name="sponsor_partner_id"/>
                         <field name="joined_from"/>
                         <field name="joined_to"/>
-                        
                     </group>
                 </group>
                 <footer>
