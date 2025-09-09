@@ -1,0 +1,31 @@
+<odoo>
+    <record id="view_sales_commission_report_wizard_form" model="ir.ui.view">
+        <field name="name">sales.commission.report.wizard.form</field>
+        <field name="model">sales.commission.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Sales Commission Report">
+                <group>
+                    <group>
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+                    </group>
+                    <group>
+                        <field name="partner_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_download_report" string="Download Report" type="object"
+                            class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sales_commission_report_wizard" model="ir.actions.act_window">
+        <field name="name">Sales Commission Report Wizard</field>
+        <field name="res_model">sales.commission.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
