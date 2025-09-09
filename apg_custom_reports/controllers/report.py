@@ -5,8 +5,11 @@ import base64
 from io import BytesIO
 import xlwt
 from datetime import date
+from datetime import datetime, time
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from odoo.http import request
 from odoo.exceptions import UserError, ValidationError
+import pytz
 
 
 class CommissionReportWizard(models.TransientModel):
@@ -431,7 +434,6 @@ class SalesCustomReportWizard(models.TransientModel):
             'target': 'self',
         }
 
-
 class SalesCommissionReportWizard(models.TransientModel):
     _name = 'sales.commission.report.wizard'
     _description = 'Sales Commission Report Wizard'
@@ -453,9 +455,21 @@ class SalesCommissionReportWizard(models.TransientModel):
 
             domain = [('order_id.state', '=', 'sale')]
             if rec.from_date and rec.to_date:
+                # Get user timezone
+                user_tz = self.env.user.tz or 'UTC'
+                tz = pytz.timezone(user_tz)
+
+                # Localize dates in user timezone
+                from_dt_local = datetime.combine(rec.from_date, time.min)
+                to_dt_local = datetime.combine(rec.to_date, time.max)
+
+                # Convert to UTC for DB comparison
+                from_dt_utc = tz.localize(from_dt_local).astimezone(pytz.UTC)
+                to_dt_utc = tz.localize(to_dt_local).astimezone(pytz.UTC)
+
                 domain += [
-                    ('order_id.date_order', '>=', rec.from_date),
-                    ('order_id.date_order', '<=', rec.to_date)
+                    ('order_id.date_order', '>=', from_dt_utc.strftime(DEFAULT_SERVER_DATETIME_FORMAT)),
+                    ('order_id.date_order', '<=', to_dt_utc.strftime(DEFAULT_SERVER_DATETIME_FORMAT)),
                 ]
             if rec.partner_ids:
                 domain.append(('partner_commission_partner_id', 'in', rec.partner_ids.ids))
@@ -493,8 +507,9 @@ class SalesCommissionReportWizard(models.TransientModel):
         # Define styles
         header_style = xlwt.easyxf("font: bold on; align: horiz center;")
         subheader_style = xlwt.easyxf("font: bold on; align: horiz center;")
-        normal_style = xlwt.easyxf("align: horiz left;")
-        sponsor_style = xlwt.easyxf("font: bold on; pattern: pattern solid, fore_color gray25; align: horiz left;")
+        normal_style = xlwt.easyxf("align: horiz center;")
+        normal_style1 = xlwt.easyxf("align: horiz left;")
+        sponsor_style = xlwt.easyxf("font: bold on; pattern: pattern solid, fore_color gray25; align: horiz center;")
 
 
         # Column widths
@@ -514,7 +529,7 @@ class SalesCommissionReportWizard(models.TransientModel):
         # worksheet.write(row+1, 5, 'Order Date', subheader_style)
         # worksheet.write(row+1, 6, 'Products', subheader_style)
 
-        row = 2
+        row = 1
         if commissionData:
             for partner_id, data in commissionData.items():
                 # Sponsor info
