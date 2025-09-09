@@ -71,6 +71,12 @@ class ResPartner(models.Model):
                                    ('approved', 'Approved'),
                                    ('rejected', 'Rejected')], string='Status',default='pending')
 
+    member_type = fields.Selection(
+        [('core_member', 'Core Member'),
+        ('noncore_member', 'Non-Core Member')],
+        string='Member Type', default='noncore_member'
+    )
+
     def action_approve(self):
         self.write({'state_selection': 'approved'})
 
