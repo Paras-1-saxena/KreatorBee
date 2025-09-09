@@ -301,9 +301,6 @@ class ICICIBankReportController(http.Controller):
         output.close()
         return response
 
-
-
-
 class SalesCustomReportWizard(models.TransientModel):
     _name = 'sale.custom.report.wizard'
     _description = 'Sales Report Wizard'
@@ -428,6 +425,132 @@ class SalesCustomReportWizard(models.TransientModel):
         fp.close()
 
         # Direct download
+        return {
+            'type': 'ir.actions.act_url',
+            'url': '/web/content/%s?download=true' % attachment.id,
+            'target': 'self',
+        }
+
+
+class SalesCommissionReportWizard(models.TransientModel):
+    _name = 'sales.commission.report.wizard'
+    _description = 'Sales Commission Report Wizard'
+
+    
+    from_date = fields.Date(string='Date From')
+    to_date = fields.Date(string='Date To')
+    partner_ids = fields.Many2many('res.partner', string="Sponsor Name")
+   
+
+
+    def check_filters(self):
+        SaleOrderLine = self.env['sale.order.line']
+        result = {}
+
+        for rec in self:
+            if rec.from_date and rec.to_date and rec.from_date > rec.to_date:
+                raise exceptions.ValidationError(_("From Date should not be greater than To Date."))
+
+            domain = [('order_id.state', '=', 'sale')]
+            if rec.from_date and rec.to_date:
+                domain += [
+                    ('order_id.date_order', '>=', rec.from_date),
+                    ('order_id.date_order', '<=', rec.to_date)
+                ]
+            if rec.partner_ids:
+                domain.append(('partner_commission_partner_id', 'in', rec.partner_ids.ids))
+
+            order_lines = SaleOrderLine.sudo().search(domain)
+
+            for line in order_lines:
+                partner = line.partner_commission_partner_id
+                if not partner:
+                    continue
+
+                if partner.id not in result:
+                    result[partner.id] = {
+                        'partner_commission_partner_id': partner.name,
+                        'partner_commission_email': partner.email or '',
+                        'partner_commission_phone': partner.phone or '',
+                        'partner_commission_amount': 0.0,
+                        'order_ids': []
+                    }
+
+                result[partner.id]['partner_commission_amount'] += line.partner_commission_amount
+
+                if line.order_id.id not in result[partner.id]['order_ids']:
+                    result[partner.id]['order_ids'].append(line.order_id.id)
+
+        return result
+
+
+    def action_download_report(self):
+        commissionData = self.check_filters()
+
+        workbook = xlwt.Workbook()
+        worksheet = workbook.add_sheet('Sales Commission Report')
+
+        # Define styles
+        header_style = xlwt.easyxf("font: bold on; align: horiz center;")
+        subheader_style = xlwt.easyxf("font: bold on; align: horiz center;")
+        normal_style = xlwt.easyxf("align: horiz left;")
+        sponsor_style = xlwt.easyxf("font: bold on; pattern: pattern solid, fore_color gray25; align: horiz left;")
+
+
+        # Column widths
+        for i, w in enumerate([25, 30, 25, 30, 15, 20, 40]):
+            worksheet.col(i).width = 250 * w
+
+        # Headers
+        row = 0
+        worksheet.write(row, 0, 'Sponsor Name', header_style)
+        worksheet.write(row, 1, 'Email', header_style)
+        worksheet.write(row, 2, 'Phone number', header_style)
+        worksheet.write(row, 3, 'Commission Amount', header_style)
+        # worksheet.write(row+1, 1, 'Customer Name', subheader_style)
+        # worksheet.write(row+1, 2, 'Customer Email', subheader_style)
+        # worksheet.write(row+1, 3, 'Customer Phone', subheader_style)
+        # worksheet.write(row+1, 4, 'Purchase Amount', subheader_style)
+        # worksheet.write(row+1, 5, 'Order Date', subheader_style)
+        # worksheet.write(row+1, 6, 'Products', subheader_style)
+
+        row = 2
+        if commissionData:
+            for partner_id, data in commissionData.items():
+                # Sponsor info
+                worksheet.write(row, 0, data['partner_commission_partner_id'], sponsor_style)
+                worksheet.write(row, 1, data['partner_commission_email'], sponsor_style)
+                worksheet.write(row, 2, data['partner_commission_phone'], sponsor_style)
+                worksheet.write(row, 3, data['partner_commission_amount'], sponsor_style)
+                row += 1
+
+                # Get full SO records
+                orders = self.env['sale.order'].browse(data['order_ids'])
+                for order in orders:
+                    products = ", ".join(order.order_line.mapped('product_id.display_name'))
+                    worksheet.write(row, 1, order.partner_id.name or '', normal_style)
+                    worksheet.write(row, 2, order.partner_id.email or '', normal_style)
+                    worksheet.write(row, 3, order.partner_id.phone or '', normal_style)
+                    worksheet.write(row, 4, order.amount_total or 0.0, normal_style)
+                    worksheet.write(row, 5, str(order.date_order.date()) if order.date_order else '', normal_style)
+                    worksheet.write(row, 6, products or '', normal_style)
+                    row += 1
+
+        # Save file in memory
+        fp = BytesIO()
+        workbook.save(fp)
+        fp.seek(0)
+
+        attachment = self.env['ir.attachment'].create({
+            'name': 'Sales Commission Report.xls',
+            'datas': base64.b64encode(fp.getvalue()),
+            'type': 'binary',
+            'store_fname': 'sales_report.xls',
+            'mimetype': 'application/vnd.ms-excel',
+        })
+
+        fp.close()
+
         return {
             'type': 'ir.actions.act_url',
             'url': '/web/content/%s?download=true' % attachment.id,
