@@ -2051,6 +2051,32 @@ class PortalMyCourses(http.Controller):
 
     @http.route('/product/referral/page', type='http', auth="public", csrf=False)
     def product_referral_page(self, **kwargs):
+        user = request.env.user
+        if request.session.get('referral_partner'):
+            partner = request.env['res.partner'].sudo().browse(int(request.session.get('referral_partner')))  # Get related partner
+            if partner:
+                subscription = partner.subscription_product_line_ids.subscription_id.filtered(
+                    lambda sub: sub.stage_id.name == 'In Progress')
+
+                end_days = 0
+                if subscription:
+                    end_days = (subscription.next_invoice_date - datetime.today().date()).days
+                if end_days < 0:
+                    public_user = request.env.ref("base.public_user")
+                    if user.id == public_user.id:
+                        # If public user → redirect to signup
+                        return request.redirect('/web/signup?user_type=partner')
+                    else:
+                        # If logged-in user → redirect to home
+                        return request.redirect('/partner/mycourses')
+        else:
+            if user.id == public_user.id:
+                # If public user → redirect to signup
+                return request.redirect('/web/signup?user_type=partner')
+            else:
+                # If logged-in user → redirect to home
+                return request.redirect('/partner/mycourses')
+
         course_in_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', request.env.user.id)]).course_ids
         courses = json.loads(kwargs.get('courses'))
         recomended_courses = request.env['product.template'].sudo().search([('id', 'not in', courses), ('bom_ids', '!=', False)])
@@ -2319,6 +2345,7 @@ class PortalMyCourses(http.Controller):
             end_days = 0
             if subscription:
                 end_days = (subscription.next_invoice_date - datetime.today().date()).days
+
             # if (datetime.today().date() - timedelta(days=2)) < partner.create_date.date() and not partner.early_sign_in:
             #     end_days = 0
 
