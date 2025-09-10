@@ -1751,6 +1751,7 @@ class PortalMyCourses(http.Controller):
                 # No referral link -> use previous commission partner
             previous_commission_lines = request.env['sale.order.line'].sudo().search([
                 ('order_id.partner_id', '=', user.partner_id.id),
+                ('order_id.state', 'in', ['sale', 'done']),
                 ('partner_commission_partner_id', '!=', False)
             ], limit=1)
 
@@ -1826,7 +1827,8 @@ class PortalMyCourses(http.Controller):
         else:
             previous_commission_lines = request.env['sale.order.line'].sudo().search([
                 ('order_id.partner_id', '=', user.partner_id.id),
-                ('partner_commission_partner_id', '!=', False)
+                ('partner_commission_partner_id', '!=', False),
+                ('order_id.state', 'in', ['sale', 'done']),
             ], limit=1)
 
             if previous_commission_lines:
