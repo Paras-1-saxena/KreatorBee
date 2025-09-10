@@ -414,6 +414,16 @@
                                         </a>
                                     </div>
                                 </t>
+                                <t t-elif="0 &lt;= end_days and end_days &lt;= 5">
+                                    <div class="active p-lg-2 p-1 d-flex flex-column align-items-center">
+                                        <a href="/partner-referral" class='text-center'>
+                                            <i class="ri-links-fill" style="color: orange!important;"></i>
+                                            <p style="color: orange!important;">
+                                                Links
+                                            </p>
+                                        </a>
+                                    </div>
+                                </t>
                                 <t t-else="">
                                     <div class="active p-lg-2 p-1 d-flex flex-column align-items-center">
                                     <a href="/partner-referral" class='text-center'>
@@ -477,6 +487,14 @@
                                             <li class="active">
                                                 <a href="/partner-referral">
                                                     <i class="ri-checkbox-circle-fill"></i>
+                                                    Links
+                                                </a>
+                                            </li>
+                                        </t>
+                                        <t t-elif="0 &lt;= end_days and end_days &lt;= 5">
+                                            <li class="active">
+                                                <a href="/partner-referral" style="color: orange!important;">
+                                                    <i class="ri-checkbox-blank-circle-line" style="color: orange!important;"></i>
                                                     Links
                                                 </a>
                                             </li>
