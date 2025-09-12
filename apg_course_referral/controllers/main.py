@@ -176,12 +176,14 @@ class ReferralController(http.Controller):
         partner = request.env.user.partner_id  # Get related partner
         subscription = partner.subscription_product_line_ids.subscription_id.filtered(
             lambda sub: sub.stage_id.name == 'In Progress')
+        expire_on = False
         if subscription and subscription.next_invoice_date >= datetime.today().date():
             is_active_subscription = True
-        end_days = 0
+        end_days = -1
         # if (datetime.today().date() - timedelta(days=2)) < partner.create_date.date() and not partner.early_sign_in:
         #     return request.redirect('/partner/income')
         if subscription:
+            expire_on = subscription.next_invoice_date 
             end_days = (subscription.next_invoice_date - datetime.today().date()).days
         # if not request.env.user.partner_id.early_sign_in and (
         #         premium_course.id not in request.env.user.partner_id.slide_channel_ids.ids):
@@ -209,7 +211,8 @@ class ReferralController(http.Controller):
                 'partner_ids': partner_ids,
                 'payment_referral_id': payment_referral_id,
                 'course_count': course_count,
-                'end_days': end_days
+                'end_days': end_days,
+                'expire_on': expire_on
             }
             # Render the data page template
             return http.request.render('apg_course_referral.partner_referral_link_page', values)
@@ -239,14 +242,16 @@ class ReferralController(http.Controller):
                     'referral_id': referral_id,
                     'partner_ids': partner_ids,
                     'course_count': course_count,
-                    'end_days': end_days
+                    'end_days': end_days,
+                    'expire_on': expire_on
                 }
                 return http.request.render('apg_course_referral.partner_referral_link_page', values)
         values = {
             'product_cart_ids': course_ids,
             'partner_ids': partner_ids,
             'course_count': course_count,
-            'end_days': end_days
+            'end_days': end_days,
+            'expire_on': expire_on
         }
         tutorial_video = Markup("""
                     <iframe src="https://player.vimeo.com/video/1073824076?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
