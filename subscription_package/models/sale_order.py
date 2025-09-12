@@ -63,6 +63,14 @@ class SaleOrder(models.Model):
         res = super().action_confirm()
         sale_order = self.subscription_id.sale_order_id
         so_state = self.search([('id', '=', sale_order.id)]).state
+        partner = self.partner_id
+        in_progress_subs = partner.subscription_product_line_ids.subscription_id.filtered(
+            lambda sub: sub.stage_id.name == 'In Progress')
+        draft_subs = partner.subscription_product_line_ids.subscription_id.filtered(
+            lambda sub: sub.stage_id.name == 'Draft')[:1]
+
+        if draft_subs and len(in_progress_subs) < 1:
+            draft_subs.button_start_date()
         if so_state in ['sale', 'done']:
             stage = self.env['subscription.package.stage'].search(
                 [('category', '=', 'progress')], limit=1).id

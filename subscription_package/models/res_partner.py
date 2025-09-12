@@ -70,5 +70,5 @@ class ResUsers(models.Model):
                         'product_qty': 1,
                     })],
                 })
-                subscription.button_start_date()
+                # subscription.button_start_date()
         return user

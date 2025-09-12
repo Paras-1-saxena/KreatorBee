@@ -519,9 +519,10 @@ class SalesCommissionReportWizard(models.TransientModel):
         # Headers
         row = 0
         worksheet.write(row, 0, 'Sponsor Name', header_style)
-        worksheet.write(row, 1, 'Email', header_style)
-        worksheet.write(row, 2, 'Phone number', header_style)
-        worksheet.write(row, 3, 'Commission Amount', header_style)
+        worksheet.write(row, 1, 'Customer Name ', header_style)
+        worksheet.write(row, 2, 'Email', header_style)
+        worksheet.write(row, 3, 'Phone number', header_style)
+        worksheet.write(row, 4, 'Commission Amount', header_style)
         # worksheet.write(row+1, 1, 'Customer Name', subheader_style)
         # worksheet.write(row+1, 2, 'Customer Email', subheader_style)
         # worksheet.write(row+1, 3, 'Customer Phone', subheader_style)
@@ -534,21 +535,25 @@ class SalesCommissionReportWizard(models.TransientModel):
             for partner_id, data in commissionData.items():
                 # Sponsor info
                 worksheet.write(row, 0, data['partner_commission_partner_id'], sponsor_style)
-                worksheet.write(row, 1, data['partner_commission_email'], sponsor_style)
-                worksheet.write(row, 2, data['partner_commission_phone'], sponsor_style)
-                worksheet.write(row, 3, data['partner_commission_amount'], sponsor_style)
+                worksheet.write(row, 2, data['partner_commission_email'], sponsor_style)
+                worksheet.write(row, 3, data['partner_commission_phone'], sponsor_style)
+                worksheet.write(row, 4, data['partner_commission_amount'], sponsor_style)
                 row += 1
 
                 # Get full SO records
                 orders = self.env['sale.order'].browse(data['order_ids'])
                 for order in orders:
+                    commission_amt = sum(order.order_line.filtered(
+                        lambda l: l.partner_commission_partner_id
+                    ).mapped('partner_commission_amount'))
                     products = ", ".join(order.order_line.mapped('product_id.display_name'))
                     worksheet.write(row, 1, order.partner_id.name or '', normal_style)
                     worksheet.write(row, 2, order.partner_id.email or '', normal_style)
                     worksheet.write(row, 3, order.partner_id.phone or '', normal_style)
-                    worksheet.write(row, 4, order.amount_total or 0.0, normal_style)
-                    worksheet.write(row, 5, str(order.date_order.date()) if order.date_order else '', normal_style)
-                    worksheet.write(row, 6, products or '', normal_style)
+                    worksheet.write(row, 4, commission_amt or '', normal_style)
+                    worksheet.write(row, 5, order.amount_untaxed or 0.0, normal_style)
+                    worksheet.write(row, 6, str(order.date_order.date()) if order.date_order else '', normal_style)
+                    worksheet.write(row, 7, products or '', normal_style)
                     row += 1
 
         # Save file in memory

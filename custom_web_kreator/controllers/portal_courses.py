@@ -513,7 +513,7 @@ class PortalMyCourses(http.Controller):
             lambda sub: sub.stage_id.name == 'In Progress')
         if subscription and subscription.next_invoice_date >= datetime.today().date():
             is_active_subscription = True
-        end_days = 0
+        end_days = -1
         if subscription:
             end_days = (subscription.next_invoice_date - datetime.today().date()).days
         # if (datetime.today().date() - timedelta(days=2)) < partner.create_date.date() and not partner.early_sign_in:
@@ -1104,7 +1104,7 @@ class PortalMyCourses(http.Controller):
                 lambda sub: sub.stage_id.name == 'In Progress')
             if subscription and subscription.next_invoice_date >= datetime.today().date():
                 is_active_subscription = True
-            end_days = 0
+            end_days = -1
             if subscription:
                 end_days = (subscription.next_invoice_date - datetime.today().date()).days
             # if (datetime.today().date() - timedelta(days=2)) < partner.create_date.date() and not partner.early_sign_in:
@@ -1777,6 +1777,10 @@ class PortalMyCourses(http.Controller):
 
                 # Find difference
                 diff_count = max(0, commission_partner_count - user_course_count)
+                subscription = commission_partner.subscription_product_line_ids.subscription_id.filtered(lambda sub: sub.stage_id.name == 'In Progress')
+                end_days = -1
+                if subscription:
+                    end_days = (subscription.next_invoice_date - datetime.today().date()).days
 
                 if diff_count > 0:
                     # Filter only course lines (products with BoM)
@@ -1787,7 +1791,9 @@ class PortalMyCourses(http.Controller):
 
                     if lines_to_update:
                         lines_to_update.write({
-                            'partner_commission_partner_id': commission_partner.id
+                            'partner_commission_partner_id': commission_partner.id if end_days >= 0 else False,
+                            'referral_partner_id': commission_partner.id,
+                            'referral_partner_subs_status': 'inprogress' if end_days >= 0 else 'closed',
                         })
             
             else:
@@ -1812,6 +1818,12 @@ class PortalMyCourses(http.Controller):
                 # Find difference
                 diff_count = max(0, commission_partner_count - user_course_count)
 
+                subscription = commission_partner.subscription_product_line_ids.subscription_id.filtered(lambda sub: sub.stage_id.name == 'In Progress')
+
+                end_days = -1
+                if subscription:
+                    end_days = (subscription.next_invoice_date - datetime.today().date()).days
+
                 if diff_count > 0:
                     # Filter only course lines (products with BoM)
                     course_lines = sale_order.sudo().order_line.filtered(lambda l: l.product_id.bom_ids)
@@ -1821,7 +1833,9 @@ class PortalMyCourses(http.Controller):
 
                     if lines_to_update:
                         lines_to_update.write({
-                            'partner_commission_partner_id': commission_partner.id
+                            'partner_commission_partner_id': commission_partner.id if end_days >= 0 else False,
+                            'referral_partner_id': commission_partner.id,
+                            'referral_partner_subs_status': 'inprogress' if end_days >= 0 else 'closed',
                         })
 
         else:
@@ -1854,6 +1868,11 @@ class PortalMyCourses(http.Controller):
                 # Find difference
                 diff_count = max(0, commission_partner_count - user_course_count)
 
+                subscription = commission_partner.subscription_product_line_ids.subscription_id.filtered(lambda sub: sub.stage_id.name == 'In Progress')
+                end_days = -1
+                if subscription:
+                    end_days = (subscription.next_invoice_date - datetime.today().date()).days
+
                 if diff_count > 0:
                     # Filter only course lines (products with BoM)
                     course_lines = sale_order.sudo().order_line.filtered(lambda l: l.product_id.bom_ids)
@@ -1863,7 +1882,9 @@ class PortalMyCourses(http.Controller):
 
                     if lines_to_update:
                         lines_to_update.write({
-                            'partner_commission_partner_id': commission_partner.id
+                            'partner_commission_partner_id': commission_partner.id if end_days >= 0 else False,
+                            'referral_partner_id': commission_partner.id,
+                            'referral_partner_subs_status': 'inprogress' if end_days >= 0 else 'closed',
                         })
             
 
@@ -2053,32 +2074,6 @@ class PortalMyCourses(http.Controller):
 
     @http.route('/product/referral/page', type='http', auth="public", csrf=False)
     def product_referral_page(self, **kwargs):
-        user = request.env.user
-        if request.session.get('referral_partner'):
-            partner = request.env['res.partner'].sudo().browse(int(request.session.get('referral_partner')))  # Get related partner
-            if partner:
-                subscription = partner.subscription_product_line_ids.subscription_id.filtered(
-                    lambda sub: sub.stage_id.name == 'In Progress')
-
-                end_days = 0
-                if subscription:
-                    end_days = (subscription.next_invoice_date - datetime.today().date()).days
-                if end_days < 0:
-                    public_user = request.env.ref("base.public_user")
-                    if user.id == public_user.id:
-                        # If public user → redirect to signup
-                        return request.redirect('/web/signup?user_type=partner')
-                    else:
-                        # If logged-in user → redirect to home
-                        return request.redirect('/partner/mycourses')
-        else:
-            if user.id == public_user.id:
-                # If public user → redirect to signup
-                return request.redirect('/web/signup?user_type=partner')
-            else:
-                # If logged-in user → redirect to home
-                return request.redirect('/partner/mycourses')
-
         course_in_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', request.env.user.id)]).course_ids
         courses = json.loads(kwargs.get('courses'))
         recomended_courses = request.env['product.template'].sudo().search([('id', 'not in', courses), ('bom_ids', '!=', False)])
@@ -2344,7 +2339,7 @@ class PortalMyCourses(http.Controller):
                 lambda sub: sub.stage_id.name == 'In Progress')
             if subscription and subscription.next_invoice_date >= datetime.today().date():
                 is_active_subscription = True
-            end_days = 0
+            end_days = -1
             if subscription:
                 end_days = (subscription.next_invoice_date - datetime.today().date()).days
 
@@ -3559,7 +3554,7 @@ class PortalMyCourses(http.Controller):
                 lambda sub: sub.stage_id.name == 'In Progress')
             if subscription and subscription.next_invoice_date >= datetime.today().date():
                 is_active_subscription = True
-            end_days = 0
+            end_days = -1
             if subscription:
                 end_days = (subscription.next_invoice_date - datetime.today().date()).days
             # if (datetime.today().date() - timedelta(days=2)) < partner.create_date.date() and not partner.early_sign_in:
