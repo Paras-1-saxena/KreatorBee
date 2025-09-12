@@ -23,7 +23,7 @@ class SaleOrderLine(models.Model):
     direct_commission_amount = fields.Float(string='Direct Commission Amount', compute='_compute_commission',store=True)
     partner_commission_amount = fields.Float(string='Partner Commission Amount', compute='_compute_commission',store=True)
     referral_partner_id = fields.Many2one('res.partner', string='Referral Partner', readonly=False, store=True)
-    referral_partner_subs_status = Selection([
+    referral_partner_subs_status = fields.Selection([
         ('inprogress', 'In Progress'),
         ('closed', 'Closed')
         ], string='Referral Partner Subscription Status')
