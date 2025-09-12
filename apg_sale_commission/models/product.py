@@ -16,7 +16,6 @@ class Partner(models.Model):
     def _compute_commission_count(self):
         order_lines = self.env['sale.order.line'].search([
             ('partner_commission_partner_id', '=', self.id),
-            ('order_id.state', 'in', ['sale', 'done']),
         ])
         # Extract unique Sale Orders
         sale_orders = order_lines.mapped('order_id')
@@ -37,11 +36,18 @@ class Partner(models.Model):
     @api.depends('commission_line_ids.order_id')
     def _compute_commission_order_count(self):
         for partner in self:
+            order_lines = self.env['sale.order.line'].search([
+                ('partner_commission_partner_id', '=', partner.id),
+                ('order_id.state', 'in', ['sale', 'done']),
+            ])
+            # Extract unique Sale Orders
+            sale_orders = order_lines.mapped('order_id')
+            partner.commission_count = len(sale_orders)
             # Get unique confirmed sale orders linked to partner's commission lines
-            confirmed_orders = partner.commission_line_ids.mapped('order_id').filtered(
-                lambda so: so.state in ['sale', 'done']
-            )
-            partner.commission_count = len(confirmed_orders)
+            # confirmed_orders = partner.commission_line_ids.mapped('order_id').filtered(
+            #     lambda so: so.state in ['sale', 'done']
+            # )
+            # partner.commission_count = len(confirmed_orders)
         
     def action_view_my_commission_sale_order(self):
         self.ensure_one()
