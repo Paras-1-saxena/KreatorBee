@@ -62,15 +62,18 @@
                                 </t>
                             </li>
                             <li>
-                                <t t-if="company.partner_id.email">
-                                    <span> Email: </span>
-                                    <span t-field="company.partner_id.email"/>
-                                </t>
+                                <span> SAC: </span>
+                                <span>999293</span>
                             </li>
-                            <li t-if="not forced_vat"/>
-                            <li t-else="">
-                                <t t-esc="company.country_id.vat_label or 'Tax ID'">Tax ID</t>:
-                                <span t-esc="forced_vat">US12345671</span>
+                            <li>
+                                <t t-if="company.partner_id.vat">
+                                    <span> GST: </span>
+                                    <span t-field="company.partner_id.vat"/>
+                                </t>
+                                <t t-if="company.partner_id.company_registry">
+                                    , <span> CIN: </span>
+                                    <span t-field="company.partner_id.company_registry"/>
+                                </t>
                             </li>
                         </ul>
                     </div>

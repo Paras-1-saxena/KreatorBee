@@ -501,3 +501,64 @@ class SubscriptionPackage(models.Model):
         """ The function is used to perform the renewal
         action for the subscription package."""
         return self.button_sale_order()
+
+    #Cron to close subscription
+    def _close_subscription(self):
+        today = fields.Date.today()
+
+        # find "In Progress" stage
+        in_progress_stage = self.env['subscription.package.stage'].search([('name', '=', 'In Progress')], limit=1)
+        close_stage = self.env['subscription.package.stage'].search([('name', '=', 'Closed')], limit=1)
+
+        # find subscriptions that are expired
+        subscriptions = self.env['subscription.package'].search([
+            ('next_invoice_date', '<', today),
+            ('stage_id', '=', in_progress_stage.id)
+        ])
+
+        for rec in subscriptions:
+            rec.write({'stage_id': close_stage.id})
+
+            invoices = self.env['account.move'].search([
+                ('subscription_id', '=', rec.id),
+                ('state', '=', 'posted'),
+                ('payment_state', '!=', 'paid')
+            ])
+            if invoices:
+                invoices.button_draft()
+                invoices.button_cancel()
+
+    #Cron to Start subscription
+    def _start_subscription(self):
+        today = fields.Date.today()
+
+        # stages
+        draft_stage = self.env['subscription.package.stage'].search([('name', '=', 'Draft')], limit=1)
+
+        # find subscriptions whose start_date has come, but still in Draft
+        subscriptions = self.env['subscription.package'].search([
+            ('start_date', '<=', today),
+            ('stage_id', '=', draft_stage.id)
+        ])
+
+        for rec in subscriptions:
+            # find confirmed sale orders for this partner
+            sale_orders = self.env['sale.order'].sudo().search([
+                ('partner_id', '=', rec.partner_id.id),
+                ('state', 'in', ['sale', 'done'])
+            ])
+
+            # check if any order line has product with BOM
+            has_bom_product = any(line.product_id.bom_ids for so in sale_orders for line in so.order_line)
+
+            if has_bom_product:
+                rec.button_start_date()
+
+                # invoices = self.env['account.move'].search([
+                #     ('subscription_id', '=', rec.id),
+                #     ('state', '=', 'posted'),
+                #     ('payment_state', '!=', 'paid')
+                # ])
+                # if invoices:
+                #     invoices.button_draft()
+                #     invoices.button_cancel()

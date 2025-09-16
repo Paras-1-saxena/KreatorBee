@@ -137,6 +137,10 @@
 
 
                     }
+                    .bg-green{
+                        --bs-bg-opacity: 1;
+                        background-color: #125818 !important;
+                    }
                 </style>
 
             </head>
@@ -269,7 +273,7 @@
                         <main class="flex-grow-1 p-4 overflow-auto">
                             <!-- Welcome Section -->
                             <!-- product filter -->
-                            <t t-if="subscription_avl and is_active_subscription">
+                            <!-- <t t-if="subscription_avl and is_active_subscription">
                                 <div class="row justify-content-center my-4">
                                     <div class="col-11 align-items-center content-section">
                                         <h1 class="text-center">Welcome to StartEazy</h1>
@@ -287,237 +291,119 @@
                                         </a>
                                     </div>
                                 </div>
-                            </t>
-                            <t t-elif="subscription_avl and not is_active_subscription">
+                            </t> -->
+                            <t t-if="subscription_avl">
                                 <div class="my-4">
-                                    <div class="row justify-content-around border1 rounded text-center">
-                                        <div class="col-lg-6 col-md-6 col-sm-12">
-                                            <!--                                            <img src="/custom_web_kreator/static/src/thankyou.png" class="img-fluid"-->
-                                            <!--                                                     alt="Welcome Icon"/>-->
-                                            <h1>Your Subscription has Just Ended</h1>
-                                            <h4>Renew your subscription to continue enjoying the benefits of StartEazy
-                                            </h4>
+                                    <div class="row justify-content-center border1 rounded text-center p-3">
+                                        <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                                            <h4>Renew your subscription to continue enjoying the benefits of StartEazy</h4>
                                         </div>
-                                        <div class="col-12 p-2 my-3">
-                                            <div class="row justify-content-around">
-                                                <!--                                                <div class="col-col-lg-4 col-md-4 col-sm-10 rounded"-->
-                                                <!--                                                     style="border: 1px solid black;">-->
-                                                <!--                                                    <a href="https://whatsapp.com/channel/0029Vb9AgyDHwXbAFQJjuT1F"-->
-                                                <!--                                                       target="_blank">-->
-                                                <!--                                                        <span class="fs-5">Click here &amp; Follow the Kreator Bee-->
-                                                <!--                                                            Partners channel on WhatsApp-->
-                                                <!--                                                        </span>-->
-                                                <!--                                                        <img-->
-                                                <!--                                                                src="/custom_web_kreator/static/src/Whatsapp.png"-->
-                                                <!--                                                        />-->
-                                                <!--                                                    </a>-->
-                                                <!--                                                </div>-->
-                                                <span>
-                                                    <a t-att-href="'my/invoices/{}?access_token={}'.format(invoice_id.id, invoice_id.access_token)"
-                                                       class="p-2 rounded text-white"
-                                                       style="background-color: black">Renew Now
-                                                    </a>
-                                                </span>
-                                                <div class="col-12"></div>
-                                                <div class="col-lg-4 col-md-4 col-sm-10 my-3">
-                                                    <div class="fs-5 p-2">OR
-                                                    </div>
-                                                    <div>
-                                                        Explore our Other Subscription Packages
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex justify-content-around">
-                                                <div style="margin-bottom: 50px; border: 2px solid black; border-radius: 25px; width: 29%; height: 52%; margin-top: 45px;"
-                                                     class="bg-white shadow-lg">
-                                                    <div style="font-family: 'Poppins'; font-size: 31.52px; font-weight: 600; border-top-left-radius: 20px; border-top-right-radius: 20px;"
-                                                         class="bg-black text-white p-3">
+
+                                        <div class="row g-3 justify-content-center">
+                                            <!-- 28 Days -->
+                                            <div class="col-12 col-sm-6 col-lg-3">
+                                                <div class="bg-white shadow-lg rounded d-flex flex-column" style="border: 2px solid black;border-radius: 25px !important;!i;!;">
+                                                    <div class="bg-green text-white p-3 rounded-top fs-4 fw-bold" style="font-family: 'Poppins';font-size: 31.52px !important;!i;!;font-weight: 600 !important;!i;!;border-top-left-radius: 20px !important;!i;!;border-top-right-radius: 20px !important;!i;!;">
                                                         28 Days
                                                     </div>
-                                                    <br/>
-                                                    <div class="text-start"
-                                                         style="padding-right: 1rem; padding-left: 1rem;">
-                                                        <span class="fs-5"><i class="ri-check-fill"
-                                                                              style="color: green;"></i>&#160;&#160;&#160;
-                                                        </span>
-                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
-                                                            <b>100 % Commission</b>
-                                                        </span>
-                                                    </div>
-                                                    <div class="text-start mt-2"
-                                                         style="padding-right: 1rem; padding-left: 1rem;">
-                                                        <span class="fs-5"><i class="ri-check-fill"
-                                                                              style="color: green;"></i>&#160;&#160;&#160;
-                                                        </span>
-                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
-                                                            <b>Access :</b>
-                                                            All Courses
-                                                        </span>
-                                                    </div>
-                                                    <div class="text-start mt-2"
-                                                         style="padding-right: 1rem; padding-left: 1rem;">
-                                                        <span class="fs-5"><i class="ri-check-fill"
-                                                                              style="color: green;"></i>&#160;&#160;&#160;
-                                                        </span>
-                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
-                                                            <b>Validity :</b>
-                                                            28 Days
-                                                        </span>
-                                                    </div>
-                                                    <div class="text-start mt-2"
-                                                         style="padding-right: 1rem; padding-left: 1rem;">
-                                                        <span class="fs-5"><i class="ri-check-fill"
-                                                                              style="color: green;"></i>&#160;&#160;&#160;
-                                                        </span>
-                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
-                                                            <b>Price :</b>
-                                                            999 INR
+                                                    <div class="flex-grow-1 d-flex align-items-center justify-content-center p-3">
+                                                        <span style="font-family: 'Poppins'; font-size: 24.01px;">
+                                                            <s>999</s> – 899 INR
                                                         </span>
                                                     </div>
                                                     <div class="p-2">
                                                         <form action="/shop/cart/update?type=subscription" method="POST"
-                                                              class="d-flex justify-content-center bg-black p-1"
-                                                              style="border-radius: 15px;">
-                                                            <input type="hidden" name="csrf_token"
-                                                                   t-att-value="request.csrf_token()"/>
+                                                              class="bg-green rounded d-flex justify-content-center p-1">
+                                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                                             <input type="hidden" name="product_template_id"
                                                                    t-att-value="subscription_packages.filtered(lambda sp: sp.name == '28 Days Subscription').product_tmpl_id.id"/>
                                                             <input type="hidden" class="product_id" name="product_id"
                                                                    t-att-value="subscription_packages.filtered(lambda sp: sp.name == '28 Days Subscription').id"/>
-                                                            <button type="submit"
-                                                                    style="background: none; border: none; color: white; font-family: 'Poppins'; font-size: 17.86px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                                            <button type="submit" class="btn text-white w-100" style="background: none; border: none; color: white; font-family: 'Poppins'; font-size: 17.86px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
                                                                 Subscribe Now
                                                             </button>
                                                         </form>
                                                     </div>
                                                 </div>
-                                                <div style="height: 52%; margin-bottom: 50px; border: 2px solid #fff5c6; border-top-left-radius: 100px; border-bottom-left-radius: 24px; border-radius: 25px; width: 29%; background-color: #fff5c6;"
-                                                     class="shadow-lg">
-                                                    <div style="font-family: 'Poppins'; font-size: 20.52px; font-weight: 600; border-top-left-radius: 20px; border-top-right-radius: 20px; background-color: #fff5c6;"
-                                                         class="p-1">
-                                                        MOST POPULAR
-                                                    </div>
-                                                    <div style="font-family: 'Poppins'; font-size: 31.52px; font-weight: 600;"
-                                                         class="bg-black text-white p-3">
+                                            </div>
+
+                                            <!-- 84 Days -->
+                                            <div class="col-12 col-sm-6 col-lg-3">
+                                                <div class="bg-white shadow-lg rounded d-flex flex-column" style="border: 2px solid black;border-radius: 25px !important;!i;!;">
+                                                    <div class="bg-green text-white p-3 rounded-top fs-4 fw-bold" style="font-family: 'Poppins';font-size: 31.52px !important;!i;!;font-weight: 600 !important;!i;!;border-top-left-radius: 20px !important;!i;!;border-top-right-radius: 20px !important;!i;!;">
                                                         84 Days
                                                     </div>
-                                                    <br/>
-                                                    <div class="text-start"
-                                                         style="padding-right: 1rem; padding-left: 1rem;">
-                                                        <span class="fs-5"><i class="ri-check-fill"
-                                                                              style="color: green;"></i>&#160;&#160;&#160;
-                                                        </span>
-                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
-                                                            <b>100 % Commission</b>
-                                                        </span>
-                                                    </div>
-                                                    <div class="text-start mt-2"
-                                                         style="padding-right: 1rem; padding-left: 1rem;">
-                                                        <span class="fs-5"><i class="ri-check-fill"
-                                                                              style="color: green;"></i>&#160;&#160;&#160;
-                                                        </span>
-                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
-                                                            <b>Access :</b>
-                                                            All Courses
-                                                        </span>
-                                                    </div>
-                                                    <div class="text-start mt-2"
-                                                         style="padding-right: 1rem; padding-left: 1rem;">
-                                                        <span class="fs-5"><i class="ri-check-fill"
-                                                                              style="color: green;"></i>&#160;&#160;&#160;
-                                                        </span>
-                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
-                                                            <b>Validity :</b>
-                                                            84 Days
-                                                        </span>
-                                                    </div>
-                                                    <div class="text-start mt-2"
-                                                         style="padding-right: 1rem; padding-left: 1rem;">
-                                                        <span class="fs-5"><i class="ri-check-fill"
-                                                                              style="color: green;"></i>&#160;&#160;&#160;
-                                                        </span>
-                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
-                                                            <b>Price :</b>
-                                                            <s>2997</s>
-                                                            - 2499 INR
+                                                    <div class="flex-grow-1 d-flex align-items-center justify-content-center p-3">
+                                                        <span style="font-family: 'Poppins'; font-size: 24.01px;">
+                                                            <s>2997</s> – 2499 INR
                                                         </span>
                                                     </div>
                                                     <div class="p-2">
                                                         <form action="/shop/cart/update?type=subscription" method="POST"
-                                                              class="d-flex justify-content-center bg-black p-1"
-                                                              style="border-radius: 15px;">
-                                                            <input type="hidden" name="csrf_token"
-                                                                   t-att-value="request.csrf_token()"/>
+                                                              class="bg-green rounded d-flex justify-content-center p-1">
+                                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                                             <input type="hidden" name="product_template_id"
                                                                    t-att-value="subscription_packages.filtered(lambda sp: sp.name == '84 Days Subscription').product_tmpl_id.id"/>
                                                             <input type="hidden" class="product_id" name="product_id"
                                                                    t-att-value="subscription_packages.filtered(lambda sp: sp.name == '84 Days Subscription').id"/>
-                                                            <button type="submit"
-                                                                    style="background: none; border: none; color: white; font-family: 'Poppins'; font-size: 17.86px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                                            <button type="submit" class="btn text-white w-100" style="background: none; border: none; color: white; font-family: 'Poppins'; font-size: 17.86px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
                                                                 Subscribe Now
                                                             </button>
                                                         </form>
                                                     </div>
                                                 </div>
-                                                <div style="height: 52%; margin-bottom: 50px; border: 2px solid black; border-radius: 24px; width: 29%; margin-top: 45px;"
-                                                     class="bg-white shadow-lg">
-                                                    <div style="font-family: 'Poppins'; font-size: 31.52px; font-weight: 600; border-top-left-radius: 20px; border-top-right-radius: 20px;"
-                                                         class="bg-black text-white p-3">
-                                                        336 Days
+                                            </div>
+
+                                            <!-- 168 Days -->
+                                            <div class="col-12 col-sm-6 col-lg-3">
+                                                <div class="bg-white shadow-lg rounded d-flex flex-column" style="border: 2px solid black;border-radius: 25px !important;!i;!;">
+                                                    <div class="bg-green text-white p-3 rounded-top fs-4 fw-bold" style="font-family: 'Poppins';font-size: 31.52px !important;!i;!;font-weight: 600 !important;!i;!;border-top-left-radius: 20px !important;!i;!;border-top-right-radius: 20px !important;!i;!;">
+                                                        168 Days
                                                     </div>
-                                                    <br/>
-                                                    <div class="text-start"
-                                                         style="padding-right: 1rem; padding-left: 1rem;">
-                                                        <span class="fs-5"><i class="ri-check-fill"
-                                                                              style="color: green;"></i>&#160;&#160;&#160;
-                                                        </span>
-                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
-                                                            <b>100 % Commission</b>
-                                                        </span>
-                                                    </div>
-                                                    <div class="text-start mt-2"
-                                                         style="padding-right: 1rem; padding-left: 1rem;">
-                                                        <span class="fs-5"><i class="ri-check-fill"
-                                                                              style="color: green;"></i>&#160;&#160;&#160;
-                                                        </span>
-                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
-                                                            <b>Access :</b>
-                                                            All Courses
-                                                        </span>
-                                                    </div>
-                                                    <div class="text-start mt-2"
-                                                         style="padding-right: 1rem; padding-left: 1rem;">
-                                                        <span class="fs-5"><i class="ri-check-fill"
-                                                                              style="color: green;"></i>&#160;&#160;&#160;
-                                                        </span>
-                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
-                                                            <b>Validity :</b>
-                                                            336 Days
-                                                        </span>
-                                                    </div>
-                                                    <div class="text-start mt-2"
-                                                         style="padding-right: 1rem; padding-left: 1rem;">
-                                                        <span class="fs-5"><i class="ri-check-fill"
-                                                                              style="color: green;"></i>&#160;&#160;&#160;
-                                                        </span>
-                                                        <span style="font-family: 'Poppins'; font-size: 20.01px;">
-                                                            <b>Price :</b>
-                                                            <s>11998</s>
-                                                            - 10999 INR
+                                                    <div class="flex-grow-1 d-flex align-items-center justify-content-center p-3">
+                                                        <span style="font-family: 'Poppins'; font-size: 24.01px;">
+                                                            <s>5994</s> – 4499 INR
                                                         </span>
                                                     </div>
                                                     <div class="p-2">
                                                         <form action="/shop/cart/update?type=subscription" method="POST"
-                                                              class="d-flex justify-content-center bg-black p-1"
-                                                              style="border-radius: 15px;">
-                                                            <input type="hidden" name="csrf_token"
-                                                                   t-att-value="request.csrf_token()"/>
+                                                              class="bg-green rounded d-flex justify-content-center p-1">
+                                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                            <input type="hidden" name="product_template_id"
+                                                                   t-att-value="subscription_packages.filtered(lambda sp: sp.name == '168 Days Subscription').product_tmpl_id.id"/>
+                                                            <input type="hidden" class="product_id" name="product_id"
+                                                                   t-att-value="subscription_packages.filtered(lambda sp: sp.name == '168 Days Subscription').id"/>
+                                                            <button type="submit" class="btn text-white w-100" style="background: none; border: none; color: white; font-family: 'Poppins'; font-size: 17.86px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                                                Subscribe Now
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 336 Days -->
+                                            <div class="col-12 col-sm-6 col-lg-3">
+                                                <div class="bg-white shadow-lg rounded d-flex flex-column" style="border: 2px solid black;border-radius: 25px !important;!i;!;">
+                                                    <div class="p-2 fs-6 fw-bold text-uppercase">
+                                                        HIGHEST DISCOUNT
+                                                    </div>
+                                                    <div class="bg-green text-white p-3 rounded-top fs-4 fw-bold" style="font-family: 'Poppins';font-size: 31.52px !important;!i;!;font-weight: 600 !important;!i;!;border-top-left-radius: 20px !important;!i;!;border-top-right-radius: 20px !important;!i;!;">
+                                                        336 Days
+                                                    </div>
+                                                    <div class="flex-grow-1 d-flex align-items-center justify-content-center p-3">
+                                                        <span style="font-family: 'Poppins'; font-size: 24.01px;">
+                                                            <s>11998</s> – 7499 INR
+                                                        </span>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <form action="/shop/cart/update?type=subscription" method="POST"
+                                                              class="bg-green rounded d-flex justify-content-center p-1">
+                                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                                             <input type="hidden" name="product_template_id"
                                                                    t-att-value="subscription_packages.filtered(lambda sp: sp.name == '336 Days Subscription').product_tmpl_id.id"/>
                                                             <input type="hidden" class="product_id" name="product_id"
                                                                    t-att-value="subscription_packages.filtered(lambda sp: sp.name == '336 Days Subscription').id"/>
-                                                            <button type="submit"
-                                                                    style="background: none; border: none; color: white; font-family: 'Poppins'; font-size: 17.86px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                                            <button type="submit" class="btn text-white w-100" style="background: none; border: none; color: white; font-family: 'Poppins'; font-size: 17.86px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
                                                                 Subscribe Now
                                                             </button>
                                                         </form>

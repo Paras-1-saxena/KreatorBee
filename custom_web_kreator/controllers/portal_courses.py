@@ -4210,8 +4210,10 @@ class PortalMyCourses(http.Controller):
         subscription_avl = False
         subscription_end_date = False
         partner = request.env.user.partner_id  # Get related partner
+        # subscription = partner.subscription_product_line_ids.subscription_id.filtered(
+        #     lambda sub: sub.stage_id.name in ['In Progress', 'Close'])
         subscription = partner.subscription_product_line_ids.subscription_id.filtered(
-            lambda sub: sub.stage_id.name == 'In Progress')
+            lambda sub: sub.stage_id.name in ['In Progress', 'Close']).sorted(key=lambda s: s.id, reverse=True)[:1]
         if subscription:
             subscription_avl = True
         if subscription and subscription.next_invoice_date >= datetime.today().date():
@@ -4219,7 +4221,7 @@ class PortalMyCourses(http.Controller):
         else:
             subscription_end_date = subscription.next_invoice_date.strftime('%Y-%m-%d') if subscription else False
         invoice_id = False
-        if not is_active_subscription and subscription:
+        if subscription:
             subscription.sudo().close_limit_cron()
             invoice_id = request.env['account.move'].sudo().search([('subscription_id', '=', subscription.id), ('state', 'in', ['draft', 'posted']), ('payment_state', '=', 'not_paid')], limit=1)
             if invoice_id.state == 'draft':
