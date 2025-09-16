@@ -21,6 +21,7 @@
 #############################################################################
 from odoo import api, fields, models
 from odoo.tools.safe_eval import datetime
+from dateutil.relativedelta import relativedelta
 
 
 class SaleOrder(models.Model):
@@ -129,12 +130,15 @@ class SaleOrder(models.Model):
                     if line.product_id.is_subscription:
                         existing_subscription = self.env['subscription.package'].search([('partner_id', '=', self.partner_id.id)])
                         existing_subscription = existing_subscription.filtered(lambda es: es.stage_id.name == 'In Progress')
+                        existing_subscription = self.env['subscription.package'].search([('partner_id', '=', self.partner_id.id),
+                            ('stage_id.name', '=', 'In Progress')
+                            ], order="start_date desc", limit=1)
                         close_state = self.env['subscription.package.stage'].search([('name', '=', 'Closed')], limit=1)
-                        if existing_subscription:
-                            existing_subscription.write({'stage_id': close_state.id})
-                            invoices = self.env['account.move'].search([('subscription_id', '=', existing_subscription.id), ('state', '=', 'posted'), ('payment_state', '!=', 'paid')])
-                            invoices.button_draft()
-                            invoices.button_cancel()
+                        # if existing_subscription:
+                        #     existing_subscription.write({'stage_id': close_state.id})
+                        #     invoices = self.env['account.move'].search([('subscription_id', '=', existing_subscription.id), ('state', '=', 'posted'), ('payment_state', '!=', 'paid')])
+                        #     invoices.button_draft()
+                        #     invoices.button_cancel()
                         this_products_line = []
                         rec_list = [0, 0, {'product_id': line.product_id.id,
                                            'product_qty': line.product_uom_qty,
@@ -144,14 +148,13 @@ class SaleOrder(models.Model):
                             {
                                 'sale_order_id': self.id,
                                 'reference_code': self.env[
-                                    'ir.sequence'].next_by_code(
-                                    'sequence.reference.code'),
-                                'start_date': fields.Date.today(),
-                                'stage_id': self.env.ref(
-                                    'subscription_package.draft_stage').id,
+                                'ir.sequence'].next_by_code(
+                                'sequence.reference.code'),
+                                'start_date': existing_subscription.next_invoice_date + relativedelta(days=1) if existing_subscription else fields.Date.today(),
+                                'stage_id': self.env.ref('subscription_package.draft_stage').id,
                                 'partner_id': self.partner_id.id,
                                 'plan_id': line.product_id.subscription_plan_id.id,
                                 'product_line_ids': this_products_line
                             })
-                        subscription.button_start_date()
+                        # subscription.button_start_date()
         return super()._action_confirm()

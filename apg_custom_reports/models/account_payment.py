@@ -17,7 +17,8 @@ class AccountPaymentRegister(models.TransientModel):
 
         if self.subscription_id:
             if self.subscription_id.stage_id.name == 'Draft':
-                self.subscription_id.button_start_date()
+                pass
+                # self.subscription_id.button_start_date()
             else:
                 pending_subscription = self.subscription_id
                 pending_subscription.write({
@@ -70,14 +71,15 @@ class PaymentTransaction(models.Model):
                 if invoice.subscription_id:
                     subscription = invoice.subscription_id
                     if subscription.stage_id.name == 'In Progress':
-                        pending_subscription = subscription
-                        pending_subscription.write({
-                            'is_to_renew': False,
-                            'start_date': pending_subscription.next_invoice_date})
-                        new_date = pending_subscription.find_renew_date(
-                            pending_subscription.next_invoice_date,
-                            pending_subscription.date_started,
-                            pending_subscription.plan_id.days_to_end)
-                        pending_subscription.write(
-                            {'close_date': new_date['close_date']})
+                        pass
+                        # pending_subscription = subscription
+                        # pending_subscription.write({
+                        #     'is_to_renew': False,
+                        #     'start_date': pending_subscription.next_invoice_date})
+                        # new_date = pending_subscription.find_renew_date(
+                        #     pending_subscription.next_invoice_date,
+                        #     pending_subscription.date_started,
+                        #     pending_subscription.plan_id.days_to_end)
+                        # pending_subscription.write(
+                        #     {'close_date': new_date['close_date']})
         return res
