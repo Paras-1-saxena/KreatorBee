@@ -4211,9 +4211,9 @@ class PortalMyCourses(http.Controller):
         subscription_end_date = False
         partner = request.env.user.partner_id  # Get related partner
         # subscription = partner.subscription_product_line_ids.subscription_id.filtered(
-        #     lambda sub: sub.stage_id.name in ['In Progress', 'Close'])
+        #     lambda sub: sub.stage_id.name in ['In Progress', 'Closed'])
         subscription = partner.subscription_product_line_ids.subscription_id.filtered(
-            lambda sub: sub.stage_id.name in ['In Progress', 'Close']).sorted(key=lambda s: s.id, reverse=True)[:1]
+            lambda sub: sub.stage_id.name in ['In Progress', 'Closed']).sorted(key=lambda s: s.id, reverse=True)[:1]
         if subscription:
             subscription_avl = True
         if subscription and subscription.next_invoice_date >= datetime.today().date():
