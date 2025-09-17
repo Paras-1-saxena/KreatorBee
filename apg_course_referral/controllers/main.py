@@ -174,16 +174,20 @@ class ReferralController(http.Controller):
         partner_id = user_id.partner_id
         is_active_subscription = False
         partner = request.env.user.partner_id  # Get related partner
+
         subscription = partner.subscription_product_line_ids.subscription_id.filtered(
             lambda sub: sub.stage_id.name == 'In Progress')
         expire_on = False
         if subscription and subscription.next_invoice_date >= datetime.today().date():
             is_active_subscription = True
+        expire_on = request.env['subscription.package'].sudo().search([
+            ('partner_id', '=', partner_id.id),
+            ('stage_id.name', 'in', ['In Progress', 'Draft'])
+        ], order='id desc', limit=1).next_invoice_date
         end_days = -1
         # if (datetime.today().date() - timedelta(days=2)) < partner.create_date.date() and not partner.early_sign_in:
         #     return request.redirect('/partner/income')
         if subscription:
-            expire_on = subscription.next_invoice_date 
             end_days = (subscription.next_invoice_date - datetime.today().date()).days
         # if not request.env.user.partner_id.early_sign_in and (
         #         premium_course.id not in request.env.user.partner_id.slide_channel_ids.ids):
