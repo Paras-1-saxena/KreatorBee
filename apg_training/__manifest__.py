@@ -10,6 +10,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/course_training_views.xml',
+        'views/partner_training.xml',
     ],
     'demo': [
         # Demo data (optional)
