@@ -1,0 +1,745 @@
+<odoo>
+    <data>
+        <template id="partner_training_video" name="Partner Training">
+            <head>
+                <!-- meta tags -->
+                <meta charset="UTF-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <!-- title -->
+                <title>StartEazy</title>
+                <!-- external css -->
+                <link rel="stylesheet" href="/custom_web_kreator/static/src/css/custom_styl.css"/>
+                <link rel="stylesheet"
+                      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+                <!-- bootstrap css -->
+                <link
+                        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+                        rel="stylesheet"
+                        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+                        crossorigin="anonymous"
+                />
+                <!-- remix icon -->
+                <link
+                        href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+                        rel="stylesheet"
+                />
+                <style>
+                    /* Top Menu */
+                    .top-menu {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 10px 20px;
+                    background-color: #fff;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    position: fixed;
+                    top: 0;
+                    z-index: 100;
+                    height: 80px; /* Adjust height for new layout */
+                    }
+
+                    .top-menu .logo img {
+                    height: 60px;
+                    width: auto;
+                    }
+
+                    .top-menu .menu-links {
+                    display: flex;
+                    gap: 40px; /* Space between menu items */
+                    align-items: center;
+                    justify-content: center;
+                    flex: 1;
+                    }
+
+                    .top-menu .menu-links a {
+                    text-decoration: none;
+                    color: #333;
+                    font-size: 14px;
+                    font-weight: 500;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 15px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
+                    height: 100%;
+                    justify-content: center;
+                    }
+
+                    .top-menu .menu-links a.active {
+                    background-color: #fef5c5;
+                    color: #000;
+                    }
+
+                    .top-menu .menu-links a:hover {
+                    background-color: #fef5c5;
+                    color: #000;
+                    }
+
+                    .top-menu .menu-links i {
+                    font-size: 24px; /* Icon size */
+                    }
+                    .top-menu .user-icon {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    cursor: pointer;
+                    margin-right: 30px; /* Adds space from the edge */
+                    }
+
+                    /* Side Menu */
+                    .side-menu {
+                    width: 250px;
+                    background-color: #fff;
+                    padding: 20px 10px;
+                    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                    position: fixed;
+                    left: 0;
+                    top: 60px; /* Adjust for top menu */
+                    height: calc(100vh - 60px);
+                    overflow-y: auto;
+                    }
+
+                    .side-menu ul {
+                    list-style: none;
+                    padding: 2;
+                    }
+
+                    .side-menu ul li {
+                    margin: 15px 0;
+                    }
+
+                    .side-menu ul li a {
+                    text-decoration: none;
+                    color: #333;
+                    font-size: 15px;
+                    font-weight: 500;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    padding: 12px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
+                    }
+
+                    .side-menu ul li a.active {
+                    background-color: #fef5c5;
+                    color: #000;
+                    }
+
+                    .side-menu ul li a:hover {
+                    background-color: #fef5c5;
+                    color: #000;
+                    }
+
+                    .main-content {
+                    margin-left: 270px; /* Adjust to create space from the side menu */
+                    padding: 20px; /* Maintain consistent padding inside the main content */
+                    margin-top: 80px; /* Adjust for the top menu */
+                    flex-grow: 1;
+                    background-color:#f8f9fa;
+                    }
+
+                    /* Progress Bar */
+                    .progress-bar-container {
+                    width: 100%;
+                    height:10px;
+                    background-color: fef5c5;
+                    margin-bottom: 20px;
+                    position: relative;
+                    }
+
+                    .progress-bar {
+                    height: 10px;
+                    background-color: #ffd001;
+                    width: 75%; /* Adjust for progress percentage */
+                    transition: width 0.3s ease;
+                    }
+
+                    .content-containter {
+                    background-color: white;
+                    height: 560px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    display: flex;
+                    flex-direction: column;
+
+
+                    overflow: hidden;
+
+
+                    }
+
+
+                    .form-container {
+                    display: flex;
+                    justify-content: space-between;
+                    flex: 1;
+                    overflow-y: auto;
+                    padding-bottom: 20px;
+                    }
+
+                    .form-content {
+                    flex: 1;
+                    padding: 0px 20px;
+                    background-color: #fff;
+                    overflow-y: auto;
+                    margin-right: 10px;
+                    }
+
+                    .form-content h3 {
+                    margin-top: 0;
+                    margin-bottom: 5px; /* Reduce the space between the title and paragraph */
+                    font-size: 16px;
+                    color: #333;
+                    font-weight: bold;
+                    }
+
+                    .form-content p {
+                    margin-top: 0; /* Remove any additional top margin */
+                    font-size: 14px;
+                    color: #333;
+                    line-height: 1.6;
+                    margin-bottom: 15px; /* Keep some space below the paragraph */
+                    }
+
+                    .image-container {
+                    flex: 1;
+                    display: flex;
+                    justify-content: center;
+
+                    }
+
+                    .image-container img {
+                    max-width: 100%;
+                    height: auto;
+                    }
+
+                    .bottom-section {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    margin-top: auto; /* Push to the bottom */
+                    }
+
+                    .radio-group {
+                    display: flex;
+                    justify-content: left;
+                    gap: 10px;
+                    margin-bottom: 10px;
+
+                    }
+
+                    .radio-group label {
+                    font-size: 14px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    margin:10px;
+                    }
+
+                    .form-actions {
+                    display: flex;
+                    justify-content: left;
+                    width: 100%;
+                    }
+
+                    button {
+                    background-color: #ffd000;
+                    color: #212529;
+                    font-family: 'Poppins', sans-serif;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    font-size: 16px;
+                    padding:5px 10px;
+                    letter-spacing: 1px;
+
+
+                    }
+
+                    .card {
+                    border: 1px solid #fdf000;
+                    border-radius: 5px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    }
+                    .pagination .page-item .page-link {
+                    color: #333;
+                    }
+                    .pagination .page-link {
+                    background-color: #fff;
+
+                    }
+
+                    .page-item.active .page-link {
+                    z-index: 3;
+                    color: #fff;
+                    background-color: #ffd000;
+                    border-color:#fff;
+                    }
+                    .border1{
+                    border: 1px solid #fdf000;
+                    }
+                </style>
+            </head>
+
+            <body>
+                <div class="layout">
+                    <!-- Header -->
+                    <header class="container-fluid">
+                        <div
+                                class="d-flex justify-content-between align-items-center border-bottom"
+                        >
+                            <!-- Menu Icon visible on mobile-->
+                            <img
+                                    class="pe-2 d-block d-lg-none hamburger"
+                                    src="/custom_web_kreator/static/src/nev-icon.svg"
+                            />
+                            <!-- Logo -->
+                            <img src="/custom_web_kreator/static/src/logo.png" style="height: 41px; width: 160px;"/>
+                            <!-- Menu-->
+                            <div class="d-lg-flex d-none gap-4">
+                                <div
+                                        class="active p-lg-2 p-1 d-flex flex-column align-items-center"
+                                >
+                                    <a href="/partner/training" class='text-center'>
+                                        <i class="fa fa-chalkboard-teacher"></i>
+                                        <p>
+                                            Training
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Profile -->
+                            <t t-call="custom_web_kreator.partner_profile_dropdown"/>
+                        </div>
+                    </header>
+                    <div class="d-flex w-100">
+                        <!-- Sidebar -->
+                        <div class="sidebar border-end d-none d-lg-block">
+                            <nav class="py-3 px-2">
+                                <!-- Sidebar Menu -->
+                                <ul class="d-flex flex-column gap-2">
+                                    <a href="/partner/income">
+                                        <li>
+                                            <i class="ri-discount-percent-fill"></i>
+                                            Sales
+                                        </li>
+                                    </a>
+                                    <!-- Sales Dropdown -->
+<!--                                    <a href="/partner/myproducts">-->
+<!--                                        <li>-->
+<!--                                            <i class="ri-product-hunt-fill"></i>-->
+<!--                                            Products-->
+<!--                                        </li>-->
+<!--                                    </a>-->
+<!--                                    <a href="/partner/training">-->
+<!--                                        <li class="active">-->
+<!--                                            <i class="ri-presentation-fill"></i>-->
+<!--                                            Training-->
+<!--                                        </li>-->
+<!--                                    </a>-->
+                                    <a href="/partner/training">
+                                        <li>
+                                            <i class="ri-user-community-fill"></i>
+                                            Training
+                                        </li>
+                                    </a>
+                                    <a href="/partner/community/updates">
+                                        <li>
+                                            <i class="ri-user-fill"></i>
+                                            Community
+                                        </li>
+                                    </a>
+                                    <a href="/partner/mycourses">
+                                        <li>
+                                            <i class="ri-user-community-fill"></i>
+                                            My Courses
+                                        </li>
+                                    </a>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- Sidebar Backdrop on mobile -->
+                        <div class="backdrop d-none d-lg-none"></div>
+                        <!-- Main Content -->
+                        <main class="flex-grow-1 p-4 overflow-auto">
+                            <!-- Welcome Section -->
+                            <section class="welcome">
+                                <div
+                                        class="d-flex gap-2 flex-column flex-lg-row align-items-lg-center justify-content-between"
+                                >
+                                    <h1 class="d-flex align-items-center gap-1">
+                                        <img class="play"
+                                             src="/custom_web_kreator/static/src/user_icon.svg"/>
+                                        Welcome,
+                                        <t
+                                                t-esc="request.env.user.name"/>
+                                    </h1>
+                                    <div class="d-flex gap-3 align-items-center">
+<!--                                        <a href="#popup_tutorial"-->
+<!--                                        >Tutorial-->
+<!--                                            <img class="ms-1"-->
+<!--                                                 src="/custom_web_kreator/static/src/play.png"-->
+<!--                                            />-->
+<!--                                        </a>-->
+                                        <a
+                                                href="https://wa.me/918826585288" target="_blank" class="text-center"
+                                        >
+                                            <img
+                                                    src="/custom_web_kreator/static/src/whatsapp.png"
+                                            />
+                                            +91 8826585288
+                                            <br/>
+                                            <div style="font-size: 10px;">
+                                                10 AM to 6:00 PM (Except Sundays)
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- Lead Details -->
+                            <div class="row my-4" id="main_section">
+                                <t t-foreach="training_courses" t-as="training">
+                                <div class="col-12 col-md-4">
+                                    <div class="card text-center p-3">
+                                        <img src="/custom_web_kreator/static/src/all_training.jpg"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                            <t t-esc="training.name"/>
+                                        </h6>
+                                        <a class="btn mt-3 mb-1" style="background:#125818; color:white!important;" onclick="openDetail('onboarding')">View Now
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row my-4 justify-content-around d-none" id="zerotoh">
+                                <div class="col-12 my-4">
+                                    <a onclick="backMain('0-100')" class="border1 rounded p-2"
+                                       style="background-color:#125818; color:white!important; cursor:pointer;">
+                                        Back
+                                        <i class="ri-arrow-left-fill"></i>
+                                    </a>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="card text-center p-3">
+                                        <img src="/custom_web_kreator/static/src/0-100_part1.png"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                        </h6>
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('1', '0-100')">View Training
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="card text-center p-3">
+
+                                        <img src="/custom_web_kreator/static/src/0-100_part2.png"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                        </h6>
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('2', '0-100')">View Training
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="card text-center p-3">
+                                        <img src="/custom_web_kreator/static/src/0-100_part3.png"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                        </h6>
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('3', '0-100')">View Training
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row my-4 justify-content-around d-none" id="onboarding">
+                                <div class="col-12 my-4">
+                                    <a onclick="backMain('onboarding')" class="border1 rounded p-2"
+                                       style="background-color:#125818; color:white!important; cursor:pointer;">
+                                        Back
+                                        <i class="ri-arrow-left-fill"></i>
+                                    </a>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="card text-center p-3">
+                                        <img src="/custom_web_kreator/static/src/foundation_drill.png"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                            The Foundation Drill
+                                        </h6>
+                                        <a class="btn mt-3 mb-1" style="background:#125818; color:white!important;" onclick="openVideo('4', 'onboarding')">View Training
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="card text-center p-3">
+                                        <img src="/custom_web_kreator/static/src/qna.jpg"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                            QnA
+                                        </h6>
+                                        <a class="btn mt-3 mb-1" style="background:#125818; color:white!important;" onclick="openVideo('1', 'onboarding')">View Training
+                                        </a>
+                                    </div>
+                                </div>
+<!--                                <div class="col-12 col-md-4">-->
+<!--                                    <div class="card text-center p-3">-->
+
+<!--                                        <img src="/custom_web_kreator/static/src/onboardingpart2.png"-->
+<!--                                             alt="Course Thumbnail" class="rounded mb-3"-->
+<!--                                             style="width: 100%; height: 250px;"/>-->
+<!--                                        <h6 class="mt-3">-->
+<!--                                            Sale and Product Walkthrough-->
+<!--                                        </h6>-->
+<!--                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('2', 'onboarding')">View Training-->
+<!--                                        </a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="col-12 col-md-4">-->
+<!--                                    <div class="card text-center p-3">-->
+<!--                                        <img src="/custom_web_kreator/static/src/onboardingpart3.png"-->
+<!--                                             alt="Course Thumbnail" class="rounded mb-3"-->
+<!--                                             style="width: 100%; height: 250px;"/>-->
+<!--                                        <h6 class="mt-3">-->
+<!--                                            Promote, Community and My Courses Walkthrough-->
+<!--                                        </h6>-->
+<!--                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('3', 'onboarding')">View Training-->
+<!--                                        </a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                            </div>
+
+                            <div class="row my-4 justify-content-around d-none" id="zerotoo">
+                                <div class="col-12 my-4">
+                                    <a onclick="backMain('zerotoo')" class="border1 rounded p-2"
+                                       style="background-color:#125818; color:white!important;; cursor:pointer;">
+                                        Back
+                                        <i class="ri-arrow-left-fill"></i>
+                                    </a>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="card text-center p-3">
+                                        <img src="/custom_web_kreator/static/src/0-1part1.png"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                            9th April 2025 Live Session Recording
+                                        </h6>
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('1', 'zerotoo')">View Training
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="card text-center p-3">
+
+                                        <img src="/custom_web_kreator/static/src/0-1part2.png"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                            10th April 2025 Live Session Recording
+                                        </h6>
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('2', 'zerotoo')">View Training
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="card text-center p-3">
+
+                                        <img src="/custom_web_kreator/static/src/0-1part3.png"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                            1 May 2025 Live Session Recording
+                                        </h6>
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('3', 'zerotoo')">View Training
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-4 mt-3">
+                                    <div class="card text-center p-3">
+
+                                        <img src="/custom_web_kreator/static/src/0-1part4.jpeg"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                            2 May 2025 Live Session Recording
+                                        </h6>
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('4', 'zerotoo')">View Training
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-4 mt-3">
+                                    <div class="card text-center p-3">
+
+                                        <img src="/custom_web_kreator/static/src/0-1part5.jpg"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                            3 May 2025 Live Session Recording
+                                        </h6>
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('5', 'zerotoo')">View Training
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-4 mt-3">
+                                    <div class="card text-center p-3">
+
+                                        <img src="/custom_web_kreator/static/src/0-1part6.jpg"
+                                             alt="Course Thumbnail" class="rounded mb-3"
+                                             style="width: 100%; height: 250px;"/>
+                                        <h6 class="mt-3">
+                                            16 May 2025 Live Session Recording
+                                        </h6>
+                                        <a class="btn btn-warning mt-3 mb-1" onclick="openVideo('6', 'zerotoo')">View Training
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row my-4 justify-content-center d-none" id="course_consume">
+                                <div class="col-12">
+                                    <div class="row my-4 justify-content-between">
+                                        <div class="col-4 col-md-1">
+                                            <a class="border1 rounded p-2" id="consume_back"
+                                               style="background-color:#125818; color:white!important; cursor:pointer;">
+                                                Back
+                                                <i class="ri-arrow-left-fill"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-4 col-md-1" id="next_vid">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12" id="video_data">
+
+                                </div>
+                            </div>
+
+                        </main>
+                    </div>
+                    <script>
+                        const main = document.getElementById("main_section");
+                        const zerotoh = document.getElementById("zerotoh");
+                        const onboarding = document.getElementById("onboarding");
+                        const zerotoo = document.getElementById("zerotoo");
+                        const consume_back = document.getElementById("consume_back");
+                        const consume = document.getElementById("course_consume");
+                        const vid_data = document.getElementById("video_data");
+                        const next_vid = document.getElementById("next_vid");
+                        function openDetail(course_id) {
+                        if (course_id == '0-100'){
+                            main.classList.add("d-none");
+                            zerotoh.classList.remove("d-none");
+                        }
+                        if (course_id == 'onboarding'){
+                            main.classList.add("d-none");
+                            onboarding.classList.remove("d-none");
+                        }
+                        if (course_id == 'zerotoo'){
+                            main.classList.add("d-none");
+                            zerotoo.classList.remove("d-none");
+                        }
+                        }
+                        function backMain(type) {
+                        if (type == '0-100'){
+                            zerotoh.classList.add("d-none");
+                            main.classList.remove("d-none");
+                        }
+                        if (type == 'onboarding'){
+                            onboarding.classList.add("d-none");
+                            main.classList.remove("d-none");
+                        }
+                        if (type == 'zerotoo'){
+                            zerotoo.classList.add("d-none");
+                            main.classList.remove("d-none");
+                        }
+                        }
+                        function backDetail(type) {
+                        let vid_data_inner = vid_data.innerHTML;
+                        if (type == '0-100'){
+                            consume.classList.add("d-none");
+                            zerotoh.classList.remove("d-none");
+                            vid_data.innerHTML = vid_data_inner;
+                        }
+                        if (type == 'onboarding'){
+                            consume.classList.add("d-none");
+                            onboarding.classList.remove("d-none")
+                            vid_data.innerHTML = vid_data_inner;
+                        }
+                        if (type == 'zerotoo'){
+                            consume.classList.add("d-none");
+                            zerotoo.classList.remove("d-none")
+                            vid_data.innerHTML = vid_data_inner;
+                        }
+                        }
+                        function openVideo(course_no, type) {
+                        fetch('/partner/training/video?video_no=' + course_no + '&amp;type=' + type, {
+                        method: "POST",
+                        headers: {
+                        "Content-Type": "application/json",
+                        },
+                        'body': JSON.stringify({'params': {'video_no': course_no}})
+                        })
+                        .then(response =&gt; response.json())
+                        .then(data =&gt; {
+                        if (data['response'] == 'success') {
+                        if (data['next_but'] != '') {
+                        next_vid.innerHTML = data['next_but'];
+                        }
+                        if (data['next_but'] == '') {
+                        next_vid.innerHTML = '';
+                        }
+                        if (type == '0-100') {
+                            vid_data.innerHTML = data['video_data'];
+                            zerotoh.classList.add("d-none");
+                            consume.classList.remove("d-none");
+                            consume_back.setAttribute('onclick', "backDetail('0-100')");
+                        }
+                        if (type == 'onboarding') {
+                            vid_data.innerHTML = data['video_data'];
+                            onboarding.classList.add("d-none");
+                            consume.classList.remove("d-none");
+                            consume_back.setAttribute('onclick', "backDetail('onboarding')");
+                        }
+                        if (type == 'zerotoo') {
+                            vid_data.innerHTML = data['video_data'];
+                            zerotoo.classList.add("d-none");
+                            consume.classList.remove("d-none");
+                            consume_back.setAttribute('onclick', "backDetail('zerotoo')");
+                        }
+                        } else {
+                        alert('Error');
+                        }
+                        })
+                        }
+
+                    </script>
+                    <!-- External Script -->
+                    <script src="/custom_web_kreator/static/src/js/script.js"></script>
+                    <!-- bootstrap script -->
+                    <script
+                            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                            crossorigin="anonymous"
+                    ></script>
+                </div>
+            </body>
+        </template>
+    </data>
+</odoo>

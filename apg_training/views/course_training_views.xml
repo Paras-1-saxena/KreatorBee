@@ -1,0 +1,63 @@
+<odoo>
+    <!-- Menu -->
+    <menuitem id="menu_apg_training_root" name="Training"/>
+    <menuitem id="menu_apg_course_training" name="Training" parent="menu_apg_training_root"/>
+
+    <!-- Action -->
+    <record id="action_apg_course_training" model="ir.actions.act_window">
+        <field name="name">Course Trainings</field>
+        <field name="res_model">apg.course.training</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_apg_course_training_action"
+              name="Trainings"
+              parent="menu_apg_course_training"
+              action="action_apg_course_training"/>
+
+    <!-- Tree View -->
+    <record id="view_apg_course_training_tree" model="ir.ui.view">
+        <field name="name">apg.course.training.tree</field>
+        <field name="model">apg.course.training</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_apg_course_training_form" model="ir.ui.view">
+        <field name="name">apg.course.training.form</field>
+        <field name="model">apg.course.training</field>
+        <field name="arch" type="xml">
+            <form string="Course Training">
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar" options="{'preview_image': 'image'}"/>
+                    <div class="oe_title">
+                        <label for="name" string="Training Title"/>
+                        <h1><field name="name" widget="text" default_focus="1" placeholder='e.g. "Computer Science for kids"'/></h1>
+                    </div>
+                    <notebook>
+                        <page string="Training Lines">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="youtube_url"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <field name="name"/>
+                                        <field name="image" widget="image"/>
+                                        <field name="youtube_url"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
