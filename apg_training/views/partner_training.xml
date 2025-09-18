@@ -1,6 +1,6 @@
 <odoo>
     <data>
-        <template id="partner_course_training" name="Partner Training">
+        <template id="custom_web_kreator.partner_training" name="Partner Training">
             <head>
                 <!-- meta tags -->
                 <meta charset="UTF-8"/>
@@ -364,7 +364,193 @@
                         </div>
                         <!-- Sidebar Backdrop on mobile -->
                         <div class="backdrop d-none d-lg-none"></div>
+                        <!-- Main Content -->
+                        <main class="flex-grow-1 p-4 overflow-auto">
+                            <!-- Welcome Section -->
+                            <section class="welcome">
+                                <div
+                                        class="d-flex gap-2 flex-column flex-lg-row align-items-lg-center justify-content-between"
+                                >
+                                    <h1 class="d-flex align-items-center gap-1">
+                                        <img class="play"
+                                             src="/custom_web_kreator/static/src/user_icon.svg"/>
+                                        Welcome,
+                                        <t
+                                                t-esc="request.env.user.name"/>
+                                    </h1>
+                                    <div class="d-flex gap-3 align-items-center">
+<!--                                        <a href="#popup_tutorial"-->
+<!--                                        >Tutorial-->
+<!--                                            <img class="ms-1"-->
+<!--                                                 src="/custom_web_kreator/static/src/play.png"-->
+<!--                                            />-->
+<!--                                        </a>-->
+                                        <a
+                                                href="https://wa.me/918826585288" target="_blank" class="text-center"
+                                        >
+                                            <img
+                                                    src="/custom_web_kreator/static/src/whatsapp.png"
+                                            />
+                                            +91 8826585288
+                                            <br/>
+                                            <div style="font-size: 10px;">
+                                                10 AM to 6:00 PM (Except Sundays)
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- Lead Details -->
+                            <div class="row my-4" id="main_section">
+                                <t t-foreach="training_courses" t-as="training">
+                                    <div class="col-12 col-md-4">
+                                        <div class="card text-center p-3">
+                                            <img t-att-src="image_data_uri(training.image) if training.image else '/apg_training/static/src/all_training.jpg'"
+                                                alt="Course Thumbnail"
+                                                class="rounded mb-3"
+                                                style="width: 100%; height: 250px;"/>
+                                            <!--<img src="/custom_web_kreator/static/src/all_training.jpg"-->
+                                            <!--     alt="Course Thumbnail" class="rounded mb-3"-->
+                                            <!--     style="width: 100%; height: 250px;"/>-->
+                                            <h6 class="mt-3">
+                                                <t t-esc="training.name"/>
+                                            </h6>
+                                            <a class="btn mt-3 mb-1"
+                                               style="background:#125818; color:white!important;"
+                                               t-att-onclick="'openDetail(\'training_' + str(training.id) + '\')'">
+                                               View Now
+                                            </a>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                            <!-- Training detail sections -->
+                            <t t-foreach="training_courses" t-as="training">
+                                <div class="row my-4 justify-content-around d-none" t-att-id="'training_'+str(training.id)">
+                                    <div class="col-12 my-4">
+                                        <a t-att-onclick="'backMain(\'training_' + str(training.id) + '\')'"
+                                           class="border1 rounded p-2"
+                                           style="background-color:#125818; color:white!important; cursor:pointer;">
+                                            Back <i class="ri-arrow-left-fill"></i>
+                                        </a>
+                                    </div>
+                                    <t t-foreach="training.line_ids" t-as="line">
+                                        <div class="col-12 col-md-4">
+                                            <div class="card text-center p-3">
+                                                <img t-att-src="image_data_uri(line.image) if line.image else '/apg_training/static/src/all_training.jpg'"
+                                                     alt="Course Thumbnail" class="rounded mb-3"
+                                                     style="width: 100%; height: 250px;"/>
+                                                <h6 class="mt-3"><t t-esc="line.name"/></h6>
+                                                <a class="btn mt-3 mb-1"
+                                                   style="background:#125818; color:white!important;"
+                                                   t-att-onclick="'openVideo(' + str(line.id) + ', \'training_' + str(training.id) + '\')'">
+                                                   View Training
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </t>
+                            
+                            <div class="row my-4 justify-content-center d-none" id="course_consume">
+                                <div class="col-12">
+                                    <div class="row my-4 justify-content-between">
+                                        <div class="col-4 col-md-2">
+                                            <a class="border1 rounded p-2" id="consume_back"
+                                               style="background-color:#125818; color:white!important; cursor:pointer;">
+                                                Back
+                                                <i class="ri-arrow-left-fill"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-4 col-md-2" id="next_vid">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12" id="video_data">
+
+                                </div>
+                            </div>
+                        </main>
                     </div>
+                    <script>
+                        function openDetail(course_id) {
+                            const main = document.getElementById("main_section");
+                            main.classList.add("d-none");
+                        
+                            document.querySelectorAll("[id^='training_']").forEach(el => el.classList.add("d-none"));
+                        
+                            const detailSection = document.getElementById(course_id);
+                            if (detailSection) {
+                                detailSection.classList.remove("d-none");
+                            }
+                        }
+                        
+                        function backDetail(training_id) {
+                            // Hide the consume/video section
+                            const consume = document.getElementById("course_consume");
+                            if (consume) {
+                                consume.classList.add("d-none");
+                            }
+                    
+                            // Show the training detail section again
+                            const trainingSection = document.getElementById(training_id);
+                            if (trainingSection) {
+                                trainingSection.classList.remove("d-none");
+                            }
+                    
+                            // Clear the video data so it resets next time
+                            const vid_data = document.getElementById("video_data");
+                            if (vid_data) {
+                                vid_data.innerHTML = "";
+                            }
+                        }
+                        
+                        function openVideo(line_id, training_id) {
+                            fetch('/partner/training/video?video_id=' + line_id + '&amp;training_id=' + training_id, {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({ params: { video_no: line_id } })
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data['response'] === 'success') {
+                                    // Insert video data
+                                    document.getElementById("video_data").innerHTML = data['video_data'];
+                        
+                                    // Show consume div
+                                    document.getElementById("course_consume").classList.remove("d-none");
+                        
+                                    // Hide onboarding/training section if needed
+                                    const trainingSection = document.getElementById(training_id);
+                                    if (trainingSection) {
+                                        trainingSection.classList.add("d-none");
+                                    }
+                        
+                                    // Back button should bring user back
+                                    document.getElementById("consume_back")
+                                        .setAttribute("onclick", "backDetail('" + training_id + "')");
+                                } else {
+                                    alert('Error');
+                                }
+                            })
+                            .catch(err => console.error("Video fetch error:", err));
+                        }
+
+                        
+                        function backMain(course_id) {
+                            const main = document.getElementById("main_section");
+                            const detailSection = document.getElementById(course_id);
+                            if (detailSection) {
+                                detailSection.classList.add("d-none");
+                            }
+                            main.classList.remove("d-none");
+                        }
+
+
+                    </script>
                     <!-- External Script -->
                     <script src="/custom_web_kreator/static/src/js/script.js"></script>
                     <!-- bootstrap script -->

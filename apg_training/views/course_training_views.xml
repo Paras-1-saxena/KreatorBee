@@ -36,22 +36,16 @@
                     <field name="image" widget="image" class="oe_avatar" options="{'preview_image': 'image'}"/>
                     <div class="oe_title">
                         <label for="name" string="Training Title"/>
-                        <h1><field name="name" widget="text" default_focus="1" placeholder='e.g. "Computer Science for kids"'/></h1>
+                        <h1><field name="name" widget="text" default_focus="1" required="1" placeholder='e.g. "Computer Science for kids"'/></h1>
                     </div>
                     <notebook>
                         <page string="Training Lines">
                             <field name="line_ids">
                                 <list editable="bottom">
-                                    <field name="name"/>
-                                    <field name="youtube_url"/>
+                                    <field name="name" required="1"/>
+                                    <field name="image" required="1"/>
+                                    <field name="youtube_url" required="1"/>
                                 </list>
-                                <form>
-                                    <group>
-                                        <field name="name"/>
-                                        <field name="image" widget="image"/>
-                                        <field name="youtube_url"/>
-                                    </group>
-                                </form>
                             </field>
                         </page>
                     </notebook>

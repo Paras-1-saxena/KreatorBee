@@ -1,5 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_apg_course_training_portal,access.apg.course.training.user,model_apg_course_training,base.group_portal,1,1,1,1
 access_apg_course_training_user,access.apg.course.training.user,model_apg_course_training,base.group_user,1,1,1,1
-access_apg_course_training_lines_public,access.apg.course.training.lines.user,model_apg_course_training_lines,base.group_public,1,1,1,1
+access_apg_course_training_lines_public,access.apg.course.training.lines.user,model_apg_course_training_lines,base.group_user,1,1,1,1
 access_apg_course_training_lines_portal,access.apg.course.training.lines,model_apg_course_training_lines,base.group_portal,1,1,1,1

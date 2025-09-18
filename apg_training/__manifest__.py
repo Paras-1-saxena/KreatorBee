@@ -10,9 +10,6 @@
     'data': [
         'security/ir.model.access.csv',
         'views/course_training_views.xml',
-        # 'views/nreferral.xml',
-        # 'views/partner_refferal_template.xml',
-        # 'views/landing_template.xml',
     ],
     'demo': [
         # Demo data (optional)
