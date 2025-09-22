@@ -71,30 +71,31 @@ class SaleOrder(models.Model):
 												
 												# Make GET request to fetch payment status
 												url="https://api.instamojo.com/v2/payments/"
-												params={"page":1,"limit":9000}
+												params={"page":1,"limit":987788787888000}
 												
 												res=requests.get(url,headers=headers,params=params)
 												res.raise_for_status()
 												payments=res.json()
 												two_days_ago=datetime.now()-timedelta(days=2)
 												
-												# for sale in self.env['sale.order'].search([('state', '=', 'draft'),('create_date', '>=', two_days_ago)]):
-												so_no=self.name
-												filtered=[p for p in payments.get("payments",[]) if p.get("title")==so_no]
-												
-												if filtered and filtered[0]['status']:
-																_logger.info("Statusssssssssssssssssssssss: %s",filtered)
+												for sale in self.env['sale.order'].search([('state', '=', 'draft'),('create_date', '>=', two_days_ago)]):
+																so_no=sale.name
+																filtered=[p for p in payments.get("payments",[]) if p.get("title")==so_no]
 																
-																if self.state=='draft':
-																				self.action_confirm()
-																tx=self.env['payment.transaction'].sudo().search([('reference','=',so_no)],limit=1)
-																if tx and tx.state != 'done':
-																				tx.provider_reference=filtered[0]['id']
-																				tx._set_done()
-																print("narshhhhhhhhhhhhh", filtered)
-												else:
-																_logger.info("NO payment status: %s",filtered)
-																raise ValidationError(_('There is not Payment status received from Instamojo.'))
+																if filtered and filtered[0]['status']:
+																				
+																				
+																				if sale.state=='draft':
+																								sale.action_confirm()
+																								_logger.info("Statusssssssssssssssssssssss: %s",filtered)
+																				tx=self.env['payment.transaction'].sudo().search([('reference','=',so_no)],limit=1)
+																				if tx and tx.state != 'done':
+																								tx.provider_reference=filtered[0]['id']
+																								tx._set_done()
+																				print("narshhhhhhhhhhhhh", filtered)
+																else:
+																				_logger.info("NO payment status: %s",filtered)
+																				raise ValidationError(_('There is not Payment status received from Instamojo.'))
 				
 				
 				
