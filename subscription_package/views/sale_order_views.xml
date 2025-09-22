@@ -13,6 +13,9 @@
                         icon="fa-usd" invisible="subscription_count == 0">
                     <field name="subscription_count" widget="statinfo"/>
                 </button>
+	            <xpath expr="//button[@name='action_cancel']" position="after">
+					<button name="check_payment_status"  type="object" string="Payment Status"/>
+				</xpath>
             </div>
         </field>
     </record>
