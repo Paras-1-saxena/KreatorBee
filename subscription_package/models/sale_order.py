@@ -85,10 +85,11 @@ class SaleOrder(models.Model):
 																if filtered and filtered[0]['status']:
 																				_logger.info("Statusssssssssssssssssssssss: %s",filtered)
 																				
-																				if self.state=='draft':
-																								self.action_confirm()
+																				
 																				tx=self.env['payment.transaction'].sudo().search([('reference','=',so_no)],limit=1)
 																				if tx and tx.state != 'done':
+																								if self.state=='draft':
+																												self.action_confirm()
 																								tx.provider_reference=filtered[0]['id']
 																								tx._set_done()
 																				print("narshhhhhhhhhhhhh", filtered)
