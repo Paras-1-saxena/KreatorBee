@@ -83,8 +83,6 @@ class SaleOrder(models.Model):
 																filtered=[p for p in payments.get("payments",[]) if p.get("title")==so_no]
 																
 																if filtered and filtered[0]['status']:
-																				
-																				
 																				if sale.state=='draft':
 																								sale.action_confirm()
 																								_logger.info("Statusssssssssssssssssssssss: %s",filtered)
