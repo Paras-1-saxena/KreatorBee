@@ -92,7 +92,7 @@ class SaleOrder(models.Model):
 																								tx._set_done()
 																				print("narshhhhhhhhhhhhh", filtered)
 																else:
-																				_logger.info("NO payment status: %s",filtered)
+																				_logger.info("NO payment status: %s",so_no)
 																				# raise ValidationError(_('There is not Payment status received from Instamojo.'))
 				
 				
