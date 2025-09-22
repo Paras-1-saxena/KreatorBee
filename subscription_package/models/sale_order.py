@@ -142,13 +142,14 @@ class SaleOrder(models.Model):
 				def _compute_subscription_count(self):
 								"""the compute function the count of
 								subscriptions associated with the sale order."""
-								subscription_count = self.env[
-												'subscription.package'].sudo().search_count(
-												[('sale_order_id', '=', self.id)])
-								if subscription_count > 0:
-												self.subscription_count = subscription_count
-								else:
-												self.subscription_count = 0
+								for sale in self:
+												subscription_count = self.env[
+																'subscription.package'].sudo().search_count(
+																[('sale_order_id', '=', sale.id)])
+												if subscription_count > 0:
+																sale.subscription_count = subscription_count
+												else:
+																sale.subscription_count = 0
 				
 				def button_subscription(self):
 								"""Open the subscription packages associated with the sale order."""
