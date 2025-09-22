@@ -71,7 +71,7 @@ class SaleOrder(models.Model):
 												
 												# Make GET request to fetch payment status
 												url="https://api.instamojo.com/v2/payments/"
-												params={"page":1,"limit":9000}
+												params={"page":1,"limit":13339000}
 												
 												res=requests.get(url,headers=headers,params=params)
 												res.raise_for_status()
