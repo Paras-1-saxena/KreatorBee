@@ -93,7 +93,7 @@ class SaleOrder(models.Model):
 																				print("narshhhhhhhhhhhhh", filtered)
 																else:
 																				_logger.info("NO payment status: %s",filtered)
-																				raise ValidationError(_('There is not Payment status received from Instamojo.'))
+																				# raise ValidationError(_('There is not Payment status received from Instamojo.'))
 				
 				
 				
