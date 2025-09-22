@@ -19,9 +19,10 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 #############################################################################
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.tools.safe_eval import datetime
 from dateutil.relativedelta import relativedelta
+from odoo.exceptions import UserError, ValidationError
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -84,6 +85,8 @@ class SaleOrder(models.Model):
 																print("narshhhhhhhhhhhhh", filtered)
 												else:
 																_logger.info("NO payment status: %s",filtered)
+																raise ValidationError(_('There is not Payment status received from Instamojo.'))
+				
 				
 				
 				@api.model_create_multi
