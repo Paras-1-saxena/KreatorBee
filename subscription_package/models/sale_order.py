@@ -45,6 +45,10 @@ class SaleOrder(models.Model):
 								compute="_compute_reference_code",
 								help='Subscription Reference Code')
 				
+				payment_request_id = fields.Char("Payment Request id")
+				payment_request_url = fields.Char("Payment Request URL")
+				
+				
 				def check_payment_status(self):
 								import requests
 								
@@ -70,29 +74,29 @@ class SaleOrder(models.Model):
 																'Authorization':f'Bearer {access_token}'}
 												
 												# Make GET request to fetch payment status
-												url="https://api.instamojo.com/v2/payments/"
-												params={"page":1,"limit":987788787888000}
+												url="https://api.instamojo.com/v2/payment_requests/"
+												#params={"page":1,"limit":987788787888000}
 												
-												res=requests.get(url,headers=headers,params=params)
-												res.raise_for_status()
-												payments=res.json()
+												
 												two_days_ago=datetime.now()-timedelta(days=2)
 												
-												for sale in self.env['sale.order'].search([('state', '=', 'draft'),('create_date', '>=', two_days_ago)]):
-																so_no=sale.name
-																filtered=[p for p in payments.get("payments",[]) if p.get("title")==so_no]
+												for sale in self.env['sale.order'].search([('state', '=', 'draft'),('create_date', '>=', two_days_ago), ('payment_request_id', '!=', False)]):
+																so_no=sale.payment_request_id
+																res=requests.get(url+str(so_no),headers=headers)
+																res.raise_for_status()
+																payments=res.json()
 																
-																if filtered and filtered[0]['status']:
+																if payments and payments['status'] !='Pending':
 																				if sale.state=='draft':
 																								sale.action_confirm()
-																								_logger.info("Statusssssssssssssssssssssss: %s",filtered)
+																								_logger.info("Statusssssssssssssssssssssss: %s",payments)
 																				tx=self.env['payment.transaction'].sudo().search([('reference','=',so_no)],limit=1)
 																				if tx and tx.state != 'done':
-																								tx.provider_reference=filtered[0]['id']
+																								tx.provider_reference=payments['id']
 																								tx._set_done()
-																				print("narshhhhhhhhhhhhh", filtered)
+																				print("narshhhhhhhhhhhhh", payments)
 																else:
-																				_logger.info("NO payment status: %s",so_no)
+																				_logger.info("NO payment status: %s",so_no,sale.name)
 																				# raise ValidationError(_('There is not Payment status received from Instamojo.'))
 				
 				
