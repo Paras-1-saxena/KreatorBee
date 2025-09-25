@@ -23,6 +23,7 @@ class InstamojoCheckoutController(http.Controller):
             tx = request.env['payment.transaction'].sudo().search([('reference', '=', reference)], limit=1)
             time.sleep(2)
             data = tx.provider_id._get_payment_status(post)
+            tx._post_process_after_done()
             data.update({'tx':tx})
             _logger.info('Instamojo: entering form_feedback with post data %s', pprint.pformat(data))
             tx.sudo()._handle_notification_data('instamojo_checkout',data)
