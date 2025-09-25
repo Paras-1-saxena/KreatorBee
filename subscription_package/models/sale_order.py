@@ -97,7 +97,7 @@ class SaleOrder(models.Model):
 																				print("narshhhhhhhhhhhhh", payments)
 																else:
 																				# resps = requests.get(payments['payments'][0],headers=headers)
-																				_logger.info("NO payment status: %s,%s,%s",so_no,sale.name,resps)
+																				_logger.info("NO payment status: %s,%s,%s",so_no,sale.name)
 																				# raise ValidationError(_('There is not Payment status received from Instamojo.'))
 				
 				
