@@ -508,11 +508,13 @@ class PortalMyCourses(http.Controller):
         partner = user.partner_id  # Get related partner
         premium_course = request.env['slide.channel'].sudo().search([('is_mandate', '=', True)], limit=1)
         is_active_subscription = False
+        active_sub ='f'
         partner = request.env.user.partner_id  # Get related partner
         subscription = partner.subscription_product_line_ids.subscription_id.filtered(
             lambda sub: sub.stage_id.name == 'In Progress')
         if subscription and subscription.next_invoice_date >= datetime.today().date():
             is_active_subscription = True
+            active_sub = 't'
         end_days = -1
         if subscription:
             end_days = (subscription.next_invoice_date - datetime.today().date()).days
@@ -604,6 +606,7 @@ class PortalMyCourses(http.Controller):
               style="width:60vw;;height:40vh;" title="Sales+Product"></iframe>
             """)
             commission_data.update({'tutorial_video': tutorial_video})
+            commission_data.update({'active_sub': active_sub})
             # Render the data page template
             return http.request.render('custom_web_kreator.Npartner', commission_data)
         else:
