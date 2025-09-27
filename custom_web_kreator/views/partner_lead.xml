@@ -243,7 +243,8 @@
                                             </a>
                                         </li>
                                     </div>
-                                    <a href="/partner/training">
+                                    <t t-if="active_sub == 't'">
+	                                <a href="/partner/training">
                                         <li>
                                             <i class="ri-user-community-fill"></i>
                                             Training
@@ -255,6 +256,25 @@
                                             Community
                                         </li>
                                     </a>
+                                    </t>
+	                                
+	                                <t t-if="active_sub == 'f'">
+										<a >
+											<li>
+												<i class="ri-user-community-fill"></i>
+												Training
+												<i class="ri-git-repository-private-fill"/>
+											</li>
+										</a>
+										<a >
+											<li>
+												<i class="ri-user-fill"></i>
+												Community
+												<i class="ri-git-repository-private-fill"/>
+											</li>
+										</a>
+									</t>
+	                                
                                     <a href="/partner/mycourses">
                                         <li>
                                             <i class="ri-user-community-fill"></i>

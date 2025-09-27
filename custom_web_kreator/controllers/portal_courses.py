@@ -731,6 +731,12 @@ class PortalMyCourses(http.Controller):
         user = request.env.user
         partner = user.partner_id  # Get related partner
         cart = False
+        active_sub='f'
+        partner=user.partner_id  # Get related partner
+        subscription=partner.subscription_product_line_ids.subscription_id.filtered(
+				        lambda sub:sub.stage_id.name=='In Progress')
+        if subscription and subscription.next_invoice_date>=datetime.today().date():
+				        active_sub='t'
         premium_course = request.env['product.template'].sudo().search([('bom_ids', '!=', False)])
         course_in_cart = request.env['kb.sale.cart'].sudo().search([('name', '=', request.env.user.id)]).course_ids
         cart_record = request.env['kb.sale.cart'].sudo().search([('name', '=', user.id)], limit=1)
@@ -760,6 +766,7 @@ class PortalMyCourses(http.Controller):
                 'course_in_cart': course_in_cart,
                 'cart': cart,
                 'cart_count': len(cart_record.course_ids),
+				            'active_sub':active_sub
             })
         else:
             raise NotFound()
@@ -1095,7 +1102,7 @@ class PortalMyCourses(http.Controller):
         # Get the current logged-in user
         user = request.env.user
         partner = user.partner_id  # Get related partner
-
+        active_sub = 'f'
         # Check if the user is an Internal User or Creator
         if partner.user_type in ['internal_user', 'partner']:
 
@@ -1107,6 +1114,7 @@ class PortalMyCourses(http.Controller):
                 lambda sub: sub.stage_id.name == 'In Progress')
             if subscription and subscription.next_invoice_date >= datetime.today().date():
                 is_active_subscription = True
+                active_sub='t'
             end_days = -1
             if subscription:
                 end_days = (subscription.next_invoice_date - datetime.today().date()).days
@@ -1158,6 +1166,7 @@ class PortalMyCourses(http.Controller):
                           style="width:60vw;;height:40vh;" title="Sales+Product"></iframe>
                         """)
             context.update({'tutorial_video': tutorial_video})
+            context.update({'active_sub': active_sub})
             return request.render('custom_web_kreator.partner_lead', context)
         else:
             raise NotFound()
@@ -2132,6 +2141,12 @@ class PortalMyCourses(http.Controller):
     def partner_kyc(self, **kwargs):
         user = request.env.user
         partner = user.partner_id  # Get related partner
+        
+        active_sub='f'
+        subscription=partner.subscription_product_line_ids.subscription_id.filtered(
+				        lambda sub:sub.stage_id.name=='In Progress')
+        if subscription and subscription.next_invoice_date>=datetime.today().date():
+				        active_sub='t'
 
         # Check if the user is an Internal User or Creator
         if partner.user_type in ['internal_user', 'partner']:
@@ -2380,6 +2395,7 @@ class PortalMyCourses(http.Controller):
                           style="width:60vw;;height:40vh;" title="Sales+Product"></iframe>
                         """)
             values.update({'tutorial_video': tutorial_video})
+            values.update({'active_sub': active_sub})
             return http.request.render('custom_web_kreator.nkyc_partner_template', values)
         else:
             raise NotFound()
@@ -3542,6 +3558,7 @@ class PortalMyCourses(http.Controller):
     def partner_leaderboard(self, **kwargs):
         user = request.env.user
         partner = user.partner_id  # Get related partner
+        active_sub='f'
 
         # Check if the user is an Internal User or Creator
         if partner.user_type in ['internal_user', 'partner']:
@@ -3557,6 +3574,7 @@ class PortalMyCourses(http.Controller):
                 lambda sub: sub.stage_id.name == 'In Progress')
             if subscription and subscription.next_invoice_date >= datetime.today().date():
                 is_active_subscription = True
+                active_sub='t'
             end_days = -1
             if subscription:
                 end_days = (subscription.next_invoice_date - datetime.today().date()).days
@@ -3586,6 +3604,7 @@ class PortalMyCourses(http.Controller):
                           style="width:60vw;;height:40vh;" title="Sales+Product"></iframe>
                         """)
             values.update({'tutorial_video': tutorial_video})
+            values.update({'active_sub': active_sub})
             # Render the data page template
             return http.request.render('custom_web_kreator.partner_leaderboard_page', values)
         else:

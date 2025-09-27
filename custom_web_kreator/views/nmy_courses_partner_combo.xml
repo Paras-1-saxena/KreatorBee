@@ -327,6 +327,7 @@
                                             Sales
                                         </li>
                                     </a>
+	                                <t t-if="active_sub == 't'">
                                     <!-- Sales Dropdown -->
                                     <a href="/partner/training">
                                         <li>
@@ -340,6 +341,25 @@
                                             Community
                                         </li>
                                     </a>
+	                                </t>
+	                                
+	                                
+	                                <t t-if="active_sub == 'f'">
+										<a >
+											<li>
+												<i class="ri-user-community-fill"></i>
+												Training
+												<i class="ri-git-repository-private-fill"/>
+											</li>
+										</a>
+										<a >
+											<li>
+												<i class="ri-user-fill"></i>
+												Community
+												<i class="ri-git-repository-private-fill"/>
+											</li>
+										</a>
+									</t>
                                     <a href="/partner/mycourses">
                                         <li class="active">
                                             <i class="ri-user-community-fill"></i>
