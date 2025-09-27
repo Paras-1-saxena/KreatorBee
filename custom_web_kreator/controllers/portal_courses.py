@@ -4225,7 +4225,7 @@ class PortalMyCourses(http.Controller):
             subscription_end_date = subscription.next_invoice_date.strftime('%Y-%m-%d') if subscription else False
         invoice_id = False
         if subscription:
-            subscription.sudo().close_limit_cron()
+            # subscription.sudo().close_limit_cron()
             invoice_id = request.env['account.move'].sudo().search([('subscription_id', '=', subscription.id), ('state', 'in', ['draft', 'posted']), ('payment_state', '=', 'not_paid')], limit=1)
             if invoice_id.state == 'draft':
                 invoice_id.sudo().action_post()
