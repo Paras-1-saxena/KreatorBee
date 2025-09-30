@@ -89,6 +89,7 @@ class SaleOrder(models.Model):
 																if payments and payments['status'] !='Pending':
 																				if sale.state=='draft':
 																								sale.action_confirm()
+																								
 																								_logger.info("Statusssssssssssssssssssssss: %s",payments)
 																				tx=self.env['payment.transaction'].sudo().search([('reference','=',so_no)],limit=1)
 																				if tx and tx.state != 'done':

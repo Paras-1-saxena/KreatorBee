@@ -77,6 +77,7 @@ class PaymentTransaction(models.Model):
 												    # 1️⃣ Confirm Sale Order
 												    if order.state=='draft':
 																    order.action_confirm()
+																    order._update_partner_onlines()
 												    
 												    # 2️⃣ Create Invoice if not exists
 												    if not order.invoice_ids:

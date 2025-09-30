@@ -1745,99 +1745,100 @@ class PortalMyCourses(http.Controller):
                 'product_uom': product.uom_id.id,
                 'price_unit': product.list_price,
                 'name': product.name,
+				            
             })
         
-            sale_order.sudo().update({'pricelist_id': pricelist.id})
-        if kwargs.get('course_count') and kwargs.get('ref_part_id'):
-            commission_partner = request.env['res.partner'].sudo().browse(int(kwargs.get('ref_part_id')))
-            
-            commission_partner_courses = commission_partner.sale_order_ids.filtered(
-                lambda so: so.state in ['sale', 'done']
-            ).order_line.filtered(
-                lambda line: line.product_id.bom_ids
-            ).product_id
-            commission_partner_count = len(commission_partner_courses)
-
-            # Count courses current user owns (before this order)
-            user_courses = user.partner_id.sale_order_ids.filtered(
-                lambda so: so.state in ['sale', 'done']
-            ).order_line.filtered(
-                lambda line: line.product_id.bom_ids
-            ).product_id
-            user_course_count = len(user_courses)
-
-            # Find difference
-            diff_count = max(0, commission_partner_count - user_course_count)
-
-            subscription = commission_partner.subscription_product_line_ids.subscription_id.filtered(lambda sub: sub.stage_id.name == 'In Progress')
-
-            end_days = -1
-            if subscription:
-                end_days = (subscription.next_invoice_date - datetime.today().date()).days
-
-            if diff_count > 0:
-                # Filter only course lines (products with BoM)
-                course_lines = sale_order.sudo().order_line.filtered(lambda l: l.product_id.bom_ids)
-                
-                # Take only up to diff_count lines
-                lines_to_update = course_lines[:diff_count]
-
-                if lines_to_update:
-                    lines_to_update.write({
-                        'partner_commission_partner_id': commission_partner.id if end_days >= 0 else False,
-                        'referral_partner_id': commission_partner.id,
-                        'referral_partner_subs_status': 'inprogress' if end_days >= 0 else 'closed',
-                    })
-
-        else:
-            previous_commission_lines = request.env['sale.order.line'].sudo().search([
-                ('order_id.partner_id', '=', user.partner_id.id),
-                ('partner_commission_partner_id', '!=', False),
-                ('order_id.state', 'in', ['sale', 'done']),
-            ], limit=1)
-
-            if previous_commission_lines:
-
-                commission_partner = previous_commission_lines.partner_commission_partner_id
-
-                # Count courses commission partner owns
-                commission_partner_courses = commission_partner.sale_order_ids.filtered(
-                    lambda so: so.state in ['sale', 'done']
-                ).order_line.filtered(
-                    lambda line: line.product_id.bom_ids
-                ).product_id
-                commission_partner_count = len(commission_partner_courses)
-
-                # Count courses current user owns (before this order)
-                user_courses = user.partner_id.sale_order_ids.filtered(
-                    lambda so: so.state in ['sale', 'done']
-                ).order_line.filtered(
-                    lambda line: line.product_id.bom_ids
-                ).product_id
-                user_course_count = len(user_courses)
-
-                # Find difference
-                diff_count = max(0, commission_partner_count - user_course_count)
-
-                subscription = commission_partner.subscription_product_line_ids.subscription_id.filtered(lambda sub: sub.stage_id.name == 'In Progress')
-                end_days = -1
-                if subscription:
-                    end_days = (subscription.next_invoice_date - datetime.today().date()).days
-
-                if diff_count > 0:
-                    # Filter only course lines (products with BoM)
-                    course_lines = sale_order.sudo().order_line.filtered(lambda l: l.product_id.bom_ids)
-                    
-                    # Take only up to diff_count lines
-                    lines_to_update = course_lines[:diff_count]
-
-                    if lines_to_update:
-                        lines_to_update.write({
-                            'partner_commission_partner_id': commission_partner.id if end_days >= 0 else False,
-                            'referral_partner_id': commission_partner.id,
-                            'referral_partner_subs_status': 'inprogress' if end_days >= 0 else 'closed',
-                        })
-            
+            sale_order.sudo().update({'pricelist_id': pricelist.id,
+				            'referral_partner_id':int(kwargs.get('ref_part_id')) if kwargs.get('ref_part_id') else ''
+            })
+        # if kwargs.get('course_count') and kwargs.get('ref_part_id'):
+        #     commission_partner = request.env['res.partner'].sudo().browse(int(kwargs.get('ref_part_id')))
+        #
+        #     commission_partner_courses = commission_partner.sale_order_ids.filtered(
+        #         lambda so: so.state in ['sale', 'done']
+        #     ).order_line.filtered(
+        #         lambda line: line.product_id.bom_ids
+        #     ).product_id
+        #     commission_partner_count = len(commission_partner_courses)
+								#
+        #     # Count courses current user owns (before this order)
+        #     user_courses = sale_order.order_line.filtered(
+        #         lambda line: line.product_id.bom_ids
+        #     ).product_id
+        #     user_course_count = len(user_courses)
+								#
+        #     # Find difference
+        #     diff_count = max(0, commission_partner_count - user_course_count)
+								#
+        #     subscription = commission_partner.subscription_product_line_ids.subscription_id.filtered(lambda sub: sub.stage_id.name == 'In Progress')
+								#
+        #     end_days = -1
+        #     if subscription:
+        #         end_days = (subscription.next_invoice_date - datetime.today().date()).days
+								#
+        #     if diff_count > 0:
+        #         # Filter only course lines (products with BoM)
+        #         course_lines = sale_order.sudo().order_line.filtered(lambda l: l.product_id.bom_ids)
+        #
+        #         # Take only up to diff_count lines
+        #         lines_to_update = course_lines[:diff_count]
+								#
+        #         if lines_to_update:
+        #             lines_to_update.write({
+        #                 'partner_commission_partner_id': commission_partner.id if end_days >= 0 else False,
+        #                 'referral_partner_id': commission_partner.id,
+        #                 'referral_partner_subs_status': 'inprogress' if end_days >= 0 else 'closed',
+        #             })
+								#
+        # else:
+        #     previous_commission_lines = request.env['sale.order.line'].sudo().search([
+        #         ('order_id.partner_id', '=', user.partner_id.id),
+        #         ('partner_commission_partner_id', '!=', False),
+        #         ('order_id.state', 'in', ['sale', 'done']),
+        #     ], limit=1)
+								#
+        #     if previous_commission_lines:
+								#
+        #         commission_partner = previous_commission_lines.partner_commission_partner_id
+								#
+        #         # Count courses commission partner owns
+        #         commission_partner_courses = commission_partner.sale_order_ids.filtered(
+        #             lambda so: so.state in ['sale', 'done']
+        #         ).order_line.filtered(
+        #             lambda line: line.product_id.bom_ids
+        #         ).product_id
+        #         commission_partner_count = len(commission_partner_courses)
+								#
+        #         # Count courses current user owns (before this order)
+        #         user_courses = user.partner_id.sale_order_ids.filtered(
+        #             lambda so: so.state in ['sale', 'done']
+        #         ).order_line.filtered(
+        #             lambda line: line.product_id.bom_ids
+        #         ).product_id
+        #         user_course_count = len(user_courses)
+								#
+        #         # Find difference
+        #         diff_count = max(0, commission_partner_count - user_course_count)
+								#
+        #         subscription = commission_partner.subscription_product_line_ids.subscription_id.filtered(lambda sub: sub.stage_id.name == 'In Progress')
+        #         end_days = -1
+        #         if subscription:
+        #             end_days = (subscription.next_invoice_date - datetime.today().date()).days
+								#
+        #         if diff_count > 0:
+        #             # Filter only course lines (products with BoM)
+        #             course_lines = sale_order.sudo().order_line.filtered(lambda l: l.product_id.bom_ids)
+        #
+        #             # Take only up to diff_count lines
+        #             lines_to_update = course_lines[:diff_count]
+								#
+        #             if lines_to_update:
+        #                 lines_to_update.write({
+        #                     'partner_commission_partner_id': commission_partner.id if end_days >= 0 else False,
+        #                     'referral_partner_id': commission_partner.id,
+        #                     'referral_partner_subs_status': 'inprogress' if end_days >= 0 else 'closed',
+        #                 })
+        #
 
         if request.env.user.is_public:
             request.session['redirect_after_signup'] = '/shop/cart'
