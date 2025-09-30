@@ -215,6 +215,8 @@
 <!--                                        <button class="download-brochure-btn">Download Brochure</button>-->
                                     </a>
                                 </div>
+	                              <input type="hidden" id="ref_part_id" name="ref_part_id" t-att-value="ref_part_id" />
+
                             </div>
                         </t>
                     </div>
@@ -224,7 +226,7 @@
                             <t t-esc="sum(course.list_price for course in referred_courses)"/>
                         </div>
                         <div class="mt-2">
-                            <a t-att-href="'/sale/cart/checkout?course_id={}&amp;redirect={}&amp;multi=True&amp;add_courses=True&amp;course_count={}'.format(referred_courses.ids, request.httprequest.full_path, len(referred_courses.ids))">
+                            <a t-att-href="'/sale/cart/checkout?course_id={}&amp;redirect={}&amp;multi=True&amp;ref_part_id={}&amp;add_courses=True&amp;course_count={}'.format(referred_courses.ids, request.httprequest.full_path,ref_part_id, len(referred_courses.ids))">
                                 <button class="add-to-cart-btn">Checkout</button>
                             </a>
                         </div>
