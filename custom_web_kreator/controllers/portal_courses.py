@@ -1748,9 +1748,9 @@ class PortalMyCourses(http.Controller):
 				            
             })
         
-            sale_order.sudo().update({'pricelist_id': pricelist.id,
-				            'referral_partner_id':int(kwargs.get('ref_part_id')) if kwargs.get('ref_part_id') else ''
-            })
+        sale_order.sudo().update({'pricelist_id': pricelist.id,
+            'referral_partner_id':int(kwargs.get('ref_part_id')) if kwargs.get('ref_part_id') else ''
+        })
         # if kwargs.get('course_count') and kwargs.get('ref_part_id'):
         #     commission_partner = request.env['res.partner'].sudo().browse(int(kwargs.get('ref_part_id')))
         #

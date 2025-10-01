@@ -45,7 +45,7 @@ class PaymentProviderInstamojoCheckout(models.Model):
             'email': tx_data['billing_partner_email'],
             'redirect_url': urls.url_join(base_url, InstamojoCheckoutController._return_url) + '?reference=%s' % reference,
             'send_email': False,
-            # 'webhook': 'http://www.example.com/webhook/',
+            'webhook': base_url+ '/payment/instamojo/webhook',
             'allow_repeated_payments': False,
         }
         return data
@@ -100,7 +100,8 @@ class PaymentProviderInstamojoCheckout(models.Model):
         payment_request_data = self.sudo()._create_instamojo_payment_request(tx_data, access_token)
         values.update({'longurl': payment_request_data.get('longurl',False)})
         if payment_request_data and payment_request_data.get('id'):
-				        order = self.env['sale.order'].sudo().search([('name', '=', values['reference'])],limit=1)
+				        ref = values['reference'].split('-')[0]
+				        order = self.env['sale.order'].sudo().search([('name', '=', ref)],limit=1)
 				        if order:
 								        order.payment_request_id = payment_request_data.get('id')
 								        order.payment_request_url = payment_request_data.get('resource_uri')

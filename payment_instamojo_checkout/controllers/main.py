@@ -7,7 +7,7 @@
 
 import logging
 import pprint
-from odoo import http
+from odoo import http,fields
 from odoo.http import request
 _logger = logging.getLogger(__name__)
 import time
@@ -28,3 +28,43 @@ class InstamojoCheckoutController(http.Controller):
             _logger.info('Instamojo: entering form_feedback with post data %s', pprint.pformat(data))
             tx.sudo()._handle_notification_data('instamojo_checkout',data)
         return request.redirect('/payment/status')
+        
+        
+        
+    @http.route(['/payment/instamojo/webhook'],type='http',auth='public',csrf=False,methods=['POST'])
+    def webhook(self,**post):
+        
+        payment_id=post.get('payment_id')
+        amount=post.get('amount')
+        purpose=post.get('purpose')  # typically your Odoo order reference
+        status=post.get('status')  # "Credit" = payment successful
+        print("dasdasdaaaaaaaaaaaaaa",post)
+        # Find the sale order
+        order=request.env['sale.order'].sudo().search([('name','=',purpose)],limit=1)
+        if order and status=="Credit":
+				        # Confirm sale order
+				        if order.state in ['draft','sent']:
+								        order.action_confirm()
+								        order._update_partner_onlines()
+				        
+				        
+								        
+				        if not order.invoice_ids:
+								        invoice=order._create_invoices()  # creates invoice from SO
+								        invoice.action_post()
+				        else:
+								        # Post any draft invoices
+								        for invoice in order.invoice_ids.filtered(lambda i:i.state=='draft'):
+												        invoice.action_post()
+				        
+				        # Post payment
+				        journal=request.env['account.journal'].sudo().search([('type','=','bank')],limit=1)
+				        payment_vals={
+								        'payment_type':'inbound','partner_type':'customer','partner_id':order.partner_id.id,'amount':amount,
+								        'currency_id': order.pricelist_id.currency_id.id,'payment_date':fields.Date.today(),
+								        'journal_id':  journal.id,'ref':f"Instamojo {payment_id}",}
+				        payment=request.env['account.payment'].sudo().create(payment_vals)
+				        payment.action_post()
+        return "Ok"
+        
+        
