@@ -212,7 +212,7 @@ class PortalMyCourses(http.Controller):
     @http.route('/ifsc/verification', type='http', auth='public', website=True, methods=['GET', 'POST'], csrf=False)
     def ifsc_verification(self, **kwargs):
         ifsc = kwargs.get('ifsc')
-        bank_id = request.env['res.bank'].sudo().search([('bic', '=', ifsc)])
+        bank_id = request.env['res.bank'].sudo().search([('bic', '=', ifsc)],limit=1)
         bank = bank_id.name
         branch = bank_id.street
         if not bank_id:
