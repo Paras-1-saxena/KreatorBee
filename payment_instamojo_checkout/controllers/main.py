@@ -23,7 +23,7 @@ class InstamojoCheckoutController(http.Controller):
             tx = request.env['payment.transaction'].sudo().search([('reference', '=', reference)], limit=1)
             time.sleep(2)
             data = tx.provider_id._get_payment_status(post)
-            tx._post_process_after_done()
+            # tx._post_process_after_done()
             data.update({'tx':tx})
             _logger.info('Instamojo: entering form_feedback with post data %s', pprint.pformat(data))
             tx.sudo()._handle_notification_data('instamojo_checkout',data)
@@ -31,16 +31,18 @@ class InstamojoCheckoutController(http.Controller):
         
         
         
-    @http.route(['/payment/instamojo/webhook'],type='http',auth='public',csrf=False,methods=['POST'])
-    def webhook(self,**post):
+    @http.route('/payment/instamojo/webhook',type='http',auth='public',methods=['POST'])
+    def webhook_new_url(self,**post):
         
         payment_id=post.get('payment_id')
         amount=post.get('amount')
         purpose=post.get('purpose')  # typically your Odoo order reference
         status=post.get('status')  # "Credit" = payment successful
-        print("dasdasdaaaaaaaaaaaaaa",post)
+        _logger.info('Instamojo: wwebhook data %s',pprint.pformat(post))
         # Find the sale order
-        order=request.env['sale.order'].sudo().search([('name','=',purpose)],limit=1)
+        order=request.env['sale.order'].sudo().search([('payment_request_id','=',payment_id)],limit=1)
+        _logger.info('Instamojo: wwebhook url and order id %s',pprint.pformat(order))
+        
         if order and status=="Credit":
 				        # Confirm sale order
 				        if order.state in ['draft','sent']:
