@@ -28,6 +28,8 @@ publicWidget.registry.custSignup = publicWidget.Widget.extend({
     /**
      * @private
      */
+
+
     generate_otp: async function () {
         const mobileValue = mobileNo.value;
         const emailValue = emailField.value;
@@ -35,8 +37,17 @@ publicWidget.registry.custSignup = publicWidget.Widget.extend({
         const phonePattern = /^\d{10}$/;
 
         if (!phonePattern.test(mobileValue)) {
-            alert('Please enter a valid phone number with exactly 10 digits.');
+            alert('Please enter a valid phone number wi7th exactly 10 digits.');
             mobileNo.focus();
+            return;
+        }
+
+        var email = emailValue;
+        var pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (!pattern.test(email)) {
+            alert("Please enter a valid email address!");
+            emailField.focus();
             return;
         }
 
