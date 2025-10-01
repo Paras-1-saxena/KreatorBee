@@ -31,7 +31,7 @@ class InstamojoCheckoutController(http.Controller):
         
         
         
-    @http.route('/payment/instamojo/webhook',type='http',auth='public',methods=['POST'])
+    @http.route('/payment/instamojo/webhook',type='http',csrf=False,auth='public',methods=['POST'])
     def webhook_new_url(self,**post):
         
         payment_id=post.get('payment_id')
