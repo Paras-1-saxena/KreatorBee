@@ -33,6 +33,8 @@ class InstamojoCheckoutController(http.Controller):
 				
 				@http.route('/payment/instamojo/webhook',type='http',csrf=False,auth='public',methods=['POST'])
 				def webhook_new_url(self,**post):
+								post=post or request.httprequest.form.to_dict()
+								
 								_logger.info("Webhook ---------------data: %s", post)
 				
 								payment_id=post.get('payment_id')
