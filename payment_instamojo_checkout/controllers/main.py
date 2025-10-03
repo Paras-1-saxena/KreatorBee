@@ -37,7 +37,7 @@ class InstamojoCheckoutController(http.Controller):
 								
 								_logger.info("Webhook ---------------data: %s", post)
 				
-								payment_id=post.get('payment_id')
+								payment_id=post.get('payment_request_id')
 								amount=post.get('amount')
 								purpose=post.get('purpose')  # typically your Odoo order reference
 								status=post.get('status')  # "Credit" = payment successful
@@ -63,13 +63,7 @@ class InstamojoCheckoutController(http.Controller):
 																				invoice.action_post()
 												
 												# Post payment
-												journal=request.env['account.journal'].sudo().search([('type','=','bank')],limit=1)
-												payment_vals={
-																'payment_type':'inbound','partner_type':'customer','partner_id':order.partner_id.id,'amount':amount,
-																'currency_id': order.pricelist_id.currency_id.id,'payment_date':fields.Date.today(),
-																'journal_id':  journal.id,'ref':f"Instamojo {payment_id}",}
-												payment=request.env['account.payment'].sudo().create(payment_vals)
-												payment.action_post()
+												
 								return "Ok"
         
         
