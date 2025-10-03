@@ -193,14 +193,14 @@ class SubscriptionPackage(models.Model):
     def _compute_next_invoice_date(self):
         """The compute function is the next invoice date for subscription
         packages based on the start date and renewal time."""
-        for sub in self.env['subscription.package'].search([]):
+        for sub in self:
             if sub.start_date:
                 sub.next_invoice_date = sub.start_date + relativedelta(
                     days=sub.plan_id.renewal_time)
 
     def _inverse_next_invoice_date(self):
         """Inverse function for next invoice date"""
-        for sub in self.env['subscription.package'].search([]):
+        for sub in self:
             if sub.start_date:
                 return
 
