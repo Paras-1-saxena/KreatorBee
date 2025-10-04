@@ -99,9 +99,8 @@ class PaymentProviderInstamojoCheckout(models.Model):
         access_token = self._get_access_token()
         payment_request_data = self.sudo()._create_instamojo_payment_request(tx_data, access_token)
         values.update({'longurl': payment_request_data.get('longurl',False)})
-        if payment_request_data and payment_request_data.get('id'):
-				        ref = values['reference'].split('-')[0]
-				        order = self.env['sale.order'].sudo().search([('name', '=', ref)],limit=1)
+        if payment_request_data and payment_request_data.get('id') and 'sale' in values:
+				        order = values['sale']
 				        if order:
 								        order.payment_request_id = payment_request_data.get('id')
 								        order.payment_request_url = payment_request_data.get('resource_uri')

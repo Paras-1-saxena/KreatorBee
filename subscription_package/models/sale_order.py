@@ -53,8 +53,8 @@ class SaleOrder(models.Model):
 								import requests
 								
 								# API credentials (Replace these with your actual credentials)
-								client_id="Coke62IvL4I4KV14X8BEH1DTg8dzXVPiAgfpaRZb"
-								client_secret="GIiFXhQnDuxpzgaQDYi9FrQBi8VxXiyGoALu9pXajYvpga0GCQxf6jtyGDqHN5wErtPrtC1FuUUSGvKPpCimmsy4sDEmJgwt8vwzLJIO7s61QIcu1vLe2A2UTYElfhCc"
+								client_id="FqUDyz4vJDyAs555XSZCqoXJCoA2y9VAffHH0cEe"
+								client_secret="GhQrKfNdgKsweMDe53N07SQN6v6jr7TwdJHQUx9jxjp1qmVheWh0BYJwSxe25h28ElzPBLqpGpkPbrkY403dbYMxwN8ZCtpMMGb3eIW8Y5O5bVj6Aq8hWD4AfaDZ3BWz"
 								
 								# OAuth endpoint to get the access token
 								auth_url="https://api.instamojo.com/oauth2/token/"

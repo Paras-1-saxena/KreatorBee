@@ -21,7 +21,8 @@ class PaymentTransactionInstamojoCheckout(models.Model):
         processing_values.update({
                     'billing_partner_name':self.partner_name,
                     'billing_partner_email':self.partner_email,
-                    'currency':record_currency
+                    'currency':record_currency,
+				                'sale': self.sale_order_ids
                     })
         txValues = self.provider_id.instamojo_checkout_form_generate_values(processing_values)
         return txValues
